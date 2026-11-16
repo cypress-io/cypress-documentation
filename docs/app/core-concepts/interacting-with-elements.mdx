@@ -16,12 +16,12 @@ slug: /app/core-concepts/interacting-with-elements
 
 ### Default Behavior
 
-As of Cypress 16, the default visibility algorithm delegates to the browser's native [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility) API. This is faster than the previous DOM-walking algorithm and aligns Cypress's notion of "visible" with the browser's own definition, making results more predictable across layouts. See [Visibility Strategy](#Visibility-Strategy) below to configure or opt back into the previous algorithm.
+As of Cypress 16, the default visibility algorithm delegates to the browser's native [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility) API. The native check is faster than the previous DOM-walking algorithm and aligns Cypress's notion of "visible" with the browser's own definition, making results more predictable across layouts. See [Visibility Strategy](#Visibility-Strategy) below to configure or opt back into the previous algorithm.
 
 #### An element is considered hidden if:
 
-- Its `width` or `height` is `0` (via the bounding rect zero-dimension guard).
-- Its computed CSS properties hide it (per `checkVisibility()`):
+- The element's `width` or `height` is `0` (via the bounding rect zero-dimension guard).
+- The element's computed CSS properties hide it (per `checkVisibility()`):
   - `display: none` on the element or any ancestor.
   - `visibility: hidden` or `visibility: collapse`.
   - `content-visibility: hidden`, or `content-visibility: auto` when not rendered.
@@ -31,13 +31,13 @@ As of Cypress 16, the default visibility algorithm delegates to the browser's na
 
 <strong>Opacity</strong>
 
-Elements where the CSS property (or ancestors) is `opacity: 0` are considered
+Cypress considers elements where the CSS property (or ancestors) is `opacity: 0`
 hidden when
 [asserting on the element's visibility directly](/app/references/assertions#Visibility).
 
 However elements where the CSS property (or ancestors) is `opacity: 0` are
 considered actionable and any commands used to interact with the hidden element
-will perform the action.
+perform the action.
 
 :::
 
@@ -64,7 +64,7 @@ The modern algorithm intentionally does **not** detect these cases. If your test
 
 :::
 
-`visibilityStrategy` can also be set per-suite or per-test:
+You can also set `visibilityStrategy` per-suite or per-test:
 
 ```js
 describe('My Test Suite', { visibilityStrategy: 'legacy' }, () => {
@@ -86,8 +86,8 @@ When you encounter a test that fails under the modern algorithm, prefer updating
 
 Two kinds of assertion are affected, and each needs a different fix:
 
-- **`should('be.visible')` used as a wait before an action.** This is the most common usage. See [Waiting for an element before you interact with it](#Waiting-for-an-element-before-you-interact-with-it) below, where the fix is usually to remove the assertion.
-- **`should('not.be.visible')` used to assert that something is hidden.** These fail in the cases the legacy algorithm detected and the modern algorithm does not. The remaining patterns cover each of those cases.
+- **`should('be.visible')` used as a wait before an action.** This usage is the most common. See [Waiting for an element before you interact with it](#Waiting-for-an-element-before-you-interact-with-it) below, where the fix is usually to remove the assertion.
+- **`should('not.be.visible')` used to assert that something is hidden.** These assertions fail in the cases the legacy algorithm detected and the modern algorithm does not. The remaining patterns cover each of those cases.
 
 Every pattern below uses [`.should()`](/api/commands/should) rather than [`.then()`](/api/commands/then). Cypress retries `.should()` until it passes or times out, so these patterns keep the retry behavior of the assertion they replace.
 
@@ -160,9 +160,9 @@ Both are queries rather than commands. A query reads state without changing it, 
 
 `isVisibleToUser()` is stricter than `be.visible` in three ways, so treat it as its own assertion rather than a drop-in replacement:
 
-- It builds on `Cypress.dom.isVisible()`, which follows the configured strategy. Under `'modern'` you get modern visibility plus coverage, so a clipped or scrolled-out element still reports as visible. The patterns below cover those two cases.
-- It hit tests every element. The legacy algorithm only hit tested `fixed`- and `sticky`-positioned elements.
-- It requires every matched element to pass, while `be.visible` is satisfied when any one of them is visible. chai-jQuery implements that assertion as `$el.is(':visible')`, and jQuery's `.is()` matches on any element in the set.
+- `isVisibleToUser()` builds on `Cypress.dom.isVisible()`, which follows the configured strategy. Under `'modern'` you get modern visibility plus coverage, so a clipped or scrolled-out element still reports as visible. The patterns below cover those two cases.
+- `isVisibleToUser()` hit tests every element. The legacy algorithm only hit tested `fixed`- and `sticky`-positioned elements.
+- `isVisibleToUser()` requires every matched element to pass, while `be.visible` is satisfied when any one of them is visible. chai-jQuery implements that assertion as `$el.is(':visible')`, and jQuery's `.is()` matches on any element in the set.
 
 The hit test has one more consequence worth knowing. `elementFromPoint()` returns `null` for a point outside the viewport, which counts as covered, so anything below the fold reports as not visible to the user. The legacy algorithm never met that case, because a `fixed` or `sticky` element is in the viewport by definition. Cypress also scrolls an element into view before acting on it, so an element below the fold is still usable. Reach for `isVisibleToUser()` only where you expect the element to be on screen already.
 
@@ -206,7 +206,7 @@ cy.get('#scroll-container')
 
 ##### Children inside a collapsed container that hides via `overflow: hidden` + `max-height: 0`
 
-Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but children with their own non-zero dimensions inside that wrapper are not detected as hidden, because `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper, so assert on that instead:
+Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but the modern algorithm doesn't detect children with their own non-zero dimensions inside that wrapper as hidden, because `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper, so assert on that instead:
 
 ```javascript title="cypress/e2e/spec.cy.js"
 // Before
@@ -220,7 +220,7 @@ cy.get('.collapsible-content .nested-item')
 
 ##### Elements rotated away with `backface-visibility: hidden`
 
-An element rotated past 90 degrees with `backface-visibility: hidden` turns its back face to the viewer, so the browser does not paint it. It keeps a non-zero bounding rect, and `checkVisibility()` reports it as visible.
+An element rotated past 90 degrees with `backface-visibility: hidden` turns its back face to the viewer, so the browser does not paint it. The element keeps a non-zero bounding rect, and `checkVisibility()` reports it as visible.
 
 Card flip and carousel components usually track which face is showing. Assert on that state, so your test does not depend on how the flip is implemented:
 
@@ -274,7 +274,7 @@ thus causing your application's event bindings to fire.
 Prior to issuing any of the commands, we check the current state of the DOM and
 take some actions to ensure the DOM element is "ready" to receive the action.
 
-Cypress will watch the DOM - re-running the queries that yielded the current
+Cypress watches the DOM - re-running the queries that yielded the current
 subject - until an element passes all of these checks for the duration of the
 [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (described
 in depth in the
@@ -294,15 +294,15 @@ core concept guide).
 - [Fire the event at the desired coordinates.](#Coordinates)
 
 Whenever Cypress cannot interact with an element, it could fail at any of the
-above steps. You will usually get an error explaining why the element was not
+above steps. You usually get an error explaining why the element was not
 found to be actionable.
 
 ### Disability
 
 Cypress checks whether the `disabled` property is `true` on a
-[form control](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) element, such as `button` or `input`. Setting a `disabled` attribute on other elements will
-have no effect on a user's ability to interact with them,
-and won't impact Cypress actionability checks.
+[form control](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) element, such as `button` or `input`. Setting a `disabled` attribute on other elements
+has no effect on a user's ability to interact with them,
+and doesn't impact Cypress actionability checks.
 
 ### Detached
 
@@ -310,10 +310,10 @@ Cypress checks whether an element you are making assertions on is still within
 the `document` of the application under test.
 
 When many applications rerender the DOM, they actually remove the DOM element
-and insert a new DOM element in its place with the newly change attributes. This
+and insert a new DOM element in its place with the newly change attributes. This replacement
 is why it's important not to chain _action commands_ together - cypress can
-re-run queries to locate the fresh element, but it will
-[never re-run commands](/app/core-concepts/retry-ability).
+re-run queries to locate the fresh element, but it
+[never re-runs commands](/app/core-concepts/retry-ability).
 
 ### Readonly
 
@@ -322,7 +322,7 @@ Cypress checks whether an element's `readonly` property is set during
 
 ### Animations
 
-Cypress will automatically determine if an element is animating and wait until
+Cypress automatically determines if an element is animating and waits until
 it stops.
 
 To calculate whether an element is animating we take a sample of the last
@@ -357,8 +357,8 @@ coordinates.
 
 :::
 
-If a _child_ of the element is covering it - that's okay. In fact we'll
-automatically issue the events we fire to that child.
+If a _child_ of the element is covering it - that's okay. In fact Cypress
+automatically issues the events it fires to that child.
 
 Imagine you have a button:
 
@@ -376,10 +376,10 @@ We even note this for you in the
 
 ### Scrolling
 
-Before interacting with an element, we will _always_ scroll it into view
+Before interacting with an element, Cypress _always_ scrolls it into view
 (including any of its parent containers). Even if the element was visible
 without scrolling, we perform the scrolling algorithm to reproduce the
-same behavior every time the command is run.
+same behavior every time the command runs.
 
 :::info
 
@@ -391,13 +391,13 @@ elements** into view when using DOM commands such as
 :::
 
 By default, the scrolling algorithm works by scrolling the top of the element we
-issued the command on to the top of its scrollable container. The horizontal
-position is left to the browser, which scrolls only as far as it needs to bring
+issued the command on to the top of its scrollable container. Cypress leaves the
+horizontal position to the browser, which scrolls only as far as it needs to bring
 the element into view, so a container that already shows the element
-horizontally is not scrolled sideways.
+horizontally doesn't scroll sideways.
 
 After scrolling the element, if we determine that it is still being covered up,
-we will continue to scroll and "nudge" the page until it becomes visible. This
+we continue to scroll and "nudge" the page until it becomes visible. This nudging
 most frequently happens when you have `position: fixed` or `position: sticky`
 navigation elements which are fixed to the top of the page.
 
@@ -406,7 +406,7 @@ covered.
 
 To change the position in the viewport to where we scroll an element, you can
 use the [`scrollBehavior`](/app/references/configuration#Actionability)
-configuration option. This can be useful if the element is covered up when
+configuration option. Changing the scroll position can be useful if the element is covered up when
 aligned to the top of the viewport, or if you prefer the element to be centered
 during scrolling of action commands.
 
@@ -420,7 +420,7 @@ method.
 
 | Value       | `scrollIntoView()` options                | Result                                                                                                                                                                                                                                     |
 | ----------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `'top'`     | `{ block: 'start' }`                      | Aligns the element to the top of its scrollable container and leaves the horizontal position to the browser. This is the default.                                                                                                          |
+| `'top'`     | `{ block: 'start' }`                      | Aligns the element to the top of its scrollable container and leaves the horizontal position to the browser. `'top'` is the default.                                                                                                       |
 | `'bottom'`  | `{ block: 'end' }`                        | Aligns the element to the bottom of its scrollable container and leaves the horizontal position to the browser.                                                                                                                            |
 | `'start'`   | `{ block: 'start', inline: 'start' }`     | Aligns the element to the start of both axes, which is the top, leftmost point of its scrollable container in a left-to-right document.                                                                                                    |
 | `'end'`     | `{ block: 'end', inline: 'end' }`         | Aligns the element to the end of both axes, which is the bottom, rightmost point of its scrollable container in a left-to-right document.                                                                                                  |
@@ -453,7 +453,7 @@ and `inline` is the horizontal axis, and each takes the same values as the nativ
 positions an axis can take, so they are not valid inside the object. Use
 `'start'` in place of `'top'` and `'end'` in place of `'bottom'`.
 
-An axis you leave out is omitted from the `scrollIntoView()` call, so the
+Cypress omits an axis you leave out from the `scrollIntoView()` call, so the
 browser's own default applies: `'start'` for `block` and `'nearest'` for
 `inline`.
 
@@ -474,21 +474,21 @@ the value you pass.
 
 ### Coordinates
 
-After we verify the element is actionable, Cypress will then fire all of the
-appropriate events and corresponding default actions. Usually these events'
-coordinates are fired at the center of the element, but most commands enable you
-to change the position it's fired to.
+After we verify the element is actionable, Cypress then fires all of the
+appropriate events and corresponding default actions. Usually Cypress fires
+these events at the center of the element, but most commands accept a `position`
+option to change that.
 
 ```js
 cy.get('button').click({ position: 'topLeft' })
 ```
 
-The coordinates we fired the event at will generally be available when clicking
+The coordinates Cypress fired the event at are generally available when clicking
 the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).
 
 <DocsImage src="/img/app/core-concepts/coords.png" alt="Event coordinates" />
 
-Additionally we'll display a red "hitbox" - which is a dot indicating the
+Additionally Cypress displays a red "hitbox" - which is a dot indicating the
 coordinates of the event.
 
 <DocsImage
@@ -498,15 +498,15 @@ coordinates of the event.
 
 ## Debugging
 
-It can be difficult to debug problems when elements are not considered
-actionable by Cypress.
+It can be difficult to debug problems when Cypress doesn't consider elements
+actionable.
 
 Although you _should_ see a nice error message, nothing beats visually
 inspecting and poking at the DOM yourself to understand the reason why.
 
 When you use the [Command Log](/app/core-concepts/open-mode#Command-Log) to
-hover over a command, you'll notice that we will always scroll the element the
-command was applied to into view. This is _NOT_ using the same
+hover over a command, Cypress always scrolls the element the
+command was applied to into view. This scrolling is _NOT_ using the same
 algorithms that we described above.
 
 In fact we only ever scroll elements into view when actionable commands are
@@ -515,7 +515,7 @@ regular DOM queries like [`cy.get()`](/api/commands/get) or
 [`.find()`](/api/commands/find).
 
 The reason we scroll an element into view when hovering over a snapshot is to
-help you to see which element(s) were found by that corresponding command. It's
+help you to see which element(s) that corresponding command found. Scrolling on hover is
 a purely visual feature and does not necessarily reflect what your page looked
 like when the command ran.
 
@@ -532,8 +532,8 @@ Make sure your Developer Tools are open and you can get pretty close to "seeing"
 the calculations Cypress is performing.
 
 You can also [bind to Events](/api/cypress-api/catalog-of-events) that Cypress
-fires as it's working with your element. Using a debugger with these events will
-give you a much lower level view into how Cypress works.
+fires as it's working with your element. Using a debugger with these events
+gives you a much lower level view into how Cypress works.
 
 ```js
 // break on a debugger before the action command
@@ -569,12 +569,12 @@ cy.get('button').click({ force: true })
 
 <strong>What's the difference?</strong>
 
-When you force an event to happen we will:
+When you force an event to happen, Cypress:
 
-- Continue to perform all default actions
-- Forcibly fire the event at the element
+- Continues to perform all default actions
+- Forcibly fires the event at the element
 
-We will NOT perform these:
+Cypress does NOT:
 
 - Scroll the element into view
 - Ensure it is visible
@@ -587,16 +587,16 @@ We will NOT perform these:
 
 :::
 
-In summary, `{ force: true }` skips the checks, and it will always fire the
+In summary, `{ force: true }` skips the checks, and it always fires the
 event at the desired element.
 
 :::caution
 
 **force `.select()` disabled options**
 
-Passing `{ force: true }` to [.select()](/api/commands/select) will not override
+Passing `{ force: true }` to [.select()](/api/commands/select) does not override
 the actionability checks for selecting a disabled `<option>` or an option within
 a disabled `<optgroup>`. See
-[this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
+[Cypress issue #107](https://github.com/cypress-io/cypress/issues/107) for more detail.
 
 :::

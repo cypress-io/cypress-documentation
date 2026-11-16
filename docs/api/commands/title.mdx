@@ -60,7 +60,7 @@ cy.title().should('eq', 'My Awesome Application')
 
 <HeaderAssertions />
 
-- `cy.title()` will automatically [retry](/app/core-concepts/retry-ability)
+- `cy.title()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
 <HeaderTimeouts />
@@ -75,7 +75,7 @@ cy.title().should('eq', 'My Awesome Application')
 cy.title().should('include', 'New User')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/title/test-title-of-website-or-webapp.png"

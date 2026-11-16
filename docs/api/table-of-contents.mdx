@@ -11,11 +11,11 @@ sidebar_position: 10
 
 ## Commands
 
-Cypress commands don't do anything at the moment they are invoked, but rather
-enqueue themselves to be run later. Commands can be chained together
+Cypress commands don't do anything at the moment you invoke them, but rather
+enqueue themselves to run later. You can chain commands together
 because Cypress manages a Promise chain on your behalf, with each command
-yielding a 'subject' to the next command, until the chain ends or an error is
-encountered.
+yielding a 'subject' to the next command, until the chain ends or Cypress encounters
+an error.
 
 Learn more about how commands chain together in the
 [Introduction to Chains of Commands](/app/core-concepts/introduction-to-cypress#Chains-of-Commands).
@@ -32,7 +32,7 @@ The differences between queries and other commands are outline in the
 
 ### Queries
 
-Queries are Cypress commands that read the state of your application. They
+Queries are Cypress commands that read the state of your application. Queries
 return a subject for further commands to act or assert on, and retry as needed
 to make sure the DOM element or other data they yield is always up to date.
 
@@ -80,20 +80,21 @@ to make sure the DOM element or other data they yield is always up to date.
 ### Assertions
 
 Assertions are Cypress commands that assert on the state of your application.
-They pause your test until the given condition is met, or until they time out.
+Assertions pause your test until the given condition is met, or until they time
+out.
 Learn more about Cypress assertions in the
 [Introduction to Assertions](/app/core-concepts/introduction-to-cypress#Assertions)
 and the [Assertions Reference](/app/references/assertions).
 
-| Command                             | Usage                                                                                                      |
-| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| [`.and()`](/api/commands/and)       | Alias for `.should(). Assert on the state of your application`.                                            |
-| [`.should()`](/api/commands/should) | Assert on the state of your application. Assertions are automatically retried until they pass or time out. |
+| Command                             | Usage                                                                                                          |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| [`.and()`](/api/commands/and)       | Alias for `.should(). Assert on the state of your application`.                                                |
+| [`.should()`](/api/commands/should) | Assert on the state of your application. Cypress automatically retries assertions until they pass or time out. |
 
 ### Actions
 
 Actions are Cypress commands that interact with your application as a user
-would. They wait for elements to be actionable before interacting with the page.
+would. Actions wait for elements to be actionable before interacting with the page.
 
 Learn more about action commands in our
 [Actionability Guide](/app/core-concepts/interacting-with-elements).
@@ -119,19 +120,19 @@ Cypress has a variety of additional commands to help write tests.
 
 | Command                                                             | Usage                                                                                                                                                                           |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`.blur()`](/api/commands/blur)                                     | Blur a focused element. Blur is not an action command, because users cannot directly unfocus an element, only focus a new one, but `.blur()` can be used as a testing shortcut. |
+| [`.blur()`](/api/commands/blur)                                     | Blur a focused element. Blur is not an action command, because users cannot directly unfocus an element, only focus a new one, but you can use `.blur()` as a testing shortcut. |
 | [`.clearAllCookies()`](/api/commands/clearallcookies)               | Clear all browser cookies.                                                                                                                                                      |
 | [`.clearAllLocalStorage()`](/api/commands/clearalllocalstorage)     | Clear `localStorage` data for all origins with which the test has interacted.                                                                                                   |
 | [`.clearAllSessionStorage()`](/api/commands/clearallsessionstorage) | Clear `sessionStorage` data for all origins with which the test has interacted.                                                                                                 |
 | [`.clearCookie()`](/api/commands/clearcookie)                       | Clear a specific browser cookie.                                                                                                                                                |
 | [`.clearCookies()`](/api/commands/clearcookies)                     | Clear browser cookies for a domain.                                                                                                                                             |
 | [`.clearLocalStorage()`](/api/commands/clearlocalstorage)           | Clear data in `localStorage` for current domain and subdomain.                                                                                                                  |
-| [`.clock()`](/api/commands/clock)                                   | Override the browser's built-in time objects (`Date`, `setTimeout` and similar), allowing them to be controlled via `cy.tick()`.                                                |
+| [`.clock()`](/api/commands/clock)                                   | Override the browser's built-in time objects (`Date`, `setTimeout` and similar), so that `cy.tick()` can control them.                                                          |
 | [`.debug()`](/api/commands/debug)                                   | Set a `debugger` statement and log what the previous command yields.                                                                                                            |
 | [`.each()`](/api/commands/each)                                     | Invoke a callback on each item in an array.                                                                                                                                     |
 | [`.env()`](/api/commands/env)                                       | Access secret environment variables in your tests.                                                                                                                              |
 | [`.fixture()`](/api/commands/fixture)                               | Load a fixed set of data from disk.                                                                                                                                             |
-| [`.focus()`](/api/commands/focus)                                   | Focus on a DOM element. Focus is not an action command, because users cannot directly focus an element, but `.focus()` can be used as a testing shortcut.                       |
+| [`.focus()`](/api/commands/focus)                                   | Focus on a DOM element. Focus is not an action command, because users cannot directly focus an element, but you can use `.focus()` as a testing shortcut.                       |
 | [`.go()`](/api/commands/go)                                         | Navigate back or forward using the browser's history.                                                                                                                           |
 | [`.hover()`](/api/commands/hover)                                   | Cypress does not have a cy.hover() command. See [Issue #10](https://github.com/cypress-io/cypress/issues/10).                                                                   |
 | [`.intercept()`](/api/commands/intercept)                           | Spy and stub network requests and responses.                                                                                                                                    |
@@ -188,8 +189,8 @@ Cypress exposes a number of properties and methods on the global `Cypress`
 object.
 
 The _key_ difference between Cypress APIs and Cypress commands is that Cypress
-APIs execute the moment they are invoked and are **not** enqueued to run at a
-later time.
+APIs execute the moment you invoke them, and Cypress does **not** enqueue them
+to run at a later time.
 
 | Property                                                           | Usage                                                                                                                          |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -200,13 +201,13 @@ later time.
 | [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)              | Generate console logs whenever a cookie is modified.                                                                           |
 | [`Cypress.currentRetry`](/api/cypress-api/currentretry)            | A number representing the current test retry count.                                                                            |
 | [`Cypress.currentTest`](/api/cypress-api/currenttest)              | An object with information about the currently executing test.                                                                 |
-| [`Cypress.log`](/api/cypress-api/cypress-log)                      | This is the internal API for controlling what gets printed to the Command Log. Useful when writing your own custom commands.   |
+| [`Cypress.log`](/api/cypress-api/cypress-log)                      | The internal API for controlling what gets printed to the Command Log. Useful when writing your own custom commands.           |
 | [`Cypress.dom`](/api/cypress-api/dom)                              | Check elements the way Cypress does: visible, attached, focusable, and more.                                                   |
 | [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) | Configure selector priority used by [Cypress Studio](/app/guides/cypress-studio) and [cy.prompt()](/api/commands/prompt).      |
 | [`Cypress.expose`](/api/cypress-api/expose)                        | Expose configuration values to the browser context.                                                                            |
 | [`Cypress.isBrowser()`](/api/cypress-api/isbrowser)                | Checks if the current browser matches the given name or filter.                                                                |
 | [`Cypress.isCy()`](/api/cypress-api/iscy)                          | checks if a variable is a valid instance of cy or a cy chainable.                                                              |
-| [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api)     | Set default values for how the `.type()` command is executed.                                                                  |
+| [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api)     | Set default values for how the `.type()` command executes.                                                                     |
 | [`Cypress.platform`](/api/cypress-api/platform)                    | The underlaying OS name, as returned by Node's `os.platform()`.                                                                |
 | [`Cypress.require`](/api/cypress-api/require)                      | Use dependencies within the [cy.origin()](/api/commands/origin) callback function.                                             |
 | [`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api) | Set defaults for screenshots captured by the `.screenshot()` command and the automatic screenshots taken during test failures. |
@@ -236,13 +237,13 @@ The Node Events hook into and extend Cypress behavior. For more
 details, see the [How to use a Plugin](/app/plugins/plugins-guide) and
 [Node Events Overview](/api/node-events/overview).
 
-| API                                                             | Usage                                                                                                                                                                                                                                                                    |
-| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [After Run Event](/api/node-events/after-run-api)               | The `after:run` event fires after a run is finished. When running cypress via cypress open, the event will fire when closing a project.                                                                                                                                  |
-| [After Screenshot Event](/api/node-events/after-screenshot-api) | After a screenshot is taken, you can get details about it via the `after:screenshot` plugin event.                                                                                                                                                                       |
-| [After Spec Event](/api/node-events/after-spec-api)             | The `after:spec` event fires after a spec file is run. When running cypress via cypress open, the event will fire when the browser closes.                                                                                                                               |
-| [Before Run Event](/api/node-events/before-run-api)             | The `before:run` event fires before a run starts. When running cypress via cypress open, the event will fire when opening a project.                                                                                                                                     |
-| [Before Spec Event](/api/node-events/before-spec-api)           | The `before:spec` event fires before a spec file is run. When running cypress via cypress open, the event will fire when the browser launches.                                                                                                                           |
-| [Browser Launch API](/api/node-events/browser-launch-api)       | Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options from the [`setupNodeEvents`](/app/plugins/plugins-guide#Using-a-plugin) function. |
-| [Configuration API](/api/node-events/configuration-api)         | Cypress enables you to dynamically modify configuration values and environment variables from your Cypress configuration.                                                                                                                                                |
-| [Preprocessors API](/api/node-events/preprocessors-api)         | A preprocessor is the plugin responsible for preparing a support file or a test file for the browser. A preprocessor also typically watches the source files for changes, processes them again, and then notifies Cypress to re-run the tests.                           |
+| API                                                             | Usage                                                                                                                                                                                                                                            |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [After Run Event](/api/node-events/after-run-api)               | The `after:run` event fires after a run is finished. When running cypress via cypress open, the event fires when closing a project.                                                                                                              |
+| [After Screenshot Event](/api/node-events/after-screenshot-api) | After Cypress takes a screenshot, you can get details about it via the `after:screenshot` plugin event.                                                                                                                                          |
+| [After Spec Event](/api/node-events/after-spec-api)             | The `after:spec` event fires after Cypress runs a spec file. When running cypress via cypress open, the event fires when the browser closes.                                                                                                     |
+| [Before Run Event](/api/node-events/before-run-api)             | The `before:run` event fires before a run starts. When running cypress via cypress open, the event fires when opening a project.                                                                                                                 |
+| [Before Spec Event](/api/node-events/before-spec-api)           | The `before:spec` event fires before Cypress runs a spec file. When running cypress via cypress open, the event fires when the browser launches.                                                                                                 |
+| [Browser Launch API](/api/node-events/browser-launch-api)       | Before Cypress launches a browser, you can modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options from the [`setupNodeEvents`](/app/plugins/plugins-guide#Using-a-plugin) function. |
+| [Configuration API](/api/node-events/configuration-api)         | Dynamically modify configuration values and environment variables from your Cypress configuration.                                                                                                                                               |
+| [Preprocessors API](/api/node-events/preprocessors-api)         | A preprocessor is the plugin responsible for preparing a support file or a test file for the browser. A preprocessor also typically watches the source files for changes, processes them again, and then notifies Cypress to re-run the tests.   |

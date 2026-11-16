@@ -29,7 +29,7 @@ spec. Accept the default name for now.
   alt="The new spec path dialog"
 />
 
-The newly-generated spec is displayed in a confirmation dialog. Close it with
+The App displays the newly-generated spec in a confirmation dialog. Close it with
 the ✕ button.
 
 <DocsImage
@@ -47,7 +47,7 @@ automatically displays any changes.
 />
 
 Even though we haven't written any code yet - that's okay - let's click on your
-new spec and watch Cypress launch it. Cypress will visit `https://example.cypress.io` and the test passes.
+new spec and watch Cypress launch it. Cypress visits `https://example.cypress.io` and the test passes.
 
 <DocsImage
   src="/img/app/end-to-end-testing/writing-your-first-end-to-end-test/new-spec-test-run.png"
@@ -77,8 +77,8 @@ Once you save this change you should see the browser reload.
 
 Although it doesn't do anything useful, this is our first passing test! ✅
 
-Over in the [Command Log](/app/core-concepts/open-mode#Command-Log) you'll
-see Cypress display the suite, the test, and your first assertion (which should
+Over in the [Command Log](/app/core-concepts/open-mode#Command-Log),
+Cypress displays the suite, the test, and your first assertion (which should
 be passing in green).
 
 <DocsImage
@@ -90,7 +90,7 @@ be passing in green).
 
 Notice Cypress displays a message about this being the default page
 [on the righthand side](/app/core-concepts/open-mode#Application-Under-Test).
-Cypress assumes you'll want to go out and [visit](/api/commands/visit) a URL on
+Cypress assumes you want to go out and [visit](/api/commands/visit) a URL on
 the internet - but it can also work just fine without that.
 
 :::
@@ -105,10 +105,10 @@ describe('My First Test', () => {
 })
 ```
 
-Once you save again, you'll see Cypress display the failing test in red since
+Once you save again, Cypress displays the failing test in red since
 `true` does not equal `false`.
 
-Cypress displays a detailed error view that includes the stack trace and the exact code frame where the assertion failed. This helps you quickly identify and fix the issue.
+Cypress displays a detailed error view that includes the stack trace and the exact code frame where the assertion failed. The error view helps you quickly identify and fix the issue.
 
 :::info
 
@@ -137,7 +137,7 @@ describe('My First Test', () => {
 />
 
 [Cypress](/app/core-concepts/open-mode) gives you a visual structure of
-suites, tests, and assertions. Soon you'll also see commands, page events,
+suites, tests, and assertions. Later in this guide, you also see commands, page events,
 network requests, and more.
 
 :::info
@@ -168,7 +168,7 @@ Assert". But the idea is: First you put the application into a specific state,
 then you take some action in the application that causes it to change, and
 finally you check the resulting application state.
 
-Today, we'll take a narrow view of these steps and map them cleanly to Cypress
+This guide takes a narrow view of these steps and maps them cleanly to Cypress
 commands:
 
 1. Visit a web page.
@@ -178,8 +178,8 @@ commands:
 
 ### <Icon name="globe" /> Step 1: Visit a page
 
-First, let's visit a web page. We will visit our
-[Kitchen Sink](https://github.com/cypress-io/cypress-example-kitchensink) application in this example
+First, let's visit a web page. This example visits our
+[Kitchen Sink](https://github.com/cypress-io/cypress-example-kitchensink) application
 so that you can try Cypress out without needing to worry about finding a page to
 test.
 
@@ -199,7 +199,7 @@ a few things:
 
 1. The [Command Log](/app/core-concepts/open-mode#Command-Log) now shows
    the new `VISIT` action.
-2. The Kitchen Sink application has been loaded into the
+2. Cypress has loaded the Kitchen Sink application into the
    [App](/app/core-concepts/open-mode).
 3. The test is green, even though we made no assertions.
 4. The `VISIT` displays a **blue pending state** until the page finishes
@@ -219,7 +219,7 @@ have failed.
 Now that we've got a page loaded, we need to take some action on it. Why don't
 we click a link on the page? Let's go look for one we like... how about `type`?
 
-To find this element by its contents, we'll use
+To find this element by its contents, use
 [cy.contains()](/api/commands/contains).
 
 Let's add it to our test and see what happens:
@@ -236,17 +236,17 @@ describe('My First Test', () => {
 Our test should now display `CONTAINS` in the
 [Command Log](/app/core-concepts/open-mode#Command-Log) and still be green.
 
-Even without adding an assertion, we know that everything is okay! This is
+Even without adding an assertion, we know that everything is okay! The test passes
 because many of Cypress' commands are built to fail if they don't find what
-they're expecting to find. This is known as an
+they're expecting to find. This built-in check is known as an
 [Implicit Assertion](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
 
 To verify this, replace `type` with something not on the page, like `hype`.
-You'll notice the test goes red, but only after about 4 seconds!
+The test goes red, but only after about 4 seconds!
 
-Can you see what Cypress is doing under the hood? It's automatically waiting and
-retrying because it expects the content to **eventually** be found in the DOM.
-It doesn't immediately fail!
+Can you see what Cypress is doing under the hood? Cypress is automatically waiting and
+retrying because it expects to **eventually** find the content in the DOM.
+Cypress doesn't immediately fail!
 
 <!--
 To reproduce the following screenshot:
@@ -347,7 +347,7 @@ chain to interact with and verify the behavior of elements on this new page.
 We can use [cy.get()](/api/commands/get) to select an element based on its
 class. Then we can use the [.type()](/api/commands/type) command to enter text
 into the selected input. Finally, we can verify that the value of the input
-reflects the text that was typed with another [.should()](/api/commands/should).
+reflects the text that `.type()` entered with another [.should()](/api/commands/should).
 
 In general, the structure of your test should flow query -> query -> command or
 assertion(s). It's best practice not to chain anything after an action command;
@@ -423,8 +423,8 @@ Worth noting is that this test transitioned across two different pages.
 1. The initial [cy.visit()](/api/commands/visit)
 2. The [.click()](/api/commands/click) to a new page
 
-Cypress automatically detects things like a `page transition event` and will
-automatically **halt** running commands until the next page has **finished**
+Cypress automatically detects things like a `page transition event` and
+automatically **halts** running commands until the next page has **finished**
 loading.
 
 Had the **next page** not finished its loading phase, Cypress would have ended
@@ -442,8 +442,9 @@ for the single `PAGE LOAD` event.
 In other words, based on the commands and the events happening, Cypress
 automatically alters its expected timeouts to match web application behavior.
 
-These various timeouts are defined in the
-[Configuration](/app/references/configuration#Timeouts) document.
+The
+[Configuration](/app/references/configuration#Timeouts) document defines these
+various timeouts.
 
 :::
 
@@ -451,8 +452,8 @@ These various timeouts are defined in the
 
 If you want a minimal code approach to creating tests, you can use
 [Cypress Studio](/app/guides/cypress-studio) to record your browser
-interactions and generate tests. With a [Cypress Cloud](/cloud/get-started/introduction) account, you also get **Studio AI**—assertion recommendations as you record. Visit our
-[guide](/app/guides/cypress-studio) for more information.
+interactions and generate tests. With a [Cypress Cloud](/cloud/get-started/introduction) account, you also get **Studio AI**—assertion recommendations as you record. Visit the
+[Cypress Studio guide](/app/guides/cypress-studio) for more information.
 
 ## Next steps
 

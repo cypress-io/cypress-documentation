@@ -11,7 +11,7 @@ sidebar_position: 50
 
 The `elements` configuration assigns a stable identity and a display name to a single element in your UI Coverage report.
 
-As your tests run, UI Coverage captures [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) of your application's DOM, and the same element usually appears in many of them: on every page load, in every test that visits its page. To count that element once, UI Coverage must recognize it as the same element in every snapshot. When one of its attributes is different on each appearance, such as an `id` generated on every page load, that recognition fails, and each appearance is reported as a new element. One dropdown then shows up as several untested elements and drags down your score.
+As your tests run, UI Coverage captures [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) of your application's DOM, and the same element usually appears in many of them: on every page load, in every test that visits its page. To count that element once, UI Coverage must recognize it as the same element in every snapshot. When one of its attributes is different on each appearance, such as an `id` generated on every page load, that recognition fails, and UI Coverage reports each appearance as a new element. One dropdown then shows up as several untested elements and drags down your score.
 
 An `elements` rule fixes this by identifying the element with a selector you choose that matches in every snapshot. The element counts once, and you can rename it to something readable like "Help Popover" instead of a machine-generated selector.
 
@@ -68,14 +68,14 @@ To add or edit `elements`, open the **App Quality** tab in your project settings
 
 ### How are elements rules applied?
 
-In each snapshot captured by your tests, every rule is evaluated independently:
+In each snapshot captured by your tests, UI Coverage evaluates every rule independently:
 
-- **A rule applies only when it matches exactly one element.** A rule identifies a single element, so UI Coverage counts how many of the [interactive elements](/ui-coverage/core-concepts/interactivity) it tracks match the rule's `selector` in the snapshot. If exactly one matches, the rule applies to that element. If two or more match, the rule is skipped and the elements keep their default identity, because applying it would merge separate elements into one. To intentionally treat several elements as one unit, use [`elementGroups`](/ui-coverage/configuration/elementgroups) instead. Matches against parts of the page that UI Coverage doesn't track, such as wrapper containers or static text, don't count.
-- **Matching is evaluated per snapshot.** A rule can apply in one snapshot and be skipped in another where its selector matches several elements at once.
-- **A matched element is identified by the rule's `selector` alone.** Its identity no longer depends on its attributes, structure, or the default [element identification rules](/ui-coverage/core-concepts/element-identification), so it stays one element across snapshots even as dynamic attributes change. The report displays the rule's `name`, or its `selector` when no name is given. This includes links, which are otherwise displayed by their URL.
+- **A rule applies only when it matches exactly one element.** A rule identifies a single element, so UI Coverage counts how many of the [interactive elements](/ui-coverage/core-concepts/interactivity) it tracks match the rule's `selector` in the snapshot. If exactly one matches, the rule applies to that element. If two or more match, UI Coverage skips the rule and the elements keep their default identity, because applying it would merge separate elements into one. To intentionally treat several elements as one unit, use [`elementGroups`](/ui-coverage/configuration/elementgroups) instead. Matches against parts of the page that UI Coverage doesn't track, such as wrapper containers or static text, don't count.
+- **UI Coverage evaluates matching per snapshot.** A rule can apply in one snapshot and be skipped in another where its selector matches several elements at once.
+- **UI Coverage identifies a matched element by the rule's `selector` alone.** The element's identity no longer depends on its attributes, structure, or the default [element identification rules](/ui-coverage/core-concepts/element-identification), so it stays one element across snapshots even as dynamic attributes change. The report displays the rule's `name`, or its `selector` when no name is given. This naming includes links, which the report otherwise displays by their URL.
 - **Rules match in any document unless scoped.** A rule without `documentScope` can match elements in the main document, in iframes, and in shadow DOMs. Add `documentScope` to restrict a rule to one of those documents, for example when the same selector appears both inside and outside an iframe.
 - **Later rules take precedence.** When more than one rule matches the same element, the last matching rule in the list determines its identity and name.
-- **Filtered elements are never matched.** Elements excluded from reports by [`elementFilters`](/ui-coverage/configuration/elementfilters) are not considered, and don't count toward a rule's one-match limit.
+- **Filtered elements are never matched.** UI Coverage doesn't consider elements excluded from reports by [`elementFilters`](/ui-coverage/configuration/elementfilters), and those elements don't count toward a rule's one-match limit.
 
 If a rule doesn't seem to take effect, see [Why isn't my elements rule applying?](/ui-coverage/faq#Why-isnt-my-UI-Coverage-elements-rule-applying) in the UI Coverage FAQ.
 
@@ -84,7 +84,7 @@ If a rule doesn't seem to take effect, see [Why isn't my elements rule applying?
 Cypress Cloud rejects a configuration when:
 
 - Two rules have the same `selector` (with the same `documentScope`).
-- Two rules have the same `name`, or one rule's `name` matches another rule's `selector`. Elements are identified by these values, so they must be unique.
+- Two rules have the same `name`, or one rule's `name` matches another rule's `selector`. UI Coverage identifies elements by these values, so they must be unique.
 - A `selector` or `documentScope` entry isn't valid CSS selector syntax.
 - `documentScope` is present but empty. Omit the property to match in any document.
 - A rule contains a property other than the four listed above.

@@ -15,10 +15,10 @@ The scope of this guide is to demonstrate authentication solely against the
 
 ## Okta Developer Console Setup
 
-If not already setup, you'll need to
+If not already setup, you need to
 [create an Okta application](https://okta.com) within the Okta Developer
-Console. Once the Okta application is created, the Okta Developer Console will
-provide a **Client ID**, which will be used alongside your **Okta domain** to
+Console. Once you create the Okta application, the Okta Developer Console
+provides a **Client ID**, which you use alongside your **Okta domain** to
 [configure Okta SDKs](https://developer.okta.com/docs/app/sign-into-spa/react/configure-the-sdk/)
 as shown in the subsequent sections of this guide.
 
@@ -59,8 +59,8 @@ There are two ways you can authenticate to Okta:
 
 ### Login with `cy.origin()`
 
-We'll write a custom command called `loginByOkta` to perform a login to
-Okta. This command will use
+Write a custom command called `loginByOkta` to perform a login to
+Okta. This command uses
 [`cy.origin()`](/api/commands/origin) to
 
 1. Navigate to the Okta origin
@@ -242,15 +242,15 @@ Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
 
 ### Programmatic Login
 
-Next, we'll write a command named `loginByOktaApi` to perform a programmatic
+Next, write a command named `loginByOktaApi` to perform a programmatic
 login into Okta and set an item in `localStorage` with the
-authenticated users details, which we'll use in our application code to verify
+authenticated users details, which our application code uses to verify
 we are authenticated under test.
 
 To make sure this is enabled inside the <Icon name="github" inline="true" contentType="rwa" />,
 set the `REACT_APP_OKTA_PROGRAMMATIC` environment variable to `true`.
 
-The `loginByOktaApi` command will execute the following steps:
+The `loginByOktaApi` command executes the following steps:
 
 1. Use the
    [Okta Authentication API](https://developer.okta.com/docs/reference/api/authn/)
@@ -258,7 +258,7 @@ The `loginByOktaApi` command will execute the following steps:
 2. Use an instance of `OktaAuth` client from the
    [Okta Auth SDK](https://github.com/okta/okta-auth-js) to gain the `id_token`
    once a session token is obtained.
-3. Finally the `oktaCypress` localStorage item is set with the `access token`
+3. Finally, set the `oktaCypress` localStorage item with the `access token`
    and user profile.
 
 <Tabs>
@@ -372,7 +372,7 @@ Cypress.Commands.add('loginByOktaApi', (username: string, password: string) => {
 
 With our Okta app setup properly in Okta Developer console, necessary
 environment variables in place, and our `loginByOktaApi` command implemented, we
-will be able to authenticate with Okta while our app is under test. Below is a
+can authenticate with Okta while our app is under test. Below is a
 test to login as a user via Okta, complete the onboarding
 process, and logout.
 
@@ -413,7 +413,7 @@ appropriately built or adapted to use Okta.
 
 Unlike programmatic login, authenticating with
 [`cy.origin()`](/api/commands/origin) doesn't require adapting the application
-to work. This step is only needed if implementing programmatic login.
+to work. You only need this step if you implement programmatic login.
 
 The following sections provides guidance on building or adapting an app to use
 Okta authentication.
@@ -461,7 +461,7 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 })
 ```
 
-Next, we'll define an Express middleware function to be use in our routes to
+Next, define an Express middleware function to be use in our routes to
 verify the [Okta](https://okta.com) JWT sent by the front end API requests as
 the `Bearer` token.
 
@@ -526,7 +526,7 @@ component.
 In routes with a `SecureRoute` and `LoginCallback` and wraps the component with
 the `withOktaAuth` higher order component (HOC).
 
-A `useEffect` hook is added to get the access token for the authenticated user
+`AppOkta.tsx` also adds a `useEffect` hook to get the access token for the authenticated user
 and send an `OKTA` event with the `user` and `token` objects to work with the
 existing authentication layer (`authMachine.ts`). `authService` is the
 [XState](https://xstate.js.org/) interpreted service instance of `authMachine`,
@@ -592,7 +592,7 @@ Next, we update our entry point (`index.tsx`) to wrap our application with the
 `<Security>` component from the
 [Okta React SDK](https://github.com/okta/okta-react) providing `issuer`,
 `clientId` from our Okta application, along with a `redirectUri` as props using
-the `REACT_APP_OKTA` variables are defined in our `.env`.
+the `REACT_APP_OKTA` variables defined in our `.env`.
 
 ```jsx title="src/index.tsx"
 // initial imports ...
@@ -624,15 +624,15 @@ ReactDOM.render(
 )
 ```
 
-An update to our
+Our
 [AppOkta.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppOkta.tsx)
-is needed to conditionally use the `oktaCypress` localStorage item.
+needs an update to conditionally use the `oktaCypress` localStorage item.
 
 In the code below, we conditionally apply a `useEffect` block based on being
 under test with Cypress (using `window.Cypress`).
 
-In addition, we will update the export to be wrapped with the `withOktaAuth`
-higher order component only if we are not under test in Cypress. This allows our
+In addition, the example wraps the export with the `withOktaAuth`
+higher order component only if we are not under test in Cypress. The wrapper allows our
 application to work with the [Okta](https://okta.com) redirect login flow in
 development/production but not when under test in Cypress.
 

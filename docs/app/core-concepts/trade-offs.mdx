@@ -12,10 +12,10 @@ e2eSpecific: true
 # Trade-offs
 
 Cypress automates the browser with its own unique architecture. While this
-unlocks the power to do things you will not find anywhere else, there are
-specific trade-offs that are made.
+unlocks the power to do things you do not find anywhere else, Cypress makes
+specific trade-offs.
 
-In this guide we'll lay out what some of the trade-offs are - and specifically
+This guide lays out what some of the trade-offs are - and specifically
 how you can work around them.
 
 While at first it may seem like these are strict limitations in Cypress - we
@@ -31,8 +31,8 @@ to have. In a sense they prevent you from writing bad, slow, or flaky tests.
   To test a flow that opens a new tab or popup in the same browser, use the
   `@cypress/puppeteer` plugin, covered in the
   [Multi-tab testing guide](/app/guides/multi-tab-testing).
-- Each test is bound to a single superdomain. Cross-origin navigation inside
-  tests can be enabled by using the [`cy.origin`](/api/commands/origin) command.
+- Each test is bound to a single superdomain. You can enable cross-origin navigation
+  inside tests by using the [`cy.origin`](/api/commands/origin) command.
   Read our
   [Cross Origin Testing Guide](/app/guides/cross-origin-testing).
 
@@ -43,8 +43,8 @@ eventually address.
 
 - [Workarounds for the lack of a `cy.hover()` command.](/api/commands/hover)
 - [There is not any native or mobile events support.](https://github.com/cypress-io/cypress/issues/311#issuecomment-339824191)
-- iframe support is somewhat limited, but does work. Same-origin iframes can be
-  queried natively (see
+- iframe support is somewhat limited, but does work. Cypress can query same-origin
+  iframes natively (see
   [How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)),
   while a "switch into an iframe" command is still an
   [open proposal](https://github.com/cypress-io/cypress/issues/136).
@@ -64,23 +64,21 @@ testing really well. We don't think Cypress is the optimal tool for things such 
 There are other excellent tools that are optimized for doing each item listed
 above.
 
-The **sweet spot** of Cypress is to be used as a tool to test your own
-application.
+The **sweet spot** of Cypress is testing your own application.
 
 ### Inside the browser
 
-In case you missed it before - Cypress tests run inside of the browser! This
+In case you missed it before - Cypress tests run inside of the browser! Running in the browser
 means we can do things nobody else can. There is no object serialization or JSON
 wire protocols. You have real, native access to everything in your application
 under test.
 
-But this also means that your test code **is being evaluated inside the
-browser**. Test code is not evaluated in Node, or any other server side
-language. The **only** language we'll ever support is the language of the web:
+But this also means that **the browser evaluates your test code**. Cypress
+does not evaluate test code in Node, or any other server side language. The **only** language we'll ever support is the language of the web:
 JavaScript.
 
 This trade-off means it makes it a little bit more challenging to communicate with the
-back end - like your server or database. You will not be able to connect or
+back end - like your server or database. You cannot connect or
 `import` those server-side libraries or modules directly. Although you can require
 `node_modules` which can be used in the browser. Additionally, you have the
 ability to use Node to import or talk directly to your back end scripts using
@@ -89,8 +87,8 @@ ability to use Node to import or talk directly to your back end scripts using
 
 To talk to your database or server you need to use the
 [`cy.task()`](/api/commands/task) or [`cy.request()`](/api/commands/request)
-commands. That means you will need to
-expose a way to seed and setup your database. It might take a bit more elbow grease
+commands. Using these commands means you need to
+expose a way to seed and setup your database. This setup might take a bit more elbow grease
 than other testing tools written in your back end language.
 
 The trade-off here is that doing everything in the browser is a much better
@@ -112,8 +110,8 @@ time.
 :::info
 
 **WebSocket support:** WebSocket connections work as expected during tests, but
-Cypress does not intercept them, so stubbing or mocking individual WebSocket
-**frames/messages** is not natively supported. The
+Cypress does not intercept them, so it does not natively support stubbing
+or mocking individual WebSocket **frames/messages**. The
 strategies described below are the recommended way to test real-time,
 message-driven features.
 
@@ -131,7 +129,7 @@ the entire environment to test collaboration with 100% coverage**.
 Doing it this way can be faster, more accurate, and more scalable.
 
 While outside the scope of this article, you could test a chat application using
-the following principles. Each one will incrementally introduce more
+the following principles. Each one incrementally introduces more
 collaboration:
 
 #### 1. Use only the browser:
@@ -148,9 +146,9 @@ the browser.
 
 You can [stub](/api/commands/stub) everything and simulate every single
 scenario. Chat messages, offline messages, connections, reconnections,
-disconnections, group chat, etc. Everything that happens inside of the browser
-can be fully tested. Requests leaving the browser could also be stubbed and you
-could assert that the request bodies were correct.
+disconnections, group chat, etc. You can fully test everything that happens
+inside of the browser. You could also stub requests leaving the browser and
+assert that the request bodies were correct.
 
 #### 2. Stub the other connection:
 
@@ -165,14 +163,14 @@ server → browser
 ```
 
 Use your server to receive messages from the browser, and simulate "the other
-participant" by sending messages as that participant. This is certainly
+participant" by sending messages as that participant. This approach is certainly
 application specific, but generally you could insert records into the database
 or do whatever it takes for your server to act as if a message of one client
 needs to be sent back to the browser.
 
-Typically this pattern enables you to avoid making a secondary WebSocket
+Typically this pattern avoids a secondary WebSocket
 connection and yet still fulfills the bidirectional browser and server contract.
-This means you could also test edge cases (disconnections, etc) without actually
+This pattern means you could also test edge cases (disconnections, etc) without actually
 handling real connections.
 
 #### 3: Introduce another connection:
@@ -194,7 +192,7 @@ the underlying WebSocket connection that you can then communicate with and
 control.
 
 You can do this in many ways and here is an example of using an HTTP server to
-act as the client and exposing a REST interface that enables us to control it.
+act as the client and exposing a REST interface for controlling it.
 
 ```js
 // Cypress tests
@@ -248,6 +246,6 @@ app.get('/disconnect', (req, res) => {
 app.listen(8081, () => {})
 ```
 
-This avoids ever needing a second open browser, but still gives you an
+This approach avoids ever needing a second open browser, but still gives you an
 end-to-end test that provides 100% confidence that the two clients can
 communicate with each other.

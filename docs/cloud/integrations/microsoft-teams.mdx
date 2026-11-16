@@ -78,7 +78,7 @@ workspace.
   width={1000}
 />
 
-6. You'll navigate to a window that manages webhooks as a way for Cypress Cloud
+6. A window opens that manages webhooks as a way for Cypress Cloud
    to communicate with Microsoft Teams. First, you must configure an _Incoming
    Webhook_ to a Teams channel.
 
@@ -136,7 +136,7 @@ workspace.
      />
 
    Once you've configured and added your webhooks, the installation is complete!
-   Cypress Cloud will post run results for **all** projects in your organization
+   Cypress Cloud posts run results for **all** projects in your organization
    to the specified Microsoft Teams channel.
 
 ### Remove a webhook
@@ -147,7 +147,7 @@ delete the global notification channels from a project.
 1. Navigate to the **Integrations** page for the project with the installed
    integration.
 2. Scroll down to the **Microsoft Teams Integration** section.
-3. Select **Global Settings** then select **Delete**, you will get a prompt, click **Yes, Delete**
+3. Select **Global Settings** then select **Delete**, a prompt appears, click **Yes, Delete**
    <DocsImage
      src="/img/cloud/integrations/teams/global-settings.jpg"
      alt="Select an organization"
@@ -185,7 +185,7 @@ needs. You can have Cypress Cloud post run results for a specific project.
    />
 4. Scroll down and click **Add Teams webhook** in the **Microsoft Teams**
    section.
-5. You'll navigate to a window that manages webhooks as a way for Cypress Cloud
+5. A window opens that manages webhooks as a way for Cypress Cloud
    to communicate with Microsoft Teams. First, you must configure an _Incoming
    Webhook_ to a Teams channel.
 
@@ -242,12 +242,12 @@ needs. You can have Cypress Cloud post run results for a specific project.
      />
 
    Once you've configured and added your webhooks, the installation is complete!
-   Cypress Cloud will post run results for **this** project to the specified
+   Cypress Cloud posts run results for **this** project to the specified
    Microsoft Teams channel.
 
 ## Notification preferences
 
-By default, Cypress Cloud will post a Teams message to each configured channel
+By default, Cypress Cloud posts a Teams message to each configured channel
 only for failing runs. However, you can select any combination of the followings preferences:
 
 - **Failed runs**: notifies on runs with a _failed_ or _errored_ status.
@@ -263,7 +263,7 @@ To set notification preferences:
 
 ### Flaky test alerts
 
-The **Flaky tests** preference works independently from the run status preferences. This means you can configure a channel to receive notifications _only_ when flaky tests are detected — even if you don't subscribe to passed or failed runs. See [Example configurations](#Example-configurations) for a concrete setup.
+The **Flaky tests** preference works independently from the run status preferences. Independent preferences mean you can configure a channel to receive notifications _only_ when Cypress Cloud detects flaky tests — even if you don't subscribe to passed or failed runs. See [Example configurations](#Example-configurations) for a concrete setup.
 
 When flaky test alerts are enabled, the Teams message includes flaky test counts in the test results section and lists flaky specs alongside failed specs in the specs for review section.
 
@@ -280,26 +280,26 @@ Flaky test detection requires the flaky test management feature to be enabled fo
 When configuring at the project-level, you can filter notifications posted to Teams based on a
 [tag](/app/references/command-line#cypress-run-tag-lt-tag-gt),
 [group](/app/references/command-line#cypress-run-group-lt-name-gt), or branch the run was
-recorded with. This is helpful for posting notifications only for certain runs,
+recorded with. Filtering by tag, group, or branch is helpful for posting notifications only for certain runs,
 like those to a staging or release environment, or only for runs on your main branch.
 
 1. Navigate to the **Teams** configuration page.
 2. Under **Tags**, select the **Tag** dropdown for the desired integration and
-   select which tag(s) to filter. If more than one tag is selected, the Teams message will be sent
+   select which tag(s) to filter. If you select more than one tag, Cypress Cloud sends the Teams message
    if any of the tags were associated with the run.
 3. Under **Run Groups**, select the **Run Group** dropdown for the desired integration and
-   select which run group(s) to filter. If more than one run group is selected, the Teams message will be
-   sent if any of the run groups were associated with the run.
+   select which run group(s) to filter. If you select more than one run group, Cypress Cloud sends the Teams message
+   if any of the run groups were associated with the run.
 4. Select the **Branch** dropdown for the desired integration and
    select which branch(es) to filter. The dropdown lists branches that runs in this project were
-   recorded on. If more than one branch is selected, the Teams message will be sent if the run was
+   recorded on. If you select more than one branch, Cypress Cloud sends the Teams message if the run was
    recorded on any of the selected branches. Select **Unknown branch** to include runs recorded
    without branch information.
 
-Branch names must match exactly. If no branch is selected, notifications are sent for runs on every branch.
+Branch names must match exactly. If you select no branch, Cypress Cloud sends notifications for runs on every branch.
 
-If more than one type of filter is selected, only a run that matches every selected filter will
-trigger a message to be sent to Teams. For example, if you select a tag and a branch, the run must
+If you select more than one type of filter, only a run that matches every selected filter
+triggers a message to Teams. For example, if you select a tag and a branch, the run must
 have one of the selected tags and be recorded on one of the selected branches.
 
 <DocsImage
@@ -332,7 +332,7 @@ You can enable or disable any of the following content sections for each Teams c
 - **Test results**: Shows pass, fail, skip, pending, and flaky counts. Each count links directly to the filtered view in Cypress Cloud.
 - **UI Coverage results**: Shows the coverage percentage along with counts of tested and untested elements and links. Only appears when [UI Coverage](/ui-coverage/get-started/introduction) data is available.
 - **Accessibility results**: Shows the accessibility pass percentage, failed rules broken down by severity (critical, serious, moderate, minor), and failed elements. Only appears when [Cypress Accessibility](/accessibility/get-started/introduction) data is available.
-- **Specs for review**: Lists up to 10 failed and flaky spec files with clickable links, the count of failed or flaky tests in each, and the run group name. If there are more than 10, a link to see all specs is included.
+- **Specs for review**: Lists up to 10 failed and flaky spec files with clickable links, the count of failed or flaky tests in each, and the run group name. If there are more than 10, the message includes a link to see all specs.
 - **Run tags**: Displays the tags associated with the run.
 - **Run groups**: Displays the run groups associated with the run.
 
@@ -347,7 +347,7 @@ To configure message content:
 
 You can choose between two display modes for your Teams messages:
 
-- **Stacked** (default): Each test result status appears on its own line with an icon and count. This is easier to scan when there are many statuses.
+- **Stacked** (default): Each test result status appears on its own line with an icon and count. Stacked mode is easier to scan when there are many statuses.
 - **Compact**: All status counts appear on a single line, saving vertical space in your Teams channel.
 
 The display mode applies to the test results, UI Coverage, and accessibility sections.
@@ -382,7 +382,7 @@ Teams workflow.
 
 ## Example configurations
 
-The options above — notification preferences, tag and run group filters, content sections, display modes, and org-vs-project scoping — can be combined to build notification setups tailored to how your team works. Below are some common configurations.
+You can combine the options above — notification preferences, tag and run group filters, content sections, display modes, and org-vs-project scoping — to build notification setups tailored to how your team works. Below are some common configurations.
 
 ### Route notifications by environment
 
@@ -390,11 +390,11 @@ Create separate project-level channels for each environment and use tag filters 
 
 ### Dedicated flaky test triage
 
-Add a channel like `#flaky-triage` with only the **Flaky tests** preference enabled and no run status preferences selected. This channel will only receive a notification when a run contains flaky tests — regardless of whether the run passed or failed — so your team can triage new flake without the noise of every run result.
+Add a channel like `#flaky-triage` with only the **Flaky tests** preference enabled and no run status preferences selected. This channel only receives a notification when a run contains flaky tests — regardless of whether the run passed or failed — so your team can triage new flake without the noise of every run result.
 
 ### Slim CI bridge for high-volume projects
 
-For projects with frequent CI runs, set up a channel with only the **Test results** content section enabled in **Compact** display mode. This gives your team a single-line pass/fail summary per run with a direct link to the CI build, keeping the channel scannable even at high volume.
+For projects with frequent CI runs, set up a channel with only the **Test results** content section enabled in **Compact** display mode. This setup gives your team a single-line pass/fail summary per run with a direct link to the CI build, keeping the channel scannable even at high volume.
 
 ### Cross-team visibility with focused project channels
 
@@ -414,7 +414,7 @@ in place.
 
 #### Per-project muting for organization channels
 
-If you have an organization-level Teams channel, you can mute it for specific projects without affecting other projects. This is useful when you want most projects to post to a shared channel but need to silence notifications for a particular project temporarily.
+If you have an organization-level Teams channel, you can mute it for specific projects without affecting other projects. Per-project muting is useful when you want most projects to post to a shared channel but need to silence notifications for a particular project temporarily.
 
 1. Navigate to the **Project Settings** page for the project you want to mute.
 2. Click the **Integrations** tab.
@@ -422,6 +422,6 @@ If you have an organization-level Teams channel, you can mute it for specific pr
 
 :::caution
 
-Toggling the mute on an organization-level install will clear all project-level mute overrides for that channel. If you're using per-project muting, be aware that changing the global mute state resets those overrides.
+Toggling the mute on an organization-level install clears all project-level mute overrides for that channel. If you're using per-project muting, be aware that changing the global mute state resets those overrides.
 
 :::

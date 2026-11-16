@@ -42,15 +42,15 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 cy.get('.completed').should('have.css', 'color', 'rgb(217,217,217)')
 ```
 
-These assertions are brittle and incomplete. They break when design tokens
+These assertions are brittle and incomplete. The assertions break when design tokens
 change, they only check the exact properties you thought to assert, and they
 can't verify things like an SVG rendering correctly, shapes drawn to a canvas,
 element overlap, or the overall layout of a page. Covering appearance
 property-by-property quickly becomes cumbersome to write and maintain.
 
 Visual testing solves this by comparing an image of your application against a
-known-good baseline, so any unexpected visible change is caught, whether or
-not you thought to assert about it.
+known-good baseline, so the comparison catches any unexpected visible change,
+whether or not you thought to assert about it.
 
 ## How visual testing works
 
@@ -60,8 +60,8 @@ Visual testing tools for Cypress follow the same general workflow:
    page or a specific element. Because the capture happens inside your test,
    you can drive the application into any state first (logged in, mid-workflow,
    with a modal open) using the Cypress commands you already know.
-2. **Compare:** The captured image is compared against a previously approved
-   **baseline** image. If the difference exceeds a configured threshold, the
+2. **Compare:** Your visual testing tool compares the captured image against a
+   previously approved **baseline** image. If the difference exceeds a configured threshold, the
    comparison fails.
 3. **Review:** You review the reported differences. If the change is
    unintended, you've caught a visual regression. If the change is intentional,
@@ -132,7 +132,7 @@ Whichever you choose, the practices in
 
 Open source plugins run the image comparison locally (or in your CI), typically
 adding a custom command that captures a screenshot and diffs it pixel-by-pixel
-against a baseline image stored alongside your code. They are free, keep your
+against a baseline image stored alongside your code. Open source plugins are free, keep your
 images in your own infrastructure, and are a great way to get started.
 
 The tradeoff is that you manage the workflow yourself: storing and updating
@@ -179,15 +179,15 @@ Commercial visual testing services handle capture, storage, comparison, and
 review for you. Instead of (or in addition to) diffing raw pixels locally, most
 of these services upload a snapshot of the page from your test run and render
 it in their own consistent cloud infrastructure, often across multiple
-browsers and viewport widths at once. They provide a web-based review workflow
+browsers and viewport widths at once. These services provide a web-based review workflow
 where your team approves or rejects visual changes, and they integrate with
 pull requests so visual review becomes part of your code review process.
 
 These services handle baseline management, cross-browser rendering, rendering
 environment consistency, and team review in exchange for a subscription.
 
-The services with official Cypress integrations are described in
-[Visual testing services](#Visual-testing-services) below.
+[Visual testing services](#Visual-testing-services) below describes the services
+with official Cypress integrations.
 
 ## Writing reliable visual tests
 
@@ -211,7 +211,7 @@ only after you confirm the page is done changing.
 :::
 
 Snapshot commands capture whatever is on screen at that moment. If the
-application is still rendering, animating, or waiting on data, you'll capture
+application is still rendering, animating, or waiting on data, you capture
 an intermediate state and get a false failure. Use a functional assertion to
 confirm the page has updated before taking the snapshot:
 
@@ -228,7 +228,7 @@ environment, or waiting for them to finish, so a snapshot never lands
 mid-animation. Cypress's
 [`waitForAnimations` and `animationDistanceThreshold`](/app/references/configuration#Actionability)
 configuration options only apply to action commands like
-[`.click()`](/api/commands/click). They ensure an element has stopped moving
+[`.click()`](/api/commands/click). The options ensure an element has stopped moving
 before Cypress interacts with it, but they don't prevent a snapshot from
 capturing an animation still in progress elsewhere on the page.
 
@@ -265,7 +265,7 @@ timestamp inside the application under test.
 
 :::
 
-Displayed dates, times, and countdowns change on every run and will fail a
+Displayed dates, times, and countdowns change on every run and fail a
 pixel comparison. Freeze the browser's clock with [`cy.clock()`](/api/commands/clock)
 so date-dependent content renders identically every time:
 
@@ -299,7 +299,7 @@ cy.mySnapshotCommand()
 ```
 
 For dynamic content you can't control, such as ads, animated media, or
-third-party widgets, most visual testing tools let you hide or mask specific elements so
+third-party widgets, most visual testing tools can hide or mask specific elements so
 they're excluded from comparison. Prefer masking a small region over raising
 the failure threshold for the whole page.
 
@@ -327,8 +327,8 @@ clear owner.
 
 [Cypress Component Testing](/app/component-testing/get-started) is a natural
 fit for visual testing: component tests render a single component in a
-controlled environment, the surface area is small, the data is fully controlled
-by the test, and a diff points directly at the component that changed. Several
+controlled environment, the surface area is small, the test fully controls
+the data, and a diff points directly at the component that changed. Several
 of the tools on this page support Cypress component tests as well as
 end-to-end tests.
 
@@ -339,7 +339,7 @@ The following commercial services provide official Cypress integrations:
 ### Applitools
 
 Applitools Eyes uses AI-assisted comparison ("Visual AI") rather than strict
-pixel diffing. It supports end-to-end and component tests, cross-browser
+pixel diffing. Applitools Eyes supports end-to-end and component tests, cross-browser
 rendering, and root cause analysis of visual changes.
 
 See [Applitools' Cypress documentation](https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started).

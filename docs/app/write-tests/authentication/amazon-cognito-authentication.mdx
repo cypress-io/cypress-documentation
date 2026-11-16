@@ -80,7 +80,7 @@ signIn({ username, password, { authFlowType: "USER_PASSWORD_AUTH" } })
 
 ## Amazon Cognito Setup
 
-If not already setup, you will need to
+If not already setup, you need to
 [create an account](https://docs.amplify.aws/start/getting-started/installation/q/integration/react#sign-up-for-an-aws-account)
 with [Amazon Web Services (AWS)](https://aws.amazon.com).
 
@@ -101,15 +101,15 @@ The
 optional [Amazon Cognito](https://aws.amazon.com/cognito) instance via the [AWS
 Amplify Framework Authentication
 Library](https://docs.amplify.aws/javascript/build-a-backend/auth/). The [AWS
-Amazon Amplify CLI](https://docs.amplify.aws/cli) is used to provision the
-[Amazon Web Services (AWS)](https://aws.amazon.com) infrastructure needed to
-configure your environment and cloud resources.
+Amazon Amplify CLI](https://docs.amplify.aws/cli) provisions the [Amazon Web
+Services (AWS)](https://aws.amazon.com) infrastructure needed to configure your
+environment and cloud resources.
 
 First, run the
 [amplify init](https://docs.amplify.aws/cli/start/workflows#initialize-new-project)
 command to initialize the
 Real World App.
-This will provision the project with your [AWS](https://aws.amazon.com)
+The command provisions the project with your [AWS](https://aws.amazon.com)
 credentials.
 
 ```jsx
@@ -182,8 +182,8 @@ There are two ways you can authenticate to AWS Cognito:
 
 ### Login with [`cy.origin()`](/api/commands/origin)
 
-We'll write a custom command called `loginByCognito` to perform a login to
-[Amazon Cognito](https://aws.amazon.com/cognito). This command will use
+Write a custom command called `loginByCognito` to perform a login to
+[Amazon Cognito](https://aws.amazon.com/cognito). This command uses
 [`cy.origin()`](/api/commands/origin) to
 
 1. Navigate to the Cognito origin
@@ -409,9 +409,9 @@ Cypress.Commands.add(
 
 ### Programmatic Login
 
-Next, we'll write a command to perform a programmatic login into
+Next, write a command to perform a programmatic login into
 [Amazon Cognito](https://aws.amazon.com/cognito) and set items in `localStorage`
-with the authenticated users details, which we will use in our application code
+with the authenticated users details, which our application code uses
 to verify we are authenticated under test.
 
 In this `loginByCognitoApi` command, we call `Auth.signIn`, then use that
@@ -587,12 +587,12 @@ describe('Cognito, programmatic login', function () {
 
 <strong>AWS Backend Services Need No Adaptation</strong>
 
-Often times, AWS Cognito is used when other AWS services provide the backend,
-such as AWS AppSync for GraphQL APIs or AWS API Gateway for REST APIs. These
-backend services can be configured to verify cognito JWTs without additional
+Teams often use AWS Cognito when other AWS services provide the backend,
+such as AWS AppSync for GraphQL APIs or AWS API Gateway for REST APIs. You can
+configure these backend services to verify cognito JWTs without additional
 code. However, if you are hosting a webserver backend, like the [cypress
 real-world app](https://github.com/cypress-io/cypress-realworld-app) does with
-the Express npm library, it must be adapted, as the real-world app is, to verify
+the Express npm library, you must adapt that backend, as the real-world app does, to verify
 the Cognito JWTs to authorize the frontend's requests.
 
 :::
@@ -669,7 +669,7 @@ export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({
 
 </Tabs>
 
-Once this helper is defined, we can use globally to apply to all routes:
+Once you define this helper, you can use it globally to apply to all routes:
 
 ```jsx title="backend/app.ts"
 // initial imports ...

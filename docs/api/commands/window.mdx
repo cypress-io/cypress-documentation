@@ -69,7 +69,7 @@ window.tags = {
 }
 ```
 
-Our test can confirm the property was properly set.
+Your test can confirm that the application set the property properly.
 
 ```javascript
 cy.window().its('tags.foo').should('equal', 'bar')
@@ -164,7 +164,7 @@ beforeEach(() => {
 
 <strong>When Can The Test Start?</strong>
 
-[This blog post](https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/?utm_source=docs.cypress.io&utm_medium=api-window)
+The [When Can the Test Start? blog post](https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/?utm_source=docs.cypress.io&utm_medium=api-window)
 explains how to use `cy.window()` to spy on the DOM `prototype` to detect when
 the application starts adding event listeners to the DOM elements. When this
 happens for the first time, Cypress knows that the application under test has
@@ -202,15 +202,15 @@ it('test', (done) => {
 })
 ```
 
-It fails. But the interesting thing is that the type of `event` is
+The test fails. But the interesting thing is that the type of `event` is
 `KeyboardEvent` when you `console.log(event)`.
 
-It's because Cypress uses an `iframe` to load the application under test. In
+The test fails because Cypress uses an `iframe` to load the application under test. In
 other words, the `KeyboardEvent` used in the code above and the
 `KeyboardEvent` class from which the `event` variable is constructed are
 different `KeyboardEvent`s.
 
-That's why the test should be written like this.
+This mismatch is why you should write the test like this.
 
 ```js
 it('should trigger KeyboardEvent with .type inside Cypress event listener', (done) => {
@@ -237,7 +237,7 @@ it('should trigger KeyboardEvent with .type inside Cypress event listener', (don
 
 <HeaderAssertions />
 
-- `cy.window()` will automatically [retry](/app/core-concepts/retry-ability)
+- `cy.window()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
 <HeaderTimeouts />
@@ -252,7 +252,7 @@ it('should trigger KeyboardEvent with .type inside Cypress event listener', (don
 cy.window()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/window/window-command-log-for-cypress-tests.png"

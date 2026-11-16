@@ -10,7 +10,7 @@ sidebar_position: 60
 # Ignore views and links
 
 UI Coverage measures every URL your tests visit and every link they could
-follow. That's usually what you want, but it means pages you don't own get
+follow. Measuring every URL is usually what you want, but it means pages you don't own get
 counted as untested and quietly drag your score down. A third-party login screen
 captured mid-sign-in, an error page a test hit by accident, a marketing site
 linked from your footer: none of these are yours to test. When that noise is
@@ -30,13 +30,13 @@ you actually intend to test:
 
 ## When to ignore views and links
 
-Reach for `viewFilters` when a URL is counted against you but isn't something
-your team is responsible for testing:
+Reach for `viewFilters` when UI Coverage counts a URL against you but it isn't
+something your team is responsible for testing:
 
 - **Third-party pages**: Sign-in flows on an external identity provider (Okta,
   Auth0), a payment processor's hosted checkout, or embedded content you don't
   control. Your tests pass through them, but their UI isn't yours to cover.
-- **Links to destinations you'll never test**: Your marketing site, a help
+- **Links to destinations you never test**: Your marketing site, a help
   center, a status page, or a social profile linked from your app. No test
   visits them, so no [view](/ui-coverage/core-concepts/views) exists. The link
   is the only thing UI Coverage sees, and it counts as an [untested
@@ -57,8 +57,8 @@ full comparison.
 
 ## Step 1: Find the views and links worth ignoring
 
-Start by finding the URLs that are counted against you but sit outside your
-testing goals. You can do this in the Cloud UI or from your editor with an AI
+Start by finding the URLs that UI Coverage counts against you but that sit
+outside your testing goals. You can do this in the Cloud UI or from your editor with an AI
 agent.
 
 ### In the Cloud UI
@@ -81,7 +81,7 @@ Open the **UI Coverage** tab of a recorded run and work through two sections:
 Expanding an untested link shows a **Referrers** tab (the views that link to the
 destination) and a **URLs** tab (the concrete destinations, grouped for dynamic
 routes). Use these to confirm a destination is genuinely out of scope before you
-exclude it, and to capture the exact URL or path you'll match on.
+exclude it, and to capture the exact URL or path to match on.
 
 ### With an AI agent
 
@@ -123,7 +123,7 @@ optional `comment` explaining why the rule exists:
 One rule removes both the excluded pages and any links pointing to them. Every
 other URL stays included, because a few rules govern how filters are applied:
 
-- Each URL is matched against your rules **in order**, and the **first** rule
+- UI Coverage matches each URL against your rules **in order**, and the **first** rule
   whose `pattern` matches decides whether the URL is included or excluded. Place
   specific rules before broad ones.
 - URLs that match **no** rule are **included by default**.
@@ -185,7 +185,7 @@ them all:
 A `viewFilters` array at the **root** of your configuration applies to both UI
 Coverage and Cypress Accessibility. To exclude a URL from UI Coverage alone,
 nest `viewFilters` under a `uiCoverage` key. A nested list completely
-**replaces** the root-level one for UI Coverage (the two are not merged), so
+**replaces** the root-level one for UI Coverage (UI Coverage doesn't merge the two), so
 include every rule UI Coverage needs in the nested list:
 
 ```json title="App Quality Config"

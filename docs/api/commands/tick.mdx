@@ -13,8 +13,8 @@ Move time after overriding a native time function with
 
 :::caution
 
-[`cy.clock()`](/api/commands/clock) must be called before `cy.tick()` in order
-to override native time functions first.
+Call [`cy.clock()`](/api/commands/clock) before `cy.tick()` so that
+`cy.clock()` overrides native time functions first.
 
 :::
 
@@ -36,8 +36,8 @@ cy.tick(500)
 
 <Icon name="angle-right" /> **milliseconds _(Number)_**
 
-The number of `milliseconds` to move the clock. Any timers within the affected
-range of time will be called.
+The number of `milliseconds` to move the clock. Cypress calls any timers within
+the affected range of time.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -53,13 +53,13 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 
 - **`clock.tick(milliseconds)`**
 
-  Move the clock a number of milliseconds. Any timers within the affected range
-  of time will be called.
+  Move the clock a number of milliseconds. Cypress calls any timers within the
+  affected range of time.
 
 - **`clock.restore()`**
 
-  Restore all overridden native functions. This is automatically called between
-  tests, so should not generally be needed.
+  Restore all overridden native functions. Cypress automatically calls
+  `clock.restore()` between tests, so you generally don't need to call it.
 
 You can also access the `clock` object via `this.clock` in a
 [`.then()`](/api/commands/then) callback.
@@ -98,8 +98,8 @@ cy.get('#header').should('have.text', 'Hello, World')
 ### Restore clock
 
 You can restore the clock and allow your application to resume normally without
-manipulating native global functions related to time. This is automatically
-called between tests.
+manipulating native global functions related to time. Cypress automatically
+restores the clock between tests.
 
 ```javascript
 cy.clock()
@@ -132,7 +132,7 @@ cy.clock().invoke('restore')
 <HeaderAssertions />
 
 - `cy.tick()` is a utility command.
-- `cy.tick()` will not run assertions. Assertions will pass through as if this
+- `cy.tick()` does not run assertions. Assertions pass through as if this
   command did not exist.
 
 <HeaderTimeouts />
@@ -148,7 +148,7 @@ cy.clock()
 cy.tick(1000)
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <DocsImage
   src="/img/api/tick/tick-machine-clock-1-second-in-time.png"

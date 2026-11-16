@@ -23,7 +23,7 @@ covers the pattern in full.
 
 An action command such as [`.click()`](/api/commands/click) locks in its subject
 the same way, so an assertion chained after it re-checks that element without
-re-querying for it. This is why asserting on a class the click toggles works,
+re-querying for it. Locking in the subject is why asserting on a class the click toggles works,
 while asserting on an element the click replaces fails with
 `The subject is no longer attached to the DOM`.
 

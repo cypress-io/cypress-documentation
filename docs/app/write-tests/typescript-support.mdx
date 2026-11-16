@@ -65,8 +65,8 @@ manual synchronization.
 
 ### Install TypeScript
 
-To use TypeScript with Cypress, you will need TypeScript 5.x, 6.x, or 7.x. If you do not
-already have TypeScript installed as a part of your framework, you will need to
+To use TypeScript with Cypress, you need TypeScript 5.x, 6.x, or 7.x. If you do not
+already have TypeScript installed as a part of your framework, you need to
 install it:
 
 <Tabs>
@@ -120,12 +120,12 @@ with the following configuration:
 }
 ```
 
-The `"types"` will tell the TypeScript compiler to only include type definitions
-from Cypress. This will address instances where the project also uses
+The `"types"` tells the TypeScript compiler to only include type definitions
+from Cypress. Limiting the types addresses instances where the project also uses
 `@types/chai` or `@types/jquery`. Since
 [Chai](/app/references/bundled-libraries#Chai) and
 [jQuery](/app/references/bundled-libraries#Utility-libraries) are
-namespaces (globals), incompatible versions will cause the package manager
+namespaces (globals), incompatible versions cause the package manager
 (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 
 :::caution
@@ -188,8 +188,8 @@ When adding [custom commands](/api/cypress-api/custom-commands) to the `cy`
 object, you can manually add their types to avoid TypeScript errors.
 
 For example, if you add the command `cy.dataCy` to
-`cypress/support/commands.ts` (which is imported by your
-[support entry file](/app/references/configuration#Testing-Type-Specific-Options) `cypress/support/e2e.ts`) like this:
+`cypress/support/commands.ts` (which your
+[support entry file](/app/references/configuration#Testing-Type-Specific-Options) `cypress/support/e2e.ts` imports) like this:
 
 ```typescript title="cypress/support/commands.ts"
 Cypress.Commands.add('dataCy', (value) => {
@@ -222,7 +222,7 @@ TypeScript distinguishes between two kinds of files:
 - **Script (ambient)** — a file with no imports or exports
 
 `declare global { ... }` is only valid inside a **module** file. If your
-`commands.ts` has no imports, TypeScript will raise an error such as:
+`commands.ts` has no imports, TypeScript raises an error such as:
 _"Augmentations for the global scope can only be directly nested in external
 modules or ambient module declarations."_
 
@@ -246,22 +246,21 @@ Alternatively, move your type declarations into a standalone
 `export` is needed.
 
 Conversely, if you use `declare namespace Cypress { ... }` **without** the
-`declare global` wrapper inside a file that _does_ have imports, TypeScript will
-**not** augment the global `Cypress` namespace — your custom commands will still
+`declare global` wrapper inside a file that _does_ have imports, TypeScript does
+**not** augment the global `Cypress` namespace — your custom commands still
 appear as unknown.
 
 :::info
 
-A nice detailed JSDoc comment above the method type will be really appreciated
-by any users of your custom command.
+Users of your custom command appreciate a detailed JSDoc comment above the method type.
 
 :::
 
 :::info
 
-Types of all the parameters taken by the implementation callback are inferred
-automatically based on the declared interface. Thus, in the example above, the
-`value` will be of type `string` implicitly.
+TypeScript automatically infers the types of all the parameters the
+implementation callback takes, based on the declared interface. Thus, in the example above, the
+`value` is of type `string` implicitly.
 
 :::
 
@@ -284,7 +283,7 @@ it('works', () => {
 
 #### Adding child or dual commands
 
-When you add a custom command with `prevSubject`, Cypress will infer the subject
+When you add a custom command with `prevSubject`, Cypress infers the subject
 type automatically based on the specified `prevSubject`.
 
 ```typescript title="cypress/support/commands.ts"
@@ -345,12 +344,12 @@ Cypress.Commands.overwrite<'type', 'element'>(
 )
 ```
 
-As you can see there are generic parameters `<'type', 'element'>` are used:
+As you can see, the example uses generic parameters `<'type', 'element'>`:
 
 1. The first parameter is the command name, equal to first parameter passed to
    `Cypress.Commands.overwrite`.
-2. The second parameter is the type of the `prevSubject` that is used by the
-   original command. Possible values:
+2. The second parameter is the type of the `prevSubject` that the original
+   command uses. Possible values:
    - 'element' infers it as `JQuery<HTMLElement>`
    - 'window' infers it as `Window`
    - 'document' infers it as `Document`
@@ -491,9 +490,9 @@ instructions.
 ### Types for plugins
 
 When using [`defineConfig`](/app/references/configuration) in your
-`cypress.config.ts` file, TypeScript types for
-[`setupNodeEvents`](/app/references/configuration#setupNodeEvents) are inferred
-automatically — no additional annotation is needed:
+`cypress.config.ts` file, TypeScript infers the types for
+[`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
+automatically, so you need no additional annotation:
 
 ```typescript title="cypress.config.ts"
 import { defineConfig } from 'cypress'
@@ -528,8 +527,8 @@ custom commands/assertions from the _support_ file and into the new file.
 
 #### Ambient declaration file (no imports needed)
 
-A plain `.d.ts` file with no `import` or `export` statements is treated by
-TypeScript as an _ambient script_. In this context you can declare the namespace
+TypeScript treats a plain `.d.ts` file with no `import` or `export` statements
+as an _ambient script_. In this context you can declare the namespace
 **directly** — the `declare global` wrapper is not required:
 
 <Tabs>
@@ -625,12 +624,13 @@ _tsconfig.json_ files in your project for TypeScript to pick up the new types:
 
 **TypeScript must be able to find the declaration file**
 
-If you rename or move a declaration file, verify that its path is covered by the
-`include` globs in every `tsconfig.json` that needs to see it. A common mistake
-is placing a `global.d.ts` inside `cypress/support/` while the
-`cypress/tsconfig.json` only includes `**/*.ts` — `.d.ts` files are matched by
-`**/*.ts` only if the glob is `**/*.{ts,d.ts}` or `**/*`. Safest
-practice: list the file explicitly or use `"include": ["**/*.ts", "**/*.d.ts"]`.
+If you rename or move a declaration file, verify that the `include` globs in
+every `tsconfig.json` that needs the declaration file cover its new path. A `**/*.ts`
+glob matches `.d.ts` files too, but only inside the directory of the
+`tsconfig.json` that declares it. A common mistake is moving a `cypress.d.ts`
+to the project root while `cypress/tsconfig.json` includes only `**/*.ts`, so
+TypeScript never sees the file from inside `cypress/`. Safest practice: list
+the file explicitly, as the `"../cypress.d.ts"` entry above does.
 
 :::
 

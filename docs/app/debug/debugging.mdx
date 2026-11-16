@@ -10,7 +10,7 @@ slug: /app/guides/debugging
 
 # Debugging
 
-Your Cypress test code runs in the same run loop as your application. This means
+Your Cypress test code runs in the same run loop as your application, so
 you have access to the code running on the page, as well as the things the
 browser makes available to you, like `document`, `window`, and `debugger`.
 
@@ -31,15 +31,15 @@ it('let me debug like a fiend', () => {
 
 :::
 
-This may not work exactly as you are expecting. As you may remember from the
+The `debugger` statement may not work exactly as you are expecting. As you may remember from the
 [Introduction to Cypress](/app/core-concepts/introduction-to-cypress), `cy`
 commands enqueue an action to be taken later. Can you see what the test above
-will do given that perspective?
+does given that perspective?
 
 Both [`cy.visit()`](/api/commands/visit) and [`cy.get()`](/api/commands/get)
-will return immediately, having enqueued their work to be done later, and
-`debugger` will be executed before any of the commands have actually run. The
-same behavior is expected in Component Tests when using
+return immediately, having enqueued their work to be done later, and
+`debugger` executes before any of the commands have actually run. You can
+expect the same behavior in Component Tests when using
 [`cy.mount()`](/api/commands/mount).
 
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during
@@ -63,17 +63,17 @@ it('let me debug when the after the command executes', () => {
 
 Now we're in business! When you're visiting a page or mounting a component for
 the first time, (shown above with the [`cy.get()`](/api/commands/get)chain and
-its [`.then()`](/api/commands/then) attached) the commands are enqueued for
-Cypress to execute. The `it` block exits, and Cypress starts its work:
+its [`.then()`](/api/commands/then) attached) Cypress enqueues the commands
+to execute. The `it` block exits, and Cypress starts its work:
 
-1. In an end-to-end test, the page is visited and Cypress waits for it to load.
-   Alternatively, the component is mounted and rendered in a Component Test.
-2. The element is queried, and Cypress automatically waits and retries for a few
-   moments if it isn't found immediately.
-3. The function passed to [`.then()`](/api/commands/then) is executed, with the
-   found element yielded to it.
+1. In an end-to-end test, Cypress visits the page and waits for it to load.
+   Alternatively, Cypress mounts and renders the component in a Component Test.
+2. Cypress queries the element, and automatically waits and retries for a few
+   moments if it doesn't find the element immediately.
+3. Cypress executes the function passed to [`.then()`](/api/commands/then),
+   yielding the found element to it.
 4. Within the context of the [`.then()`](/api/commands/then) function, the
-   `debugger` is called, halting the browser and calling focus to the Developer
+   `debugger` statement runs, halting the browser and calling focus to the Developer
    Tools.
 5. You're in! Inspect the state of your application like you normally would if
    you'd dropped the `debugger` into your application code.
@@ -96,8 +96,8 @@ it('let me debug like a fiend', () => {
 
 :::
 
-The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
-exposed as the variable `subject` within your Developer Tools so that you can
+Cypress exposes the current subject that [`cy.get()`](/api/commands/get)
+yields as the variable `subject` within your Developer Tools so that you can
 interact with it in the console.
 
 <DocsImage
@@ -122,7 +122,7 @@ it('adds items', () => {
 })
 ```
 
-This pauses after each command, so you can inspect the web application, the DOM,
+Stepping with `cy.pause()` stops after each command, so you can inspect the web application, the DOM,
 the network, and any storage to make sure everything happens as expected.
 
 ## Debug with an AI agent
@@ -133,7 +133,7 @@ an AI coding agent, it can read the same information from the terminal with the
 poll the run's status, read the failing test's Command Log and error, and
 inspect the DOM of the app under test at the moment a command ran.
 
-That closes the loop without you relaying failures back and forth. Start
+Reading that information from the terminal closes the loop without you relaying failures back and forth. Start
 Cypress with `cypress open`, then let your agent drive it from another
 terminal.
 
@@ -149,7 +149,7 @@ them correctly, without you writing the steps by hand. For the full workflow, or
 a snippet you can drop into your agent's instructions file yourself, see
 [driving Cypress from the terminal with an AI agent](/app/tooling/cypress-tap).
 
-When the failure happened in CI rather than locally, and the run was recorded to
+When the failure happened in CI rather than locally, and you recorded the run to
 Cypress Cloud, your agent can triage it from the terminal too. The
 [`cypress-cloud-cli` skill](/app/tooling/ai-skills#cypress-cloud-cli) drives the
 [Cloud CLI](/cloud/integrations/cloud-cli) to read the failing run, its tests,
@@ -199,7 +199,7 @@ help make that process as easy as possible.
 
 ### Anatomy of an error
 
-Let's take a look at the anatomy of an error and how it is displayed in Cypress,
+Let's take a look at the anatomy of an error and how Cypress displays it,
 by way of a failing test.
 
 ```js
@@ -210,7 +210,7 @@ it('reroutes on users page', () => {
 ```
 
 The center of the `<li>Users</li>` element is hidden from view in our
-application under test, so the test above will fail.
+application under test, so the test above fails.
 
 <AnatomyOfAnError />
 
@@ -226,7 +226,7 @@ do experience flake, particularly when running in CI versus locally.
 
 :::tip
 To debug flake in your recorded tests in CI, try out [Test Replay](/cloud/features/test-replay) in Cypress Cloud.
-It replays the test exactly as it ran in CI.
+Test Replay replays the test exactly as it ran in CI.
 :::
 
 Most often
@@ -237,7 +237,7 @@ If there is any variation in the speed of the network requests or responses when
 run locally versus in CI, then there can be failures in one over the other.
 
 Because of this, we recommend asserting on as many required steps as possible
-before moving forward with the test. This also helps later to isolate where the
+before moving forward with the test. Asserting on each step also helps later to isolate where the
 exact failure is when debugging.
 
 Flake can also occur when there are differences between your local and CI
@@ -252,7 +252,7 @@ locally but fail in CI.
   [aliasing](/app/core-concepts/variables-and-aliases#Aliases) for this.
 
 Cypress Cloud also offers [Analytics](/cloud/features/analytics/overview) that illustrate
-trends in your tests and can help identify the tests that flake or fail most often. This
+trends in your tests and can help identify the tests that flake or fail most often. Analytics
 could help narrow down what is causing the flake -- for example, seeing
 increased failures after a change to the test environment could indicate issues
 with the new environment.
@@ -264,7 +264,7 @@ For more advice on dealing with flake read a
 ## Log Cypress events
 
 Cypress emits multiple events you can listen to as shown below.
-[Read more about logging events in the browser here](/api/cypress-api/catalog-of-events#Logging-All-Events).
+Read more about [logging all events in the browser](/api/cypress-api/catalog-of-events#Logging-All-Events).
 
 <DocsImage
   src="/img/api/catalog-of-events/console-log-events-debug.png"
@@ -273,7 +273,7 @@ Cypress emits multiple events you can listen to as shown below.
 
 ## Troubleshooting Cypress
 
-There are times when you'll encounter errors or unexpected behavior with
+There are times when you encounter errors or unexpected behavior with
 Cypress itself. In this situation, we recommend checking out our
 [Troubleshooting Guide](/app/references/troubleshooting).
 

@@ -12,13 +12,13 @@ slug: /app/plugins/plugins-guide
 
 Plugins add capabilities that don't ship with Cypress itself: visual testing,
 custom commands, code coverage, richer reporters, framework integrations, and
-more. They're versioned npm packages, so you can add one to
+more. Plugins are versioned npm packages, so you can add one to
 your project in a couple of minutes and update it independently of Cypress.
 
 ## Find a plugin
 
 Browse the [list of plugins](/app/plugins/plugins-list) maintained by Cypress.
-It curates official and community plugins across categories like custom
+The list curates official and community plugins across categories like custom
 commands, visual testing, network and API helpers, reporters, and CI
 integrations. Each entry shows its latest version, supported Cypress versions,
 and how recently it was updated, so you can pick one with confidence.
@@ -71,7 +71,7 @@ bun add --dev <plugin name>
   </TabItem>
 </Tabs>
 
-Before installing, check the plugin's supported Cypress versions. Its card on
+Before installing, check the plugin's supported Cypress versions. The plugin's card on
 the [list of plugins](/app/plugins/plugins-list) shows the Cypress range the
 plugin declares when you hover over or focus the card, and the plugin's README
 usually states it too.
@@ -80,7 +80,7 @@ usually states it too.
 
 Installing the package isn't enough on its own: you also need to register the
 plugin with Cypress. Where you register it depends on where the plugin's code
-needs to run, and the plugin's README will tell you which it needs:
+needs to run, and the plugin's README tells you which it needs:
 
 - **In [`setupNodeEvents`](/app/references/configuration#setupNodeEvents) in
   your Cypress configuration** for plugins that run in Node: preprocessors,
@@ -115,7 +115,7 @@ return config
 
 ### Register in the support file
 
-Browser-side plugins are imported (or registered with a function call) in your
+You import browser-side plugins (or register them with a function call) in your
 support file, which loads before every spec:
 
 ```ts title="cypress/support/e2e.js"
@@ -186,7 +186,7 @@ these checks:
 ## Plugin issue or Cypress issue?
 
 When something breaks in a project that uses plugins, isolate which side owns
-the problem before reporting it, so your issue lands where it can be fixed:
+the problem before reporting it, so your issue lands where the right maintainers can fix it:
 
 1. **Read the error and stack trace.** A stack trace that points into the
    plugin's package in `node_modules` is a strong signal the plugin is
@@ -195,8 +195,8 @@ the problem before reporting it, so your issue lands where it can be fixed:
    `setupNodeEvents` and your support file, then re-run the failing command or
    test.
 3. **Report it where it reproduces:**
-   - If the problem still occurs with the plugin disabled, it isn't caused by
-     the plugin. Work through the
+   - If the problem still occurs with the plugin disabled, the plugin isn't
+     causing it. Work through the
      [troubleshooting guide](/app/references/troubleshooting), search
      [existing Cypress issues](https://github.com/cypress-io/cypress/issues),
      and if it's new,

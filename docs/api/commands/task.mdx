@@ -10,7 +10,7 @@ sidebar_label: task
 
 `cy.task()` runs code in [Node.js](https://nodejs.org) from your test, through
 the `task` event you register in
-[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin). It handles the
+[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin). `cy.task()` handles the
 work a browser can't do on its own:
 
 - Seed or query a database.
@@ -70,7 +70,7 @@ on('task', {
 
 The `task` plugin event handler can return a value or a promise. The command
 fails if the handler returns `undefined` or the promise resolves with
-`undefined`. This catches typos and events that no handler covers.
+`undefined`. This check catches typos and events that no handler covers.
 
 If you don't need to return a value, return `null` to signal that the event was
 handled.
@@ -99,23 +99,23 @@ on('task', {
 
 <Icon name="angle-right" /> **event _(String)_**
 
-An event name to be handled via the `task` event in the
+An event name that the `task` event handles in the
 [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function.
 
 <Icon name="angle-right" /> **arg _(Object)_**
 
-An argument to send along with the event. This can be any value that can be
-serialized by
-[JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify),
+An argument to send along with the event. The argument can be any value that
+[JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+can serialize,
 and the handler receives it the way `JSON.stringify()` would serialize it:
 
-- Functions, symbols, and `undefined` are dropped from object properties and
-  become `null` inside arrays.
+- Serialization drops functions, symbols, and `undefined` from object
+  properties and turns them into `null` inside arrays.
 - Regular expressions, `Map`, and `Set` become empty objects (`{}`).
 - `Date` objects become ISO date strings. Rebuild one in the handler with
   `new Date(value)`.
-- An argument with circular references can't be serialized, so the command
-  fails.
+- `JSON.stringify()` can't serialize an argument with circular references, so
+  the command fails.
 
 When you omit `arg`, the handler receives `undefined`, so a default parameter
 value in the handler applies.
@@ -430,18 +430,17 @@ doesn't reach it.
 describe('Href visit', () => {
   it('captures href', () => {
     cy.visit('https://example.cypress.io')
-    cy.get('a')
+    cy.get('a[href="https://docs.cypress.io"]')
       .invoke('attr', 'href')
       .then((href) => {
-        // href is not same-origin as current url
-        // like https://www.cypress-dx.com
+        // href is not same-origin as the current url
         cy.task('setHref', href)
       })
   })
 
   it('visit href', () => {
     cy.task('getHref').then((href) => {
-      // visit non same-origin url https://www.cypress-dx.com
+      // visit the non same-origin url https://docs.cypress.io
       cy.visit(href)
     })
   })

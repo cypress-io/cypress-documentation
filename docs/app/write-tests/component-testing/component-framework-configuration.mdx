@@ -10,8 +10,8 @@ slug: /app/component-testing/component-framework-configuration
 
 # Component Testing Configuration
 
-When you launch Cypress for the first time in a project, the app will
-automatically guide you through setup and configuration. The Launchpad detects
+When you launch Cypress for the first time in a project, the app
+automatically guides you through setup and configuration. The Launchpad detects
 your UI framework and bundler, lists the required dependencies needed for you to install, and scaffolds
 a `cypress.config` file with a `component.devServer` block.
 
@@ -40,7 +40,7 @@ The dev server is responsible for:
 
 Cypress ships with built-in dev server implementations for **Vite** and
 **Webpack**. You do not need to install `@cypress/vite-dev-server` or
-`@cypress/webpack-dev-server` separately, they are bundled with the Cypress App.
+`@cypress/webpack-dev-server` separately, the Cypress App bundles them.
 
 ### How it works at runtime
 
@@ -54,7 +54,7 @@ When you open or run component tests, Cypress:
 
 ### Recommended configuration
 
-The recommended way to configure component testing is to use the `component.devServer` object. Specify your UI framework and bundler and Cypress will wire up the correct dev server implementation for you:
+The recommended way to configure component testing is to use the `component.devServer` object. Specify your UI framework and bundler and Cypress wires up the correct dev server implementation for you:
 
 :::cypress-config-example
 
@@ -71,7 +71,7 @@ The recommended way to configure component testing is to use the `component.devS
 
 :::
 
-This is the configuration that Cypress App scaffolds during project setup. It is
+Cypress App scaffolds the configuration above during project setup, and it is
 all most projects need.
 
 #### Supported `framework` and `bundler` values
@@ -84,8 +84,8 @@ all most projects need.
 | `next`      | `webpack`                  | Uses Next.js-specific Webpack presets. See [React overview — Next.js](/app/component-testing/react/overview#Nextjs).       |
 | `angular`   | `webpack`                  | Supports an `options.projectConfig` override. See [Angular overview](/app/component-testing/angular/overview#Options-API). |
 
-Community framework definitions (packages named `cypress-ct-*` or
-`@org/cypress-ct-*`) can also be used as the `framework` value when paired with
+You can also use community framework definitions (packages named `cypress-ct-*`
+or `@org/cypress-ct-*`) as the `framework` value when paired with
 a supported bundler. See [Custom Frameworks](/app/component-testing/custom-frameworks).
 
 ### Automatic bundler configuration detection
@@ -98,10 +98,10 @@ to duplicate your entire Vite or Webpack config in your Cypress config file.
 
 If you omit `viteConfig`, Cypress searches upward from your project root for a `vite.config.ts|js|mjs|cjs|mts|cts` file.
 
-When a config file is found, Cypress loads it and merges in Cypress-specific
+When Cypress finds a config file, it loads the file and merges in Cypress-specific
 settings (plugins, public path, spec entries, and file-system allow rules).
 
-If no config file is found, Cypress shows an error asking you to add a `vite.config` file or pass a `viteConfig` option explicitly.
+If Cypress finds no config file, it shows an error asking you to add a `vite.config` file or pass a `viteConfig` option explicitly.
 
 #### Webpack
 
@@ -112,8 +112,8 @@ framework-specific presets before merging your config. For React, Vue, and
 Svelte, Cypress merges your detected Webpack config with a Cypress-specific
 overlay.
 
-If no Webpack config can be detected and no framework preset applies, Cypress
-shows an error asking you to add a `webpack.config` file or pass a
+If Cypress can't detect a Webpack config and no framework preset applies,
+Cypress shows an error asking you to add a `webpack.config` file or pass a
 `webpackConfig` option explicitly.
 
 ### Overriding bundler configuration
@@ -192,7 +192,7 @@ those aliases must be resolvable by the bundler Cypress uses, otherwise the spec
 fails to compile with a "module not found" (or "failed to resolve import")
 error.
 
-Cypress does **not** define any aliases of its own. It resolves them exactly the
+Cypress does **not** define any aliases of its own. Cypress resolves aliases exactly the
 way your dev server does, using the bundler config it detects or the one you pass
 in:
 
@@ -201,18 +201,18 @@ in:
 - **Webpack**: aliases come from the `resolve.alias` of the `webpack.config`
   Cypress detects, or the `webpackConfig` you pass to `devServer`.
 
-So if your aliases are declared in a standalone `vite.config` or `webpack.config`
-at (or above) your project root, Cypress picks them up automatically and no extra
-configuration is needed.
+So if you declare your aliases in a standalone `vite.config` or `webpack.config`
+at (or above) your project root, Cypress picks them up automatically and you
+need no extra configuration.
 
 #### Meta-frameworks that own the bundler config
 
 Some meta-frameworks (such as **Nuxt**) configure Vite internally rather than
 through a standalone `vite.config` file. Cypress only reads a discoverable
-`vite.config`/`webpack.config`. It does **not** execute `nuxt.config` (or
+`vite.config`/`webpack.config`. Cypress does **not** execute `nuxt.config` (or
 similar) to extract the bundler settings those frameworks generate at runtime.
 As a result, framework-provided aliases like Nuxt's `@/` and `~/` are not visible
-to Cypress and must be declared explicitly via `viteConfig`:
+to Cypress, so declare them explicitly via `viteConfig`:
 
 :::cypress-config-example
 
@@ -241,7 +241,7 @@ import { fileURLToPath } from 'url'
 
 :::
 
-The aliases you pass are merged with Cypress's own Vite settings, so you only need
+Cypress merges the aliases you pass with its own Vite settings, so you only need
 to declare the ones your components rely on. The same applies to Webpack
 meta-frameworks: declare the aliases under `webpackConfig.resolve.alias`.
 
@@ -260,7 +260,7 @@ at bundle time, add the matching plugin to the config you give Cypress:
   under `resolve.plugins` in your `webpack.config` (or the `webpackConfig` you
   pass to `devServer`).
 
-This is the same plugin your app already needs to resolve `tsconfig` paths at
+The matching plugin is the same one your app already needs to resolve `tsconfig` paths at
 build time, so reusing your existing bundler config is usually enough.
 
 ### Function syntax (advanced)
@@ -314,7 +314,7 @@ The function receives a `cypressDevServerConfig` object with:
 | `cypressConfig`   | The resolved Cypress configuration         |
 | `devServerEvents` | Event emitter for compile lifecycle events |
 
-It must return (or resolve to) an object with:
+The function must return (or resolve to) an object with:
 
 | Property | Description                               |
 | -------- | ----------------------------------------- |
@@ -322,13 +322,13 @@ It must return (or resolve to) an object with:
 | `close`  | Optional callback to shut the server down |
 
 You can store additional dev server options on `component.devServerConfig` when
-using the function syntax. This field is passed as the second argument to your
-`devServer` function.
+using the function syntax. Cypress passes this field as the second argument to
+your `devServer` function.
 
 ### devServerPublicPathRoute
 
 The `devServerPublicPathRoute` option controls the URL path prefix Cypress uses
-to load compiled specs and assets. It defaults to `/__cypress/src`.
+to load compiled specs and assets. The option defaults to `/__cypress/src`.
 
 In most projects the default works well. You may need to change it if component
 tests reference assets from your app's public directory and those paths must
@@ -380,7 +380,7 @@ in the [component config](/app/references/configuration#component) options:
 ## Fully Custom Dev Server
 
 If your project uses a bundler other than Vite or Webpack, or you need complete
-control over compilation, pass a custom function to `component.devServer`. This
+control over compilation, pass a custom function to `component.devServer`. A custom function
 is how community integrations and preview-server setups work.
 
 The function receives a single `DevServerOptions` argument and must return (or
@@ -419,10 +419,9 @@ interface ResolvedDevServerConfig {
 
 :::
 
-Any requests triggered during a test using the `devServerPublicPathRoute` as
-defined in the `cypressConfig` will be forwarded to your server. Cypress will
-trigger a request for `[devServerPublicPathRoute]/index.html` when a test is
-started. Your server needs to reply with the html-file referenced in
+Cypress forwards to your server any request triggered during a test that uses the `devServerPublicPathRoute` defined in `cypressConfig`.
+Cypress triggers a request for `[devServerPublicPathRoute]/index.html` when a
+test starts. Your server needs to reply with the html-file referenced in
 `cypressConfig.indexHtmlFile` and inject a script to load the support files and
 the actual test.
 
@@ -463,13 +462,13 @@ function createServer(cypressConfig, bundleDir, port = 1234) {
 ```
 
 For a real-world example, you can refer to
-[this loader](https://github.com/cypress-io/cypress/blob/466155c2125476374d9f9549530f67d0c6354a41/npm/vite-dev-server/src/plugins/cypress.ts#L82-L92)
+[the Cypress plugin loader](https://github.com/cypress-io/cypress/blob/466155c2125476374d9f9549530f67d0c6354a41/npm/vite-dev-server/src/plugins/cypress.ts#L82-L92)
 used by the Vite Dev Server.
 
 The client script must retrieve information on the currently active test from
-the Cypress instance of the parent frame and load the corresponding bundle. If a
-support file is defined, it should be injected at the top of your test bundle or
-loaded before the test script.
+the Cypress instance of the parent frame and load the corresponding bundle. If you
+define a support file, inject it at the top of your test bundle or load it
+before the test script.
 
 ```ts
 const CypressInstance = (window.Cypress = parent.Cypress)
@@ -507,7 +506,7 @@ CypressInstance.action('app:window:before:load', window)
 For a more complete example you can check out the
 [kickstart script used in the vite-devserver.](https://github.com/cypress-io/cypress/blob/develop/npm/vite-dev-server/client/initCypressTests.js)
 
-The `devServerEvents` event emitter is used to communicate compile lifecycle
+The `devServerEvents` event emitter communicates compile lifecycle
 events between your server and Cypress:
 
 - Emit `dev-server:compile:success` to notify Cypress that a build finished and
