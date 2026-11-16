@@ -682,6 +682,14 @@
           "badge": "vendor",
           "vendor": "PactFlow",
           "npm": "@pactflow/pact-cypress-adapter"
+        },
+        {
+          "name": "cypress-network-chaos",
+          "description": "Simulate slow networks, failed and dropped requests, timeouts and offline mode with one-line commands, plus a suite-wide chaos mode.",
+          "link": "https://github.com/SnehalP75/cypress-network-chaos",
+          "keywords": ["network", "throttling", "offline", "chaos"],
+          "badge": "community",
+          "npm": "cypress-network-chaos"
         }
       ]
     },
