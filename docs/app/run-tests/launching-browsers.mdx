@@ -285,11 +285,11 @@ To avoid this issue, use a current
 [Cypress Docker image](/app/continuous-integration/overview#Cypress-Docker-Images) `cypress/browsers` or `cypress/included`, built with Firefox 139, or above.
 These images include a Mozilla geckodriver version pre-installed.
 Using `cypress/factory:5.9.0`, or above, you can also build your own custom Cypress Docker image that includes a Mozilla geckodriver version.
-Refer to the `cypress/factory`
-[documentation](https://github.com/cypress-io/cypress-docker-images/blob/master/factory/README.md) for instructions on building custom images.
+Refer to the
+[`cypress/factory` documentation](https://github.com/cypress-io/cypress-docker-images/blob/master/factory/README.md) for instructions on building custom images.
 
-If you need to work without Docker, refer to the npm wrapper package geckodriver
-[documentation](https://github.com/webdriverio-community/node-geckodriver) for information
+If you need to work without Docker, refer to the
+[geckodriver npm wrapper package documentation](https://github.com/webdriverio-community/node-geckodriver) for information
 about how to define a custom path for the driver or how to refer to a local CDN mirror site.
 Download the Mozilla geckodriver from the
 [releases](https://github.com/mozilla/geckodriver/releases) location.
@@ -518,7 +518,7 @@ Customize the launch to:
 - Enable or disable experimental features
 - Change command-line arguments, preferences, and environment variables
 
-[This part of the API is documented here.](/api/node-events/browser-launch-api)
+The [`before:browser:launch` event](/api/node-events/browser-launch-api) page documents this part of the API.
 
 ### Distinguishing the Cypress browser
 

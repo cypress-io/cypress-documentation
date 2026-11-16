@@ -109,9 +109,30 @@ describe('Fullstory conversion link labels', () => {
           'product-heading-accessibility'
         )
         expect(
+          doc
+            .querySelector(
+              '.theme-doc-markdown a[href*="utm_medium=product-heading-"]'
+            )!
+            .getAttribute('aria-label'),
+          'product heading link names its destination'
+        ).to.eq(
+          'Premium Solution: Cypress Accessibility on cypress.io (opens in a new tab)'
+        )
+        expect(
           linkByText(doc, '.theme-doc-markdown a', 'See a demo').getAttribute(
             'data-fs-element'
           )
+        ).to.be.null
+      })
+    })
+
+    it('renders no product heading link on Cypress App pages', () => {
+      serverRendered('/app/references/recipes').then((doc) => {
+        expect(
+          doc.querySelector(
+            '.theme-doc-markdown a[href*="utm_medium=product-heading-"]'
+          ),
+          'empty product heading link'
         ).to.be.null
       })
     })

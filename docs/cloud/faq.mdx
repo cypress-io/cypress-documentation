@@ -312,7 +312,7 @@ cypress run --record --parallel --ci-build-id $CI_RUN_ID
 ```
 
 For reference, here are
-[the variables](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.js)
+[the CI provider variables](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.js)
 we extract from the popular CI providers, and for most of them, there is some
 variable that is set to the same value across multiple containers running in
 parallel. If there is NO common variable, try using the commit SHA string.
