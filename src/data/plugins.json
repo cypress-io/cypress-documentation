@@ -1044,9 +1044,9 @@
           "vendor": "Sauce Labs"
         },
         {
-          "name": "LambdaTest SmartUI",
-          "description": "Visual regression testing for Cypress tests on LambdaTest's SmartUI cloud.",
-          "link": "https://www.lambdatest.com/support/docs/smartui-cypress-sdk/",
+          "name": "TestMu AI SmartUI",
+          "description": "Visual regression testing for Cypress tests on the TestMu AI (formerly LambdaTest) SmartUI cloud.",
+          "link": "https://www.testmuai.com/support/docs/smartui-cypress-sdk/",
           "npm": "@lambdatest/cypress-driver",
           "keywords": [
             "screenshots",
@@ -1055,7 +1055,7 @@
             "cross-browser"
           ],
           "badge": "vendor",
-          "vendor": "LambdaTest"
+          "vendor": "TestMu AI"
         },
         {
           "name": "Cypress Image Diff",
