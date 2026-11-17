@@ -9,8 +9,8 @@ slug: /api/commands/should
 
 # should
 
-Create an assertion. Assertions are automatically retried until they pass or
-time out.
+Create an assertion. Cypress automatically retries assertions until they pass
+or time out.
 
 :::info
 
@@ -68,12 +68,12 @@ Value to assert against chainer.
 
 <Icon name="angle-right" /> **method _(String)_**
 
-A method to be called on the chainer.
+A method to call on the chainer.
 
 <Icon name="angle-right" /> **callbackFn _(Function)_**
 
 Pass a function that can have any number of explicit assertions within it.
-Whatever was passed to the function is what is yielded.
+`.should()` yields whatever was passed to the function.
 
 <HeaderYields />
 
@@ -96,7 +96,7 @@ cy.get('nav') // yields <nav>
   .and('match', /serif/) // yields 'sans-serif'
 ```
 
-It is _safe_ to chain further commands that rely on the subject after `.should()`. This is different from action commands such as [`.click()`](/api/commands/click), where chaining further commands is unsafe.
+It is _safe_ to chain further commands that rely on the subject after `.should()`. This behavior is different from action commands such as [`.click()`](/api/commands/click), where chaining further commands is unsafe.
 
 Queries chained after `.should()` do not retry from the start of the chain. If the DOM re-renders, they retry from the subject `.should()` yielded. See [Retry boundaries](#Retry-boundaries).
 
@@ -179,12 +179,12 @@ cy.get('#input-receives-focus').should('have.focus') // equivalent to should('be
 
 ### Function
 
-Passing a function to `.should()` enables you to make multiple assertions on the
-yielded subject. This also gives you the opportunity to _massage_ what you'd
+A function passed to `.should()` receives the yielded subject, so you can make
+multiple assertions on it. Inside the function, you can also _massage_ what you'd
 like to assert on.
 
 Be sure _not_ to include any code that has side effects in your callback
-function. The callback function will be retried over and over again until no
+function. Cypress retries the callback function over and over again until no
 assertions within it throw.
 
 You cannot invoke Cypress commands inside of a `.should()` callback function.
@@ -251,9 +251,9 @@ cy.get('p').should(($p) => {
 })
 ```
 
-<Icon name="exclamation-triangle" color="red" /> **Warning** Any value returned
-from a `.should()` callback function will be ignored. The original subject will
-be yielded to the next command.
+<Icon name="exclamation-triangle" color="red" /> **Warning** Cypress ignores any
+value returned from a `.should()` callback function. Cypress yields the original
+subject to the next command.
 
 ```js
 cy.get('p')
@@ -346,7 +346,7 @@ cy.get('.connectors-list > li').should(($lis) => {
 })
 ```
 
-These string messages will be shown in the Command Log giving each assertion
+The Command Log shows these string messages, giving each assertion
 more context.
 
 <DocsImage
@@ -433,12 +433,12 @@ cy.get('button')
 #### How do I know which assertions change the subject and which keep it the same?
 
 The chainers that come from [Chai](/app/references/bundled-libraries#Chai) or
-[Chai-jQuery](/app/references/bundled-libraries#Chai-jQuery) will always
+[Chai-jQuery](/app/references/bundled-libraries#Chai-jQuery) always
 document what they return.
 
-#### Using a callback function will not change what is yielded
+#### Using a callback function does not change what is yielded
 
-Whatever is returned in the function is ignored. Cypress always forces the
+Cypress ignores whatever the function returns. Cypress always forces the
 command to yield the value from the previous cy command's yield (which in the
 example below is `<button>`)
 
@@ -498,7 +498,7 @@ cy.get('input', { timeout: 10000 }).should(($input) => {
 cy.get('.left-nav>.nav').children().should('have.length', 8)
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png"

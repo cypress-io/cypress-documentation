@@ -12,11 +12,11 @@ slug: /app/get-started/install-cypress
 
 1. **Check Requirements:** make sure you meet the [system requirements](#System-requirements) including
    operating system, installation of Node.js, and a supported package manager.
-2. **Run in your project root:** This will install Cypress locally as a dev dependency for your project.
+2. **Run in your project root:** The following command installs Cypress locally as a dev dependency for your project.
 
 <CypressInstallCommands />
 
-3. **Open Cypress:** This launches the Cypress App so you can choose end-to-end (E2E) or component testing (CT) and start writing tests.
+3. **Open Cypress:** The following command launches the Cypress App so you can choose end-to-end (E2E) or component testing (CT) and start writing tests.
 
 <CypressOpenCommands />
 
@@ -50,11 +50,11 @@ Attempting to use it as a non-root user may result in permissions errors.
 
 :::
 
-If you're using a [Cypress Docker image](/app/continuous-integration/overview#Cypress-Docker-variants), you'll find a fixed version of Node.js is pre-installed in the image. You select the Node.js version using the Docker image tag.
+If you're using a [Cypress Docker image](/app/continuous-integration/overview#Cypress-Docker-variants), a fixed version of Node.js is pre-installed in the image. You select the Node.js version using the Docker image tag.
 
 ### Package Manager
 
-Cypress is installed using one of the following supported package managers:
+You install Cypress using one of the following supported package managers:
 
 | Manager                                          | Version   | Docs                                                                             |
 | ------------------------------------------------ | --------- | -------------------------------------------------------------------------------- |
@@ -66,18 +66,18 @@ Cypress is installed using one of the following supported package managers:
 
 Cypress uses a `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
 As a security hardening measure, package managers increasingly block dependency lifecycle scripts such as `postinstall` by default.
-When the script is blocked, the Cypress binary is not downloaded and Cypress will not run.
+When the package manager blocks the script, Cypress can't download its binary and doesn't run.
 
 The sections below describe how to allow Cypress to run its `postinstall` script, or how to install the Cypress binary explicitly, for each supported package manager.
 
 #### npm configuration
 
-Starting in npm 11.16.0, a warning is issued, then starting in npm 12.0.0, npm blocks `postinstall` lifecycle scripts by default.
+Starting in npm 11.16.0, npm issues a warning, then starting in npm 12.0.0, npm blocks `postinstall` lifecycle scripts by default.
 To allow Cypress to run its `postinstall` script, use one of the following approaches.
 
 After installing Cypress, you can use the `npm install-scripts` CLI command to add `cypress` to the `allowScripts` list so npm runs the `postinstall` script on install.
 Use the `--no-allow-scripts-pin` option if you want to allow also future versions of Cypress, or omit if not.
-`npm rebuild` re-runs the installation to install the Cypress binary after its installation has been allowed.
+`npm rebuild` re-runs the installation to install the Cypress binary after you allow its installation.
 
 ```shell
 npm install cypress --save-dev
@@ -85,7 +85,7 @@ npm install-scripts approve cypress --no-allow-scripts-pin
 npm rebuild cypress
 ```
 
-In npm v11 >=11.16.0 warnings are issued. Check the warning prompt for the recommended CLI command.
+In npm v11 >=11.16.0, npm issues warnings. Check the warning prompt for the recommended CLI command.
 
 For all npm versions >=11.16.0 you can add `cypress` to `allowScripts` in `package.json` manually instead of using a CLI command:
 
@@ -119,7 +119,7 @@ npmPreapprovedPackages:
   - cypress
 ```
 
-`enableScripts` can also be set using the CLI:
+You can also set `enableScripts` using the CLI:
 
 ```shell
 yarn config set enableScripts true
@@ -138,7 +138,7 @@ pnpm config set side-effects-cache false --location project
 
 [pnpm@10.0.0](https://github.com/pnpm/pnpm/releases/tag/v10.0.0) and above require allowlisting `cypress`.
 Refer to the [pnpm settings](https://pnpm.io/settings) documentation for additional information.
-In [pnpm@10.4.0](https://github.com/pnpm/pnpm/releases/tag/v10.4.0) and above, the CLI `add` option [--allow-build](https://pnpm.io/cli/add#--allow-build) can be used, for example:
+In [pnpm@10.4.0](https://github.com/pnpm/pnpm/releases/tag/v10.4.0) and above, you can use the CLI `add` option [--allow-build](https://pnpm.io/cli/add#--allow-build), for example:
 
 ```shell
 pnpm --allow-build=cypress add --save-dev cypress
@@ -150,7 +150,7 @@ Cypress is detected automatically from a `bun.lock` (text, Bun >=1.2) or `bun.lo
 
 When restoring dependencies from an existing manifest with `bun install` (for example in CI), Bun does not run `postinstall` scripts for packages that aren't in its [trustedDependencies](https://bun.sh/docs/install/lifecycle) allowlist. To install the Cypress binary, use one of the following approaches:
 
-**Recommended:** Skip lifecycle scripts and install the binary explicitly. This avoids running `postinstall` scripts from dependencies and is the more secure approach:
+**Recommended:** Skip lifecycle scripts and install the binary explicitly. Skipping lifecycle scripts avoids running `postinstall` scripts from dependencies and is the more secure approach:
 
 ```shell
 bun install --ignore-scripts
@@ -211,7 +211,7 @@ Some issues you might run into in CI that could be a sign of insufficient resour
 
 ### Linux Prerequisites
 
-Install required dependencies. See below under [Docker Prerequisites](#Docker-Prerequisites) for information on [Cypress Docker images](https://github.com/cypress-io/cypress-docker-images). These already include the necessary dependencies.
+Install required dependencies. See below under [Docker Prerequisites](#Docker-Prerequisites) for information on [Cypress Docker images](https://github.com/cypress-io/cypress-docker-images). These images already include the necessary dependencies.
 
 #### Ubuntu/Debian
 
@@ -246,13 +246,13 @@ dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib
 [Amazon ECR (Elastic Container Registry) Public Gallery](https://gallery.ecr.aws/cypress-io).
 These images, which are Linux (Debian) based, include all of the required dependencies pre-installed.
 
-If you need Node.js, browser or Cypress version combinations which are not covered by the published Cypress Docker images,
+If you need Node.js, browser, or Cypress version combinations which are not covered by the published Cypress Docker images,
 then the [cypress/factory](https://github.com/cypress-io/cypress-docker-images/tree/master/factory) image
 generates your own customized Docker image.
 
 If you are not using a Cypress Docker image, make sure that your base operating system is a Linux system listed in the supported
 [Operating Systems](#Operating-System) above and that Node.js is installed in the image.
-It is recommended to have `unzip` installed. This avoids the Cypress binary installation falling back to a slower unzip method using Node.js.
+We recommend installing `unzip`. Having `unzip` avoids the Cypress binary installation falling back to a slower unzip method using Node.js.
 
 ## <Icon name="cog" /> Advanced Installation
 

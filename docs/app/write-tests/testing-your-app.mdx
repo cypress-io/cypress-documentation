@@ -15,10 +15,10 @@ slug: /app/end-to-end-testing/testing-your-app
 Assuming you've successfully
 [installed Cypress](/app/get-started/install-cypress) and
 [opened Cypress](/app/get-started/open-the-app) in your project, the
-first thing you'll want to do is start your local development server that hosts
+first thing to do is start your local development server that hosts
 the application.
 
-It should look something like **http://localhost:8080**.
+The server's URL should look something like **http://localhost:8080**.
 
 :::caution
 
@@ -37,20 +37,19 @@ production?
 While you certainly _can_ test an application that's already deployed, that's
 not really the **sweet spot** of Cypress.
 
-Cypress is built, and optimized around being a tool for your daily local
+We built and optimized Cypress to be a tool for your daily local
 development. In fact, after you start using Cypress for awhile, we believe that
 you may find it useful to even do **all of your development** in it.
 
-Ultimately you'll not only be able to **test and develop** at the same time, but
-you'll actually be able to build your application **faster** while getting tests
+Ultimately you can not only **test and develop** at the same time, but also build your application **faster** while getting tests
 "for free".
 
-What's more - since Cypress enables you to do things like **stub network
-requests** you can build out your web application without even needing a server
+What's more, because Cypress can do things like **stub network
+requests**, you can build out your web application without even needing a server
 to provide valid JSON responses.
 
 Last but not least - trying to shoehorn tests to an already built application is
-much more difficult than building it as you write tests. You'll likely encounter
+much more difficult than building it as you write tests. You likely encounter
 a series of initial up front challenges / hurdles that would have otherwise been
 avoided writing tests from the start.
 
@@ -89,14 +88,14 @@ Now let's create our own spec file called `home_page.cy.js`.
 touch cypress/e2e/home_page.cy.js
 ```
 
-Once that file is created, you should see it in the list of spec files.
+Once you create that file, you should see it in the list of spec files.
 
 <DocsImage
   src="/img/app/get-started/e2e/testing-your-app-home-page-spec.png"
   alt="List of files including home_page.cy.js"
 />
 
-Now you'll need to add in the following code in your test file to visit your
+Now add in the following code in your test file to visit your
 server:
 
 ```js
@@ -109,7 +108,7 @@ describe('The Home Page', () => {
 
 Now click on the `home_page.cy.js` file and watch Cypress open your browser.
 
-If you forgot to start your server you'll see the error below:
+If you forgot to start your server Cypress shows the error below:
 
 <!--
 To reproduce the following screenshot:
@@ -129,13 +128,13 @@ working.
 
 ## <Icon name="cogs" /> Step 3: Configure Cypress
 
-If you think ahead, you'll quickly realize that you're going to be typing this
+If you think ahead, you quickly realize that you're going to be typing this
 URL a lot, since every test is going to need to visit some page of your
 application. Luckily, Cypress provides a
 [configuration option](/app/references/configuration) for this. Let's
 use that now.
 
-Open up your [configuration file](/app/references/configuration). It starts
+Open up your [configuration file](/app/references/configuration). The file starts
 out empty, but let's add the `baseUrl` option.
 
 :::cypress-config-example
@@ -150,13 +149,13 @@ out empty, but let's add the `baseUrl` option.
 
 :::
 
-This will automatically **prefix** [`cy.visit()`](/api/commands/visit) and
+The `baseUrl` option automatically **prefixes** [`cy.visit()`](/api/commands/visit) and
 [`cy.request()`](/api/commands/request) commands with this baseUrl.
 
 :::info
 
-Whenever you modify your configuration file, Cypress will automatically reboot
-itself and kill any open browsers. This is normal. Click on the spec file again
+Whenever you modify your configuration file, Cypress automatically reboots
+itself and kills any open browsers. The reboot is normal. Click on the spec file again
 to relaunch the browser.
 
 :::
@@ -199,8 +198,8 @@ here are some quick tips on common situations you're likely to run into.
 
 ### Seeding data
 
-Depending on how your application is built - it's likely that your web
-application is going to be affected and controlled by the server.
+Depending on how your application is built - it's likely that the server
+affects and controls your web application.
 
 Typically these days servers communicate with front end apps via JSON, but you
 could also be running a traditional server-side rendered HTML web application.
@@ -211,11 +210,11 @@ of **state** it holds - generally in a database.
 Traditionally when writing `e2e` tests using Selenium, before you automate the
 browser you do some kind of **set up and tear down** on the server.
 
-Perhaps you'll need to generate a user, and seed them with associations and
+Perhaps you need to generate a user, and seed them with associations and
 records. You may be familiar with using things such as fixtures or factories.
 
 To test various page states - like an empty view, or a pagination view, you'd
-need to seed the server so that this state can be tested.
+need to seed the server so that you can test this state.
 
 **While there is a lot more to this strategy, you generally have two ways to
 facilitate this with Cypress:**
@@ -296,12 +295,12 @@ describe('The Home Page', () => {
 ```
 
 While there's nothing really _wrong_ with this approach, it does add a lot of
-complexity. You will be battling synchronizing the state between your server and
-your browser - and you'll always need to set up / tear down this state before
+complexity. You end up battling synchronizing the state between your server and
+your browser - and you always need to set up / tear down this state before
 tests (which is slow).
 
 The good news is that we aren't Selenium, nor are we a traditional e2e testing
-tool. That means we're not bound to the same restrictions.
+tool. Being a different kind of tool means we're not bound to the same restrictions.
 
 **With Cypress, there are several other approaches that can offer an arguably
 better and faster experience.**
@@ -311,17 +310,17 @@ better and faster experience.**
 Another valid approach opposed to seeding and talking to your server is to
 bypass it altogether.
 
-While you'll still receive all of the regular HTML / JS / CSS assets from your
-server and you'll continue to [`cy.visit()`](/api/commands/visit) it in the same
+While you still receive all of the regular HTML / JS / CSS assets from your
+server and you continue to [`cy.visit()`](/api/commands/visit) it in the same
 way - you can instead **stub** the JSON responses coming from it.
 
-This means that instead of resetting the database, or seeding it with the state
+Stubbing means that instead of resetting the database, or seeding it with the state
 we want, you can force the server to respond with **whatever** you want it to.
 In this way, we not only prevent needing to synchronize the state between the
-server and browser, but we also prevent mutating state from our tests. That
-means tests won't build up state that may affect other tests.
+server and browser, but we also prevent mutating state from our tests. Avoiding mutation
+means tests don't build up state that may affect other tests.
 
-Another upside is that this enables you to **build out your application**
+Another upside is that you can **build out your application**
 without needing the _contract_ of the server to exist. You can build it the way
 you want the data to be structured, and even test all of the edge cases, without
 needing a server.
@@ -330,25 +329,25 @@ However - there is likely still a balance here where **both** strategies are
 valid (and you should likely do them).
 
 While stubbing is great, it means that you don't have the guarantees that these
-response payloads actually match what the server will send. However, there are
+response payloads actually match what the server sends. However, there are
 still many valid ways to get around this:
 
 #### Generate the fixture stubs ahead of time
 
 You could have the server generate all of the fixture stubs for you ahead of
-time. This means their data will reflect what the server will actually send.
+time. Server-generated stubs mean their data reflects what the server actually sends.
 
 #### Write a single e2e test without stubs, and then stub the rest
 
 Another more balanced approach is to integrate both strategies. You likely want
 to have a **single test** that takes a true `e2e` approach and stubs nothing.
-It'll use the feature for real - including seeding the database and setting up
+That test uses the feature for real - including seeding the database and setting up
 state.
 
 Once you've established it's working you can then use stubs to test all of the
 edge cases and additional scenarios. There are no benefits to using real data in
 the vast majority of cases. We recommend that the vast majority of tests use
-stub data. They will be orders of magnitude faster, and much less complex.
+stub data. Stubbed tests are orders of magnitude faster, and much less complex.
 
 :::info
 
@@ -361,7 +360,7 @@ a much more thorough analysis and approach to accomplishing this.
 
 ### Logging in
 
-One of the first (and arguably one of the hardest) hurdles you'll have to
+One of the first (and arguably one of the hardest) hurdles you have to
 overcome in testing is logging into your application.
 
 Nothing slows a test suite down like having to log in, but all the good parts of
@@ -414,7 +413,7 @@ describe('The Login Page', () => {
 })
 ```
 
-You'll likely also want to test your login UI for:
+You likely also want to test your login UI for:
 
 - Invalid username / password
 - Username taken
@@ -433,11 +432,11 @@ maintainable, and they're certainly not very elegant. A much better solution is
 to write a custom `cy.login()` [command](/api/cypress-api/custom-commands).
 
 Custom commands encapsulate and reuse Cypress test logic.
-They let you add your own functionality to your test suite and then use it with
+Custom commands add your own functionality to your test suite, using
 the same
 [chainable and asynchronous API](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
 as the built-in Cypress commands. Lets make the above login example a custom
-command and add it to `cypress/support/commands.js` so it can be reused in
+command and add it to `cypress/support/commands.js` so you can reuse it in
 any spec file:
 
 <Tabs>
@@ -511,13 +510,13 @@ Cypress.Commands.add('login', (username: string, password: string) => {
 #### Improving performance
 
 You're probably wondering what happened to our advice about logging in "only
-once". The custom command above will work just fine for testing your secured
+once". The custom command above works fine for testing your secured
 pages, but if you have more than a handful of tests, logging in before every
 test is going to increase the overall run time of your suite.
 
 Luckily, Cypress provides the [`cy.session()`](/api/commands/session) command, a
-powerful performance tool that lets you cache the browser context associated
-with your user and reuse it for multiple tests without going through multiple
+powerful performance tool that caches the browser context associated
+with your user and reuses it for multiple tests without going through multiple
 login flows! Let's modify the custom `cy.login()` command from our previous
 example to use `cy.session()`:
 
@@ -619,17 +618,17 @@ The point of Cypress is to be a tool you use every day to build and test your ow
 
 Why?
 
-- They may have security features enabled which prevent Cypress from working,
-  such as detecting Cypress script usage. This can block your access and make it
+- Sites you don't control may have security features enabled which prevent Cypress from working,
+  such as detecting Cypress script usage. Such detection can block your access and make it
   appear that the application website is unresponsive.
-- They have the potential to change at any moment which will break tests.
-- They may do A/B testing which makes it impossible to get consistent results.
+- Sites you don't control have the potential to change at any moment which breaks tests.
+- Sites you don't control may do A/B testing which makes it impossible to get consistent results.
 
 However, this is a guideline rather than a hard-and-fast rule. There are legitimate exceptions:
 
-- They are specifically designed to integrate with third parties, e.g. SSO providers.
-- They provide you with a complementary service, e.g. SaaS control panels or analytics.
-- They reuse your content or provide plugins for an app you control.
+- The sites are specifically designed to integrate with third parties, e.g. SSO providers.
+- The sites provide you with a complementary service, e.g. SaaS control panels or analytics.
+- The sites reuse your content or provide plugins for an app you control.
 
 The key is to carefully weigh the benefits of the tests against the possible disruption and flake these sorts of tests can introduce. See also [Visiting External Sites](/app/core-concepts/best-practices#Visiting-External-Sites) for strategies when this is necessary.
 

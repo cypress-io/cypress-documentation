@@ -12,22 +12,22 @@ slug: /app/core-concepts/variables-and-aliases
 
 New users to Cypress may initially find it challenging to work with the
 asynchronous nature of our APIs. There are many ways to reference, compare, and use the objects that Cypress
-commands yield you. Once you get the hang of async code you'll realize you can do everything you
+commands yield you. Once you get the hang of async code you realize you can do everything you
 could do synchronously, without your code doing any backflips.
 
 This guide explores many common patterns for writing good Cypress code that can
 handle even the most complex situations.
 
-Asynchronous APIs are here to stay in JavaScript. They are found everywhere in
-modern code. In fact, most new browser APIs are asynchronous and many core Node
+Asynchronous APIs are here to stay in JavaScript. Modern code uses asynchronous APIs
+everywhere. In fact, most new browser APIs are asynchronous and many core Node
 modules are asynchronous as well.
 
-The patterns we'll explore below are useful in and outside of Cypress. The first and most important concept you should recognize is...
+The patterns below are useful in and outside of Cypress. The first and most important concept you should recognize is...
 
 :::danger
 
 **You cannot assign or work with the return values** of any Cypress command.
-Commands are enqueued and run asynchronously.
+Cypress enqueues commands and runs them asynchronously.
 
 :::
 
@@ -56,7 +56,7 @@ If you're familiar with
 the Cypress `.then()` works similarly. You can continue to nest more Cypress
 commands inside of the `.then()`.
 
-Each nested command has access to the work done in previous commands. This ends
+Each nested command has access to the work done in previous commands. This nesting ends
 up reading very nicely.
 
 ```js
@@ -80,7 +80,7 @@ cy.get('button').then(($btn) => {
 cy.get(...).find(...).should(...)
 ```
 
-The commands outside of the `.then()` will not run until all of the nested
+The commands outside of the `.then()` do not run until all of the nested
 commands finish.
 
 :::info
@@ -96,8 +96,8 @@ commands.
 
 Using `.then()` functions is an excellent opportunity to use
 [`debugger`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger).
-This can help you understand the order in which commands are run. This also
-enables you to inspect the objects that Cypress yields you in each command.
+A `debugger` statement can help you understand the order in which commands run. You can also use the statement
+to inspect the objects that Cypress yields you in each command.
 
 ```js
 cy.get('button').then(($btn) => {
@@ -124,7 +124,7 @@ cy.get('button').then(($btn) => {
 ## Variables
 
 Typically in Cypress you hardly need to ever use `const`, `let`, or `var`. When
-using closures you'll always have access to the objects that were yielded to you
+using closures you always have access to the objects that Cypress yielded to you
 without assigning them.
 
 The one exception to this rule is when you are dealing with mutable objects
@@ -167,7 +167,7 @@ cy.get('[data-testid="num"]').then(($span) => {
 ```
 
 The reason for using `const` is because the `$span` object is mutable. Whenever
-you have mutable objects and you're trying to compare them, you'll need to store
+you have mutable objects and you're trying to compare them, you need to store
 their values. Using `const` is a perfect way to do that.
 
 ## Aliases
@@ -188,7 +188,7 @@ it('does not have access to text', () => {
 })
 ```
 
-How will we get access to `text`?
+How do you get access to `text`?
 
 We could make our code do some ugly backflips using `let` to get access to it.
 
@@ -228,10 +228,10 @@ better handle these situations.
 
 <strong>Introducing Aliases</strong>
 
-Aliases are a powerful construct in Cypress that have many uses. We'll explore
-each of their capabilities below.
+Aliases are a powerful construct in Cypress that have many uses. The sections below explore
+each of their capabilities.
 
-At first, we'll use them to share objects between your hooks and your tests.
+The first use is sharing objects between your hooks and your tests.
 
 :::
 
@@ -358,11 +358,11 @@ cy.fixture('users.json').then((users) => {
 
 <strong>Arrow Functions</strong>
 
-Accessing aliases as properties with `this.*` will not work if you use
+Accessing aliases as properties with `this.*` does not work if you use
 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 for your tests or hooks.
 
-This is why all of our examples use the regular `function () {}` syntax as
+This limitation is why all of our examples use the regular `function () {}` syntax as
 opposed to the lambda "fat arrow" syntax `() => {}`.
 
 :::
@@ -397,9 +397,9 @@ By using [`cy.get()`](/api/commands/get) we avoid the use of `this`.
 Keep in mind that there are use cases for both approaches because they have one
 major difference.
 
-`this.users` is stored on the Mocha context when `.as()` first runs and never
-re-evaluates — it behaves like a static snapshot. `cy.get('@users')` re-executes
-the full query chain every time it is accessed, returning fresh results.
+`.as()` stores `this.users` on the Mocha context when `.as()` first runs, and
+`this.users` never re-evaluates — it behaves like a static snapshot. `cy.get('@users')` re-executes
+the full query chain every time you access it, returning fresh results.
 
 ```javascript
 const favorites = { color: 'blue' }
@@ -423,7 +423,7 @@ the alias was first stored, back when our favorite color was blue.
 
 ### Elements
 
-Aliases have other special characteristics when being used with DOM elements.
+Aliases have other special characteristics when you use them with DOM elements.
 
 After you alias DOM elements, you can then later access them for reuse.
 
@@ -468,8 +468,8 @@ current DOM, so you never end up with stale element references.
 
 Let's imagine when we click the `.edit` button that our `<li>` is re-rendered in
 the DOM. Instead of displaying the edit button it instead displays an
-`<input />` text field for editing the todo. The previous `<li>` has
-been _completely_ removed from the DOM and a new `<li>` is rendered in its
+`<input />` text field for editing the todo. The app has
+_completely_ removed the previous `<li>` from the DOM and rendered a new `<li>` in its
 place.
 
 ```javascript
@@ -487,12 +487,12 @@ Every time we reference `@firstTodo`, Cypress re-runs the queries leading up to
 the alias definition.
 
 In our case it would re-query the DOM using: `cy.get('#todos li').first()`.
-Everything works because the new `<li>` is found.
+Everything works because Cypress finds the new `<li>`.
 
 :::caution
 
-_Usually_, replaying previous commands will return what you expect, but not
-always. It is recommended that you **alias elements before running commands**.
+_Usually_, replaying previous commands returns what you expect, but not
+always. We recommend that you **alias elements before running commands**.
 
 - `cy.get('nav').find('header').find('[data-testid="user"]').as('user').click()`
   <Icon name="check-circle" color="green" /> (good)
@@ -503,8 +503,8 @@ always. It is recommended that you **alias elements before running commands**.
 
 ### Intercepts
 
-Aliases can also be used with [cy.intercept()](/api/commands/intercept).
-Aliasing your intercepted routes enables you to:
+You can also use aliases with [cy.intercept()](/api/commands/intercept).
+Alias your intercepted routes to:
 
 - ensure your application makes the intended requests
 - wait for your server to send the response
@@ -546,7 +546,7 @@ request that matches it — not just the most recent one. By default,
 matching request. The `.all` suffix and numeric index notation expose the full
 history Cypress was already keeping.
 
-This is useful in several situations:
+The full request history is useful in several situations:
 
 **Asserting request count.** The most common need is proving your app made
 _exactly_ the expected number of requests — not just that it made at least one.
@@ -562,7 +562,7 @@ Without `.all` there is no clean way to assert count. You can only assert
 whether a request happened, not how many times.
 
 **Sequential requests with different data.** When your app paginates or retries,
-requests share a route but carry different parameters. The numeric index lets you
+requests share a route but carry different parameters. Use the numeric index to
 validate each one independently:
 
 ```js
@@ -570,8 +570,8 @@ cy.get('@getUsers.1').its('request.url').should('include', 'page=1')
 cy.get('@getUsers.2').its('request.url').should('include', 'page=2')
 ```
 
-**Why not multiple `cy.wait()` calls?** `cy.wait('@alias')` called twice will
-consume two requests in order, which is useful for _sequencing_ — but it doesn't
+**Why not multiple `cy.wait()` calls?** `cy.wait('@alias')` called twice
+consumes two requests in order, which is useful for _sequencing_ — but it doesn't
 catch a third unexpected request, and once consumed you can't go back to inspect
 an earlier one. `cy.get('@alias.all')` is backward-looking: it queries everything
 Cypress has already captured. The two complement each other — use `cy.wait()` to
@@ -587,7 +587,7 @@ cy.get('@getUsers.all') // then assert on everything captured
 
 ### Requests
 
-Aliases can also be used with [requests](/api/commands/request).
+You can also use aliases with [requests](/api/commands/request).
 
 Here's an example of aliasing a request and accessing its properties later.
 

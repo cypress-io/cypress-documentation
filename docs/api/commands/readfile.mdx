@@ -9,7 +9,7 @@ slug: /api/commands/readfile
 
 # readFile
 
-`cy.readFile()` reads a file from disk and yields its contents. It reads the
+`cy.readFile()` reads a file from disk and yields its contents. The command reads the
 file again until the file exists and your assertions pass, so it suits files
 that change during a test, such as downloads, logs, and files your app
 generates. For test data that stays the same, use
@@ -74,7 +74,7 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 
 <HeaderYields />
 
-- `cy.readFile()` yields the contents of the file. It parses a file with a
+- `cy.readFile()` yields the contents of the file. `cy.readFile()` parses a file with a
   `.json` extension into JavaScript, unless the encoding is `null`.
 - `cy.readFile()` reads the file from disk again if any upcoming command (such
   as an assertion) in the chain fails.
@@ -145,9 +145,7 @@ cy.readFile('languages/en.yml').then((str) => {
   cy.get('#sidebar')
     .find('.sidebar-title')
     .each(($el, i) => {
-      const englishTitle = english.sidebar[i]
-
-      expect($el.text()).to.eq(englishTitle)
+      cy.wrap($el).should('have.text', english.sidebar[i])
     })
 })
 ```
@@ -255,7 +253,7 @@ cy.get('input[type=file]').selectFile('@logo')
 #### Default file existence assertion
 
 By default, `cy.readFile()` asserts that the file exists and fails if it does
-not. It retries reading the file until the file exists or the command times
+not. The command retries reading the file until the file exists or the command times
 out.
 
 ```javascript

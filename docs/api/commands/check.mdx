@@ -51,11 +51,11 @@ cy.get('p:first').check() // Errors, '.get()' does not yield checkbox or radio
 
 <Icon name="angle-right" /> **value _(String)_**
 
-Value of checkbox or radio that should be checked.
+Value of the checkbox or radio to check.
 
 <Icon name="angle-right" /> **values _(Array)_**
 
-Values of checkboxes or radios that should be checked.
+Values of the checkboxes or radios to check.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -185,8 +185,8 @@ cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 #### A value argument filters the subject
 
 `.check()` compares each argument against the element's `value` and acts only on
-the elements that match, yielding that narrowed set. Elements that don't match
-are left untouched, and a value that matches nothing is dropped without an
+the elements that match, yielding that narrowed set. `.check()` leaves elements
+that don't match untouched and drops a value that matches nothing without an
 error.
 
 ```javascript
@@ -218,9 +218,9 @@ state leaves that state when you check it, whether or not the click happens.
 
 <HeaderAssertions />
 
-- `.check()` will automatically wait for the element to reach an
+- `.check()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.check()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.check()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -237,7 +237,7 @@ state leaves that state when you check it, whether or not the click happens.
 cy.get('form').find('[name="emailUser"]').check()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/check/check-checkbox-in-cypress.png"

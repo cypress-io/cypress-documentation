@@ -156,7 +156,7 @@ cy.get('.results li').eq(2).should('have.text', 'Katherine')
 #### Move a table row up and check its position with `.eq()`
 
 `.eq()` yields a single DOM element, so you can keep chaining queries and actions
-off it. It also narrows the set to one element before
+off it. `.eq()` also narrows the set to one element before
 [`.within()`](/api/commands/within), which throws an error when its subject
 contains more than one element. Here, the test checks where each row ends up, so
 the index is what's under test.
@@ -398,10 +398,10 @@ cy.get('[data-cy=user-ada]').should('be.visible')
 
 <HeaderAssertions />
 
-- `.eq()` will automatically [retry](/app/core-concepts/retry-ability) until
+- `.eq()` automatically [retries](/app/core-concepts/retry-ability) until
   the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.eq()` will automatically [retry](/app/core-concepts/retry-ability) until
+- `.eq()` automatically [retries](/app/core-concepts/retry-ability) until
   all chained assertions have passed.
 
 <HeaderTimeouts />

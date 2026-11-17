@@ -220,27 +220,16 @@ cy.window() // yields window object
 
 :::
 
-### Application state
+### Browser state
 
-#### Read app state from a store exposed on `window`
+#### Read a value your app saves in `localStorage`
 
-When your app exposes its store on `window`, `.its()` and
-[`.invoke()`](/api/commands/invoke) can read that state directly. The whole
-chain retries, so the assertion waits for the app to update its state.
+`.its()` reads a key from a browser API such as `localStorage` with a dot path.
+The whole chain retries, so the assertion waits for the app to save the value.
 
-```javascript title="app.js"
-// expose the store only when the app runs inside Cypress
-if (window.Cypress) {
-  window.store = store
-}
-```
-
-```javascript title="spec.cy.js"
-cy.window()
-  .its('store')
-  .invoke('getState')
-  .its('cart.items')
-  .should('have.length', 2)
+```javascript
+cy.get('[data-cy=dark-mode-toggle]').click()
+cy.window().its('localStorage.theme').should('eq', 'dark')
 ```
 
 ### Nested properties

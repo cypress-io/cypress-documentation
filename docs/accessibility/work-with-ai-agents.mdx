@@ -67,7 +67,7 @@ Because the agent can page through every failing element of the latest run, the 
 
 ## Work with a downloaded report {#Work-with-a-downloaded-report}
 
-The [**Download report** button](/accessibility/connect-and-extend/download-reports) on a run's Accessibility report exports the run's violations as a `.csv` or `.json` file. This gives an AI agent a complete, self-contained view of a run's accessibility results that it can read directly from disk—no Cloud connection or MCP setup required.
+The [**Download report** button](/accessibility/connect-and-extend/download-reports) on a run's Accessibility report exports the run's violations as a `.csv` or `.json` file. The file gives an AI agent a complete, self-contained view of a run's accessibility results that it can read directly from disk—no Cloud connection or MCP setup required.
 
 This pairs well with the [Cloud CLI](#Cypress-Cloud-CLI) and [Cypress Cloud MCP](#Cypress-Cloud-MCP) approaches rather than replacing them:
 
@@ -104,7 +104,7 @@ Since the export is structured data, an agent with code execution can turn it in
 
 ### Compare different reports
 
-Download a report for each run you want to compare—for example, a `main` branch run and a feature-branch run—and ask the agent to diff them. This is a lightweight, offline complement to the [Branch Review](/accessibility/guides/compare-reports) comparison in Cypress Cloud, useful when you want the difference in writing or as data.
+Download a report for each run you want to compare—for example, a `main` branch run and a feature-branch run—and ask the agent to diff them. Diffing downloaded reports is a lightweight, offline complement to the [Branch Review](/accessibility/guides/compare-reports) comparison in Cypress Cloud, useful when you want the difference in writing or as data.
 
 > Here are two accessibility reports, `report-main.json` and `report-branch.json`. Compare them and tell me which violations are new in the branch report, which were resolved, and which are unchanged. Group new issues by rule and view, and include the Element URL for each new issue so I can open it in Cypress Cloud.
 
@@ -118,7 +118,7 @@ Ask the agent to keep the **Element URL** and **View URL** values in its output.
 
 ## File issues in your issue tracker
 
-Triage usually ends in tickets, and typing them out one at a time is the slowest part of the job. An agent connected to both Cypress Cloud and your issue tracker can read the accessibility report for the latest run, check what has already been filed, and open only the tickets that are missing. Nothing new has to run in your pipeline, because the data comes from runs Cypress Cloud has already recorded.
+Triage usually ends in tickets, and typing them out one at a time is the slowest part of the job. An agent connected to both Cypress Cloud and your issue tracker can read the accessibility report for the latest run, check what your team has already filed, and open only the tickets that are missing. Nothing new has to run in your pipeline, because the data comes from runs Cypress Cloud has already recorded.
 
 Cypress supplies the read side of this workflow through Cloud MCP or the [Cloud CLI](#Cypress-Cloud-CLI). Both are read-only, so the write side comes from your tracker's own MCP server or CLI, which Jira, GitHub, and Linear all publish. Connect both to the same agent before you start.
 
@@ -130,13 +130,13 @@ For a single violation you are already looking at, the [Create Jira issue](/acce
 
 ### Decide what a ticket represents
 
-Agree on this before the agent creates anything. It decides both the size of your backlog and whether next week's refresh can tell an existing ticket from a new one.
+Agree on what a ticket represents before the agent creates anything. That choice decides both the size of your backlog and whether next week's refresh can tell an existing ticket from a new one.
 
 **Group by rule and view.** One ticket per rule per view is a good default: "Form elements must have labels on /checkout" is a unit of work someone can pick up and finish. A ticket per failing element buries the team in near-duplicates, and a ticket per rule across the whole application is usually too large to schedule.
 
 **Give every ticket the same shape.** Ask the agent to follow a fixed convention: a label such as `cypress-accessibility` on everything it opens, a summary pattern such as `[Accessibility] <rule ID> on <view name>`, and a description holding the rule, the severity, the failing selectors, and the link back to the report in Cypress Cloud. The convention is what makes the next refresh cheap, because deduplication becomes a search for a label and a rule ID rather than a judgment call about whether two sentences describe the same problem.
 
-**Group by component where it helps.** If your selectors carry [component names](#Map-violations-to-your-components), an agent can spot that one design-system component is behind failures on 15 views. That is one ticket for the component team rather than 15 for the page owners, so tell the agent which grouping you want.
+**Group by component where it helps.** If your selectors carry [component names](#Map-violations-to-your-components), an agent can spot that one design-system component is behind failures on 15 views. Grouping by component gives one ticket for the component team rather than 15 for the page owners, so tell the agent which grouping you want.
 
 ### Plan first, then create
 
@@ -144,7 +144,7 @@ Run this in two passes. The first proposes tickets and checks them against your 
 
 - `<branch>` is the branch you track, such as `main`.
 - `<projectId>` is your Cypress project ID, the `projectId` in your Cypress configuration file.
-- `<tracker project key>` identifies the project in your issue tracker that the tickets are filed into, such as the Jira project key `WEB` or the repository `acme/storefront` in GitHub.
+- `<tracker project key>` identifies the project in your issue tracker that the agent files tickets into, such as the Jira project key `WEB` or the repository `acme/storefront` in GitHub.
 
 <CopyPrompt
   title="Plan tickets from the latest report"
@@ -188,11 +188,11 @@ In general, it's a good idea to look carefully at the pages and elements include
 
 You can learn how exclude pages or elements, mute known issues for certain elements, and reduce duplication in the [Cypress Accessibility configuration overview](/accessibility/configuration/overview).
 
-There is also configuration for how elements are identified when failures are presented, which can flow directly into the MCP tools in a predictable way to speed up element identification in your codebase.
+There is also configuration for how Cypress Accessibility identifies elements when it presents failures, which can flow directly into the MCP tools in a predictable way to speed up element identification in your codebase.
 
 ### Component identification techniques
 
-Clear component boundaries make both human triage and agent-assisted fixes easier: violations are grouped predictably, and prompts can refer to the same names you see in Cypress Accessibility.
+Clear component boundaries make both human triage and agent-assisted fixes easier: Cypress Accessibility groups violations predictably, and prompts can refer to the same names you see in Cypress Accessibility.
 
 For LLM use-cases, a few lightweight signals from the page where an element locator can turn into a huge efficiency boost, avoiding the context and tokens needed to parse a full page of HTML or crawl large amounts of code. Instead, you can quickly and accurately identify where in your pages component tree a given element is, and what code rendered it.
 
@@ -208,7 +208,7 @@ Here are the steps to follow for this process:
 
 ### 1. Click the Print-to-Console shortcut
 
-This logs the exact element reference to your developer console, avoiding any need to inspect or move around the DOM manually, or use search tools to locate your element.
+The Print-to-Console shortcut logs the exact element reference to your developer console, avoiding any need to inspect or move around the DOM manually, or use search tools to locate your element.
 
 <DocsImage
   src="/img/accessibility/guides/working-with-ai-agents-print-to-console.png"
@@ -218,7 +218,7 @@ This logs the exact element reference to your developer console, avoiding any ne
 
 ### 2. Move to the Elements panel
 
-Right-click the element in the console and choose "Open in Elements panel". This will take you to the full DOM view with the element highlighted. You need to be here for the AI chat to correctly start with the element reference.
+Right-click the element in the console and choose "Open in Elements panel". This option takes you to the full DOM view with the element highlighted. You need to be here for the AI chat to correctly start with the element reference.
 
 <DocsImage
   src="/img/accessibility/guides/working-with-ai-agents-open-in-elements-panel.png"
@@ -228,7 +228,7 @@ Right-click the element in the console and choose "Open in Elements panel". This
 
 ### 3. Start a chat about this element
 
-Right-click the highlighted element and choose "Debug with AI" and then "Start a chat". This will open the chat with this specific element.
+Right-click the highlighted element and choose "Debug with AI" and then "Start a chat". This option opens the chat with this specific element.
 
 <DocsImage
   src="/img/accessibility/guides/working-with-ai-agents-debug-with-ai-start-chat.png"

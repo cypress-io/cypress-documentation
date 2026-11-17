@@ -45,12 +45,12 @@ cy.clock().trigger('mouseleave') // Errors, 'clock' does not yield DOM elements
 
 <Icon name="angle-right" /> **eventName _(String)_**
 
-The name of the `event` to be triggered on the DOM element. It must be a
+The name of the `event` to trigger on the DOM element. The name must be a
 non-empty string, so `.trigger('')` fails.
 
 <Icon name="angle-right" /> **position _(String)_**
 
-The position where the event should be triggered. The `center` position is the
+The position where Cypress triggers the event. The `center` position is the
 default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
@@ -72,17 +72,17 @@ The distance in pixels from element's top to trigger the event.
 
 Pass in an options object to change the default behavior of `.trigger()`.
 
-| Option                       | Default                                                                     | Description                                                                                                                                                                                                                                                   |
-| ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                                                |
-| `bubbles`                    | `true`                                                                      | Whether the event bubbles                                                                                                                                                                                                                                     |
-| `cancelable`                 | `true`                                                                      | Whether the event is cancelable                                                                                                                                                                                                                               |
-| `eventConstructor`           | `'Event'`                                                                   | The name of the constructor, as a string, that creates the event object (e.g. `'MouseEvent'`, `'KeyboardEvent'`). It must exist on the application's `window`. See [choosing an event constructor](#How-eventConstructor-changes-the-properties-you-can-set). |
-| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                                                          |
-| `log`                        | `true`                                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                           |
-| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`.                               |
-| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                       |
-| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                                                     |
+| Option                       | Default                                                                     | Description                                                                                                                                                                                                                                                                |
+| ---------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                                                             |
+| `bubbles`                    | `true`                                                                      | Whether the event bubbles                                                                                                                                                                                                                                                  |
+| `cancelable`                 | `true`                                                                      | Whether the event is cancelable                                                                                                                                                                                                                                            |
+| `eventConstructor`           | `'Event'`                                                                   | The name of the constructor, as a string, that creates the event object (e.g. `'MouseEvent'`, `'KeyboardEvent'`). The constructor must exist on the application's `window`. See [choosing an event constructor](#How-eventConstructor-changes-the-properties-you-can-set). |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                                                                       |
+| `log`                        | `true`                                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                                        |
+| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`.                                            |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                                    |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                                                                  |
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`).
 With the default `Event` constructor, they're attached to the event as is. With
@@ -149,7 +149,10 @@ By default, the event bubbles up the DOM tree. Set `bubbles: false` to stop it
 at the element.
 
 ```javascript
-cy.get('button').trigger('mouseover', { bubbles: false })
+cy.get('button').trigger('mouseover', {
+  eventConstructor: 'MouseEvent',
+  bubbles: false,
+})
 ```
 
 A [`cy.spy()`](/api/commands/spy) added as a listener on the document confirms
@@ -161,7 +164,10 @@ cy.document().then((doc) => {
   doc.addEventListener('mouseover', onDocumentMouseover)
 })
 
-cy.get('button').trigger('mouseover', { bubbles: false })
+cy.get('button').trigger('mouseover', {
+  eventConstructor: 'MouseEvent',
+  bubbles: false,
+})
 cy.get('@documentMouseover').should('not.have.been.called')
 ```
 
@@ -172,7 +178,11 @@ from the element. Use it for events like `mousemove`, where the position needs
 to be outside the element.
 
 ```javascript
-cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
+cy.get('button').trigger('mousemove', {
+  eventConstructor: 'MouseEvent',
+  clientX: 200,
+  clientY: 300,
+})
 ```
 
 To check the properties a listener receives, add a
@@ -184,7 +194,11 @@ cy.get('button').then(($button) => {
   $button[0].addEventListener('mousemove', onMousemove)
 })
 
-cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
+cy.get('button').trigger('mousemove', {
+  eventConstructor: 'MouseEvent',
+  clientX: 200,
+  clientY: 300,
+})
 cy.get('@mousemove').should('have.been.calledWithMatch', {
   clientX: 200,
   clientY: 300,
@@ -199,9 +213,7 @@ Custom controls often hide the native input they're built on. Without `force`,
 into view, and dispatches the event right away.
 
 ```typescript copyTsToJs
-cy.get<HTMLInputElement>('[data-cy=volume-input]').then(($input) => {
-  $input[0].value = '60'
-})
+cy.get('[data-cy=volume-input]').invoke('val', '60')
 cy.get('[data-cy=volume-input]').trigger('change', { force: true })
 
 cy.get('[data-cy=volume-label]').should('have.text', '60')
@@ -247,11 +259,20 @@ cy.get('.target').trigger('mouseup')
 
 ```js
 // Main button pressed (usually the left button)
-cy.get('.target').trigger('mousedown', { button: 0 })
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 0,
+})
 // Auxiliary button pressed (usually the middle button)
-cy.get('.target').trigger('mousedown', { button: 1 })
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 1,
+})
 // Secondary button pressed (usually the right button)
-cy.get('.target').trigger('mousedown', { button: 2 })
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 2,
+})
 ```
 
 ### Keyboard Events
@@ -260,10 +281,15 @@ cy.get('.target').trigger('mousedown', { button: 2 })
 
 `.trigger()` fires one keyboard event with exactly the properties you pass,
 including modifier keys, without moving focus. Trigger it on the document to
-reach a global shortcut handler.
+reach a global shortcut handler, and pass `eventConstructor: 'KeyboardEvent'`
+so the handler receives a keyboard event.
 
 ```javascript
-cy.document().trigger('keydown', { key: 'k', ctrlKey: true })
+cy.document().trigger('keydown', {
+  eventConstructor: 'KeyboardEvent',
+  key: 'k',
+  ctrlKey: true,
+})
 cy.get('[data-cy=command-palette]').should('be.visible')
 ```
 
@@ -271,7 +297,7 @@ Pass the properties the handler reads, such as `key`, `code`, or `keyCode`, alon
 with `ctrlKey`, `metaKey`, `shiftKey`, or `altKey`.
 
 To press a single key the way a user does, such as Escape to close a dialog, use
-[`cy.press()`](/api/commands/press) instead. It dispatches native key events,
+[`cy.press()`](/api/commands/press) instead. `cy.press()` dispatches native key events,
 while events from `.trigger()` have `isTrusted` set to `false`, so a handler
 that checks `isTrusted` ignores them. `cy.press()` takes one key without
 modifiers. To type text, use [`.type()`](/api/commands/type).
@@ -291,10 +317,8 @@ the `change` event to signal it changed.
 Some implementations listen for the `input` event instead, which fires as the
 user moves the slider.
 
-```typescript copyTsToJs
-cy.get<HTMLInputElement>('input[type=range]').then(($range) => {
-  $range[0].value = '25'
-})
+```javascript
+cy.get('input[type=range]').invoke('val', 25)
 cy.get('input[type=range]').trigger('change')
 
 cy.get('input[type=range]').siblings('p').should('have.text', '25')
@@ -338,16 +362,18 @@ HTML drag and drop handlers pass data through the event's `dataTransfer`
 property. Create one
 [`DataTransfer`](https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer)
 and pass the same object to every event, so the data the `dragstart` handler
-sets is there when the `drop` handler reads it.
+sets is there when the `drop` handler reads it. With
+`eventConstructor: 'DragEvent'`, each event is a real drag event that carries
+it.
 
 ```javascript
-const dataTransfer = new DataTransfer()
+const drag = { eventConstructor: 'DragEvent', dataTransfer: new DataTransfer() }
 
-cy.get('[data-cy=card]').trigger('dragstart', { dataTransfer })
-cy.get('[data-cy=done-column]').trigger('dragenter', { dataTransfer })
-cy.get('[data-cy=done-column]').trigger('dragover', { dataTransfer })
-cy.get('[data-cy=done-column]').trigger('drop', { dataTransfer })
-cy.get('[data-cy=card]').trigger('dragend', { dataTransfer })
+cy.get('[data-cy=card]').trigger('dragstart', drag)
+cy.get('[data-cy=done-column]').trigger('dragenter', drag)
+cy.get('[data-cy=done-column]').trigger('dragover', drag)
+cy.get('[data-cy=done-column]').trigger('drop', drag)
+cy.get('[data-cy=card]').trigger('dragend', drag)
 
 cy.get('[data-cy=done-column]').should('contain', 'Write docs')
 ```
@@ -378,21 +404,26 @@ With `cancelable: false`, `preventDefault()` has no effect and
 
 Many drag handlers listen for `mousedown` on the element, then follow
 `mousemove` and `mouseup` on the document. The events bubble, so triggering them
-on the element reaches document listeners too. Pass the position properties the
-handler reads at each step. With the default `Event` constructor, `pageX` and
-`pageY` reach the handler exactly as you pass them.
+on the element reaches document listeners too. Pass `clientX` and `clientY` at
+each step. With `eventConstructor: 'MouseEvent'`, the browser calculates `pageX`
+and `pageY` from them, so a handler that reads either pair gets the same
+position a real mouse reports.
 
 ```javascript
 cy.get('[data-cy=draggable]').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
   button: 0,
-  pageX: 100,
-  pageY: 100,
+  clientX: 100,
+  clientY: 100,
 })
 cy.get('[data-cy=draggable]').trigger('mousemove', {
-  pageX: 300,
-  pageY: 150,
+  eventConstructor: 'MouseEvent',
+  clientX: 300,
+  clientY: 150,
 })
-cy.get('[data-cy=draggable]').trigger('mouseup')
+cy.get('[data-cy=draggable]').trigger('mouseup', {
+  eventConstructor: 'MouseEvent',
+})
 
 cy.get('[data-cy=draggable]')
   .should('have.css', 'left', '200px')
@@ -403,10 +434,16 @@ cy.get('[data-cy=draggable]')
 
 Many drag and gesture libraries listen for pointer events and ignore pointers
 that aren't primary. Pass the same `pointerId` with every event so the library
-tracks one pointer from press to release.
+tracks one pointer from press to release, and pass
+`eventConstructor: 'PointerEvent'` so the browser keeps those properties.
 
 ```javascript
-const pointer = { pointerId: 1, pointerType: 'mouse', isPrimary: true }
+const pointer = {
+  eventConstructor: 'PointerEvent',
+  pointerId: 1,
+  pointerType: 'mouse',
+  isPrimary: true,
+}
 
 cy.get('[data-cy=volume-thumb]').trigger('pointerdown', {
   ...pointer,
@@ -462,22 +499,23 @@ to these events.
 
 #### Trigger a custom event with a `detail` payload
 
-`.trigger()` fires any event name, including your app's own events. With the
-default `Event` constructor, the `detail` you pass is attached as is.
+`.trigger()` fires any event name, including your app's own events. Pass
+`eventConstructor: 'CustomEvent'` so the event carries `detail` the way the
+app's own `dispatchEvent(new CustomEvent(...))` does.
 
 ```javascript
-cy.get('[data-cy=cart]').trigger('cart:updated', { detail: { count: 3 } })
+cy.get('[data-cy=cart]').trigger('cart:updated', {
+  eventConstructor: 'CustomEvent',
+  detail: { count: 3 },
+})
 cy.get('[data-cy=cart-count]').should('have.text', '3')
 ```
-
-If the handler checks `event instanceof CustomEvent`, add
-`eventConstructor: 'CustomEvent'`, which also accepts `detail`.
 
 ### Window and Document
 
 #### Trigger an event on the window or document
 
-`.trigger()` also accepts the window or document as its subject. It dispatches
+`.trigger()` also accepts the window or document as its subject. For those subjects, `.trigger()` dispatches
 the event right away, without waiting for actionability, and doesn't add any
 coordinate properties to the event.
 
@@ -496,12 +534,12 @@ cy.window().trigger('online')
 cy.get('[data-cy=offline-banner]').should('not.be.visible')
 ```
 
-This runs the app's `offline` and `online` listeners, but `navigator.onLine`
-doesn't change. It works when the app reacts to the events rather than reading
+This example runs the app's `offline` and `online` listeners, but `navigator.onLine`
+doesn't change. Triggering the events works when the app reacts to the events rather than reading
 `navigator.onLine`.
 
 For `scroll` and `resize`, use [`.scrollTo()`](/api/commands/scrollto) and
-[`cy.viewport()`](/api/commands/viewport) instead. They change the scroll
+[`cy.viewport()`](/api/commands/viewport) instead. Those commands change the scroll
 position or window size and fire the real event, so the handler reads values
 that match it.
 
@@ -541,9 +579,9 @@ event's `view` property to the application's `window`.
 
 With the default `Event` constructor, `.trigger()` attaches every property you
 pass to the event as is, including ones like `pageX` and `pageY` that a real
-mouse event calculates for itself. Handlers that only read properties, like the
-one in [Drag an element with mouse events](#Drag-an-element-with-mouse-events),
-work with this default.
+mouse event calculates for itself. A handler that only reads properties works
+with this default, but one that checks the event's type doesn't, so pass the
+matching constructor whenever you pass event properties.
 
 When you set `eventConstructor` to a class such as
 [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent), the
@@ -603,14 +641,14 @@ action commands then reproduce the full sequence of events a user's input
 produces, along with what the browser does in response. `.trigger()` dispatches
 only the event you name.
 
-| You call                            | Events fired                                                                                                                                                          | What happens in the browser                                                                                                                                                           |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.trigger('click')`                 | `click`                                                                                                                                                               | Focus doesn't move. With the default `Event`, nothing else happens. With `eventConstructor: 'MouseEvent'`, a checkbox toggles and fires `input` and `change`, and a link is followed. |
-| `.click()`                          | `pointerover`, `pointerenter`, `mouseover`, `mouseenter`, `pointermove`, `mousemove`, `pointerdown`, `mousedown`, `focus`, `focusin`, `pointerup`, `mouseup`, `click` | Focus moves to the element, a checkbox toggles, and a link is followed.                                                                                                               |
-| `.trigger('keydown', { key: 'a' })` | `keydown`                                                                                                                                                             | Focus doesn't move, and no text is inserted, even with `eventConstructor: 'KeyboardEvent'`.                                                                                           |
-| `.type('a')`                        | The `.click()` sequence when the element isn't focused yet, then `keydown`, `keypress`, `beforeinput`, `textInput`, `input`, `keyup`                                  | Focus moves to the element, and `a` is inserted.                                                                                                                                      |
-| `.trigger('focus')`                 | `focus`                                                                                                                                                               | Focus doesn't move.                                                                                                                                                                   |
-| `.focus()`                          | `focus`, `focusin`                                                                                                                                                    | Focus moves to the element.                                                                                                                                                           |
+| You call                            | Events fired                                                                                                                                                          | What happens in the browser                                                                                                                                                                   |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.trigger('click')`                 | `click`                                                                                                                                                               | Focus doesn't move. With the default `Event`, nothing else happens. With `eventConstructor: 'MouseEvent'`, a checkbox toggles and fires `input` and `change`, and the browser follows a link. |
+| `.click()`                          | `pointerover`, `pointerenter`, `mouseover`, `mouseenter`, `pointermove`, `mousemove`, `pointerdown`, `mousedown`, `focus`, `focusin`, `pointerup`, `mouseup`, `click` | Focus moves to the element, a checkbox toggles, and the browser follows a link.                                                                                                               |
+| `.trigger('keydown', { key: 'a' })` | `keydown`                                                                                                                                                             | Focus doesn't move, and Cypress inserts no text, even with `eventConstructor: 'KeyboardEvent'`.                                                                                               |
+| `.type('a')`                        | The `.click()` sequence when the element isn't focused yet, then `keydown`, `keypress`, `beforeinput`, `textInput`, `input`, `keyup`                                  | Focus moves to the element, and Cypress inserts `a`.                                                                                                                                          |
+| `.trigger('focus')`                 | `focus`                                                                                                                                                               | Focus doesn't move.                                                                                                                                                                           |
+| `.focus()`                          | `focus`, `focusin`                                                                                                                                                    | Focus moves to the element.                                                                                                                                                                   |
 
 Your listeners run either way. Use the action command when you're testing what a
 user does, and `.trigger()` when a handler listens for an event no action
@@ -621,13 +659,13 @@ command fires.
 <HeaderRequirements />
 
 - `.trigger()` requires being chained off a command that yields a single DOM
-  element, the window, or the document. It errors when the subject contains
+  element, the window, or the document. `.trigger()` errors when the subject contains
   more than one element.
 
 <HeaderAssertions />
 
 - `.trigger()` automatically waits for the element to reach an
-  [actionable state](/app/core-concepts/interacting-with-elements). It skips
+  [actionable state](/app/core-concepts/interacting-with-elements). `.trigger()` skips
   this wait when the subject is the window or the document.
 - `.trigger()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
@@ -642,10 +680,8 @@ command fires.
 
 **_Trigger a `change` event on input type='range'_**
 
-```typescript copyTsToJs
-cy.get<HTMLInputElement>('.trigger-input-range').then(($range) => {
-  $range[0].value = '25'
-})
+```javascript
+cy.get('.trigger-input-range').invoke('val', 25)
 cy.get('.trigger-input-range').trigger('change')
 ```
 
@@ -653,7 +689,7 @@ The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/trigger/command-log-trigger.png"
-  alt="Command Log showing two get commands for .trigger-input-range, followed by a trigger command for the change event"
+  alt="Command Log showing a get and an invoke that set the value of .trigger-input-range, followed by a get and a trigger command for the change event"
 />
 
 When you click `trigger` in the Command Log, the console outputs the following:

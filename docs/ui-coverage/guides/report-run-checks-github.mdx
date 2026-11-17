@@ -10,7 +10,7 @@ sidebar_custom_props: { 'new_label': true }
 
 # Report Run Checks as GitHub pull request statuses
 
-[Run Checks](/cloud/features/checks) let you encode UI Coverage thresholds in your App Quality configuration, such as a minimum coverage score or a maximum number of untested elements, and have Cypress Cloud evaluate them on every recorded run. To surface those results on a pull request, fetch them in CI with `getCheckResults()` and post one commit status per applicable check.
+[Run Checks](/cloud/features/checks) encode UI Coverage thresholds in your App Quality configuration, such as a minimum coverage score or a maximum number of untested elements, and Cypress Cloud evaluates them on every recorded run. To surface those results on a pull request, fetch them in CI with `getCheckResults()` and post one commit status per applicable check.
 
 This guide covers the GitHub workflow for posting Run Check statuses. For custom policy logic the built-in assertion types don't cover, such as comparing untested-element counts against a stored baseline, use the [Results API](/ui-coverage/results-api) approach in [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests).
 

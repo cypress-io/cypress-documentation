@@ -12,10 +12,10 @@ Cypress automatically includes a [Buffer](https://github.com/feross/buffer)
 polyfill for the browser and exposes it as `Cypress.Buffer`.
 
 Use `Cypress.Buffer` to manipulate binary data, similar to the
-[nodejs Buffer class](https://nodejs.org/api/buffer.html). Instances are
-returned by [`cy.readFile()`](/api/commands/readfile) and
-[`cy.fixture()`](/api/commands/fixture), and it is used with
-[`.selectFile()`](/api/commands/selectfile).
+[nodejs Buffer class](https://nodejs.org/api/buffer.html).
+[`cy.readFile()`](/api/commands/readfile) and
+[`cy.fixture()`](/api/commands/fixture) return instances, and you can use them
+with [`.selectFile()`](/api/commands/selectfile).
 
 ## Syntax
 

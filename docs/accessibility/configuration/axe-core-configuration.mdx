@@ -11,7 +11,7 @@ sidebar_position: 50
 
 Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every snapshot captured during your test run, with no setup, assertions, or `cy.` commands to add to your specs. The ruleset favors high-confidence results, so the report you get out of the box is already the recommended configuration for most teams.
 
-When you need a different ruleset for your project, set `axeConfig` under the `accessibility` key in App Quality Config. You can enable a rule that is off by default, turn off a rule that is a known false positive, or scope the report to the WCAG tags your team measures against. Changes apply the next time a run is processed, and you can [regenerate a past run](/accessibility/configuration/overview#Setting-Configuration) to preview the effect without rerunning your tests.
+When you need a different ruleset for your project, set `axeConfig` under the `accessibility` key in App Quality Config. You can enable a rule that is off by default, turn off a rule that is a known false positive, or scope the report to the WCAG tags your team measures against. Changes apply the next time Cypress Cloud processes a run, and you can [regenerate a past run](/accessibility/configuration/overview#Setting-Configuration) to preview the effect without rerunning your tests.
 
 Because you decide what actually blocks a build with the [Accessibility Results API](/accessibility/connect-and-extend/results-api) or [webhook-driven workflows](/accessibility/connect-and-extend/webhooks), turning rules off only to keep CI green is unnecessary. Leaving a rule reported but non-blocking keeps full visibility into every finding while you control the gate in your pipeline.
 
@@ -27,7 +27,7 @@ To ignore a specific rule for individual elements, add the [`data-a11y-ignore`](
 
 ## Scope
 
-`axeConfig` is only valid under an `accessibility` key in your App Quality configuration. It can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply different rulesets to tagged runs.
+`axeConfig` is only valid under an `accessibility` key in your App Quality configuration. You can also set `axeConfig` inside a [`profiles`](/accessibility/configuration/profiles) entry to apply different rulesets to tagged runs.
 
 ## Setting axeConfig
 
@@ -66,10 +66,10 @@ To add or edit `axeConfig`, open the **App Quality** tab in your project setting
 ### How is axeConfig applied?
 
 - **`rules` overrides win over Cypress defaults.** Cypress Accessibility starts from its [default disabled rules](#rules-that-are-off-by-default). Any rule you set in `axeConfig.rules` replaces that default for that rule, so `"color-contrast": { "enabled": true }` turns color contrast on for the project.
-- **`runOnly` narrows the ruleset.** When you set `runOnly`, only rules that match the listed tags or IDs run. Rules outside that selection are reported as ignored by configuration.
+- **`runOnly` narrows the ruleset.** When you set `runOnly`, only rules that match the listed tags or IDs run. Cypress Accessibility reports rules outside that selection as ignored by configuration.
 - **Combine `runOnly` and `rules` when you need both.** A common pattern is scoping to WCAG tags with `runOnly`, then enabling or disabling individual rules inside that scope with `rules`.
 - **Disabled rules stay visible in the report.** In the **Rules** view, rules turned off by configuration appear with an **Ignored by configuration** status, so it's clear which checks a run did and did not include.
-- **Unknown properties are rejected.** Cypress Cloud validates `axeConfig` against a strict schema. Only `runOnly` and `rules` are accepted, and each `rules` entry accepts only `enabled`.
+- **Unknown properties are rejected.** Cypress Cloud validates `axeConfig` against a strict schema. The schema accepts only `runOnly` and `rules`, and each `rules` entry accepts only `enabled`.
 
 ### Validation rules
 
@@ -224,14 +224,14 @@ Runs recorded with the `aq-config-pr` tag use the scoped ruleset. Runs recorded 
 
 Cypress applies no conformance filter of its own, so a run evaluates whatever Axe-Core® enables by default, minus the [three rules Cypress turns off by default](#rules-that-are-off-by-default):
 
-| Axe-Core® rule group        | Runs by default | Notes                                                                                                       |
-| --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------- |
-| WCAG 2.0 Level A and AA     | Yes             | Minus `color-contrast`, `no-autoplay-audio`, and `meta-refresh`, which are WCAG-tagged but off by default   |
-| WCAG 2.1 Level A and AA     | Yes             |                                                                                                             |
-| Best Practices              | Yes             | Deque's own recommendations, such as `region` and `landmark-one-main`. These are not WCAG success criteria. |
-| WCAG 2.2 Level A and AA     | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.       |
-| WCAG Level AAA              | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.       |
-| Experimental and deprecated | No              | Off by default in Axe-Core® itself.                                                                         |
+| Axe-Core® rule group        | Runs by default | Notes                                                                                                                |
+| --------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------- |
+| WCAG 2.0 Level A and AA     | Yes             | Minus `color-contrast`, `no-autoplay-audio`, and `meta-refresh`, which are WCAG-tagged but off by default            |
+| WCAG 2.1 Level A and AA     | Yes             |                                                                                                                      |
+| Best Practices              | Yes             | Deque's own recommendations, such as `region` and `landmark-one-main`. Best practices are not WCAG success criteria. |
+| WCAG 2.2 Level A and AA     | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.                |
+| WCAG Level AAA              | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.                |
+| Experimental and deprecated | No              | Off by default in Axe-Core® itself.                                                                                  |
 
 Keep these behaviors in mind if you're measuring against a formal standard:
 
@@ -240,17 +240,17 @@ Keep these behaviors in mind if you're measuring against a formal standard:
 
 ## Rules that are off by default {#rules-that-are-off-by-default}
 
-A small number of Axe-Core® rules are turned off in Cypress Accessibility by default. Color contrast can be enabled per project with `axeConfig`. The other two depend on live runtime behavior that isn't reproduced when Cypress re-renders a captured snapshot for analysis, so they can't be evaluated reliably even if you enable them.
+Cypress Accessibility turns off a small number of Axe-Core® rules by default. You can enable color contrast per project with `axeConfig`. The other two depend on live runtime behavior that Cypress doesn't reproduce when it re-renders a captured snapshot for analysis, so Cypress can't evaluate them reliably even if you enable them.
 
-| Rule                                                        | Why it's off by default                                                                                                                                                                                             |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Elements must meet minimum color contrast ratio thresholds  | This is the slowest rule in the Axe-Core® ruleset and the one most likely to produce false positives or incomplete results. It works well in many projects; enable it with `"color-contrast": { "enabled": true }`. |
-| `<video>` or `<audio>` elements must not play automatically | Detecting a violation requires loading and playing the media to measure how long it plays. Cypress analyzes a reconstructed snapshot of the page without playable media, so this rule can't be evaluated.           |
-| Delayed refresh under 20 hours must not be used             | This rule reads a page's meta refresh directive, which Cypress disables while it analyzes a run so the reconstructed page doesn't navigate away. With the directive disabled, the rule can't be evaluated.          |
+| Rule                                                        | Why it's off by default                                                                                                                                                                                                                      |
+| ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Elements must meet minimum color contrast ratio thresholds  | The color contrast rule is the slowest rule in the Axe-Core® ruleset and the one most likely to produce false positives or incomplete results. The rule works well in many projects; enable it with `"color-contrast": { "enabled": true }`. |
+| `<video>` or `<audio>` elements must not play automatically | Detecting a violation requires loading and playing the media to measure how long it plays. Cypress analyzes a reconstructed snapshot of the page without playable media, so Cypress can't evaluate this rule.                                |
+| Delayed refresh under 20 hours must not be used             | This rule reads a page's meta refresh directive, which Cypress disables while it analyzes a run so the reconstructed page doesn't navigate away. With the directive disabled, Cypress can't evaluate the rule.                               |
 
 In addition, the custom [Cypress rule](/accessibility/core-concepts/cypress-rules) _Interactive elements should be semantically correct_ is available in all projects but is not enabled by default. Reach out to Cypress if you'd like it turned on.
 
-You can confirm which rules were turned off for any run in its Accessibility report. In the **Rules** view, disabled rules are listed with an **Ignored by configuration** status, so it's always clear which checks a run did and did not include.
+You can confirm which rules were turned off for any run in its Accessibility report. The **Rules** view lists disabled rules with an **Ignored by configuration** status, so it's always clear which checks a run did and did not include.
 
 ## Component testing {#component-testing}
 
@@ -258,15 +258,15 @@ Cypress Accessibility works with [component testing](/app/component-testing/get-
 
 Rules skipped for component tests include page-structure and document-level checks, such as whether the page has a main landmark, a single top-level heading, a language attribute, and a document title. Rules that evaluate the components themselves, such as color contrast (when enabled), button naming, and image alternative text, run as normal.
 
-The exact set of skipped rules isn't a fixed list Cypress maintains. It's derived from which rules Axe-Core® classifies as page-level, so it can shift when Cypress updates its Axe-Core® version. In a component's report, these page-structure rules are reported as not applicable rather than as failures. An `axeConfig` rule override can't force a page-level rule to run for component tests.
+The exact set of skipped rules isn't a fixed list Cypress maintains. Cypress derives the set from which rules Axe-Core® classifies as page-level, so it can shift when Cypress updates its Axe-Core® version. In a component's report, Cypress reports these page-structure rules as not applicable rather than as failures. An `axeConfig` rule override can't force a page-level rule to run for component tests.
 
 ## Axe-Core® library version and updates {#axe-core-library-version-and-updates}
 
-Cypress pins a specific, tested version of the Axe-Core® library. New Axe-Core® versions are released several times a year. While Cypress doesn't commit to updating our internal version within a specific timeframe, we always wait at least 30 days before adopting a new release.
+Cypress pins a specific, tested version of the Axe-Core® library. Deque releases new Axe-Core® versions several times a year. While Cypress doesn't commit to updating our internal version within a specific timeframe, we always wait at least 30 days before adopting a new release.
 
-Because some updates introduce new rules or change how existing issues are detected, this buffer gives you time to adjust how you use the [Results API](/accessibility/connect-and-extend/results-api) if needed. You can track Axe-Core® releases [on GitHub](https://github.com/dequelabs/axe-core/releases).
+Because some updates introduce new rules or change how Axe-Core® detects existing issues, this buffer gives you time to adjust how you use the [Results API](/accessibility/connect-and-extend/results-api) if needed. You can track Axe-Core® releases [on GitHub](https://github.com/dequelabs/axe-core/releases).
 
-The exact Axe-Core® version used for a given run is shown in the **Properties** tab for that run in Cypress Cloud, and is also included as `axeVersion` in the [Results API](/accessibility/connect-and-extend/results-api) response. To get a heads-up in CI when the version changes, see [how to detect a change in the axe-core version](/accessibility/connect-and-extend/results-api#how-to-detect-a-change-in-the-axe-core-version).
+The **Properties** tab for a run in Cypress Cloud shows the exact Axe-Core® version used for that run, and the [Results API](/accessibility/connect-and-extend/results-api) response also includes it as `axeVersion`. To get a heads-up in CI when the version changes, see [how to detect a change in the axe-core version](/accessibility/connect-and-extend/results-api#how-to-detect-a-change-in-the-axe-core-version).
 
 ## See also
 

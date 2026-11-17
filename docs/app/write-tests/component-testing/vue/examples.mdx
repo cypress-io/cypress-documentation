@@ -89,7 +89,7 @@ it('surfaces a render error', () => {
 The recommended way to render fallback UI in Vue is a wrapper component that uses
 the [`onErrorCaptured`](https://vuejs.org/api/composition-api-lifecycle#onerrorcaptured)
 lifecycle hook to catch errors from its descendants. You can mount a component
-inside such a wrapper and assert that the fallback UI is displayed:
+inside such a wrapper and assert that the wrapper displays the fallback UI:
 
 ```js
 // ErrorBoundary.cy.js
@@ -327,15 +327,15 @@ Cypress.Commands.add('mount', (...args) => {
 cy.mount(Stepper).doStuff().get('@vue') // The subject is now the Vue Wrapper
 ```
 
-This means that you are able to get to the resulting `wrapper` returned from the
+The `@vue` alias means that you are able to get to the resulting `wrapper` returned from the
 `mount` command and use `wrapper.emitted()` to gain access to Native
-DOM events that were fired, as well as custom events that were emitted by your
-component under test.
+DOM events that fired, as well as custom events that your component under test
+emitted.
 
-Because `wrapper.emitted()` is only data, and NOT spy-based you will have to
+Because `wrapper.emitted()` is only data, and NOT spy-based you have to
 unpack its results to write assertions.
 
-Your test failure messages will not be as helpful because you're not able to use
+Your test failure messages are not as helpful because you're not able to use
 the Sinon-Chai library that Cypress ships, which comes with methods such as
 `to.have.been.called` and `to.have.been.calledWith`.
 
@@ -377,7 +377,7 @@ cy.get('@onChangeSpy').should('have.been.calledWith', '101')
 
 Regardless of our recommendation to use spies instead of the internal Vue Test
 Utils API, you may decide to continue using `emitted` as it _automatically_
-records every single event emitted from the component, and so you won't have to
+records every single event emitted from the component, and so you don't have to
 create a spy for every event emitted.
 
 This auto-spying behavior could be useful for components that emit _many_ custom
@@ -389,7 +389,7 @@ events.
 
 While you can use the [mount()](/app/component-testing/vue/api#mount)
 function in your tests, we recommend using [`cy.mount()`](/api/commands/mount),
-which is a [custom command](/api/cypress-api/custom-commands) that is defined in
+which is a [custom command](/api/cypress-api/custom-commands) that you define in
 the **cypress/support/component.js** file:
 
 <Tabs>
@@ -421,19 +421,19 @@ Cypress.Commands.add('mount', mount)
 </TabItem>
 </Tabs>
 
-This registers `cy.mount()` for any test without having to import the `mount()`
+The support file registers `cy.mount()` for any test without having to import the `mount()`
 function in each and every spec file.
 
 By default, `cy.mount()` is a simple passthrough to `mount()`, however, you can
 customize `cy.mount()` to fit your needs. For instance, if you are using plugins
 or other global app-level setups in your Vue app, you can configure them here.
 
-Below are a few examples that demonstrate using a custom mount command. These
-examples can be adjusted for most other providers that you will need to support.
+Below are a few examples that demonstrate using a custom mount command. You can
+adjust these examples for most other providers that you need to support.
 
 ### Replicating Plugins
 
-Most applications will have state management or routing. Both of these are Vue
+Most applications have state management or routing. Both of these are Vue
 plugins.
 
 <Tabs>
@@ -579,7 +579,7 @@ Some Vue applications, most famously Vue apps built on top of Vuetify, require
 certain components to be structured in a specific hierarchy.
 
 All Vuetify applications require that you wrap your app in a `VApp` component
-when you build it. This is an implementation detail of Vuetify, but once users
+when you build it. The `VApp` wrapper is an implementation detail of Vuetify, but once users
 try to test components that depend on Vuetify, they get Vuetify-specific
 compilation errors and quickly find out that **they need to replicate that
 component hierarchy any time they need to mount a component that uses a Vuetify
@@ -588,7 +588,7 @@ component**!
 Custom `cy.mount` commands to the rescue! You may find the JSX syntax to be more
 straightforward.
 
-You'll also need to replicate the plugin setup steps from the Vuetify docs for
+You also need to replicate the plugin setup steps from the Vuetify docs for
 everything to compile.
 
 <Tabs>
@@ -861,7 +861,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 :::info
 
 The `getStore` method is a factory method that initializes Vuex and creates a
-new store. It is important that the store be initialized with each new test to
+new store. It is important to initialize the store with each new test to
 ensure changes to the store don't affect other tests.
 
 :::
@@ -944,8 +944,8 @@ it.only('User profile should display user name', () => {
 
 ### Global Components
 
-If you have components that are registered globally in the main application
-file, set them up in your mount command so your component will render them
+If you register components globally in the main application
+file, set them up in your mount command so your component renders them
 properly:
 
 <Tabs>

@@ -107,6 +107,10 @@ Prefer the provided MDX components over raw HTML:
 - `<DocsVideo src="..." title="..." />` — supports local files, YouTube, Vimeo.
 - `<Icon name="..." />` — the Font Awesome icon must be imported under the
   `fontawesome` key in `src/theme/MDXComponents.js`.
+- `<AccordionBlock title="..." icon={<Icon name="..." />}>` — a collapsible
+  section, collapsed unless you pass `open`. Use one per tool or variation when
+  each needs its own prose (see
+  [use accordions for prose that varies by tool](#use-accordions-for-prose-that-varies-by-tool)).
 
 Images go in `static/img/...` and are referenced via `/img/...`.
 
@@ -241,6 +245,48 @@ same change. `## See also` always stays as it is.
   almost always hides a simpler sentence.
   - Yes: "`cy.session()` caches and restores session state between tests."
   - No: "`cy.session()` allows you to cache and restore session state."
+  - The same pattern hides behind other phrasings: "lets you", "enables you
+    to", "allows users (or teams, developers) to", "gives you the ability
+    to", "offers the ability to", "comes with the ability to", "provides you
+    with", and "makes it possible to". Rewrite each the same way.
+    - Yes: "The ElementSelector API defines how Cypress selects elements."
+    - No: "The ElementSelector API lets you define how Cypress selects
+      elements."
+    - Yes: "A team sets project access once, at the team level."
+    - No: "Teams let you control project access once at the team level."
+  - When the sentence is an instruction, use the imperative: "Use Node event
+    hooks to tap into the internal behavior of Cypress", not "Node event hooks
+    enable you to tap into…".
+  - When the reader really is the one acting, "you can" is fine: "Cypress
+    captures a snapshot for every command, so you can time travel to previous
+    states while you debug."
+  - Leave the phrasing where it isn't about the reader: test titles and other
+    text in code blocks, quoted UI labels (the **Enable Teams** button), and
+    "allows for" with a non-reader subject ("Separating installation allows
+    for reuse of various build steps"). A plainer verb such as "supports" or
+    "provides" often still reads better there.
+- **Name the subject in every sentence.** Readers skim, search results quote a
+  single sentence, and answer engines lift one out of the page, so a sentence
+  that opens with a pronoun for something named earlier loses its meaning out
+  of context. Repeat the noun instead of reaching back with "it", "this",
+  "that", or "they" on their own.
+  - Yes: "Run Cypress in your AI agent's sandbox, so the agent tests its own
+    changes before it hands them back. The agent runs your specs with
+    `cypress tap`."
+  - No: "Run Cypress in your AI agent's sandbox, and the agent tests its own
+    changes. It runs your specs with `cypress tap`."
+  - No: "Cypress caches the binary. This speeds up later installs."
+
+  A pronoun that refers to a noun in the same sentence is fine ("Cypress retries
+  the assertion until it passes"), and so is "this" or "that" followed by its
+  noun ("This command…").
+
+  `npm run lint:pronouns -- <file>` lists the sentences that open with one of
+  these pronouns. The script is a heuristic and always exits 0. The script
+  skips the common no-referent "it" ("It is possible to…") and a "this" that
+  leads its noun, but it can't tell what a pronoun points at, so read each
+  sentence it lists.
+
 - **Keep body text current.** The docs describe the product as it works today,
   so a reader on the current release never has to work out whether a sentence
   still applies. Leave out the Cypress release that added or changed a feature.
@@ -340,6 +386,115 @@ same change. `## See also` always stays as it is.
   button in a sample table). This keeps invented example labels visually distinct
   from the real UI the tutorial navigates.
 
+## Reviewing a new or rewritten page
+
+Lint and Bugbot catch the mechanical writing rules. The judgment rules need a
+reader, and a whole new page is where they slip most. In Claude Code, the first
+`git commit` after a page under `docs/` is added, or has more than about 40% of
+its prose lines rewritten, stops once and lists it. Review each listed page with
+these steps, report in the thread, then commit again. If a page doesn't need a
+review (it moved, or Prettier only rewrapped it), say so and why.
+
+This section is the procedure, not the rules. Read the linked rule before
+judging each question, so [`AGENTS.md`](./AGENTS.md#rules) and
+[Writing style](#writing-style) stay the one source of truth.
+
+### Step 1: clear the mechanical rules first
+
+If `package.json` defines `lint:prose`, run `npm run lint:prose` and fix what it
+reports. If it doesn't, check the page by hand against the hard rules in
+[`.cursor/BUGBOT.md` section 4](./.cursor/BUGBOT.md), treating every line of a
+new page, and every rewritten line of a changed page, as added prose. List these
+fixes under their own heading in the report.
+
+### Step 2: read the whole page once before changing anything
+
+Repetition, the lead, and `See also` are questions about the whole page, so they
+can't be answered section by section. Note what kind of page it is: an `/api`
+page keeps its fixed skeleton ([`docs/api/AGENTS.md`](./docs/api/AGENTS.md)).
+
+### Step 3: ask each question
+
+1. **Does the page lead with the feature's value?** [Lead with the
+   value](#lead-with-the-value). A version or prerequisite admonition in the
+   first screen pushes the value down.
+2. **Does each heading stand on its own, at roughly 40 to 60 characters?**
+   [Headings](#headings). Weigh the renaming cost only for a heading published
+   at this page's path at `HEAD`. A new page has none, even when it starts as a
+   copy of another.
+3. **Is any explanation repeated?** Look across the body, tables,
+   troubleshooting, and limitations. Keep the full explanation in the body
+   section that owns it. Troubleshooting keeps a short symptom and fix that links
+   there, and so do tables and limitations.
+4. **Are behaviors framed positively and reader-first?** The framing rule in
+   [`AGENTS.md`](./AGENTS.md#rules). Watch for "you will need to" chains that
+   describe the burden instead of the step.
+5. **Does it say what something does, not what it lets or allows?** [Person and
+   tense](#person-and-tense), which also covers "you", present tense, active
+   voice, and keeping body text current.
+6. **Does every sentence name its subject?** [Person and
+   tense](#person-and-tense). The commit reminder lists the new and rewritten
+   sentences that open with "it", "this", "that", "they", and their forms; run
+   `npm run lint:pronouns -- <page>` to list them yourself. Fix each one that
+   points back to an earlier sentence, list item, or heading. Leave a "this" or
+   "that" that leads its noun ("This command…"), a pronoun for a noun in the
+   same sentence, an "it" with no referent ("It is possible to…"), and quoted
+   UI strings and prompts. The list is a heuristic, so also read for the
+   sentences it can't see, such as one after "e.g." or inside a `<CopyPrompt>`.
+7. **Are minimizing words and hedges gone?** [Word choice](#word-choice). "May",
+   "can", and "it is recommended" often hedge a fact the page could state.
+8. **Does a reusable agent recipe sit in a code block or prose?**
+   [`<CopyPrompt>` vs a code block](#ai-prompts-copyprompt-vs-a-code-block).
+9. **Is there prose or a list inside a `<TabItem>`?** [Keep prose out of
+   tabs](#keep-prose-out-of-tabs).
+10. **Is `## See also` warranted, and not padded?** The `See also` rule in
+    [`AGENTS.md`](./AGENTS.md#rules).
+
+The ten are the minimum. Read the rest of the `AGENTS.md` **Writing style** and
+**Authoring** rules against the page once more.
+
+### Step 4: edit the page
+
+- **Keep the facts.** Reword and restructure, but don't change a claim. When a
+  fix needs a fact you can't confirm from the page, the
+  [source](#api-source-of-truth), or the author, flag it instead.
+- **Move code examples, don't change them.** A changed one falls under
+  [verifying code examples](#verifying-code-examples).
+- **Update every link to an anchor you rename**, on the page and across the repo.
+- **Fix links the build reports as broken even when the review didn't cause
+  them**, if the new target is clear, and list them separately in the report.
+
+### Step 5: verify the edited page
+
+1. Run `npm run lint:fix`, then `npm run build`.
+2. If you added a `<CopyPrompt>`, run `npm run test:copy-prompt-titles`.
+3. If you added or changed tabs, accordions, or a `<CopyPrompt>`, render the page
+   in both modes. Run `npm run serve`, then capture it with Playwright at
+   `colorScheme: 'light'` and `'dark'`. The site follows the reader's system
+   setting.
+
+### Step 6: report the review in the thread
+
+Group the changes by rule, with a link to each rule, then list what you flagged
+without changing and the verification results:
+
+```md
+## Style review: `docs/app/ai/example.mdx`
+
+**Headings** ([rule](AGENTS_REFERENCE.md#headings))
+
+- `## Requirements` → `## Agent sandbox requirements for Cypress`
+
+**Repetition**
+
+- Agent detection was explained in three places. Kept it in "How Cypress
+  detects an AI agent" and cut the others to a sentence and a link.
+
+**Flagged, not changed**
+
+- "About 2 GB of memory" has no source on the page.
+```
+
 ## Code blocks
 
 - Always tag a fenced block with its language (`ts`, `js`, `jsx`, `shell`,
@@ -383,6 +538,89 @@ same change. `## See also` always stays as it is.
   [`:::cypress-config-example`](#cypress-config-examples) directive, and for
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
+
+## Code example preferences
+
+A reader copies an example as the way Cypress tests are written. So write
+examples the way a user drives the app: through its UI, its network, and the
+browser's own APIs, with Cypress commands doing the reading and the clicking.
+Tests written that way keep passing when the app's internals change, and every
+step shows up in the Command Log.
+
+These preferences cover test code only: specs, custom commands, support files,
+and config. They never apply to app code in an example, such as the HTML,
+component, or `app.js` a test runs against. App code is there to give the test
+something to act on, so write it however the example reads most clearly.
+
+Within test code, each preference also gives way when the example exists to
+show the thing it steers away from. The `.trigger()` page explains what the
+default `Event` does, and the `cy.window()` page shows why its two windows
+differ. Those examples stay as they are. Everywhere else, follow these:
+
+- **Drive the app through its UI or its API where you can.** Click, type, and
+  visit to reach a state, or set it up with `cy.request()` and
+  `cy.intercept()`.
+- **Chain to app code on `window`; don't call it in a callback.** When a test
+  does need app code the app exposes on `window`, such as a store or a factory
+  function, reach it with `cy.window().its()` and call it with `.invoke()`.
+  The chain retries until the property exists and logs each step, while
+  `cy.window().then((win) => win.store.dispatch(...))` runs once, fails if the
+  app hasn't set the property yet, and logs nothing.
+- **Don't depend on `window.Cypress` in the test.** A test that branches on it
+  or reaches the app through it ties itself to the runner's internals rather
+  than to what the app does.
+- **Read the DOM with `.invoke()` and `.its()`.** They retry with the assertion
+  that follows and log what they read, while a `.then()` callback runs once and
+  logs nothing. jQuery methods work through `.invoke()`, and DOM properties
+  through `.invoke('prop', name)`.
+- **Prefer Cypress actions to hand-built events.** `.click()`, `.type()`,
+  `.check()`, `.select()`, and `cy.press()` fire the events a user's input
+  does, in order, after the actionability checks. Reach for `.trigger()` only
+  when no action fits, and when it passes event properties, pass the matching
+  `eventConstructor`. The default plain `Event` attaches those properties as-is,
+  so a handler that checks the event's type, or reads a property the browser
+  calculates, gets something no real input produces.
+- **Wait for the app, not the clock.** `cy.wait(ms)` guesses how long the app
+  takes: too short and the test flakes, too long and every run pays for it.
+  Wait for the state the next step needs instead. An assertion on the UI
+  retries until it passes, and `cy.wait('@alias')` waits for a request routed
+  through `cy.intercept()`. `cy.visit()` and `cy.request()` already wait for
+  their responses. Pass `timeout` when the state takes longer than
+  `defaultCommandTimeout`. The one exception is a short pause between polls of
+  an endpoint that has nothing else to wait on, such as a background job's
+  status, so the loop doesn't hammer the server.
+
+**❌ Calls the app in a callback, waits a fixed time, reads the DOM in a
+callback, and hand-builds an event:**
+
+```js
+cy.window().then((win) => {
+  win.store.dispatch({ type: 'cart/clear' })
+})
+cy.wait(2000)
+
+cy.get('.sidebar').then(($el) => {
+  expect($el.outerWidth()).to.be.greaterThan(200)
+})
+
+cy.get('.target').trigger('mousedown', { button: 0 })
+```
+
+**✅ Drives the UI, waits for the request, reads through Cypress, and builds
+the right event:**
+
+```js
+cy.intercept('DELETE', '/api/cart').as('clearCart')
+cy.get('[data-cy=clear-cart]').click()
+cy.wait('@clearCart')
+
+cy.get('.sidebar').invoke('outerWidth').should('be.greaterThan', 200)
+
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 0,
+})
+```
 
 ## Domains in code examples
 
@@ -1123,6 +1361,75 @@ TypeScript readers need, such as the `declare global` block that types a custom
 command, in its own section outside the tabs. In
 `docs/api/commands/mount.mdx`, the framework tabs show each
 `cypress/support/component.js`, and a separate section covers the typings.
+
+### Keep prose out of tabs
+
+A `<TabItem>` holds code: code blocks, plus components that render as code, such
+as `<PackageManagerTabs>`. Leave plain paragraphs and lists out. The site styles
+the whole tab container as a code surface (`.tabs-container` in
+`src/css/custom.scss`), so plain prose inside it breaks:
+
+- In light mode, body text renders in the page's dark text color on the dark
+  code background, at about 2:1 contrast, well under the 4.5:1 that WCAG AA
+  requires.
+- Code blocks nested in a list item run flush to the panel's right edge, so long
+  lines look clipped.
+
+An admonition is the exception: it brings its own background, so a short
+`:::info` inside a tab stays readable.
+
+None of the build, lint, or test commands catch this, so render the page in
+both light and dark mode whenever you add or change a tab group.
+
+#### Use accordions for prose that varies by tool
+
+When the same kind of instructions repeats for different tools or variations,
+and each one needs its own prose, lists, or steps, give each variation an
+[`<AccordionBlock>`](#mdx-components) instead of a tab. Typical cases are setup
+per agent sandbox, environment variables per CI provider, and configuration per
+AI client. The accordion renders its content on the page background, so text and
+code blocks keep their normal styling, and readers expand only the variation
+they use.
+
+```mdx
+## Configure your sandbox
+
+Expand your sandbox below for the setup it needs.
+
+<AccordionBlock title="Claude Code on the web" icon={<Icon name="claude" />}>
+
+1. In the environment's network settings, allow the hosts in
+   [Network access](#Network-access).
+
+</AccordionBlock>
+
+<AccordionBlock title="Cursor Cloud" icon={<Icon name="hexagon-nodes" />}>
+
+Cursor Cloud builds the environment from a Dockerfile.
+
+</AccordionBlock>
+```
+
+- Lead with a sentence outside the accordions that tells the reader to expand
+  the one they use, and keep what every variation shares in prose above or
+  below them rather than repeating it in each.
+- Title each accordion with the tool's name alone ("Cursor Cloud"); the section
+  heading above carries the context.
+- Leave a blank line after the opening tag and before the closing tag, as the
+  existing pages do.
+- Give each one an `icon` and check that the icon is registered (see
+  [MDX components](#mdx-components)). Use the brand icon when one exists.
+- Don't put headings inside an accordion. Its title already names the
+  variation, and a heading that other pages link to belongs where readers can
+  see it without expanding anything.
+
+Precedents: `docs/cloud/integrations/cloud-mcp.mdx` (one per AI client),
+`docs/partials/_results-api-env-vars.mdx` (one per CI provider), and
+`docs/app/ai/cypress-agent-sandboxes.mdx` (one per agent sandbox).
+
+Tabs stay the right fit when each variation is a code sample, such as one config
+file per framework. Keep any lead-in sentence outside the tab group rather than
+inside each tab.
 
 ## Cypress config examples
 

@@ -13,12 +13,12 @@ slug: /app/guides/authentication-testing/auth0-authentication
 This guide is setup for testing against an [Auth0](https://auth0.com) Single
 Page Application using the
 [Classic Universal Login Experience](https://auth0.com/docs/universal-login/classic).
-This configuration is recommended for a "Test Tenant" and/or "Test API" setup
+We recommend this configuration for a "Test Tenant" and/or "Test API" setup
 for automated end-to-end testing.
 
 ## Auth0 Application Setup
 
-To get started with Auth0, an application needs to be setup within the
+To get started with Auth0, set up an application within the
 [Auth0 Dashboard](https://auth0.com/docs/get-started/auth0-overview/dashboard) via the following steps:
 
 1. Visit the [Auth0 Dashboard](https://auth0.com/docs/get-started/auth0-overview/dashboard) and click the
@@ -62,7 +62,7 @@ for additional details.
 
 Finally, create a user in the
 [Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store)
-for testing with Cypress. This testing-dedicated target user will be login to
+for testing with Cypress. This testing-dedicated target user logs in to
 your application within your test specs. If required for your testing purposes,
 you can make as many users needed to test your specific application.
 
@@ -108,8 +108,8 @@ There are two ways you can authenticate to Auth0:
 
 ### Login with [`cy.origin()`](/api/commands/origin)
 
-Next, we'll write a custom command called `loginToAuth0` to perform a login to
-[Auth0](https://auth0.com). This command will use
+Next, write a custom command called `loginToAuth0` to perform a login to
+[Auth0](https://auth0.com). This command uses
 [`cy.origin()`](/api/commands/origin) to
 
 1. Navigate to the Auth0 login
@@ -332,15 +332,15 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
 Below is a command to programmatically login into [Auth0](https://auth0.com),
 using the
 [/oauth/token endpoint](https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint)
-and set an item in `localStorage` with the authenticated users details, which we
-will use in our application code to verify we are authenticated under test.
+and set an item in `localStorage` with the authenticated users details, which our
+application code uses to verify we are authenticated under test.
 
-The `loginByAuth0Api` command will execute the following steps:
+The `loginByAuth0Api` command executes the following steps:
 
 1. Use the
    [/oauth/token endpoint](https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint)
    to perform the programmatic login.
-2. Finally the `auth0Cypress` `localStorage` item is set with the
+2. Finally, the command sets the `auth0Cypress` `localStorage` item with the
    `access token`, `id_token`, and user profile.
 
 <Tabs>
@@ -489,7 +489,7 @@ Cypress.Commands.add(
 
 With our Auth0 app setup properly in the Auth0 Developer console, necessary
 environment variables in place, and our `loginByAuth0Api` command implemented,
-we will be able to authenticate with Auth0 while our app is under test. Below is
+we can authenticate with Auth0 while our app is under test. Below is
 a test to login as a user via [Auth0](https://auth0.com), complete the
 onboarding process, and logout.
 
@@ -517,14 +517,14 @@ describe('Auth0', function () {
 <strong>Note</strong>
 
 The previous sections focused on the recommended Auth0 authentication practice
-within Cypress tests. To use this practice it is assumed you are testing an app
+within Cypress tests. This practice assumes you are testing an app
 appropriately built or adapted to use Auth0.
 
 The following sections provide guidance on building or adapting an app to use
 Auth0 authentication. If you are
 [logging in with `cy.origin()`](#Login-with-cyorigin) and your app is already
 successfully integrated with Auth0, you don't need to make any further changes
-to your app and the remainder of this guide should be regarded as purely
+to your app and you can regard the remainder of this guide as purely
 informational.
 
 :::
@@ -577,7 +577,7 @@ const auth0JwtConfig = {
 }
 ```
 
-Next, we'll define an Express middleware function to be use in our routes to
+Next, define an Express middleware function to be use in our routes to
 verify the [Auth0](https://auth0.com) JWT sent by the front end API requests as
 the `Bearer` token.
 
@@ -605,9 +605,9 @@ if (process.env.REACT_APP_AUTH0) {
 ### Adapting the front end
 
 We need to update our front end React app to allow for authentication with
-[Auth0](https://auth0.com). As mentioned above, the
+[Auth0](https://auth0.com). As mentioned above, the app uses the
 [auth0-react SDK](https://github.com/auth0/auth0-react) for React Single Page
-Applications (SPA) is used.
+Applications (SPA).
 
 First, we create a `AppAuth0.tsx` container to render our application as it is
 authenticated with [Auth0](https://auth0.com). The component is identical to the
@@ -615,8 +615,7 @@ authenticated with [Auth0](https://auth0.com). The component is identical to the
 the Sign Up and Sign In routes and wraps the component with the
 `withAuthenticationRequired` higher order function (HOC).
 
-A `useEffect` hook is added to get the access token for the authenticated user
-and send an `AUTH0` event with the `user` and `token` objects to work with the
+A `useEffect` hook gets the access token for the authenticated user and sends an `AUTH0` event with the `user` and `token` objects to work with the
 existing authentication layer (`authMachine.ts`).
 
 ```jsx title='containers/AppAuth0.tsx'
@@ -705,8 +704,8 @@ is needed to conditionally use the `auth0Cypress` `localStorage` item.
 In the code below, we conditionally apply a `useEffect` block based on being
 under test with Cypress (using `window.Cypress`).
 
-In addition, we will update the export to be wrapped with
-`withAuthenticationRequired` if we are not under test in Cypress. This allows
+In addition, the example wraps the export with
+`withAuthenticationRequired` if we are not under test in Cypress. The wrapper allows
 our application to work with the [Auth0](https://auth0.com) redirect login flow
 in development/production but not when under test in Cypress.
 
@@ -773,14 +772,14 @@ export default appAuth0
 
 Be aware of the rate limit in [Auth0's documentation](https://auth0.com/docs/connections/database/rate-limits) -
 
-This limit can be reached as the size of a test suite grows along with enabling
+You can reach this limit as the size of a test suite grows along with enabling
 [parallelized runs](/cloud/features/smart-orchestration/parallelization) to speed up test run
 duration.
 
-If you run into this rate limit, a programmatic approach can be added to the
+If you run into this rate limit, you can add a programmatic approach to the
 `loginByAuth0` command to clear a blocked IP prior to the test run.
 
-You'll need to obtain an
+You need to obtain an
 [API token](https://auth0.com/docs/api/management/v2/tokens) to interact with
 the [Auth0 Management API](https://auth0.com/docs/api/management/v2). This token
 is a JSON Web Token (JWT) and it contains specific granted permissions for the
@@ -798,7 +797,7 @@ AUTH0_MGMT_API_TOKEN = 'YOUR-MANAGEMENT-API-TOKEN'
 
 With this token in place, we can add interaction with the
 [Auth0 Anomaly remove the blocked IP address endpoint](https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id)
-to our `loginByAuth0Api` command. This will send a delete request to
+to our `loginByAuth0Api` command. The updated command sends a delete request to
 [Auth0 Management API](https://auth0.com/docs/api/management/v2) anomaly
 endpoint to unblock an IP that may become blocked during the test run.
 

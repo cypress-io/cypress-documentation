@@ -1,9 +1,9 @@
-The `views` configuration groups the URLs your tests visit into views using URL patterns. Views are the distinct pages of your application that your reports are organized around. URLs that differ only by numeric IDs or UUIDs are grouped automatically (`/users/123` and `/users/456` become a single `/users/*` view), but other dynamic values are not: `/users/alice` and `/users/bob` appear as two separate views unless a `views` pattern groups them.
+The `views` configuration groups the URLs your tests visit into views using URL patterns. Your reports organize results around views, the distinct pages of your application. Cypress automatically groups URLs that differ only by numeric IDs or UUIDs (`/users/123` and `/users/456` become a single `/users/*` view), but not URLs that differ by other dynamic values: `/users/alice` and `/users/bob` appear as two separate views unless a `views` pattern groups them.
 
 ## Why use views?
 
 - **Group dynamic URLs**: Combine URLs with dynamic values that the automatic rules don't recognize, such as usernames or slugs, into a single view.
-- **Split views by query parameters**: By default, query strings are ignored when views are created, so `/home?status=done` and `/home?status=new` group into a single `/home` view. A pattern that captures a query parameter lets you report on them separately.
+- **Split views by query parameters**: By default, Cypress ignores query strings when creating views, so `/home?status=done` and `/home?status=new` group into a single `/home` view. A pattern that captures a query parameter splits those URLs into separate views.
 - **Create distinct view groups**: Use `groupBy` to create a separate view for each value of a meaningful URL parameter, while still grouping the parts that are dynamic.
 - **Consolidate environments**: Patterns can span subdomains, or omit the protocol and hostname entirely, so the same page visited on different environments rolls up into one view.
 
@@ -12,13 +12,13 @@ The `views` configuration groups the URLs your tests visit into views using URL 
 :::info
 
 **Note:** setting `views` impacts both Accessibility and UI Coverage reports.
-It is defined at the root of your configuration and, unlike `viewFilters` and
-`elementFilters`, it cannot be nested under an `accessibility` or `uiCoverage`
+You define the `views` property at the root of your configuration and, unlike `viewFilters` and
+`elementFilters`, you can't nest it under an `accessibility` or `uiCoverage`
 key to configure each product separately.
 
 :::
 
-The `views` configuration applies to URLs visited in end-to-end tests. Views for component tests are created from the path of the spec file, and are not affected by this configuration.
+The `views` configuration applies to URLs visited in end-to-end tests. Cypress creates views for component tests from the path of the spec file, and this configuration doesn't affect them.
 
 ## Syntax
 
@@ -34,7 +34,7 @@ The `views` configuration applies to URLs visited in end-to-end tests. Views for
 }
 ```
 
-A view can also be defined as just a pattern string when no other options are needed:
+You can also define a view as only a pattern string when you need no other options:
 
 ```json title="App Quality Config"
 {
@@ -52,10 +52,10 @@ A view can also be defined as just a pattern string when no other options are ne
 
 ## How are URLs matched to views?
 
-- Patterns are evaluated in the order they are defined, and each URL is grouped into the view of the first pattern it matches. A URL only ever belongs to one view.
-- URLs that don't match any pattern are grouped by the [automatic view grouping rules](/ui-coverage/core-concepts/views#How-views-are-created), where possible.
+- Cypress evaluates patterns in the order you define them and groups each URL into the view of the first pattern it matches. A URL only ever belongs to one view.
+- Cypress groups URLs that don't match any pattern by the [automatic view grouping rules](/ui-coverage/core-concepts/views#How-views-are-created), where possible.
 - A pattern that doesn't match any URLs in the run does not appear in the report.
-- URLs excluded by a `viewFilters` rule are excluded before `views` patterns are applied. A `views` pattern cannot bring an excluded URL back into the report.
+- Cypress removes URLs that a `viewFilters` rule excludes before applying `views` patterns. A `views` pattern cannot bring an excluded URL back into the report.
 
 Pattern matching follows [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) semantics, with a few behaviors worth knowing:
 
@@ -67,19 +67,19 @@ Pattern matching follows [URL Pattern API](https://developer.mozilla.org/en-US/d
 
 The `groupBy` property creates distinct views based on named parameters in your URL pattern. For example, if your pattern is `/analytics/:type/:id`, using `groupBy: ["type"]` creates a separate view for each unique value of `type` (like `/analytics/performance/:id` and `/analytics/usage/:id`).
 
-This is particularly useful when:
+The `groupBy` property is particularly useful when:
 
 - Different parameter values represent distinct functional areas
 - You want to track coverage separately for different categories of content
 - URL parameters determine significant UI changes
 
-URLs with the same values for the specified parameters are grouped together, while different values create distinct views. Values can be captured from named parameters in the path, the query string, or the hash of the pattern.
+Cypress groups URLs with the same values for the specified parameters together, while different values create distinct views. You can capture values from named parameters in the path, the query string, or the hash of the pattern.
 
 ## How views are named
 
-A view created from your configuration is named by the pattern you wrote. When `groupBy` is used, the grouped parameters are replaced with their matched values, and any remaining named parameters and wildcards stay in the name, as the examples below show.
+Cypress names a view created from your configuration after the pattern you wrote. When you use `groupBy`, Cypress replaces the grouped parameters with their matched values, and any remaining named parameters and wildcards stay in the name, as the examples below show.
 
-When every view in a report shares the same protocol and hostname, view names are displayed without them. The examples below show the names as they appear in this most common case.
+When every view in a report shares the same protocol and hostname, reports display view names without them. The examples below show the names as they appear in this most common case.
 
 ## Examples
 
@@ -119,7 +119,7 @@ The first three URLs match the pattern and group into `/users/*`. The last URL d
 
 ### Grouping with a named path parameter
 
-A named parameter like `:name` matches a single path segment, just like `*`, but keeps a readable placeholder in the view name and can be referenced by `groupBy`.
+A named parameter like `:name` matches a single path segment, just like `*`, but keeps a readable placeholder in the view name and `groupBy` can reference it.
 
 #### Config
 
@@ -223,7 +223,7 @@ View names keep the query string portion of the pattern as you wrote it, with th
 
 ### Grouping URLs across subdomains
 
-Each unique value of `:path*` creates a view, and the same path visited on different subdomains is grouped into a single view. All of the views share the `*.my-app.com` hostname pattern, so it is omitted from the view names.
+Each unique value of `:path*` creates a view, and Cypress groups the same path visited on different subdomains into a single view. All of the views share the `*.my-app.com` hostname pattern, so Cypress omits it from the view names.
 
 #### Config
 
@@ -260,7 +260,7 @@ https://www.my-app.com/profile/edit
 
 ### A pattern you configured doesn't appear in the report
 
-A pattern that doesn't match any URLs in the run is dropped from the report. Confirm that the pattern matches the full URL, including the protocol and hostname, or omit them so the pattern matches any origin. Also check that a `viewFilters` rule isn't excluding the URLs before `views` patterns are applied.
+Cypress drops a pattern that doesn't match any URLs in the run from the report. Confirm that the pattern matches the full URL, including the protocol and hostname, or omit them so the pattern matches any origin. Also check that a `viewFilters` rule isn't excluding the URLs before Cypress applies `views` patterns.
 
 ### Error: `Value "..." was not found in the pattern`
 
@@ -268,4 +268,4 @@ Each name in `groupBy` must appear in `pattern` as a named parameter. For exampl
 
 ### Error: `No duplicate values allowed - "..." was added multiple times`
 
-Each pattern in `views` must be unique. Named parameters are compared as wildcards, so `/users/:name` and `/users/*` count as the same pattern and trigger this error.
+Each pattern in `views` must be unique. Cypress compares named parameters as wildcards, so `/users/:name` and `/users/*` count as the same pattern and trigger this error.

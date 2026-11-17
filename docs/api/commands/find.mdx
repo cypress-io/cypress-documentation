@@ -156,9 +156,7 @@ cy.get('checkout-panel').find('button', { includeShadowDom: true })
 
 ### `.find()` only searches below the subject
 
-`.find()` matches descendants of the subject, never the subject itself. An
-element that matches the selector is left out of the result when it is the
-subject. To search from the root of the page instead, use
+`.find()` matches descendants of the subject, never the subject itself. `.find()` excludes the subject from the result, even when the subject matches the selector. To search from the root of the page instead, use
 [`cy.get()`](/api/commands/get), and see
 [how `cy.get()` and `.find()` differ](/api/commands/get#Get-vs-Find).
 
@@ -247,10 +245,10 @@ cy.get('checkout-panel').shadow().find('button')
 
 <HeaderAssertions />
 
-- `.find()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.find()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.find()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.find()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />

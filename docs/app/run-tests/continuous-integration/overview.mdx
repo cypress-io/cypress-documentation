@@ -24,8 +24,8 @@ major CI provider.
 ## What is Continuous Integration?
 
 Continuous integration is the practice of merging code changes into a shared
-repository frequently, where each change is verified by an automated build and
-test run. When Cypress is part of that pipeline, every commit runs your
+repository frequently, where an automated build and test run verifies each
+change. When Cypress is part of that pipeline, every commit runs your
 end-to-end and component tests against your application, so a change that
 breaks a user flow fails the build instead of shipping.
 
@@ -61,9 +61,9 @@ Cypress, or start from one of our [CI examples](#CI-Examples).
 
 ### Boot your server
 
-Typically you will need to boot a local server before running Cypress. A web
+Typically you need to boot a local server before running Cypress. A web
 server is a **long running process** that never exits, so you need to run it
-in the **background** or your CI provider will never move on to the next
+in the **background** or your CI provider never moves on to the next
 command. You also need to wait for the server to be ready before Cypress
 starts. A command like this has a race condition:
 
@@ -107,7 +107,7 @@ URL your server is hosted on, and your Cypress test command.
 }
 ```
 
-In the example above, the `cy:run` command will only be executed when the URL
+In the example above, the `cy:run` command only runs when the URL
 `http://localhost:3030` responds with an HTTP status code of 200. The server
 also shuts down when the tests complete.
 
@@ -158,7 +158,7 @@ npx cypress run
 Most CI providers automatically kill background processes, so you don't have
 to worry about cleaning up your server process once Cypress finishes.
 
-However, if you're running this script locally you'll have to do a bit more
+However, if you're running this script locally you have to do a bit more
 work to collect the backgrounded PID and then kill it after `cypress run`.
 
 :::
@@ -223,7 +223,7 @@ To record tests:
 Cypress can run tests in parallel across multiple machines, cutting your total
 run time roughly in proportion to the number of machines.
 
-You'll want to refer to your CI provider's documentation on how to set up
+Refer to your CI provider's documentation on how to set up
 multiple machines to run in your CI environment.
 
 Once multiple machines are available within your CI environment, you can pass
@@ -251,7 +251,7 @@ Images are Linux-based and support the following platforms:
 
 Cypress Docker images provide a consistent environment tailored for use with
 Cypress. By choosing an appropriate Cypress Docker image, you determine the
-exact environment that your Cypress tests run in. This shields your workflows
+exact environment that your Cypress tests run in. The image shields your workflows
 from version updates made by your CI provider, for instance if they update
 Node.js or browser versions.
 
@@ -263,7 +263,7 @@ Cypress Docker images are available from:
 ### Cypress Docker variants
 
 - [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) is the entry-level Cypress Docker image. To test in an installed browser such as Chrome or Firefox, use the `cypress/browsers` image described below.
-  It contains a complete Linux (Debian) operating system, together with the
+  The `cypress/base` image contains a complete Linux (Debian) operating system, together with the
   [prerequisite operating system packages](/app/get-started/install-cypress#UbuntuDebian) for Cypress,
   Node.js, npm, and Yarn v1 Classic.
   An image `<tag>` gives you the choice of Node.js version.
@@ -280,13 +280,13 @@ Cypress Docker images are available from:
 
 - [cypress/included](https://github.com/cypress-io/cypress-docker-images/tree/master/included) builds on the
   [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) image.
-  It adds a fixed version of **Cypress**, globally installed by npm.
+  The `cypress/included` image adds a fixed version of **Cypress**, globally installed by npm.
   A short-form image `<tag>` selects the version of Cypress.
   A corresponding long-form `<tag>` selects the version of Cypress and documents the combined Node.js and browser versions.
 
 - [cypress/factory](https://github.com/cypress-io/cypress-docker-images/tree/master/factory)
   provides the base operating system image and allows individual selection of other components
-  by version. It is used to generate customized Docker images.
+  by version. You use the `cypress/factory` image to generate customized Docker images.
 
 ### CI Docker examples
 
@@ -440,7 +440,7 @@ minutes off install time by preventing a large binary download.
 We recommend that you:
 
 - Cache the `~/.cache` folder after running `npm install`, `yarn`,
-  [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in
+  [`npm ci`](https://docs.npmjs.com/cli/ci), or equivalents as demonstrated in
   the configs below.
 
 - **Do not** cache `node_modules` across builds. Instead, cache the package
@@ -454,7 +454,7 @@ We recommend that you:
   [switching to `npm ci`](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable)
   and caching the `~/.npm` directory for a faster and more reliable build.
 
-- If you are using `yarn`, caching `~/.cache` will include both the `yarn` and
+- If you are using `yarn`, caching `~/.cache` includes both the `yarn` and
   Cypress caches. Consider using `yarn install --frozen-lockfile` as an
   [`npm ci`](https://docs.npmjs.com/cli/ci) equivalent.
 
@@ -477,7 +477,7 @@ You can set various environment variables to modify how Cypress runs.
 #### Configuration Values
 
 You can set any [configuration value](/app/references/configuration) as an
-environment variable by prefixing it with `CYPRESS_`. This overrides values in
+environment variable by prefixing it with `CYPRESS_`. The environment variable overrides values in
 the Cypress configuration.
 
 **_Typical use cases would be modifying things like:_**
@@ -488,9 +488,9 @@ the Cypress configuration.
 - `CYPRESS_VIEWPORT_WIDTH` and `CYPRESS_VIEWPORT_HEIGHT` - vary the screen
   size per CI job
 
-The install-time variable
+CI setups also commonly set the install-time variable
 [`CYPRESS_INSTALL_BINARY`](/app/references/advanced-installation#Download-URLs)
-is also commonly set in CI, to skip or redirect the binary download.
+to skip or redirect the binary download.
 
 Refer to the
 [Environment Variables recipe](/app/references/configuration#Environment-Variables)
@@ -498,8 +498,8 @@ for more examples.
 
 **_Record Key_**
 
-If you are [recording your runs](#Record-tests) on a public project, you'll want
-to protect your Record Key.
+If you are [recording your runs](#Record-tests) on a public project, protect your
+Record Key.
 [Learn why.](/cloud/account-management/projects#Project-ID)
 
 Instead of hard coding it into your run command like this:
@@ -507,7 +507,7 @@ Instead of hard coding it into your run command like this:
 <CypressCommandTabs command="run --record --key abc-key-123" />
 
 You can set the record key as the environment variable `CYPRESS_RECORD_KEY`
-and we'll automatically use that value. You can now omit the `--key` flag when
+and Cypress automatically uses that value. You can now omit the `--key` flag when
 recording.
 
 <CypressCommandTabs command="run --record" />
@@ -576,7 +576,7 @@ environment variables to help pass that information along.
 - Pull Request URL: `CYPRESS_PULL_REQUEST_URL`
 - Build URL: `CYPRESS_CI_BUILD_URL`
 
-Setting these will allow links within the Cloud run to take you to the
+Setting these lets links within the Cloud run take you to the
 appropriate place.
 
 #### Custom Environment Variables
@@ -656,13 +656,13 @@ node scripts/run-cypress-tests.js
 
 ### Missing binary
 
-When npm or yarn install the `cypress` package, a `postinstall` hook is executed
+When npm or yarn install the `cypress` package, they execute a `postinstall` hook
 that downloads the platform-specific Cypress binary. If the hook is skipped for
-any reason the Cypress binary will be missing (unless it was already cached).
+any reason the Cypress binary is missing (unless it was already cached).
 
 To better diagnose the error, add
 [commands to get information about the Cypress cache](/app/references/command-line#cypress-cache-command)
-to your CI setup. This will print where the binary is located and what versions
+to your CI setup. These commands print where the binary is located and what versions
 are already present.
 
 <CypressCommandTabs
@@ -670,7 +670,7 @@ are already present.
 cache list`}
 />
 
-If the required binary version is not found in the cache, you can try the
+If the cache does not contain the required binary version, you can try the
 following:
 
 1. Clean your CI's cache using your CI's settings to force a clean `npm install`
@@ -725,16 +725,16 @@ Xvfb -screen 0 1024x768x24 :99 &
 ```
 
 Cypress internally passes these Xvfb arguments, but if you are spawning your own
-Xvfb, you would need to pass these arguments. This is necessary to avoid using
-8-bit color depth with Xvfb, which will prevent Chrome or Electron from
+Xvfb, you would need to pass these arguments. The arguments are necessary to avoid using
+8-bit color depth with Xvfb, which prevents Chrome or Electron from
 crashing.
 
 :::
 
 ### Colors
 
-If you want colors to be disabled, you can pass the `NO_COLOR` environment
-variable to disable colors. You may want to do this if ASCII characters or
+If you want to disable colors, you can pass the `NO_COLOR` environment
+variable. You may want to do this if ASCII characters or
 colors are not properly formatted in your CI.
 
 ```shell

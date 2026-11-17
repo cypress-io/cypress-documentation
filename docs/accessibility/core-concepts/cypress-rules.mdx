@@ -9,9 +9,9 @@ sidebar_position: 40
 
 # Cypress rules
 
-In addition to running the default ruleset of the Axe-Core® library, Cypress develops custom rules that take advantage of the additional layer of information available in a test automation context. These rules are identified by a "Cypress Rule" badge, to distinguish them from the main Axe-Core® rule set.
+In addition to running the default ruleset of the Axe-Core® library, Cypress develops custom rules that take advantage of the additional layer of information available in a test automation context. A "Cypress Rule" badge marks these rules and distinguishes them from the main Axe-Core® rule set.
 
-The first custom rule that we have implemented is called "Interactive elements should be semantically correct." At launch, it is a non-blocking **manual-review** rule that will either pass if no issues are found, or return an inconclusive state.
+The first custom rule that we have implemented is called "Interactive elements should be semantically correct." At launch, it is a non-blocking **manual-review** rule that either passes if no issues are found, or returns an inconclusive state.
 
 ## Why do we need custom accessibility rules?
 
@@ -21,7 +21,7 @@ This form of "passive" accessibility scan is limited to what can be learned from
 
 In Cypress Accessibility, we can build rules that move beyond a passive scan and offer more insights about the accessibility of what you are testing based on your existing test activities, which already describe how a user is supposed to move through the application and what elements they use.
 
-This helps provide early detection of issues that might later appear in manual testing or in bug reports from users, increasing the total range of issues detectable in an automated scan without custom assertions or setup.
+Rules based on test activity help provide early detection of issues that might later appear in manual testing or in bug reports from users, increasing the total range of issues detectable in an automated scan without custom assertions or setup.
 
 ## Interactive elements should be semantically correct
 
@@ -30,7 +30,7 @@ This helps provide early detection of issues that might later appear in manual t
 - **Severity**: `serious`
 
 :::caution
-This rule requires that runs be recorded using Cypress version 13.14.0 or above.
+This rule requires that you record runs using Cypress version 13.14.0 or above.
 :::
 
 <DocsImage
@@ -41,7 +41,7 @@ This rule requires that runs be recorded using Cypress version 13.14.0 or above.
 
 This custom rule is intended to surface potential usability problems with the kinds of elements that Axe-Core® traditionally does not evaluate as interactive, such as div, span, SVG, and image elements.
 
-This works based on the interactions that take place during testing. Often an inaccessible custom component will have Cypress tests that perform interactions the way a user does, and that allows us to detect a mismatch between the underlying purpose of the element in code, and the usage of the element in the context of a test.
+The rule works based on the interactions that take place during testing. Often an inaccessible custom component has Cypress tests that perform interactions the way a user does, and that allows us to detect a mismatch between the underlying purpose of the element in code, and the usage of the element in the context of a test.
 
 ### How to pass this rule
 
@@ -49,13 +49,13 @@ You should look at the purpose and nature of the specific elements flagged by th
 
 For example:
 
-- If the element that gets flagged is a span that has been styled to look like a button and submits a form, the correct solution would be to instead use a standard HTML button element. This communicates the expected action and is activated with the space bar or enter key.
+- If the element that gets flagged is a span that has been styled to look like a button and submits a form, the correct solution would be to instead use a standard HTML button element. A button element communicates the expected action and is activated with the space bar or enter key.
 
 - If the same element is styled with underlined text, and when clicked it resets the URL to navigate to a new page, the correct solution would be to instead use a link element with a `href` attribute.
 
 In each case, the solution is to choose the element that provides the best information to the user, so they can independently understand what the action does, and activate it.
 
-After you have updated to a suitable HTML solution, elements will then be able to be correctly parsed and analyzed by the standard Axe-Core® checks.
+After you have updated to a suitable HTML solution, the standard Axe-Core® checks can correctly parse and analyze the elements.
 
 :::info
 **Tip**: Follow the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#firstrule) and implement interactive controls with standard semantic HTML where possible, relying on ARIA `role` attributes only when no suitable HTML element is available.
@@ -63,7 +63,7 @@ After you have updated to a suitable HTML solution, elements will then be able t
 
 ### Why this matters
 
-In the Web Content Accessibility Guidelines (WCAG), interactive elements are required to meet a wide range of Success Criteria (SCs) to follow the POUR principles, which stands for Perceivable, Operable, Understandable, and Robust.
+The Web Content Accessibility Guidelines (WCAG) require interactive elements to meet a wide range of Success Criteria (SCs) to follow the POUR principles, which stands for Perceivable, Operable, Understandable, and Robust.
 
 Interactive elements that are not semantically correct often don't appear in automated scans, but do appear in manual testing, because they are usually not operable with a keyboard or correctly understandable when described by a screen reader.
 
@@ -86,19 +86,19 @@ This rule is available in all Cypress Accessibility projects, though it is not e
 
 ### Possible outcomes
 
-For each run, this rule can be in one of four states. Most importantly, it will never fail, which means it will not affect your accessibility score.
+For each run, this rule can be in one of four states. Most importantly, it never fails, which means it does not affect your accessibility score.
 
-| Outcome                      | Description                                                                                                                           |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| **Pass**                     | No interactive elements with semantic issues were detected during the test run.                                                       |
-| **Inconclusive**             | Interactive elements with potential semantic issues were detected. You should review each element and determine the correct solution. |
-| **Not Applicable**           | The test run did not interact with any elements, or the version of Cypress was below 13.14.0, so interaction data was not gathered.   |
-| **Ignored by configuration** | The rule was not executed during this test run because it was intentionally turned off.                                               |
+| Outcome                      | Description                                                                                                                                            |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Pass**                     | Cypress Accessibility detected no interactive elements with semantic issues during the test run.                                                       |
+| **Inconclusive**             | Cypress Accessibility detected interactive elements with potential semantic issues. You should review each element and determine the correct solution. |
+| **Not Applicable**           | The test run did not interact with any elements, or the version of Cypress was below 13.14.0, so Cypress did not gather interaction data.              |
+| **Ignored by configuration** | Cypress Accessibility did not run the rule during this test run because it was intentionally turned off.                                               |
 
 ### False positives
 
-Use the "Submit Feedback" button in the product to let us know if you see something that you think is a false positive. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives, so we will make adjustments for specific situations that are not already known as we learn about them.
+Use the "Submit Feedback" button in the product to let us know if you see something that you think is a false positive. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives, so we make adjustments for specific situations that are not already known as we learn about them.
 
 #### Shadow DOM false positives
 
-There is a known issue related to interactions that take place within some shadow DOM nodes and how they are reported in this rule. If this issue affects your reports, reach out to your Cypress point-of-contact.
+There is a known issue related to interactions that take place within some shadow DOM nodes and how this rule reports them. If this issue affects your reports, reach out to your Cypress point-of-contact.
