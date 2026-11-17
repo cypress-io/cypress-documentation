@@ -13,7 +13,7 @@ sidebar_position: 100
 
 ## Examples
 
-Each example shows the App Quality configuration and the `cypress run` command that selects the profile. Anything a profile doesn't mention is inherited from your base configuration.
+Each example shows the App Quality configuration and the `cypress run` command that selects the profile. A profile inherits anything it doesn't mention from your base configuration.
 
 ### Scope a pull request gate to critical flows
 
@@ -55,7 +55,7 @@ cypress run --record --tag "aq-config-pr"
 
 ### Re-include a widget for a dedicated audit
 
-Your base configuration excludes two third-party widgets with [`elementFilters`](/accessibility/configuration/elementfilters), a cookie banner and an embedded support chat, because another vendor owns them and their violations only add noise. One suite exists specifically to audit the support-chat integration's accessibility, recorded under the `aq-config-support-audit` tag. For that run, the chat widget should be scanned while the cookie banner stays excluded.
+Your base configuration excludes two third-party widgets with [`elementFilters`](/accessibility/configuration/elementfilters), a cookie banner and an embedded support chat, because another vendor owns them and their violations only add noise. One suite exists specifically to audit the support-chat integration's accessibility, recorded under the `aq-config-support-audit` tag. For that run, Cypress Accessibility should scan the chat widget while the cookie banner stays excluded.
 
 #### Config
 
@@ -96,7 +96,7 @@ Your base configuration excludes two third-party widgets with [`elementFilters`]
 cypress run --record --tag "aq-config-support-audit"
 ```
 
-A profile's `elementFilters` replaces the base list rather than adding to it, so the profile repeats the cookie-banner rule it still needs and omits the support-chat rule. In Cypress Accessibility an element is scanned unless an `include: false` rule matches it, so dropping the support-chat exclusion is all it takes to bring the widget back into this run's report; you don't add an `include: true` rule. On every other run, both widgets stay excluded.
+A profile's `elementFilters` replaces the base list rather than adding to it, so the profile repeats the cookie-banner rule it still needs and omits the support-chat rule. Cypress Accessibility scans an element unless an `include: false` rule matches it, so dropping the support-chat exclusion is all it takes to bring the widget back into this run's report; you don't add an `include: true` rule. On every other run, both widgets stay excluded.
 
 ### Apply an accessibility-only override for a labels audit
 
@@ -133,7 +133,7 @@ Profiles can override configuration nested under an `accessibility` key, and tho
 cypress run --record --tag "aq-config-label-audit"
 ```
 
-Inside `accessibility`, the profile replaces only `significantAttributes`; the sibling `components` object is inherited, so violation targets still carry their component context and are now identified by their label text. On every other run, elements are identified by `data-cy` as usual.
+Inside `accessibility`, the profile replaces only `significantAttributes`; the profile inherits the sibling `components` object, so violation targets still carry their component context and Cypress Accessibility now identifies them by their label text. On every other run, Cypress Accessibility identifies elements by `data-cy` as usual.
 
 ### Choose between profiles when several tags match
 
@@ -180,7 +180,7 @@ Two teams share one Cypress Cloud project, and each has a profile that scopes th
 cypress run --record --tag "aq-config-team-account,aq-config-team-checkout"
 ```
 
-The nightly run gets `aq-config-team-checkout`, the first of the two in the array, rather than `aq-config-team-account`, even though its tag is listed first on the command line. Reorder the `profiles` array to hand the shared run to the other team.
+The nightly run gets `aq-config-team-checkout`, the first of the two in the array, rather than `aq-config-team-account`, even though its tag comes first on the command line. Reorder the `profiles` array to hand the shared run to the other team.
 
 ## Confirm which profile a run used
 
@@ -198,7 +198,7 @@ If the applied configuration matches your base rather than the profile you expec
 - The run's tag doesn't exactly match the profile `name`. Matching is case-sensitive and exact.
 - The tag never reached Cypress Cloud. A run recorded without `--record`, or without that `--tag`, uses the base configuration.
 - Another profile earlier in the array also matches one of the run's tags and wins. Reorder the array to change precedence.
-- The report was processed before you saved the configuration. Regenerate the run to apply your current profiles. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
+- Cypress Cloud processed the report before you saved the configuration. Regenerate the run to apply your current profiles. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
 
 ## See also
 

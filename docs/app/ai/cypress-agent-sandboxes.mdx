@@ -380,7 +380,7 @@ config first, and check them with \`npx cypress run --component --spec <spec>\`.
   configuration file fails to load, or `setupNodeEvents` throws, Cypress stops
   watching the configuration, so restart Cypress to pick up your fix.
 
-- **`status` stays at `browser not selected`.** This can happen for two
+- **`status` stays at `browser not selected`.** A stalled status can happen for two
   reasons. First, check that you passed `--project`, `--browser` (or set
   `defaultBrowser`), and a testing type to `cypress open`; if you already
   did, set `CYPRESS_AGENT_MODE=1`, since Cypress didn't recognize the agent.
@@ -395,9 +395,9 @@ config first, and check them with \`npx cypress run --component --spec <spec>\`.
 - **Component testing shows no session and no error.** Check that the
   configuration, support file, `component-index.html`, and bundler config (such
   as `vite.config.*`) exist, and that `setupNodeEvents` does not throw. Cypress
-  does not scaffold component testing for an agent because it needs a
-  framework and bundler to be chosen and their dependencies installed, so
-  create these files first. To check the setup, run
+  does not scaffold component testing for an agent because you need to
+  choose a framework and bundler and install their dependencies, so create
+  these files first. To check the setup, run
   `npx cypress run --component --spec <spec>`.
 
 - **`status` reports `not connected` for a session that was running.**

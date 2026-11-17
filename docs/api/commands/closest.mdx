@@ -178,7 +178,7 @@ cy.get('[data-cy="checkout"]').closest('.modal').should('not.exist')
 When the subject is inside a shadow root, `.closest()` crosses the shadow
 boundary. If nothing inside the shadow root matches, it continues from the
 shadow host, testing the host itself and then the host's ancestors, until it
-finds a match or reaches the document. This happens whether or not
+finds a match or reaches the document. This search happens whether or not
 [`includeShadowDom`](/app/references/configuration#Global) is enabled. The
 option controls whether queries like [`.find()`](/api/commands/find) reach
 into a shadow root, not whether `.closest()` climbs back out of one.
@@ -211,10 +211,10 @@ cy.get('payment-panel')
 
 <HeaderAssertions />
 
-- `.closest()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.closest()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.closest()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.closest()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -231,7 +231,7 @@ cy.get('payment-panel')
 cy.get('li.active').closest('.nav')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/closest/find-closest-nav-element-in-test.png"

@@ -11,7 +11,7 @@ slug: /app/references/release-stages
 # Release Stages
 
 Cypress follows Semantic Versioning
-([see summary here](https://semver.org/#summary)) so that it is clear how you
+([Semantic Versioning summary](https://semver.org/#summary)) so that it is clear how you
 may be affected when upgrading to a newer version of Cypress. If there is a
 minor version increment, `11.0.0` → `11.1.0` for example, you should not
 experience disruption in your usage of Cypress. If there is a major version
@@ -34,19 +34,19 @@ to be feature complete and free of issues in the majority of use cases.
 **Strategies for releasing and communicating changes to GA features**
 
 - Modifications
-  - Modifications can be introduced during any release cycle and increment
-    semver
+  - We can introduce modifications during any release cycle, and they
+    increment semver
 - Breaking Changes
-  - Breaking changes will only be introduced during major releases in which
-    semver is bumped by a major version
+  - We only introduce breaking changes during major releases, which bump
+    semver by a major version
   - In some cases early access to these changes are possible through public
     packages
 - Removals
-  - Removals will only be introduced during major releases in which semver is
-    bumped by a major version
-  - In the majority of cases, removals will be proceeded by a period in which
-    the feature is ‘deprecated’
-  - Migration steps will be provided to minimize pain points in these situations
+  - We only introduce removals during major releases, which bump semver by
+    a major version
+  - In the majority of cases, a period in which the feature is ‘deprecated’
+    precedes a removal
+  - We provide migration steps to minimize pain points in these situations
 
 ### Beta
 
@@ -58,23 +58,23 @@ before an official release.
 **Strategies for releasing and communicating changes to Beta features**
 
 - Modifications
-  - Modifications can be introduced during any release cycle.
-  - Modifications will be documented, with recommended code changes highlighted
+  - We can introduce modifications during any release cycle.
+  - We document modifications, with recommended code changes highlighted
     if appropriate.
 - Breaking Changes
-  - Breaking changes can be introduced during any release cycle and do not bump
-    semver by a major version
+  - We can introduce breaking changes during any release cycle, and they do not
+    bump semver by a major version
   - Breaking changes require in-app messaging to help users unblock themselves
     as needed
-  - The introduction and impact of breaking changes should be carefully
-    considered at this stage as the cost to users is higher than with an alpha
+  - We should carefully consider the introduction and impact of breaking changes
+    at this stage as the cost to users is higher than with an alpha
     feature.
 - Removals
   - Removal of any new functionality related to the feature can happen during
-    any release cycle and will increment semver. These do not need to coincide
+    any release cycle and increments semver. These removals do not need to coincide
     with a major release that is bumping semver by a major version.
-  - Removals at this stage will be rare and a migration strategy along with
-    reasoning for the removal will be documented.
+  - Removals at this stage are rare, and we document a migration strategy
+    along with reasoning for the removal.
 
 ### Alpha
 
@@ -85,13 +85,13 @@ features may not be feature complete and changes are possible during this stage.
 **Strategies for releasing and communicating changes to Alpha features**
 
 - Modifications
-  - Modifications can be introduced during any release cycle and may or may not
-    increment semver.
-  - Modifications will be documented, with recommended code changes highlighted
+  - We can introduce modifications during any release cycle, and they may or
+    may not increment semver.
+  - We document modifications, with recommended code changes highlighted
     if appropriate.
 - Breaking Changes
-  - Breaking changes can be introduced during any release cycle and do not bump
-    semver by a major version
+  - We can introduce breaking changes during any release cycle, and they do not
+    bump semver by a major version
 - Removals
   - Removal of any new functionality related to the feature can happen during
     any release cycle and does not bump semver by a major version.
@@ -109,12 +109,12 @@ experimental lifetime. See the current
 **Strategies for releasing and communicating changes to experimental features**
 
 - Modifications
-  - Modifications can be introduced during any release cycle and may or may not
-    increment semver.
+  - We can introduce modifications during any release cycle, and they may or
+    may not increment semver.
 - Breaking Changes
-  - Breaking changes can be introduced during any release cycle and do not bump
-    semver by a major version.
+  - We can introduce breaking changes during any release cycle, and they do not
+    bump semver by a major version.
 - Removals
   - Removal of any new functionality related to the feature or the feature in
-    its entirety can happen during any release cycle and will not be accompanied
+    its entirety can happen during any release cycle and is not accompanied
     by a major semver version change.

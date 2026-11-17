@@ -16,8 +16,8 @@ Chrome-family browsers, Firefox, and
 WebKit (Safari's
 browser engine).
 
-Any browser you want to run Cypress tests in needs to be installed on your local
-system or CI environment. A full list of detected browsers is displayed within
+You need to install any browser you want to run Cypress tests in on your local
+system or CI environment. Cypress displays a full list of detected browsers within
 the browser selection menu of [Cypress](/app/core-concepts/open-mode).
 
 <DocsImage
@@ -25,7 +25,7 @@ the browser selection menu of [Cypress](/app/core-concepts/open-mode).
   alt="Cypress with Firefox selected as the browser"
 />
 
-The desired browser can also specified via the
+You can also specify the desired browser via the
 [`--browser`](/app/references/command-line#Options) flag when using the
 [`run`](/app/references/command-line#cypress-run) command to launch Cypress. For
 example, to run Cypress tests in Chrome:
@@ -34,8 +34,8 @@ example, to run Cypress tests in Chrome:
 cypress run --browser chrome
 ```
 
-To make launching of Cypress with a specific browser even more convenient, npm
-scripts can be used as a shortcut:
+To make launching of Cypress with a specific browser even more convenient, you
+can use npm scripts as a shortcut:
 
 ```json title='package.json'
 "scripts": {
@@ -49,11 +49,11 @@ scripts can be used as a shortcut:
 When incorporating testing of multiple browsers within your QA process, you must
 implement a CI strategy that provides an optimal level of confidence while
 taking into consideration test duration and infrastructure costs. This optimal
-strategy will vary by the needs of a particular project. This guide we
+strategy varies by the needs of a particular project. This guide we
 present several strategies to consider when crafting the strategy for your
 project.
 
-CI strategies will be demonstrated using the
+This guide demonstrates CI strategies using the
 [Circle CI Cypress Orb](https://circleci.com/orbs/registry/orb/cypress-io/cypress)
 for its concise and readable configuration, but the same concepts apply for most
 CI providers.
@@ -69,10 +69,10 @@ Firefox.
 
 ### Periodic Basis
 
-Generally, it is desired to run tests with each pushed commit, but it may not be
+Generally, you want to run tests with each pushed commit, but it may not be
 necessary to do so for all browsers. For example, we can choose to run tests
 within Chrome for each commit, but only run Firefox on a periodic basis (i.e.
-nightly). The periodic frequency will depend on the scheduling of your project
+nightly). The periodic frequency depends on the scheduling of your project
 releases, so consider a test run frequency that is appropriate for the release
 schedule of your project.
 
@@ -80,7 +80,7 @@ schedule of your project.
 
 <strong>Cron Scheduling</strong>
 
-Typically CI providers allow for the scheduling of CI jobs via
+Typically CI providers support scheduling CI jobs via
 [cron expressions](https://en.wikipedia.org/wiki/Cron). For example, the
 expression `0 0 * * *` translates to "everyday at midnight" or nightly. Helpful
 [online utilities](https://crontab.guru/) are available to assist with creation
@@ -117,9 +117,9 @@ For projects that exhibit consistently stable behavior across browsers, it may
 be better to run tests against additional browsers only before merging changes
 in the production deployment branch.
 
-The following example demonstrates only running Firefox tests when commits are
-merged into a specific branch (`develop` branch in this case) so any potential
-Firefox issues can be caught before a production release:
+The following example demonstrates only running Firefox tests when you merge commits
+into a specific branch (`develop` branch in this case) so you can catch any potential
+Firefox issues before a production release:
 
 ```yaml title='.circleci/config.yml'
 version: 2.1
@@ -158,8 +158,8 @@ parameter, against the Firefox browser, and reports the results to
 
 :::info
 
-**Note:** The `name` under each `cypress/run` job which will be shown in the
-Circle CI workflow UI to distinguish the jobs.
+**Note:** The Circle CI workflow UI shows the `name` under each `cypress/run` job
+to distinguish the jobs.
 
 :::
 
@@ -185,11 +185,10 @@ workflows:
 
 ### Parallelize per browser
 
-Execution of test files can be parallelized on a per
+You can parallelize execution of test files on a per
 [group](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs)
-basis, where test files can be grouped by the browser under test. This
-versatility enables the ability to allocate the desired amount of CI resources
-towards a browser to either improve test duration or to minimize CI costs.
+basis, where you group test files by the browser under test. With per-browser
+groups, you can allocate the desired amount of CI resources towards a browser to either improve test duration or to minimize CI costs.
 
 **You do not have to run all browsers at the same parallelization level.** In
 the example below, the Chrome dedicated `cypress/run` job runs _all_ tests in
@@ -227,7 +226,7 @@ workflows:
 ### Running Specific Tests by Browser
 
 There may be instances where it can be useful to run or ignore one or more tests
-when in specific browsers. For example, test run duration can be reduced by only
+when in specific browsers. For example, you can reduce test run duration by only
 running smoke-tests against Chrome and not Firefox. This type of granular
 selection of test execution depends on the type of tests and the level of
 confidence those specific tests provide to the overall project.

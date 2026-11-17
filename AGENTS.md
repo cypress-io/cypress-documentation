@@ -56,6 +56,7 @@ npm run typecheck     # tsc
 npm test              # cypress e2e (needs `npm run serve`, not the dev server)
 npm run test:plugins  # vitest unit tests for plugins/
 npm run api:source -- blur   # locate the Cypress source a /api page documents
+npm run lint:pronouns -- docs/app/ai/cypress-tap.mdx   # list sentences that open with a bare pronoun
 ```
 
 Install before you lint. With no `node_modules` present, `npm run lint:fix`
@@ -229,8 +230,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   service) gets reported as not run, with the reason. Being short is not a
   reason.
 - In Claude Code, the first `git commit` after examples change stops once with
-  a reminder listing them. Run them and report (or say in your report why one
-  doesn't need a run), then commit again. The judgment is yours.
+  a reminder listing them. Run them and report (or say why one doesn't need a
+  run), then commit again. The judgment is yours. A new or mostly rewritten page
+  stops it the same way for a [style review](./AGENTS_REFERENCE.md#reviewing-a-new-or-rewritten-page).
 
 **API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
 
@@ -266,11 +268,14 @@ Each rule is a hard convention. See the linked section for the how and why.
   migration notes are the exception, since the reader needs the version to
   upgrade.
 - **Say what something does**, not what it lets the reader do. "`cy.session()`
-  caches and restores session state", not "allows you to cache…".
+  caches and restores session state", not "allows you to cache…". The same
+  goes for "lets you", "enables you to", "allows users to", "gives you the
+  ability to", "provides you with", and "makes it possible to".
 - **Name the subject in every sentence.** Repeat the noun instead of pointing
   back to an earlier sentence with "it", "this", or "they" ("The agent runs
   your specs", not "It runs your specs"), so each sentence stands on its own.
-  A pronoun for a noun in the same sentence is fine.
+  A pronoun for a noun in the same sentence is fine. To list the candidates,
+  run `npm run lint:pronouns -- <file>`.
 - Plain words over formal ones: not `leverage`, `utilize`, or `in order to`.
 - Cut filler. `please`, `note that`, and hedges that carry no information.
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in

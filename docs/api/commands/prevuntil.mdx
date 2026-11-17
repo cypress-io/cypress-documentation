@@ -110,10 +110,10 @@ cy.get('#nuts').prevUntil('#veggies')
 
 <HeaderAssertions />
 
-- `.prevUntil()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.prevUntil()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.prevUntil()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.prevUntil()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -130,7 +130,7 @@ cy.get('#nuts').prevUntil('#veggies')
 cy.get('#nuts').prevUntil('#veggies')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/prevuntil/prev-until-finding-elements-in-command-log.png"

@@ -14,7 +14,7 @@ Get every DOM element with the given role, optionally narrowed to the elements
 whose accessible name matches. The role is what a screen reader announces an
 element as, such as a button or a link, and the accessible name is the text it
 announces for it. A test written with `cy.getByRole()` finds elements the way
-assistive technology does, and fails if the role or text is changed.
+assistive technology does, and fails if the role or text changes.
 
 Browsers expose accessible roles for many elements by default, such as a
 `<button>` or a `<nav>`. A `role` attribute can also set one, which is the only
@@ -29,7 +29,7 @@ By default, `cy.getByRole()` skips two kinds of elements:
    such as a `<div role="button">`
 
 The command has options to find both, but the defaults favor the elements most
-likely to be accessible to users. This follows the
+likely to be accessible to users. These defaults follow the
 [first rule of ARIA](https://www.w3.org/TR/using-aria/#rule1), which advises
 using native browser elements over a custom re-implementation. To change the
 defaults for your project, [overwrite the query](#Change-the-native-default-for-your-project)
@@ -73,10 +73,10 @@ cy.getByRole('heading', { level: 2 }) // Errors, narrow by level with .filter()
 The role to find, such as `'button'`, `'heading'`, `'navigation'`, or
 `'tab'`. An element has a role when:
 
-- Its tag implies one, such as `<button>` for `button`, `<nav>` for
+- The element's tag implies one, such as `<button>` for `button`, `<nav>` for
   `navigation`, or `<input type="checkbox">` for `checkbox`.
-- Its `role` attribute sets one, such as `<div role="tab">`. The attribute
-  replaces the implied role. When it lists several roles as fallbacks, the
+- The element's `role` attribute sets one, such as `<div role="tab">`. The attribute
+  replaces the implied role. When the attribute lists several roles as fallbacks, the
   first valid one counts, as in browsers: `role="switch checkbox"` is a
   `switch`, and `role="foo button"` is a `button`. With no valid role in the
   attribute, the element keeps its implied role.
@@ -201,8 +201,8 @@ cy.getByRole('link').should(($links) => {
 The accessible name comes from the element's content, a `<label>`,
 `aria-label`, `aria-labelledby`, an image's `alt` text, or a `title`
 attribute. A string must match the whole name, and it is case-sensitive.
-Whitespace in the name is collapsed to a single space and trimmed before it's
-compared.
+`cy.getByRole()` collapses whitespace in the name to a single space and trims it
+before comparing.
 
 ```html title="index.html"
 <button>Save changes</button>
@@ -220,10 +220,7 @@ cy.getByRole('button', { name: 'Save' }).should('not.exist')
 cy.getByRole('button', { name: 'save changes' }).should('not.exist')
 ```
 
-Content hidden with `aria-hidden="true"` is left out of the name. So is CSS
-`::before` and `::after` content, so that an icon-font glyph, which lives in a
-pseudo-element, doesn't become part of a button's name. Browsers include this
-content in the accessible name, so an element named only by `::before` or
+`cy.getByRole()` leaves content hidden with `aria-hidden="true"` out of the name. `cy.getByRole()` also leaves out CSS `::before` and `::after` content, so that an icon-font glyph, which lives in a pseudo-element, doesn't become part of a button's name. Browsers include pseudo-element content in the accessible name, so an element named only by `::before` or
 `::after` content has a name in the browser but not in `cy.getByRole()`. Match
 it with an `aria-label` or by another role and name instead.
 
@@ -276,7 +273,7 @@ reach:
 
 - The element or an ancestor has the `hidden` attribute, `aria-hidden="true"`,
   or `display: none`.
-- The element's computed `visibility` is `hidden`. It inherits this from a
+- The element's computed `visibility` is `hidden`. The element inherits this value from a
   `visibility: hidden` ancestor unless it sets `visibility: visible` itself.
 
 Pass `hidden: true` to include them, such as to find a closed menu.
@@ -306,7 +303,7 @@ A `<div role="button">` has the `button` role, but it doesn't get a button's
 keyboard behavior unless the page adds it. For a role that HTML has an element
 for, such as `button`, `link`, `heading`, `dialog`, or `checkbox`,
 `cy.getByRole()` matches only elements whose tag gives them the role. The test
-fails if a native control is replaced with an imitation.
+fails if your app swaps a native control for an imitation.
 
 ```html title="index.html"
 <button>Save</button>
@@ -344,7 +341,7 @@ authoring practices, because HTML has a different element for the role:
   `<select>` or an `<input>` with a `list` attribute.
 - An icon `<svg role="img">`. The native image is an `<img>`.
 
-When an element was skipped only because it has the role through a `role`
+When `cy.getByRole()` skips an element only because it has the role through a `role`
 attribute, the error says so and suggests passing `{ native: false }`.
 
 #### Change the `native` default for your project
@@ -370,7 +367,7 @@ Cypress.Commands.overwriteQuery(
 #### Search inside another element
 
 Chained off a command that yields DOM elements, `cy.getByRole()` searches the
-descendants of each of them. It never matches the subject element(s) it is
+descendants of each of them. `cy.getByRole()` never matches the subject element(s) it is
 chained off.
 
 ```html title="index.html"

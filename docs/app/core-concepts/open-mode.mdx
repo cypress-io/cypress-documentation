@@ -19,10 +19,10 @@ The Cypress app includes an interactive workflow called open mode. In Cypress op
   alt="The Launchpad"
 />
 
-The Launchpad helps you choose a testing type, pick a browser, and open your project. It also guides first time setup when needed so you can start running specs with the right configuration.
+The Launchpad helps you choose a testing type, pick a browser, and open your project. The Launchpad also guides first time setup when needed so you can start running specs with the right configuration.
 
 To bypass the Launchpad's manual selection steps, run
-[`cypress open`](/app/references/command-line#cypress-open) with `--browser` and either `--component` or `--e2e`. The Launchpad will still open briefly (it handles configuration errors and other edge cases), but you'll land directly on the Specs page without having to click through the testing type and browser prompts.
+[`cypress open`](/app/references/command-line#cypress-open) with `--browser` and either `--component` or `--e2e`. The Launchpad still opens briefly (it handles configuration errors and other edge cases), but you land directly on the Specs page without having to click through the testing type and browser prompts.
 
 ## Specs
 
@@ -41,7 +41,7 @@ Shows when the spec file last changed on your machine, based on git or filesyste
 
 ### Latest runs
 
-Shows the last time the spec ran and the last four statuses. Results are scoped to your current git branch when available, then the default branch, then all branches. Data comes from Cypress Cloud.
+Shows the last time the spec ran and the last four statuses. Cypress scopes results to your current git branch when available, then the default branch, then all branches. Data comes from Cypress Cloud.
 
 ### Average duration
 
@@ -53,7 +53,7 @@ Shows the average time to run the spec, calculated from the last four runs. Usef
 
 <strong>What is a flaky test?</strong>
 
-A test is considered to be [flaky](/cloud/features/flaky-test-management) when it
+Cypress considers a test [flaky](/cloud/features/flaky-test-management) when it
 can pass and fail across multiple retry attempts without any code changes.
 
 :::
@@ -78,10 +78,10 @@ You can run multiple specs sequentially using [`experimentalRunAllSpecs`](/app/r
 
 ## Runs
 
-When your project records to [Cypress Cloud](/cloud/get-started/introduction), the app shows your latest [recorded runs](/cloud/features/recorded-runs#Latest-Runs) directly in open mode. This gives branch scoped results in context while you debug locally.
+When your project records to [Cypress Cloud](/cloud/get-started/introduction), the app shows your latest [recorded runs](/cloud/features/recorded-runs#Latest-Runs) directly in open mode. Showing recorded runs in open mode gives branch scoped results in context while you debug locally.
 
 - **Authentication:** Sign in to Cypress Cloud using the profile in the top right.
-- **Branch scoping:** Cypress reads your current git branch to scope results. It first shows runs from that branch. If no runs are found, it falls back to the default branch, then to all branches.
+- **Branch scoping:** Cypress reads your current git branch to scope results. Cypress first shows runs from that branch. If no runs are found, it falls back to the default branch, then to all branches.
 - **Git information:** To scope runs correctly, the app needs git metadata. Ensure git is available and that you send git information to Cypress Cloud. In some environments, such as `docker` or `docker-compose`, pass git information with [custom system environment variables](/app/continuous-integration/overview#Git-information).
 - **Run titles:** Each run title comes from the git commit message. Click a run to open it in Cypress Cloud.
 
@@ -121,7 +121,7 @@ Get notifications in the Cypress app for recorded runs from [Cypress Cloud](/clo
 
 ## Test Runner
 
-The Cypress Test Runner is where you run and debug specs in open mode. It executes commands step by step, renders the Application or Component Under Test, and streams details to the Command Log so you can see what happened and why. Use the Test Runner to reproduce failures, inspect the DOM, and iterate quickly during development.
+The Cypress Test Runner is where you run and debug specs in open mode. The Test Runner executes commands step by step, renders the Application or Component Under Test, and streams details to the Command Log so you can see what happened and why. Use the Test Runner to reproduce failures, inspect the DOM, and iterate quickly during development.
 
 :::tip
 
@@ -157,7 +157,7 @@ Links in the Command Log often point to the source file where a command is defin
 
 ### Time traveling
 
-Hover over any command in the Command Log to restore the Application or Component Under Test to the state it had when that command ran. Cypress captures a snapshot for every command, which lets you time travel to previous states while you debug.
+Hover over any command in the Command Log to restore the Application or Component Under Test to the state it had when that command ran. Cypress captures a snapshot for every command, so you can time travel to previous states while you debug.
 
 :::info
 
@@ -192,7 +192,7 @@ In this example, clicking the `CLICK` command highlights it and shows:
 
 #### 1. Pinned snapshot
 
-The snapshot is pinned. Hovering other commands does not change the preview, which lets you inspect the DOM at that moment in time.
+The snapshot is pinned. Hovering other commands does not change the preview, so you can inspect the DOM at that moment in time.
 
 #### 2. Event hitbox
 
@@ -200,7 +200,7 @@ Action commands like [`.click()`](/api/commands/click) show a red hitbox at the 
 
 #### 3. Snapshot menu
 
-Some commands capture multiple snapshots, for example action commands capture both before and after. Use the snapshot menu to switch between them. This is useful when an action triggers a visible change, such as typing into an input.
+Some commands capture multiple snapshots, for example action commands capture both before and after. Use the snapshot menu to switch between them. Switching snapshots is useful when an action triggers a visible change, such as typing into an input.
 
 :::info
 
@@ -228,9 +228,9 @@ The Command Log also records application events. These entries appear in gray wi
 
 ### Hide HTTP Requests
 
-When you do not need to inspect network calls, you can hide HTTP requests in the Command Log to reduce noise. Deselect the "Show HTTP Requests" toggle in the Options menu in the Command Log header to collapse entries for XHR and fetch requests. This makes it easier to focus on the commands that interact with the page.
+When you do not need to inspect network calls, you can hide HTTP requests in the Command Log to reduce noise. Deselect the "Show HTTP Requests" toggle in the Options menu in the Command Log header to collapse entries for XHR and fetch requests. Hiding requests makes it easier to focus on the commands that interact with the page.
 
-Hiding HTTP requests does not change how your tests run. It only affects what is displayed in the Command Log. Requests still execute and remain available to assertions and tooling like [`cy.intercept()`](/api/commands/intercept).
+Hiding HTTP requests does not change how your tests run. The toggle only affects what the Command Log displays. Requests still execute and remain available to assertions and tooling like [`cy.intercept()`](/api/commands/intercept).
 
 <DocsVideo
   src="/img/app/core-concepts/open-mode/hide-http-fetch-requests-cypress.mp4"
@@ -240,7 +240,7 @@ Hiding HTTP requests does not change how your tests run. It only affects what is
 
 ### Instrument panel
 
-When you use [`cy.intercept()`](/api/commands/intercept), [`cy.stub()`](/api/commands/stub), or [`cy.spy()`](/api/commands/spy), the instrument panel appears above the test. It summarizes routes, stubs, and spies so you can quickly inspect network traffic and function calls while you debug.
+When you use [`cy.intercept()`](/api/commands/intercept), [`cy.stub()`](/api/commands/stub), or [`cy.spy()`](/api/commands/spy), the instrument panel appears above the test. The instrument panel summarizes routes, stubs, and spies so you can quickly inspect network traffic and function calls while you debug.
 
 #### Routes
 
@@ -278,17 +278,15 @@ cy.intercept('GET', '/comments/1').as('getComment')
 
 ## Preview pane
 
-The right-hand side of the App is where the Application or Component
-Under Test is rendered.
+The right-hand side of the App is where Cypress renders the Application or
+Component Under Test.
 
 ### Application Under Test <E2EOnlyBadge />
 
 In
 [E2E Testing](/app/core-concepts/testing-types#What-is-E2E-Testing),
-the right-hand side of the App is used to display the Application Under
-Test (AUT): the application that was navigated to using a
-[`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from
-the visited application.
+the right-hand side of the App displays the Application Under
+Test (AUT): the application your test visited with [`cy.visit()`](/api/commands/visit), including any routing the visited application does afterward.
 
 In the example below, we wrote the following code in our test file:
 
@@ -298,7 +296,7 @@ cy.title().should('include', 'Kitchen Sink')
 ```
 
 In the corresponding application preview below, you can see
-`https://example.cypress.io` is being displayed in the right-hand side. Not only
+`https://example.cypress.io` displayed in the right-hand side. Not only
 is the application visible, but it is fully interactive. You can open your
 developer tools to inspect elements as you would in your normal application. The
 DOM is completely available for debugging.
@@ -312,8 +310,8 @@ DOM is completely available for debugging.
 
 The application preview honors the size and orientation defined in your tests. Control the viewport with [`cy.viewport()`](/api/commands/viewport) or set defaults in your [Cypress configuration](/app/references/configuration#Viewport). If the preview does not fit in the browser window, Cypress scales it to fit.
 
-The current size and scale of the AUT is displayed in the top right corner of
-the window.
+The top right corner of the window displays the current size and scale of the
+AUT.
 
 The image below shows an application at `1000px` by `660px`, scaled to `90%`.
 
@@ -324,7 +322,7 @@ The image below shows an application at `1000px` by `660px`, scaled to `90%`.
 
 #### Errors
 
-Cypress surfaces syntax errors in your spec file directly in the preview so you can fix them when tests run. This helps catch typos and missing imports early.
+Cypress surfaces syntax errors in your spec file directly in the preview so you can fix them when tests run. Surfacing errors in the preview helps catch typos and missing imports early.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/aut-error-e2e.png"
@@ -360,7 +358,7 @@ it('should have password input of type password', () => {
 </TabItem>
 </Tabs>
 
-In the preview below, the `LoginForm` component is rendered on the right. The component is fully interactive. Open developer tools to inspect elements as you would in your application. The DOM is available for debugging.
+In the preview below, Cypress renders the `LoginForm` component on the right. The component is fully interactive. Open developer tools to inspect elements as you would in your application. The DOM is available for debugging.
 
 <DocsImage
   src="/img/app/core-concepts/component-under-test.png"
@@ -385,7 +383,7 @@ Cypress also surfaces syntax errors in component specs in the preview so you can
 
 ## Cypress Studio
 
-[Cypress Studio](/app/guides/cypress-studio) is part of open mode. Use Studio to record interactions and generate Cypress commands, then edit tests inline without leaving the app. Changes are saved to your spec file so your tests stay in code.
+[Cypress Studio](/app/guides/cypress-studio) is part of open mode. Use Studio to record interactions and generate Cypress commands, then edit tests inline without leaving the app. Studio saves changes to your spec file so your tests stay in code.
 
 To learn how to start Studio, record actions, add assertions, and edit tests, see the [Cypress Studio guide](/app/guides/cypress-studio).
 
@@ -437,7 +435,7 @@ For example, click the `GET` for the `.action-email` selector in the Command Log
   alt="Cypress app with get command pinned and console log open showing the yielded element"
 />
 
-You will see Cypress print additional information:
+Cypress prints additional information:
 
 - Command issued
 - Yielded value

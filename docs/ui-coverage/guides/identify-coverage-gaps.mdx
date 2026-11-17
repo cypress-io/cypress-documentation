@@ -13,8 +13,8 @@ Most teams can name a few flows they know are well tested. Naming the buttons,
 forms, and pages that _no_ test ever touches is much harder, and those are the
 gaps that let regressions ship. UI Coverage turns every recorded run into a
 ranked map of exactly those gaps: every interactive element your tests
-exercised, every one they missed, and every page they never opened. It reads
-this from [Test Replay](/cloud/features/test-replay) data in Cypress Cloud, so
+exercised, every one they missed, and every page they never opened. UI Coverage reads
+this map from [Test Replay](/cloud/features/test-replay) data in Cypress Cloud, so
 there's no code to instrument and nothing to add to your app.
 
 <UICovPremiumNote />
@@ -58,7 +58,7 @@ pages your suite doesn't reach yet.
 
 ## Step 2: Read your overall coverage score
 
-Once your run has recorded, start with the **overall coverage score**. It's the
+Once your run has recorded, start with the **overall coverage score**. The score is the
 percentage of your application's interactive elements that your tests
 exercised, so it's the single number that tells you how much of your UI is
 covered and gives you a baseline to improve against. The score appears on the
@@ -71,7 +71,7 @@ runs list and on each individual run.
 
 [Grouped elements](/ui-coverage/core-concepts/element-grouping) count once
 toward the score, so a list of 50 identical "Remove" buttons is a single unit,
-and one test that removes one item covers all of them. This keeps repeated
+and one test that removes one item covers all of them. Counting a group once keeps repeated
 elements from inflating or sinking your score. For the exact calculation, see
 [how the score is calculated](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated).
 
@@ -83,22 +83,22 @@ untested elements behind the number actually are.
 ## Step 3: Start with your lowest-scoring views
 
 Open the run's **UI Coverage** tab. A [view](/ui-coverage/core-concepts/views)
-is a distinct page or state of your application. For end-to-end tests, URLs
-are grouped into patterns; for component tests, each spec file is a view. The
+is a distinct page or state of your application. For end-to-end tests, UI Coverage
+groups URLs into patterns; for component tests, each spec file is a view. The
 **Views** section lists every view with:
 
-- **Snapshots**: how many DOM snapshots were captured for the view.
-- **Tested elements**: how many of the view's interactive elements were tested, out of the total found.
-- **Coverage %**: the percentage of the view's interactive elements that were tested.
+- **Snapshots**: how many DOM snapshots Cypress captured for the view.
+- **Tested elements**: how many of the view's interactive elements your tests exercised, out of the total found.
+- **Coverage %**: the percentage of the view's interactive elements that your tests tested.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-list-of-views.png"
   alt="Cypress Cloud screenshot showing the list of views within the UI Coverage tab, with columns for snapshots, tested elements, and coverage score alongside the lefthand navigation and a filter"
 />
 
-The table is sorted by **Views** by default. Sort by **Coverage %** to bring your lowest-covered views to the top, then
+The table sorts by **Views** by default. Sort by **Coverage %** to bring your lowest-covered views to the top, then
 weigh each one against how important it is to your users. A checkout or signup
-view at 40% is a more urgent gap than a settings page at the same score. This
+view at 40% is a more urgent gap than a settings page at the same score. Weighing views by importance
 is where you decide which views deserve the next test.
 
 ## Step 4: Drill into a view to see untested elements
@@ -108,7 +108,7 @@ didn't reach, so you can see each gap in context. A view drilldown includes:
 
 - **Untested elements**: interactive elements that no recognized Cypress command targeted during the run.
 - **Tested elements**: interactive elements a test exercised, with a count of how many times.
-- **Snapshot**: a full-page, inspectable snapshot of the view as it appeared during the run. Tested elements are highlighted green, untested elements red.
+- **Snapshot**: a full-page, inspectable snapshot of the view as it appeared during the run. The snapshot highlights tested elements green and untested elements red.
 - **Snapshot navigation**: previous and next controls, labeled `Snapshot {n} of {total}`, to move between the view's different states during the run.
 - **Snapshot coverage score**: the coverage score for the specific snapshot you're viewing.
 - **Test Replay**: a menu of the tests that reached the snapshot, each opening [Test Replay](/cloud/features/test-replay) at that point, where you can see the element within the full test run instead of a single captured state.
@@ -133,9 +133,9 @@ cover it in one place.
   alt="Cypress Cloud screenshot of the untested elements section listing elements that were not interacted with during the run"
 />
 
-Expanding an untested element shows its selector and, when needed, switches to an example snapshot. It also lists any views where the element appears without any interaction, so you can trace the same element back to every page it shows up on.
+Expanding an untested element shows its selector and, when needed, switches to an example snapshot. The expanded row also lists any views where the element appears without any interaction, so you can trace the same element back to every page it shows up on.
 
-For tested elements, the individual interactions are listed and can be traced through to the tests themselves.
+For tested elements, the report lists the individual interactions, and you can trace them through to the tests themselves.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-view-drilldown.png"
@@ -145,7 +145,7 @@ For tested elements, the individual interactions are listed and can be traced th
 ## Step 5: Find the pages your tests never visit
 
 Untested elements only exist for pages your tests actually open. To find the
-pages your suite never reaches at all, use the **Untested links** section. It
+pages your suite never reaches at all, use the **Untested links** section. The section
 lists links (`<a>` elements) whose destination URL was never visited during the
 run. Each one is a flow your tests are missing, even when no view exists for
 that page yet.
@@ -169,9 +169,9 @@ so you can see where in the page the link lives.
 />
 
 Untested links count against your coverage score, which is deliberate: a page
-you link to but never test is a real gap. But links to destinations you'll
+you link to but never test is a real gap. But links to destinations you
 never own, such as external sites, a marketing page, or a status page,
-shouldn't drag your score down. That's what the next step addresses.
+shouldn't drag your score down. The next step addresses these links.
 
 ## Step 6: Sharpen the signal with configuration
 
@@ -180,9 +180,9 @@ _real_ gaps. Two kinds of noise commonly lower a score without pointing to
 anything worth testing:
 
 - **Third-party widgets**, such as chat launchers, cookie banners, and ad embeds, are interactive elements you don't own, each counted as untested.
-- **Untested links to pages you'll never test**, such as external sites, marketing pages, and a status page, count against your score even though testing them isn't your job.
+- **Untested links to pages you never test**, such as external sites, marketing pages, and a status page, count against your score even though testing them isn't your job.
 
-UI Coverage is configured from the **App Quality** tab of your project settings
+You configure UI Coverage from the **App Quality** tab of your project settings
 in Cypress Cloud. Configuration is opt-in: add a rule only to remove noise or
 sharpen the report. After saving, you can regenerate any historical run from its
 **Properties** tab to see the effect immediately, with no need to re-run your tests.
@@ -202,7 +202,7 @@ Exclude a third-party widget so it stops counting as an untested element with
 }
 ```
 
-Exclude a destination you'll never test so its untested links stop counting
+Exclude a destination you never test so its untested links stop counting
 against your score with [`viewFilters`](/ui-coverage/configuration/viewfilters):
 
 ```json title="App Quality Config"

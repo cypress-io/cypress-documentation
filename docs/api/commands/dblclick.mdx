@@ -246,7 +246,7 @@ which can hold keys down across multiple commands. See
 
 :::
 
-The following keys can be combined with `.dblclick()` through the `options`.
+You can combine the following keys with `.dblclick()` through the `options`.
 
 | Option     | Notes                                                                                         |
 | ---------- | --------------------------------------------------------------------------------------------- |
@@ -307,15 +307,15 @@ cy.get('[data-cy=title]').type('{selectall}')
 <HeaderRequirements />
 
 - `.dblclick()` requires being chained off a command that yields DOM element(s).
-- `.dblclick()` cannot be called on a `<select>` element. Use
+- You can't call `.dblclick()` on a `<select>` element. Use
   [`.select()`](/api/commands/select) to change its value.
 
 <HeaderAssertions />
 
 - `.dblclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.dblclick()` itself is not retried. It fires once when the element is
-  actionable. Assertions chained after `.dblclick()` are retried until they
+- Cypress doesn't retry `.dblclick()` itself. `.dblclick()` fires once when the element is
+  actionable. Cypress retries assertions chained after `.dblclick()` until they
   pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 

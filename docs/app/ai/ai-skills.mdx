@@ -32,11 +32,11 @@ With Cypress AI Skills, your AI agent can:
 - Behave consistently across your team, no matter who writes the prompt
 
 Skills work with any AI coding agent that supports skills or custom
-instructions, including Cursor, Claude Code, and GitHub Copilot. They are
+instructions, including Cursor, Claude Code, and GitHub Copilot. The skills are
 published in the open source
 [Cypress AI Toolkit](https://github.com/cypress-io/ai-toolkit).
 
-They are free to every Cypress user: no Cypress Cloud account, no paid
+Cypress skills are free to every Cypress user: no Cypress Cloud account, no paid
 subscription, and no usage limits. Installing them into your agent is all it
 takes.
 
@@ -47,13 +47,13 @@ specific Cypress workflow: what conventions to follow, how to reason about the
 task, and what good output looks like.
 
 Think of a generic AI agent as a brilliant but inexperienced new hire. Without
-guidance, it will do its best, but it won't know your team's standards, your
+guidance, the agent does its best, but it doesn't know your team's standards, your
 project's conventions, or what good Cypress tests look like. A skill is the expert
 SOP manual you hand them on day one.
 
 ## Available Cypress skills
 
-Cypress publishes five skills. They are designed to work together:
+Cypress publishes five skills, designed to work together:
 `cypress-author` writes and fixes tests, `cypress-explain` reviews and explains
 them, and `cypress-tap` runs and debugs them against a live Cypress session.
 `cypress-cloud-cli` triages recorded runs and failures in Cypress Cloud, and
@@ -67,8 +67,8 @@ tests. Use it when you're writing new tests or fixing broken or flaky ones.
 
 Before writing a single line, the skill reads your project: your Cypress
 config, `package.json`, support files, existing specs, custom commands, and
-fixtures. Everything it produces is shaped by what is already there, not by
-what a generic Cypress project might look like.
+fixtures. The skill shapes everything it produces to what is already there, not
+to what a generic Cypress project might look like.
 
 In practice, that means:
 
@@ -78,12 +78,12 @@ In practice, that means:
   (`data-cy`, `data-test`, `data-testid`, and similar) over CSS classes and DOM
   structure, and suggests adding a `data-cy` attribute to your app code when no
   stable selector exists.
-- **Tests built for stability.** It never adds arbitrary waits like
+- **Tests built for stability.** The skill never adds arbitrary waits like
   `cy.wait(5000)`, relying instead on `cy.intercept()` with aliases and
-  assertions that retry automatically. Tests are written to run independently,
+  assertions that retry automatically. The skill writes tests to run independently,
   with application state prepared programmatically rather than through slow UI
   flows.
-- **Code that fits your project.** It matches your language (TypeScript or
+- **Code that fits your project.** The skill matches your language (TypeScript or
   JavaScript) and existing type patterns, and reuses your helpers, custom
   commands, and fixtures rather than reinventing them.
 - **Only APIs your Cypress version supports.** The skill detects your Cypress
@@ -108,10 +108,10 @@ Beyond what a generic AI agent knows, this skill:
 - **Flags what will bite you.** Brittle selectors, timing assumptions,
   unnecessary waits, UI coupling, and missing assertions are all called out
   explicitly.
-- **Catches bad metadata.** Misleading or incorrect test titles and comments
-  are flagged and corrected, not silently accepted.
+- **Catches bad metadata.** The skill flags and corrects misleading or incorrect
+  test titles and comments rather than silently accepting them.
 - **Uses accurate Cypress terminology.** Command chains, subjects, assertions,
-  network stubbing. It speaks Cypress, not generic testing jargon.
+  network stubbing. The skill speaks Cypress, not generic testing jargon.
 - **Keeps explanations concise and practical.** Focused on how things are
   used, not exhaustive API walkthroughs.
 
@@ -134,16 +134,16 @@ To run a headless session instead, use `cypress run`.
 
 Beyond what a generic AI agent knows, this skill:
 
-- **Reads results the way the Cypress app does.** It pulls the spec overview,
+- **Reads results the way the Cypress app does.** The skill pulls the spec overview,
   each test's Command Log, the error and code frame, and the console properties
   behind a command, drilling into a single command only when it needs to.
-- **Inspects the app at the moment it broke.** It pins a past command's DOM
+- **Inspects the app at the moment it broke.** The skill pins a past command's DOM
   snapshot and reads the page with `dom`, `aria`, and `inspect`, then clears the
   pin when it is done.
-- **Keeps its reads small.** It caps the DOM, accessibility tree, and console
+- **Keeps its reads small.** The skill caps the DOM, accessibility tree, and console
   output it pulls back, so a large page never floods your AI agent's context,
   and raises the caps only when it needs more.
-- **Waits for the real verdict.** It captures the run's start time, runs a single
+- **Waits for the real verdict.** The skill captures the run's start time, runs a single
   spec, and polls `status` until a fresh `passed` or `failed` arrives for that
   spec, so it never trusts a stale result left over from a previous run.
 - **Runs against the right session.** When more than one `cypress open` session
@@ -173,20 +173,20 @@ for the setup.
 
 Beyond what a generic AI agent knows, this skill:
 
-- **Resolves a Cypress Cloud URL directly.** It reads the project, run number,
+- **Resolves a Cypress Cloud URL directly.** The skill reads the project, run number,
   and test ID from a copied Cloud test URL and queries that test straight away,
   instead of walking the organization and project lists to rediscover them.
-- **Targets the attempt that failed.** It reads a test's attempt history and
+- **Targets the attempt that failed.** The skill reads a test's attempt history and
   passes the failed attempt number to every Test Replay query, so a flaky test's
   final passing retry never hides the failure it is diagnosing.
-- **Reconstructs the failure from Test Replay.** It pulls the commands leading up
+- **Reconstructs the failure from Test Replay.** The skill pulls the commands leading up
   to the failed command, the XHR and Fetch network events, and the application's
   console logs, then correlates them to explain what broke.
 - **Distinguishes flake from a reproducible failure.** With no explicit flake
   field to rely on, it infers flake from the retry history, a failed attempt
   followed by a passing one, and reports the cause as `unknown` when the attempts
   are inconclusive.
-- **Grounds every conclusion in evidence.** It reports the run, spec, test, and
+- **Grounds every conclusion in evidence.** The skill reports the run, spec, test, and
   timeline it inspected, and names the remaining gap when the evidence is
   incomplete rather than guessing.
 
@@ -199,23 +199,23 @@ options, and end-to-end triage walkthroughs, see
 [`cypress-docs`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-docs)
 gives your AI agent reliable access to accurate, up-to-date Cypress
 documentation. Use it to look up commands, APIs, and configuration options, or
-to confirm how a feature works in a specific Cypress version. It also supports
+to confirm how a feature works in a specific Cypress version. The `cypress-docs` skill also supports
 the other Cypress skills, which consult official documentation while they work.
 
 Beyond what a generic AI agent knows, this skill:
 
-- **Searches official sources first.** It routes queries to the correct
+- **Searches official sources first.** The skill routes queries to the correct
   section of docs.cypress.io (commands, guides, configuration, error messages)
   before your model reaches for Cypress knowledge it already has, which may be
   outdated.
 - **Uses LLM-optimized documentation.** The skill discovers structured
   Markdown content through the `/llms.txt` index on docs.cypress.io, giving
   cleaner and more reliable results than scraping HTML.
-- **Grounds answers in docs, not training data.** If a claim can't be verified
-  in official documentation, it says so rather than inventing an API or
+- **Grounds answers in docs, not training data.** If the skill can't verify a
+  claim in official documentation, it says so rather than inventing an API or
   behavior, reducing the chance of a confident but incorrect answer.
-- **Stays version-aware.** When a Cypress version is detected in your project,
-  it scopes answers to what is available in that version and calls out
+- **Stays version-aware.** When the skill detects a Cypress version in your
+  project, it scopes answers to what is available in that version and calls out
   differences explicitly.
 
 ## Install Cypress AI Skills
@@ -324,7 +324,7 @@ load it automatically when your prompt is relevant:
 /cypress-author
 ```
 
-The example prompts below show a few ways to put the skills to work. They are
+The example prompts below show a few ways to put the skills to work. The examples are
 not exhaustive.
 
 ### Scaffold tests from acceptance criteria
@@ -426,7 +426,7 @@ reference.
 
 ### Triage a recorded Cloud failure
 
-When a test fails in CI and was recorded to Cypress Cloud, `cypress-cloud-cli`
+When a test fails in a CI run recorded to Cypress Cloud, `cypress-cloud-cli`
 can pull the run, the failing test, and its Test Replay data from the terminal,
 then work out the most likely cause. See the
 [Cloud CLI documentation](/cloud/integrations/cloud-cli) for the full command
@@ -463,8 +463,8 @@ skill.
 2. Skills listen for keywords and concepts, but depending on your agent, model,
    and other installed skills, a skill may not trigger. You can improve your
    odds by using the word "Cypress" in your prompt.
-3. Most agents let you verify a skill is installed and force it to run with a
-   slash command, for example `/cypress-author`.
+3. In most agents, a slash command such as `/cypress-author` verifies a skill is
+   installed and forces it to run.
 
 ### A skill is using too many tokens
 
@@ -474,14 +474,14 @@ Skills sometimes prompt the agent to read foundational files like your
 "use `my_spec.cy.js` as a pattern."
 
 Also review your `AGENTS.md`, `CLAUDE.md`, or similar agent configuration
-files. These often reference files that are helpful in principle but large in
+files. These configuration files often reference files that are helpful in principle but large in
 practice. Consider adding instructions to scope how agents use them.
 
 ### The output isn't what I want
 
 Skills set general guidelines. Add your own steps, instructions, or
 anti-patterns directly in your prompt to override or extend them. The skill
-will mix your additions with its own.
+mixes your additions with its own.
 
 For teams with consistent preferences, consider contributing your improvements
 back to the open source

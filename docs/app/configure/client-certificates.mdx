@@ -20,10 +20,10 @@ Without mTLS support, you face an unpleasant choice: disable certificate
 requirements in your test environment (meaning your tests run against a system
 that doesn't match production), or rely on slow and inconsistent manual testing.
 
-The `clientCertificates` configuration lets you supply the certificates Cypress
+The `clientCertificates` configuration supplies the certificates Cypress
 needs to authenticate against mTLS-protected endpoints, so your automated E2E
-tests exercise the real security boundary. Misconfigurations, expired
-certificates, or changed server requirements get caught in CI — not in
+tests exercise the real security boundary. Your tests catch misconfigurations,
+expired certificates, or changed server requirements in CI — not in
 production, where the cost is highest.
 
 :::info
@@ -126,11 +126,11 @@ Cypress automatically applies the correct client certificate for every outgoing
 network request — including those initiated by
 [`cy.visit()`](/api/commands/visit) and
 [`cy.request()`](/api/commands/request) — based on URL pattern matching.
-**No additional options need to be passed to these commands.**
+**You don't need to pass additional options to these commands.**
 
 When Cypress makes a request, it compares the target URL against each `url`
-pattern in the `clientCertificates` array. If a matching entry is found, its
-certificates are attached to the request automatically.
+pattern in the `clientCertificates` array. If Cypress finds a matching entry, it
+attaches that entry's certificates to the request automatically.
 
 If more than one entry matches the same URL, Cypress selects the entry with the
 **most specific (longest) path** pattern.
@@ -237,7 +237,7 @@ non-standard port (e.g. `https://secure.example.com:8443/**`).
 When Cypress makes a request to a URL that matches a `clientCertificates`
 entry, it logs `clientCertificates` details in the **Cypress App** network
 panel. Open the panel and look for the lock icon next to the matching request
-to confirm that a certificate was attached.
+to confirm that Cypress attached a certificate.
 
 ### Common errors
 

@@ -256,8 +256,8 @@ cy.session('admin', loginAsAdmin).then((status) => {
 
 ### Validating a restored session with `validate`
 
-The `validate` function checks that the session is established correctly. This
-matters most when Cypress restores a cached session: if the session is no longer
+The `validate` function checks that the session is established correctly.
+Validation matters most when Cypress restores a cached session: if the session is no longer
 valid, `cy.session()` recreates it by running `setup` again.
 
 These scenarios mark the session as invalid:
@@ -606,7 +606,7 @@ it('logs out', () => {
 ```
 
 To test what a signed-out user sees without logging out on the server, clear
-the browser's session data instead. This leaves the cached session as it is.
+the browser's session data instead. Clearing that data leaves the cached session as it is.
 
 ```javascript
 it('redirects a signed-out user to the login page', () => {
@@ -701,7 +701,7 @@ const login = (name) => {
 }
 ```
 
-`cy.session()` can't be called inside the `cy.origin()` callback, so keep the
+You can't call `cy.session()` inside the `cy.origin()` callback, so keep the
 `cy.origin()` call inside `setup`. For provider-specific walkthroughs, see the
 guides for [Auth0](/app/guides/authentication-testing/auth0-authentication),
 [Okta](/app/guides/authentication-testing/okta-authentication), and
@@ -860,7 +860,7 @@ the session and recreate it when needed.
 
 <HeaderTimeouts />
 
-- `cy.session()` has no `timeout` option. It runs for as long as the commands in
+- `cy.session()` has no `timeout` option. `cy.session()` runs for as long as the commands in
   `setup` and `validate` run, and each of those commands uses its own timeout.
 - If `setup` or `validate` returns a Promise, `cy.session()` waits up to 20
   seconds for it to settle, then fails the test.
@@ -930,7 +930,7 @@ it('recreates the session after logging out', () => {
 })
 ```
 
-Whenever `cy.session()` is called, the Command Log shows one of the following
+Whenever you call `cy.session()`, the Command Log shows one of the following
 lines, with the session `id` and the status of the call:
 
 - No saved session exists, so Cypress creates and saves a new session:
@@ -961,7 +961,7 @@ with an error.
 Expanding the session group in the Command Log shows each step Cypress ran. In
 the third test, Cypress clears the page and session data and restores the saved
 session. In **Validate session**, `/whoami` returns `401`, so the assertion
-fails and Cypress reports that it will recreate the session. It then clears the
+fails and Cypress reports that it is recreating the session. Cypress then clears the
 page and session data again, runs **Recreate session** and **Validate session**, and
 clears the page.
 

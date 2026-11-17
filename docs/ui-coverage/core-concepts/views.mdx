@@ -15,14 +15,14 @@ Views turn a run's raw coverage data into a page-by-page breakdown you can act o
 
 - **Where coverage is strong**: views with high scores confirm which areas of your application are well tested.
 - **Where the gaps are**: views with low scores, and untested views discovered from links, show exactly which pages need attention.
-- **How to prioritize**: per-view scores let you focus testing effort on the most critical areas of your application first.
+- **How to prioritize**: per-view scores point testing effort at the most critical areas of your application first.
 
 ## What makes a view
 
 Views come from two sources, depending on testing type:
 
-- **End-to-end tests**: The unique URLs across all snapshots are consolidated into URL patterns. Each pattern becomes a view.
-- **Component tests**: Each spec file becomes a single view, named by the spec's file path. All components mounted within a spec are grouped into that view.
+- **End-to-end tests**: UI Coverage consolidates the unique URLs across all snapshots into URL patterns. Each pattern becomes a view.
+- **Component tests**: Each spec file becomes a single view, named by the spec's file path. UI Coverage groups all components mounted within a spec into that view.
 
 <DocsImage
   noBorder
@@ -34,17 +34,17 @@ Views come from two sources, depending on testing type:
 
 Every URL visited in an end-to-end run passes through three steps, in order:
 
-1. **Filtering**: URLs excluded by your [`viewFilters`](/ui-coverage/configuration/viewfilters) configuration are removed from the report.
-2. **Your patterns**: The remaining URLs are matched against your [`views`](/ui-coverage/configuration/views) configuration patterns, in the order they're listed. The first matching pattern wins.
-3. **Automatic grouping**: Any URLs that didn't match one of your patterns are grouped by the automatic rules below.
+1. **Filtering**: UI Coverage removes URLs excluded by your [`viewFilters`](/ui-coverage/configuration/viewfilters) configuration from the report.
+2. **Your patterns**: UI Coverage matches the remaining URLs against your [`views`](/ui-coverage/configuration/views) configuration patterns, in the order you list them. The first matching pattern wins.
+3. **Automatic grouping**: UI Coverage groups any URLs that didn't match one of your patterns by the automatic rules below.
 
-The automatic rules consolidate the dynamic URLs that represent the same page into a single view. They reduce noise so that your report reflects the structure of your application, not the number of records in your test data:
+The automatic rules consolidate the dynamic URLs that represent the same page into a single view, reducing noise so that your report reflects the structure of your application, not the number of records in your test data:
 
-- **Dynamic segments**: Any path segment that is a number or an ID is replaced with a wildcard (`*`). A segment counts as an ID when it is a UUID, a UUID-shaped hexadecimal value (even if not a strictly valid UUID), or a string of 20 or more hexadecimal characters. This applies even when only one URL matches the pattern, so `/orders/123` becomes `/orders/*` on its own.
-- **Query parameters**: Query strings are ignored when grouping, so URLs that differ only by query parameters become a single view, and view names do not include a query string.
-- **Hash routing**: If a URL's hash begins with `#/`, UI Coverage treats your application as using hash-based routing. Each hash route becomes its own view, and the dynamic segment rules also apply within the hash. Hashes that do not begin with `#/` (e.g., `#section-2`) are ignored.
+- **Dynamic segments**: UI Coverage replaces any path segment that is a number or an ID with a wildcard (`*`). A segment counts as an ID when it is a UUID, a UUID-shaped hexadecimal value (even if not a strictly valid UUID), or a string of 20 or more hexadecimal characters. The wildcard replacement applies even when only one URL matches the pattern, so `/orders/123` becomes `/orders/*` on its own.
+- **Query parameters**: UI Coverage ignores query strings when grouping, so URLs that differ only by query parameters become a single view, and view names do not include a query string.
+- **Hash routing**: If a URL's hash begins with `#/`, UI Coverage treats your application as using hash-based routing. Each hash route becomes its own view, and the dynamic segment rules also apply within the hash. UI Coverage ignores hashes that do not begin with `#/` (e.g., `#section-2`).
 - **Trailing slashes**: URLs that differ only by a trailing slash are the same view.
-- **Common origins**: When views share a protocol, host, and port, view names omit them for readability. In runs that span multiple origins, names are shortened wherever it's unambiguous.
+- **Common origins**: When views share a protocol, host, and port, view names omit them for readability. In runs that span multiple origins, UI Coverage shortens names wherever it's unambiguous.
 
 ### Examples
 
@@ -133,8 +133,8 @@ The [`viewFilters`](/ui-coverage/configuration/viewfilters) configuration exclud
 
 - [`views` configuration](/ui-coverage/configuration/views) covers the full syntax for grouping URLs into views, including `groupBy`.
 - [`viewFilters` configuration](/ui-coverage/configuration/viewfilters) covers excluding URLs from your reports.
-- [Interactivity](/ui-coverage/core-concepts/interactivity) explains which elements count as interactive, which commands mark them as tested, and how untested links are tracked.
-- [Element identification](/ui-coverage/core-concepts/element-identification) explains how elements are identified within a view across snapshots.
+- [Interactivity](/ui-coverage/core-concepts/interactivity) explains which elements count as interactive, which commands mark them as tested, and how UI Coverage tracks untested links.
+- [Element identification](/ui-coverage/core-concepts/element-identification) explains how UI Coverage identifies elements within a view across snapshots.
 - The [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps) guide shows how to use views to find untested areas of your application.
 - The [Ignore views and links](/ui-coverage/guides/ignore-views-and-links) guide walks through excluding irrelevant views from your coverage scores.
 - The [UI Coverage FAQ](/ui-coverage/faq) answers common questions about view grouping and missing pages.

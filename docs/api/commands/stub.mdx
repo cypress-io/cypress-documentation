@@ -10,8 +10,8 @@ sidebar_label: stub
 
 Replace a function, record its usage, and control its behavior.
 
-`cy.stub()` is a utility function, and is not a Cypress command, query or
-assertion. It is not retryable, chainable, or timeout-able.
+`cy.stub()` is a utility function, and is not a Cypress command, query, or
+assertion. `cy.stub()` is not retryable, chainable, or timeout-able.
 
 :::info
 
@@ -49,9 +49,9 @@ The name of the `method` on the `object` to be wrapped.
 <HeaderYields />
 
 - `cy.stub()` is _synchronous_ and returns a value (the stub) instead of a
-  Promise-like chain-able object. It can be aliased.
-- `cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). All methods found
-  on [Sinon.js](http://sinonjs.org) spies and stubs are supported.
+  Promise-like chain-able object. You can alias the stub.
+- `cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). `cy.stub()` supports all
+  methods found on [Sinon.js](http://sinonjs.org) spies and stubs.
 
 ## Examples
 
@@ -108,11 +108,11 @@ expect(removeStub).to.be.called
 #### Replace built-in window methods like prompt
 
 In end-to-end tests, replacing built-in `window` methods needs to happen _after_
-the page is visited, but _before_ the application under test is loaded. You can
+Cypress visits the page, but _before_ the application under test loads. You can
 do this by stubbing functions inside the [`cy.visit()`](/api/commands/visit)
 command `onBeforeLoad` function.
 
-In Component tests, because the page isn't being reloaded, all you need to do is
+In Component tests, because Cypress doesn't reload the page, all you need to do is
 stub functions before mounting your component.
 
 :::visit-mount-example
@@ -141,7 +141,7 @@ cy.get('.name').should('have.value', 'my custom message')
 #### Disable logging to Command Log
 
 You can chain a `.log(bool)` method to disable `cy.stub()` calls from being
-shown in the Command Log. This may be useful when your stubs are called an
+shown in the Command Log. Disabling the log may be useful when your application calls your stubs an
 excessive number of times.
 
 ```javascript
@@ -161,7 +161,7 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 ### Aliases
 
-You can alias stubs, similar to how [`.as()`](/api/commands/as) works. This can
+You can alias stubs, similar to how [`.as()`](/api/commands/as) works. Aliasing can
 make your stubs easier to identify in error messages and Cypress's command log,
 and retrieve them later for assertions using `cy.get()`.
 
@@ -178,7 +178,7 @@ expect(stub).to.be.called
 cy.get('@withFoo').should('be.called') // purposefully failing assertion
 ```
 
-You will see the following in the command log:
+The command log shows the following:
 
 <DocsImage
   src="/img/api/stub/stubs-with-aliases-and-error-in-command-log.png"
@@ -202,9 +202,9 @@ reset/restore them.
 
 The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is
 that `cy.spy()` does not replace the method, it only wraps it. So, while
-invocations are recorded, the original method is still called. This can be very
-useful when testing methods on native browser objects. You can verify a method
-is being called by your test and still have the original method action invoked.
+`cy.spy()` records invocations, it still calls the original method. Wrapping can be very
+useful when testing methods on native browser objects. You can verify your test
+calls a method and still have the original method action invoked.
 
 ## Command Log
 
@@ -220,7 +220,7 @@ obj.foo('foo', 'bar')
 expect(stub).to.be.called
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <DocsImage src="/img/api/stub/stub-in-command-log.png" alt="Command Log stub" />
 

@@ -17,8 +17,8 @@ another origin.
 
 :::caution
 
-Cypress automatically clears all cookies _before_ each test to prevent state
-from being shared across tests when
+Cypress automatically clears all cookies _before_ each test to prevent tests
+from sharing state when
 [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 is enabled. You shouldn't need to use this command unless you're using it to
 clear all cookies inside a single test or test isolation is disabled.
@@ -137,7 +137,7 @@ cy.clearAllCookies({ log: false })
 <HeaderTimeouts />
 
 - `cy.clearAllCookies()` can time out waiting for the browser to clear the cookies.
-  It waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
+  The command waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
   (or the `timeout` option, when passed) before failing.
 
 ## History

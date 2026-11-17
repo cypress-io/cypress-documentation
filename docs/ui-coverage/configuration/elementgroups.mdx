@@ -9,7 +9,7 @@ sidebar_position: 60
 
 # Group related elements - `elementGroups`
 
-The `elementGroups` configuration combines related elements into a single unit in your UI Coverage report. A group counts once toward your coverage score, and an interaction with any element in the group marks the whole group as tested. This means a list of 50 untested product cards no longer appears as 50 untested elements dragging down your score. Instead, it appears as one clearly named group that a single test can cover.
+The `elementGroups` configuration combines related elements into a single unit in your UI Coverage report. A group counts once toward your coverage score, and an interaction with any element in the group marks the whole group as tested. Grouping means a list of 50 untested product cards no longer appears as 50 untested elements dragging down your score. Instead, it appears as one clearly named group that a single test can cover.
 
 Without meaningful groups, a report can fill up with elements listed under machine-generated names that are hard to act on:
 
@@ -23,7 +23,7 @@ Without meaningful groups, a report can fill up with elements listed under machi
 UI Coverage already [groups elements automatically](/ui-coverage/core-concepts/element-grouping) based on their structure in the DOM. Use `elementGroups` when the automatic grouping doesn't match how your application actually behaves:
 
 - **Consolidate repeated elements**: Collapse dynamic or repeated elements, such as items in a list, carousel, or data table, into one logical group.
-- **Correct the automatic grouping**: Split apart elements that were grouped together incorrectly, or unite elements that the automatic rules kept separate.
+- **Correct the automatic grouping**: Split apart elements that the automatic rules grouped together incorrectly, or unite elements that the automatic rules kept separate.
 - **Make reports readable**: Replace machine-generated selectors with meaningful names like "Remove Item Button" or "Shipping Method Option", so anyone reading the report understands what needs testing.
 - **Group across markup differences**: Combine elements that share behavior but not structure, such as form controls and their labels.
 
@@ -66,13 +66,13 @@ To add or edit `elementGroups`, open the **App Quality** tab in your project set
 
 ### How are elementGroups rules applied?
 
-Rules are evaluated in order, and each element joins the group of the **first** rule whose `selector` matches it. Elements that match no rules fall back to the automatic [element grouping rules](/ui-coverage/core-concepts/element-grouping).
+UI Coverage evaluates rules in order, and each element joins the group of the **first** rule whose `selector` matches it. Elements that match no rules fall back to the automatic [element grouping rules](/ui-coverage/core-concepts/element-grouping).
 
 A few behaviors are worth knowing:
 
-- **Custom groups override automatic grouping.** An element that matches an `elementGroups` rule is grouped by that rule alone. This includes links, which would otherwise be grouped by their `href` patterns.
+- **Custom groups override automatic grouping.** UI Coverage groups an element that matches an `elementGroups` rule by that rule alone. This override includes links, which UI Coverage would otherwise group by their `href` patterns.
 - **A group forms even with one match.** Unlike the automatic rules, which require at least two similar elements, an `elementGroups` rule that matches a single element still produces a named group in the report.
-- **Filtered elements are never grouped.** Elements excluded from reports by [`elementFilters`](/ui-coverage/configuration/elementfilters) are not considered for grouping.
+- **Filtered elements are never grouped.** UI Coverage skips grouping for elements that [`elementFilters`](/ui-coverage/configuration/elementfilters) excludes from reports.
 - **The `data-cy-ui-group` attribute wins.** Elements that declare a group directly in your markup with the [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) keep that group, even if they also match an `elementGroups` rule.
 
 ### Validation rules
@@ -80,7 +80,7 @@ A few behaviors are worth knowing:
 Cypress Cloud rejects a configuration when:
 
 - Two rules have the same `selector` (with the same `documentScope`). Duplicates can never both apply, because the first matching rule wins.
-- Two rules have the same `name`, or one rule's `name` matches another rule's `selector`. Groups are identified by these values, so they must be unique.
+- Two rules have the same `name`, or one rule's `name` matches another rule's `selector`. UI Coverage identifies groups by these values, so they must be unique.
 - A `selector` or `documentScope` entry isn't valid CSS selector syntax.
 - `documentScope` is present but empty. Omit the property to match in any document.
 - A rule contains a property other than the four listed above.
@@ -89,7 +89,7 @@ Cypress Cloud rejects a configuration when:
 
 ### Consolidate repeated elements
 
-Elements generated from data often have dynamic attribute values, like an add to cart button rendered for each product in a listing. One rule with an attribute prefix selector collapses all of them into a single group. Without a `name`, the group is displayed under its selector.
+Elements generated from data often have dynamic attribute values, like an add to cart button rendered for each product in a listing. One rule with an attribute prefix selector collapses all of them into a single group. Without a `name`, UI Coverage displays the group under its selector.
 
 #### Config
 
@@ -296,7 +296,7 @@ Shipping Method Option (4 instances)
 
 ### Group elements inside a shadow DOM
 
-Third-party widgets and design system components often render inside a shadow DOM. Use `documentScope` to apply a rule only to elements inside a specific shadow DOM host. Here, only the buttons inside the `<support-chat>` component's shadow root are grouped; the button in the main document also matches the `button` selector, but stays separate because it's outside the scope.
+Third-party widgets and design system components often render inside a shadow DOM. Use `documentScope` to apply a rule only to elements inside a specific shadow DOM host. Here, the rule groups only the buttons inside the `<support-chat>` component's shadow root; the button in the main document also matches the `button` selector, but stays separate because it's outside the scope.
 
 #### Config
 
@@ -338,7 +338,7 @@ Support Chat Actions (2 instances)
 
 ### Group elements inside an iframe
 
-`documentScope` works the same way for embedded services that render inside an iframe, such as a payment provider on a checkout page. The scope selector matches the `iframe` element itself in its parent document. Here, only the buttons inside the `#payment-provider` iframe are grouped, while the coupon button in the main document remains a separate element.
+`documentScope` works the same way for embedded services that render inside an iframe, such as a payment provider on a checkout page. The scope selector matches the `iframe` element itself in its parent document. Here, the rule groups only the buttons inside the `#payment-provider` iframe, while the coupon button in the main document remains a separate element.
 
 #### Config
 

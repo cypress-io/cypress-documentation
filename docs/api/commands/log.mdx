@@ -37,7 +37,7 @@ line it displays, including any arguments. HTML tags display as plain text.
 <Icon name="angle-right" /> **args...**
 
 Additional values to print after the message. See [Formatting arguments in the Command Log](#Formatting-arguments-in-the-Command-Log)
-for how each value is displayed.
+for how the Command Log displays each value.
 
 <HeaderYields />
 
@@ -187,8 +187,8 @@ cy.get('li').each(($item, index) => {
 
 `cy.log()` joins the message and every argument with a comma and a space.
 Strings, numbers, and booleans print as they are, and Markdown in a string
-renders the same way it does in the message. Arrays with more than 3 items
-and objects with more than 2 keys are summarized so the Command Log stays
+renders the same way it does in the message. `cy.log()` summarizes arrays with
+more than 3 items and objects with more than 2 keys so the Command Log stays
 readable:
 
 | Argument               | Shown in the Command Log |
@@ -205,8 +205,8 @@ console.
 
 ### Values are captured when the command is queued
 
-`cy.log()` is enqueued like every other Cypress command, so its arguments are
-evaluated when the test code runs, before any commands execute. A variable that
+Cypress enqueues `cy.log()` like every other Cypress command, so JavaScript
+evaluates its arguments when the test code runs, before any commands execute. A variable that
 an earlier command changes still holds its old value when `cy.log()` receives
 it. Call `cy.log()` inside [`.then()`](/api/commands/then) to print a value
 that an earlier command produces.

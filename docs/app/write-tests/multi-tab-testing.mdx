@@ -20,7 +20,7 @@ plugin reaches the tabs and popups outside it. The plugin runs
 then hands the result back to your command chain, where you assert on it and see
 it in the Command Log like any other Cypress command.
 
-This guide first helps you decide whether a test needs a second tab. It then
+This guide first helps you decide whether a test needs a second tab. The guide then
 covers how to set up the plugin and test the most common multi-tab flows.
 
 ## Test new-tab links when the tabs don't interact
@@ -133,7 +133,7 @@ Cypress config:
 
 When your spec calls `cy.puppeteer('readNewTab', 'receipt')`, the call travels
 to Node.js through `cy.task()`, so its arguments must be serializable. The
-handler uses Puppeteer to find the new tab, read its heading, and close it. Its
+handler uses Puppeteer to find the new tab, read its heading, and close it. The handler's
 return value then travels back to the Cypress tab, where `.should()` asserts on
 it.
 
@@ -187,7 +187,7 @@ Testing, Chromium, Edge, or Electron. Two of those browsers have limits:
 
 ## Set up @cypress/puppeteer in your project
 
-Install the plugin. It bundles its own copy of Puppeteer, so you don't need to
+Install the plugin. The plugin bundles its own copy of Puppeteer, so you don't need to
 install Puppeteer separately.
 
 <PackageManagerTabs install="@cypress/puppeteer" dev />

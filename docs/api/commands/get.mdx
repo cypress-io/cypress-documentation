@@ -198,7 +198,7 @@ cy.get(`#${CSS.escape(userId)}`).should('have.text', 'Jane')
 
 ### `cy.get()` in the [`.within()`](/api/commands/within) command
 
-Since `cy.get()` is chained off of `cy`, it always looks for the selector within
+Since you chain `cy.get()` off of `cy`, it always looks for the selector within
 the entire `document`. The only exception is when used inside a
 [.within()](/api/commands/within) command.
 
@@ -289,7 +289,7 @@ instead.
 
 #### Hide a query from the Command Log with `log`
 
-The `get` row is hidden, but the assertion still appears in the Command Log.
+Cypress hides the `get` row, but the assertion still appears in the Command Log.
 
 ```javascript
 cy.get('[data-cy=toast]', { log: false }).should('be.visible')
@@ -297,8 +297,8 @@ cy.get('[data-cy=toast]', { log: false }).should('be.visible')
 
 ### Alias
 
-For a detailed explanation of aliasing,
-[read more about aliasing here](/app/core-concepts/variables-and-aliases#Aliases).
+For a detailed explanation of aliasing, see
+[Aliases in the Variables and Aliases guide](/app/core-concepts/variables-and-aliases#Aliases).
 
 #### Get the aliased 'todos' elements
 
@@ -358,7 +358,7 @@ cy.get('@liveTotal').should('eq', '$5.00') // re-runs the queries
 cy.get('@startTotal').should('eq', '$0.00') // value captured earlier
 ```
 
-In the Command Log, the static alias is labeled `(static)` where it's created:
+The Command Log labels the static alias `(static)` where you create it:
 
 <DocsImage
   src="/img/api/get/command-log-query-and-static-aliases.png"
@@ -390,7 +390,7 @@ cy.get('@consoleError').should('not.have.been.called')
 
 When using [`cy.intercept()`](/api/commands/intercept) with an alias, you can
 retrieve **all** intercepted requests for that alias by appending `.all` to the
-alias name. This returns an array of
+alias name. The `.all` alias returns an array of
 [interception objects](/api/commands/intercept#Using-the-yielded-object).
 
 <InterceptAliasIndex />
@@ -460,7 +460,7 @@ descend into `<iframe>` elements. To query inside a same-origin iframe, see
 cy.get('input[name="firstName"]').should('have.value', 'Homer')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/get/get-element-and-make-an-assertion.png"

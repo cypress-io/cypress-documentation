@@ -14,7 +14,7 @@ Starting in Cypress 16, Chrome, Chromium, and Edge intercept test traffic on the
 browser network. Your application connects to your server directly and negotiates
 whatever protocol the server supports, exactly as it does in production.
 
-That closes the biggest remaining gap between how your application behaves under test and
+Connecting directly closes the biggest remaining gap between how your application behaves under test and
 how it behaves for your users:
 
 - **Your production protocol is the one under test.** HTTP/2 and HTTP/3 connections are
@@ -35,11 +35,11 @@ and wait on requests with the same API, and most suites need no edits.
 
 Before Cypress 16, Cypress routed every request your application made through the
 legacy network path. That path is how Cypress observed, stubbed, and recorded network
-traffic, and it only supported HTTP/1.1. Requests that your server would have served over
-HTTP/2 or HTTP/3 in production were downgraded to HTTP/1.1 during a Cypress run.
+traffic, and it only supported HTTP/1.1. Cypress downgraded requests that your server would have served over
+HTTP/2 or HTTP/3 in production to HTTP/1.1 during a Cypress run.
 
 Because Cypress is no longer the connection between your browser and your server, a small
-number of behaviors change. Each one is listed on this page with a before-and-after
+number of behaviors change. This page lists each one with a before-and-after
 example:
 
 | Behavior                                                                                                                               | What to do                                                                 |
@@ -53,12 +53,12 @@ example:
 | [Revalidated responses report `200` instead of `304`](#Revalidated-responses-report-200-instead-of-304)                                | Use [`cy.request()`](/api/commands/request) to assert on caching behavior. |
 | [`responseTimeout` does not apply to response handlers](#responseTimeout-does-not-apply-to-response-handlers)                          | Bound the wait with a `timeout` on [`cy.wait()`](/api/commands/wait).      |
 | [Request `content-length` is not reported](#Request-content-length-is-not-reported)                                                    | Assert on the body you set.                                                |
-| [Your application's certificate is used](#Your-applications-certificate-is-used)                                                       | Nothing. This is the improvement.                                          |
-| [`cy.intercept()` changes are visible in the browser](#cyintercept-changes-are-visible-in-the-browser)                                 | Nothing. This is the improvement.                                          |
+| [Your application's certificate is used](#Your-applications-certificate-is-used)                                                       | Nothing. The new behavior is the improvement.                              |
+| [`cy.intercept()` changes are visible in the browser](#cyintercept-changes-are-visible-in-the-browser)                                 | Nothing. The new behavior is the improvement.                              |
 
 ## Which browsers are affected
 
-The interception mechanism is chosen per browser, so a suite that runs in more than one
+Cypress chooses the interception mechanism per browser, so a suite that runs in more than one
 browser can see both behaviors in the same run.
 
 <NativeBrowserNetworkBrowsers />
@@ -82,13 +82,13 @@ uses the legacy network path and the Cypress 15 behavior described throughout th
 
 :::
 
-Changing `forceHttp1` restarts the Cypress server, and the option cannot be set per test
+Changing `forceHttp1` restarts the Cypress server, and you can't set the option per test
 or per suite.
 
 If setting `forceHttp1` to `true` allows your suite to pass, and the difference is
 not one of the documented behaviors below,
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you
-are experiencing so it can be investigated.
+are experiencing so the Cypress team can investigate it.
 
 <ForceHttp1Deprecation />
 
@@ -129,8 +129,8 @@ cy.wait('@appJs').then(({ response }) => {
 })
 ```
 
-Compression is negotiated between the browser and your server, and the body Cypress hands
-you has already been decoded. Assert on the body itself rather than on the encoding
+The browser and your server negotiate compression, and the browser has already decoded
+the body Cypress hands you. Assert on the body itself rather than on the encoding
 headers.
 
 ### `httpVersion` is not reported
@@ -142,8 +142,8 @@ path and still report `'1.1'`.
 On the legacy network path, the value was always `'1.1'`, because it described the hop
 between the browser and Cypress rather than the protocol your server used. The browser
 now negotiates directly with your server on the native browser network, so the protocol
-depends on what that server supports (HTTP/1.1, HTTP/2, or HTTP/3). It is not known at
-the point the request is intercepted, so Cypress reports no value instead of one that
+depends on what that server supports (HTTP/1.1, HTTP/2, or HTTP/3). Cypress doesn't know the protocol at
+the point it intercepts the request, so Cypress reports no value instead of one that
 could be wrong.
 
 ```js
@@ -167,7 +167,7 @@ If a cross-browser suite needs the assertion for browsers on the legacy network 
 ### Responses the browser rejects are not observable
 
 When the browser's network stack refuses a response before delivering it (for example, a
-response it will not decode), the response never reaches Cypress. The interception still
+response it does not decode), the response never reaches Cypress. The interception still
 records the request, and `interception.response` is `undefined`.
 
 On the legacy network path, Cypress used to receive that response itself, so it could
@@ -221,13 +221,13 @@ cy.reload()
 cy.get('@config.all').should('have.length', 2)
 ```
 
-Tests that assert a resource was served from cache, rather than asserting on what your
-application rendered, will be affected.
+This change affects tests that assert a resource was served from cache, rather than
+asserting on what your application rendered.
 
 ### Stubbed bodies are decoded from their declared `content-encoding`
 
 When a stub declares a `content-encoding` header, Cypress decodes the body so the browser
-renders it. `gzip`, `x-gzip`, `deflate`, and `br` are all decoded. A `zstd` stub is passed
+renders it. Cypress decodes `gzip`, `x-gzip`, `deflate`, and `br`. Cypress passes a `zstd` stub
 through with the header and body intact, as before.
 
 If the bytes do not actually match the declared encoding, the decode fails inside Cypress
@@ -251,8 +251,8 @@ compressed and the visit failed.
 
 On the native browser network in Cypress 16, [`cy.visit()`](/api/commands/visit) on an
 `http` origin resolves and decodes the document before handing it to the browser, so the
-visit completes. Scripts, stylesheets, and other subresources are still fetched by the
-browser and still hit the same insecure-origin policy, matching production.
+visit completes. The browser still fetches scripts, stylesheets, and other
+subresources, and those subresources still hit the same insecure-origin policy, matching production.
 
 A test that expected the visit itself to fail may now wait for a failure that never comes
 and time out instead.
@@ -345,8 +345,8 @@ cy.wait('@slow', { timeout: 10000 })
 
 `responseTimeout` still applies to every command
 [documented as using it](/app/references/configuration#Timeouts), including
-[`cy.request()`](/api/commands/request) and [`cy.wait()`](/api/commands/wait). Only
-`cy.intercept()` response handlers are affected.
+[`cy.request()`](/api/commands/request) and [`cy.wait()`](/api/commands/wait). The change
+affects only `cy.intercept()` response handlers.
 
 ### Request `content-length` is not reported
 
@@ -355,7 +355,7 @@ computes that header when it sends the request, which happens after your interce
 so the value does not exist yet at the point Cypress hands you the request. Your server
 still receives an accurate `content-length`.
 
-This also means Cypress no longer recalculates the header when a handler replaces
+Leaving the header to the browser also means Cypress no longer recalculates the header when a handler replaces
 `req.body`. The browser sends the real length of whatever body your handler set.
 
 ```js
@@ -380,7 +380,7 @@ Cypress no longer terminates TLS for the application under test, so the browser 
 own connection and validates your origin's real certificate. Chrome no longer reports a
 certificate issued by an unknown authority, and Cypress does not generate one.
 
-The browser still reports the page as not secure, because the Cypress app itself is served
+The browser still reports the page as not secure, because Cypress serves the Cypress app itself
 over `http` on `localhost`. That indicator describes the Cypress app, not your application
 loading inside it.
 
@@ -395,7 +395,7 @@ or rewritten responses, and overridden status codes all appear in the browser's 
 panel. The `Authorization` header attached by
 [`cy.visit()`](/api/commands/visit#Add-basic-auth-headers-to-cyvisit) appears there too.
 
-On the legacy network path, request modifications are applied after the browser has
+On the legacy network path, Cypress applies request modifications after the browser has
 already logged the request, so they do not appear in the network panel. Response
 modifications do, because the browser only ever sees the response Cypress returns.
 
@@ -422,7 +422,7 @@ Starting in Cypress 16.1.0, you can declare your server's certificates with the 
 
 :::
 
-When certificates are declared in `trustedCertificates`, Cypress adds their SubjectPublicKeyInfo (SPKI) fingerprints to `--ignore-certificate-errors-spki-list`, which it passes only on the native browser network path. Chromium honors this fingerprint list over the blanket ignore flag and treats connections to matching origins as trusted. Static assets are then cached to disk across navigations as they are in production.
+When you declare certificates in `trustedCertificates`, Cypress adds their SubjectPublicKeyInfo (SPKI) fingerprints to `--ignore-certificate-errors-spki-list`, which it passes only on the native browser network path. Chromium honors this fingerprint list over the blanket ignore flag and treats connections to matching origins as trusted. The browser then caches static assets to disk across navigations as it does in production.
 
 Chromium matches a fingerprint against any certificate in the chain the server presents during the TLS handshake. If your server presents an intermediate or CA certificate in its chain, declaring either that CA or the leaf certificate works. If your server presents only the leaf certificate without a chain, you must declare the leaf certificate.
 
