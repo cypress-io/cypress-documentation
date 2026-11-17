@@ -1391,8 +1391,10 @@ To start the server, run the tests and then shutdown the server we recommend
 There is already a great section in
 [Custom Commands](/api/cypress-api/custom-commands#Best-Practices) guide that
 talks about trade-offs between custom commands and utility functions. We feel
-reusable functions in general are a way to go. Plus they do not confuse
-[IntelliSense like custom commands do](https://github.com/cypress-io/cypress/issues/1065).
+reusable functions in general are a way to go. Plus, IntelliSense picks up a
+utility function's types automatically, while a custom command needs its own
+[type declaration](/app/tooling/typescript-support#Types-for-Custom-Commands)
+before IntelliSense recognizes it.
 
 ### <Icon name="angle-right" /> Can my tests interact with Redux / Vuex data store?
 
