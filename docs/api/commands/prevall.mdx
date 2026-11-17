@@ -111,10 +111,10 @@ cy.get('li').prevAll('.selected')
 
 <HeaderAssertions />
 
-- `.prevAll()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.prevAll()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.prevAll()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.prevAll()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -131,7 +131,7 @@ cy.get('li').prevAll('.selected')
 cy.get('.left-nav').find('li.active').prevAll()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/prevall/find-all-previous-elements-with-optional-selector.png"

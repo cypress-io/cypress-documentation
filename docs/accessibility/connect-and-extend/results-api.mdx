@@ -9,9 +9,9 @@ sidebar_position: 30
 
 # Results API
 
-The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility which enables you to programmatically fetch your run's Accessibility results in a CI environment. It determines the Cypress run created for the given CI workflow and will return the Accessibility results associated with that run. The results will be returned once the Cypress run has finished and the Accessibility report has been processed.
+The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility, which programmatically fetches your run's Accessibility results in a CI environment. The `getAccessibilityResults` utility determines the Cypress run created for the given CI workflow and returns the Accessibility results associated with that run. The utility returns the results once the Cypress run has finished and Cypress Cloud has processed the Accessibility report.
 
-This brings the results into CI, where you review them and determine if they are acceptable or need to be addressed before code changes can merge. It provides overall accessibility scores and violation details for the runs, as well as page- or component-level feedback. This supports a wide variety of needs related to alerting about failures in specific focus areas of the application or creating fine-grained regression monitoring according to the current standards being met by each page.
+The Results API brings the results into CI, where you review them and determine if they are acceptable or need to be addressed before code changes can merge. The Results API provides overall accessibility scores and violation details for the runs, as well as page- or component-level feedback. These results support a wide variety of needs related to alerting about failures in specific focus areas of the application or creating fine-grained regression monitoring according to the current standards being met by each page.
 
 :::info
 
@@ -19,7 +19,7 @@ This brings the results into CI, where you review them and determine if they are
   Examples and use cases
 </CalloutLabel>
 
-This page focuses on how the Results API works and what kinds of information can be accessed. For examples of how this can be used, see our higher-level guides:
+This page focuses on how the Results API works and what kinds of information you can access. For examples of how to use the Results API, see our higher-level guides:
 
 - The [pull requests and policies guide](/accessibility/guides/block-pull-requests) shows what it looks like to use the Results API to set a policy and fail a pull request.
 - [Run Checks](/cloud/features/checks) encode score and failed-element thresholds in App Quality configuration; [report them as GitHub statuses](/accessibility/guides/report-run-checks-github) with `getCheckResults()`.
@@ -55,7 +55,7 @@ npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-clou
 
 Do not check this module in as a dependency. You should install it separately outside of your normal module installation. Use `--force` to get the latest version.
 
-If you check this in as a dependency, your installation will fail when we update the package.
+If you check this in as a dependency, your installation fails when we update the package.
 
 :::
 
@@ -63,11 +63,11 @@ If you check this in as a dependency, your installation will fail when we update
 
 ### **1. Get the Results**
 
-Write a script using the `getAccessibilityResults` utility to retrieve the results and perform one or more assertions to verify if the changes are acceptable. This script will be executed in CI.
+Write a script using the `getAccessibilityResults` utility to retrieve the results and perform one or more assertions to verify if the changes are acceptable. CI runs this script.
 
 #### Basic example
 
-This snippet uses the `getAccessibilityResults()` helper to log out the results. It assumes your Project ID and Record Key variable are set. The following should work in any of the supported CI Providers out of the box:
+This snippet uses the `getAccessibilityResults()` helper to log out the results. The snippet assumes your Project ID and Record Key variable are set. The following should work in any of the supported CI Providers out of the box:
 
 ```javascript title="scripts/verifyAccessibilityResults.js"
 // Assuming these environment variables are set:
@@ -84,7 +84,7 @@ getAccessibilityResults().then((results) => {
 
 #### How to assert that only known rules are failing in the run
 
-The Cypress App [repository](https://github.com/cypress-io/cypress) uses the Results API to ensure no new violations have been introduced. You can reference [this script](https://github.com/cypress-io/cypress/blob/develop/scripts/verify-accessibility-results.js) as a real example.
+The [Cypress App repository](https://github.com/cypress-io/cypress) uses the Results API to ensure no new violations have been introduced. For a real example, see the Cypress App [accessibility results verification script](https://github.com/cypress-io/cypress/blob/develop/scripts/verify-accessibility-results.js).
 
 ```javascript title="scripts/verifyAccessibilityResults.js"
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
@@ -228,7 +228,7 @@ getAccessibilityResults({
 
 #### Result Types
 
-The Accessibility results for the run are returned as an object containing the following data:
+`getAccessibilityResults` returns the Accessibility results for the run as an object containing the following data:
 
 ```javascript
 {
@@ -332,7 +332,7 @@ In your CI workflow that runs your Cypress tests,
 
 If you record multiple runs in a single CI build, you must record these runs using the `--tag` parameter and then call `getAccessibilityResults` with the `runTags` argument for each run.
 
-This is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified. Tags can also be used to activate [Profiles](/accessibility/configuration/profiles) that apply different configuration settings to your runs.
+Tagging each run is necessary to identify each unique run and return a corresponding set of results. Cypress Cloud uses the tags to uniquely identify each run. You can also use tags to activate [Profiles](/accessibility/configuration/profiles) that apply different configuration settings to your runs.
 
 **Example**
 

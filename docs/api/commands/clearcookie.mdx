@@ -12,8 +12,8 @@ Clear a specific browser cookie.
 
 :::caution
 
-Cypress automatically clears all cookies _before_ each test to prevent state
-from being shared across tests when
+Cypress automatically clears all cookies _before_ each test to prevent tests
+from sharing state when
 [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 is enabled. You shouldn't need to use this command unless you're using it to
 clear a specific cookie inside a single test or test isolation is disabled.
@@ -173,7 +173,7 @@ cy.getCookie('session_id', { domain: 'auth.example.com' }).should('be.null')
 
 ### Clearing a cookie that doesn't exist
 
-`cy.clearCookie()` doesn't fail when no cookie matches the name. It still
+`cy.clearCookie()` doesn't fail when no cookie matches the name. The command still
 yields `null`, and the console output for the command notes that no cookie with
 that name was found or removed.
 
@@ -196,7 +196,7 @@ that name was found or removed.
 <HeaderTimeouts />
 
 - `cy.clearCookie()` can time out waiting for the browser to clear the cookie.
-  It waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
+  The command waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
   (or the `timeout` option, when passed) before failing.
 - If the application under test is on a different origin, `cy.clearCookie()`
   retries for up to the

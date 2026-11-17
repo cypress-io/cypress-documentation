@@ -18,7 +18,7 @@ export const toc = [
 
 Cypress Accessibility organizes every report around **views**, the distinct pages and components of your application. Each view collects the [snapshots](/accessibility/reports/run-level-reports#Snapshots) captured on that page and reports the accessibility violations found there, so you review, score, and track each part of your app as a unit.
 
-The `views` configuration controls that grouping. Without it, URLs that differ only by a username, slug, or other non-numeric value each become their own view, so a single violation on a shared page template is reported once per URL and one issue is split across many rows. A `views` pattern rolls those URLs into one view, so you triage the violation once for the whole page and your report reflects the structure of your application, not the shape of your test data.
+The `views` configuration controls that grouping. Without it, URLs that differ only by a username, slug, or other non-numeric value each become their own view, so Cypress Accessibility reports a single violation on a shared page template once per URL and splits one issue across many rows. A `views` pattern rolls those URLs into one view, so you triage the violation once for the whole page and your report reflects the structure of your application, not the shape of your test data.
 
 The reference below covers the full `views` syntax, including how URLs are matched, the `groupBy` option, and worked examples.
 

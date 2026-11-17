@@ -10,10 +10,10 @@ slug: /app/guides/stubs-spies-and-clocks
 
 # Stubs, Spies, and Clocks
 
-Cypress comes built in with the ability to stub and spy with
-[`cy.stub()`](/api/commands/stub), [`cy.spy()`](/api/commands/spy) or modify
-your application's time with [`cy.clock()`](/api/commands/clock) - which lets
-you manipulate `Date`, `setTimeout`, `clearTimeout`, `setInterval`, or
+Cypress has built-in stubs and spies with
+[`cy.stub()`](/api/commands/stub) and [`cy.spy()`](/api/commands/spy), and
+[`cy.clock()`](/api/commands/clock) modifies your application's time by
+controlling `Date`, `setTimeout`, `clearTimeout`, `setInterval`, or
 `clearInterval`.
 
 These commands are useful when writing both **unit tests** and **integration
@@ -79,7 +79,7 @@ control.
 - Your function returns a `Promise`, and you want to automatically resolve or
   reject it.
 - You have a function that wraps `window.location` and don't want your
-  application to be navigated.
+  application to navigate.
 - You're trying to test your application's "failure path" by forcing things to
   fail.
 - You're trying to test your application's "happy path" by forcing things to
@@ -98,13 +98,12 @@ control.
 
 ### Spies
 
-A spy gives you the ability to "spy" on a function, by letting you capture and
-then assert that the function was called with the right arguments, or that the
+A spy "spies" on a function, capturing its calls so you can then assert that the function was called with the right arguments, or that the
 function was called a certain number of times, or even what the return value was
 or what context the function was called with.
 
-A spy does **not** modify the behavior of the function - it is left perfectly
-intact. A spy is most useful when you are testing the contract between multiple
+A spy does **not** modify the behavior of the function - the function stays
+perfectly intact. A spy is most useful when you are testing the contract between multiple
 functions and you don't care about the side effects the real function may create
 (if any).
 
@@ -150,16 +149,16 @@ cy.tick(1000)
 ```
 
 You can call [`cy.clock()`](/api/commands/clock) **prior** to visiting your
-application and we will automatically bind it to the application on the next
+application and Cypress automatically binds it to the application on the next
 [`cy.visit()`](/api/commands/visit). The same concept applies to mounting a
-component with [`cy.mount()`](/api/commands/mount). We bind **before** any
-timers from your code can be invoked.
+component with [`cy.mount()`](/api/commands/mount). We bind **before** your
+code can invoke any timers.
 
 ##### Restore the clock
 
 You can restore the clock and allow your application to resume normally without
-manipulating native global functions related to time. This is automatically
-called between tests.
+manipulating native global functions related to time. Cypress restores the clock automatically
+between tests.
 
 ```javascript
 cy.clock()
@@ -245,7 +244,7 @@ collaboration between these tools.
 
 - We replaced Sinon's argument stringifier for a much less noisy, more
   performant, custom version.
-- We improved the `sinon-chai` assertion output by changing what is displayed
+- We improved the `sinon-chai` assertion output by changing what Cypress displays
   during a passing vs. failing test.
 - We added aliasing support to `stub` and `spy` APIs.
 - We automatically restore and tear down `stub`, `spy`, and `clock` between
@@ -261,10 +260,10 @@ We visually indicate when:
 - A `clock` is ticked
 
 When you use aliasing with the [`.as()`](/api/commands/as) command, we also
-correlate those aliases with the calls. This works identically to aliasing
+correlate those aliases with the calls. Aliasing works identically to aliasing
 [`cy.intercept()`](/api/commands/intercept).
 
-When stubs are created by calling the method `.withArgs(...)` we also visually
+When you create stubs by calling the method `.withArgs(...)`, we also visually
 link these together.
 
 When you click on a stub or spy, we also output **remarkably** helpful debugging

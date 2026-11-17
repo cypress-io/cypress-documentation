@@ -9,11 +9,11 @@ sidebar_position: 20
 
 # Element Identification
 
-Your UI Coverage score is only as trustworthy as the way elements are counted. UI Coverage gives every interactive element a single, stable identity, so that one control, such as a "Place order" button that appears in hundreds of [snapshots](#Snapshots) across a run, counts as one element, marked tested the moment any test interacts with it.
+Your UI Coverage score is only as trustworthy as the way UI Coverage counts elements. UI Coverage gives every interactive element a single, stable identity, so that one control, such as a "Place order" button that appears in hundreds of [snapshots](#Snapshots) across a run, counts as one element, marked tested the moment any test interacts with it.
 
 That stability is what makes the score meaningful:
 
-- **When identity is stable**, the same button is recognized in every snapshot and view, and your score reflects real coverage.
+- **When identity is stable**, UI Coverage recognizes the same button in every snapshot and view, and your score reflects real coverage.
 - **When identity drifts**, for example from an `id` that regenerates on every render, that one button fractures into many duplicate "untested" elements that add noise and drag the score down for no real reason.
 
 In reports, each element appears under a selector like `[data-cy="place-order"]`, or a readable name when you configure one. This page explains how UI Coverage builds that identity, what keeps it stable automatically, and how to correct it when your application's markup works against the defaults. You don't need any configuration to get started: the defaults described below apply out of the box.
@@ -26,14 +26,14 @@ UI Coverage analyzes the snapshots in a recorded run: it detects the [interactiv
 
 ## How an element is identified
 
-For each interactive element it tracks, UI Coverage looks for an **identifying attribute**. It checks a single prioritized list and uses the first attribute that is present with a usable value:
+For each interactive element it tracks, UI Coverage looks for an **identifying attribute**. UI Coverage checks a single prioritized list and uses the first attribute that is present with a usable value:
 
 1. The markup attribute `data-cy-ui-id`, which outranks every other option. `data-cy-ui-id` replaces the element's identity outright: its value becomes the identity, with no tag or selector appended.
 2. Your [`significantAttributes`](/ui-coverage/configuration/significantattributes), in the order you list them
 3. The default test attributes, in order: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id` (data grids)
 4. `id`, then `name`, as fallbacks
 
-The first attribute in this list that the element has, with a value that isn't excluded by an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule, becomes the element's **identifying attribute**. That single attribute-value pair drives how the element is identified across snapshots and named in reports. It also drives [grouping](/ui-coverage/core-concepts/element-grouping), with one exception: the `id` and `name` fallbacks identify an element but never group it.
+The first attribute in this list that the element has, with a value that no [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule excludes, becomes the element's **identifying attribute**. That single attribute-value pair drives how UI Coverage identifies the element across snapshots and names it in reports. The identifying attribute also drives [grouping](/ui-coverage/core-concepts/element-grouping), with one exception: the `id` and `name` fallbacks identify an element but never group it.
 
 For example, both attributes below can identify this button, but `data-cy` outranks `id`, so it wins:
 
@@ -41,7 +41,7 @@ For example, both attributes below can identify this button, but `data-cy` outra
 <button data-cy="place-order" id="btn-8f3a">Place order</button>
 ```
 
-The button is identified as `[data-cy="place-order"]`, and the generated `id` is never used. Using one of these attributes consistently across your application is the most effective way to keep identification accurate.
+UI Coverage identifies the button as `[data-cy="place-order"]`, and never uses the generated `id`. Using one of these attributes consistently across your application is the most effective way to keep identification accurate.
 
 In reports, elements appear under their identifying selector, and the **Snapshots** column shows how many snapshots each one spans while still counting as a single element. An element without a usable attribute falls back to a structural selector.
 
@@ -52,11 +52,11 @@ In reports, elements appear under their identifying selector, and the **Snapshot
 
 ## When an element has no identifying attribute
 
-Not every interactive element carries a useful attribute. When none of the attributes above apply, UI Coverage falls back to identifying the element by its structure and position in the DOM, such as its tag and where it sits among sibling elements. Its visible text content is never used, so a button labeled "Save" that briefly becomes "Saving…" during a request stays one element.
+Not every interactive element carries a useful attribute. When none of the attributes above apply, UI Coverage falls back to identifying the element by its structure and position in the DOM, such as its tag and where it sits among sibling elements. The element's visible text content is never used, so a button labeled "Save" that briefly becomes "Saving…" during a request stays one element.
 
 A structural identity like this is less stable than an attribute you control: a change to the surrounding markup can shift it, so the same element can appear as new and untested when you [compare two runs in Branch Review](/ui-coverage/guides/compare-reports). Adding a stable test attribute is the reliable fix.
 
-**Links are a special case.** An `<a>` element is identified by its destination `href`. Links whose URLs follow the same pattern are resolved into [views](/ui-coverage/core-concepts/views) and grouped by that pattern, so a list of 50 product links doesn't become 50 separate untested elements.
+**Links are a special case.** UI Coverage identifies an `<a>` element by its destination `href`. UI Coverage resolves links whose URLs follow the same pattern into [views](/ui-coverage/core-concepts/views) and groups them by that pattern, so a list of 50 product links doesn't become 50 separate untested elements.
 
 ## Unstable attributes are filtered automatically
 
@@ -66,11 +66,11 @@ If your application produces an unstable value that these built-in rules don't c
 
 ## Elements in iframes and shadow DOM
 
-UI Coverage identifies interactive elements inside iframes and shadow DOM as well, qualifying each element's identity with its host chain. A `#submit` button inside a checkout iframe is therefore a different element from a `#submit` in the main document, and both are tracked. To target an element inside a specific iframe or shadow root with a configuration rule, use the `documentScope` property on [`elements`](/ui-coverage/configuration/elements#Options), [`elementFilters`](/ui-coverage/configuration/elementfilters), or [`elementGroups`](/ui-coverage/configuration/elementgroups) rules.
+UI Coverage identifies interactive elements inside iframes and shadow DOM as well, qualifying each element's identity with its host chain. A `#submit` button inside a checkout iframe is therefore a different element from a `#submit` in the main document, and UI Coverage tracks both. To target an element inside a specific iframe or shadow root with a configuration rule, use the `documentScope` property on [`elements`](/ui-coverage/configuration/elements#Options), [`elementFilters`](/ui-coverage/configuration/elementfilters), or [`elementGroups`](/ui-coverage/configuration/elementgroups) rules.
 
 ## Tuning element identification
 
-When the defaults don't match your application, three configuration options adjust how elements are identified. Set them in the **App Quality** tab of your project settings in Cypress Cloud, then [regenerate a recent run](/ui-coverage/configuration/overview#Setting-configuration) to preview the effect without re-running your tests.
+When the defaults don't match your application, three configuration options adjust how UI Coverage identifies elements. Set them in the **App Quality** tab of your project settings in Cypress Cloud, then [regenerate a recent run](/ui-coverage/configuration/overview#Setting-configuration) to preview the effect without re-running your tests.
 
 | Your goal                                                       | Use                                                                         |
 | --------------------------------------------------------------- | --------------------------------------------------------------------------- |
@@ -82,7 +82,7 @@ See [Which option do I need?](/ui-coverage/configuration/overview#Which-option-d
 
 ### Prioritize your own attributes
 
-If your components already render a descriptive attribute, add it to `significantAttributes` so UI Coverage prefers it over the defaults. Elements are then identified and named by the vocabulary your team recognizes, showing `[data-component="CheckoutButton"]` instead of a generated selector.
+If your components already render a descriptive attribute, add it to `significantAttributes` so UI Coverage prefers it over the defaults. UI Coverage then identifies and names elements by the vocabulary your team recognizes, showing `[data-component="CheckoutButton"]` instead of a generated selector.
 
 ```json title="App Quality Config"
 {
@@ -112,11 +112,11 @@ Exclude a dynamically generated attribute value so it can't split one element in
 }
 ```
 
-Once the unstable value is ignored, UI Coverage identifies the element by the next stable attribute it has. Learn more in the [`attributeFilters`](/ui-coverage/configuration/attributefilters) guide.
+Once UI Coverage ignores the unstable value, it identifies the element by the next stable attribute it has. Learn more in the [`attributeFilters`](/ui-coverage/configuration/attributefilters) guide.
 
 ### Fix a single element's identity
 
-When one element's attributes change between snapshots, an [`elements`](/ui-coverage/configuration/elements) rule pins it to a selector you choose and gives it a readable name. The matched element is identified by the rule's selector alone, so it stays one element across snapshots even as its `id` regenerates.
+When one element's attributes change between snapshots, an [`elements`](/ui-coverage/configuration/elements) rule pins it to a selector you choose and gives it a readable name. UI Coverage identifies the matched element by the rule's selector alone, so it stays one element across snapshots even as its `id` regenerates.
 
 ```json title="App Quality Config"
 {
@@ -131,11 +131,11 @@ When one element's attributes change between snapshots, an [`elements`](/ui-cove
 }
 ```
 
-An `elements` rule applies only when its selector matches exactly one interactive element in a snapshot. Refer to the [`elements`](/ui-coverage/configuration/elements) guide for how rules are matched and scoped.
+An `elements` rule applies only when its selector matches exactly one interactive element in a snapshot. Refer to the [`elements`](/ui-coverage/configuration/elements) guide for how UI Coverage matches and scopes rules.
 
 ## See also
 
-- [Element Grouping](/ui-coverage/core-concepts/element-grouping): how related elements are combined so interacting with one counts for the set.
+- [Element Grouping](/ui-coverage/core-concepts/element-grouping): how UI Coverage combines related elements so interacting with one counts for the set.
 - [Interactivity](/ui-coverage/core-concepts/interactivity): which elements UI Coverage tracks and which commands mark them tested.
 - [`significantAttributes`](/ui-coverage/configuration/significantattributes): prioritize your own attributes for identifying and naming elements.
 - [`attributeFilters`](/ui-coverage/configuration/attributefilters): stop dynamic or generated attribute values from identifying elements.

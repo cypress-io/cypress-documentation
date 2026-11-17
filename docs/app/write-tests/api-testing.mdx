@@ -16,7 +16,7 @@ and yields the response, so you can assert on status codes, response bodies,
 headers, and timing in the same specs, the same config, and the same CI job that
 already run your UI tests.
 
-That makes Cypress a practical place to test authentication flows, CRUD
+Sharing that setup makes Cypress a practical place to test authentication flows, CRUD
 workflows, validation errors, and pagination, and to seed application state over
 HTTP instead of clicking through a form to reach it. This guide covers writing
 your first API test, what `cy.request()` does under the hood, and the patterns
@@ -50,7 +50,7 @@ You get a few concrete wins:
   hard to trigger from a form but trivial to trigger with a request.
 - **Real inspection, locally and in CI.** Every request shows up in the Command
   Log with its method, status, and URL, and clicking it prints the full request
-  and response to your browser console. That works in
+  and response to your browser console. The inspection works in
   [open mode](/app/core-concepts/open-mode) and, through
   [Test Replay](/cloud/features/test-replay), on a run that already finished in
   CI.
@@ -59,7 +59,7 @@ You get a few concrete wins:
   then verify over HTTP that the backend really persisted the change.
 
 Cypress runs API tests in the [end-to-end testing type](/app/core-concepts/testing-types).
-The command you will use most is [`cy.request()`](/api/commands/request), which
+The command you use most is [`cy.request()`](/api/commands/request), which
 makes a real HTTP request and yields the response.
 
 ## Write your first API test
@@ -67,9 +67,9 @@ makes a real HTTP request and yields the response.
 ### Set a `baseUrl` (optional)
 
 You can pass a full URL to `cy.request()` and start writing tests right away, so
-this step is not required. Setting `baseUrl` is a convenience: it lets every
-request use a relative path, and it lets you point the same specs at a different
-environment by changing one value.
+this step is not required. Setting `baseUrl` is a convenience: every request can
+use a relative path, and changing one value points the same specs at a different
+environment.
 
 :::cypress-config-example
 
@@ -108,27 +108,27 @@ describe('GET /users', () => {
 
 <CypressCommandTabs command="run --spec 'cypress/e2e/api/users.cy.js'" />
 
-That is a complete API test. No page has to be visited first, and no browser
-navigation happens. `cy.request()` resolves the relative `/users` against
+That spec is a complete API test. The test doesn't have to visit a page first, and no
+browser navigation happens. `cy.request()` resolves the relative `/users` against
 `baseUrl` and yields the response.
 
 ## Anatomy of the response
 
-`cy.request()` yields a response object. These are the properties you will
+`cy.request()` yields a response object. The following properties are the ones you
 assert on most often:
 
-| Property              | Description                                                                                 |
-| --------------------- | ------------------------------------------------------------------------------------------- |
-| `status`              | The HTTP status code, for example `200`                                                     |
-| `statusText`          | The status text, for example `'OK'`                                                         |
-| `body`                | The response body, parsed into an object when the response `Content-Type` ends in `json`    |
-| `headers`             | The response headers                                                                        |
-| `duration`            | How long the request took, in milliseconds                                                  |
-| `isOkStatusCode`      | `true` for `2xx` and `3xx` responses                                                        |
-| `requestHeaders`      | The headers Cypress actually sent, including cookies it attached for you                    |
-| `requestBody`         | The body Cypress actually sent                                                              |
-| `redirects`           | Present when redirects were followed, as an array like `['301: http://localhost:3001/new']` |
-| `allRequestResponses` | Every request and response in the chain, useful when redirects were followed                |
+| Property              | Description                                                                                    |
+| --------------------- | ---------------------------------------------------------------------------------------------- |
+| `status`              | The HTTP status code, for example `200`                                                        |
+| `statusText`          | The status text, for example `'OK'`                                                            |
+| `body`                | The response body, parsed into an object when the response `Content-Type` ends in `json`       |
+| `headers`             | The response headers                                                                           |
+| `duration`            | How long the request took, in milliseconds                                                     |
+| `isOkStatusCode`      | `true` for `2xx` and `3xx` responses                                                           |
+| `requestHeaders`      | The headers Cypress actually sent, including cookies it attached for you                       |
+| `requestBody`         | The body Cypress actually sent                                                                 |
+| `redirects`           | Present when Cypress followed redirects, as an array like `['301: http://localhost:3001/new']` |
+| `allRequestResponses` | Every request and response in the chain, useful when Cypress followed redirects                |
 
 Body parsing follows the response, not the request. If the server returns
 `Content-Type: application/json`, `response.body` is an object. Otherwise it is
@@ -167,25 +167,25 @@ That single fact explains the behaviors below.
 
 | Behavior                                                             | Why                                                                                                               |
 | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| The request never appears in the browser DevTools **Network** tab    | It is not a browser request, so the browser has nothing to report                                                 |
+| The request never appears in the browser DevTools **Network** tab    | The request is not a browser request, so the browser has nothing to report                                        |
 | [`cy.intercept()`](/api/commands/intercept) cannot spy on or stub it | Interception works on browser traffic flowing through the Cypress proxy, and this request never enters that proxy |
-| CORS and same-origin policy do not apply                             | Those are browser rules, and no browser is involved. You can request any host                                     |
+| CORS and same-origin policy do not apply                             | CORS and same-origin policy are browser rules, and no browser is involved. You can request any host               |
 | Cookies still work, against the real browser jar                     | See [cookies are shared with the browser](#Cookies-are-shared-with-the-browser)                                   |
 | The `User-Agent` matches the browser under test                      | Cypress forwards the browser's user agent so the server sees a consistent client                                  |
-| Invalid or self-signed TLS certificates do not fail the request      | Certificate verification is relaxed, which keeps requests against staging environments working                    |
+| Invalid or self-signed TLS certificates do not fail the request      | Cypress relaxes certificate verification, which keeps requests against staging environments working               |
 
 A few more defaults worth knowing:
 
 - **Non-`2xx`/`3xx` responses fail the test.** `failOnStatusCode` defaults to
   `true`. Set it to `false` when the error response _is_ what you are testing.
-- **Redirects are followed.** `followRedirect` defaults to `true`. Set it to
+- **Cypress follows redirects.** `followRedirect` defaults to `true`. Set it to
   `false` to assert on the `Location` header via `response.redirectedToUrl`.
-- **Object bodies are serialized for you.** When `body` is an object or boolean,
-  Cypress JSON-serializes it and sets `Content-Type: application/json`. A string
-  body is sent as-is with no content type added.
-- **Transient network errors are retried.** `retryOnNetworkFailure` defaults to
-  `true` and retries up to 4 times. Status code failures are not retried unless
-  you opt in with `retryOnStatusCodeFailure`.
+- **Cypress serializes object bodies for you.** When `body` is an object or
+  boolean, Cypress JSON-serializes it and sets `Content-Type: application/json`.
+  Cypress sends a string body as-is and adds no content type.
+- **Cypress retries transient network errors.** `retryOnNetworkFailure`
+  defaults to `true` and retries up to 4 times. Cypress doesn't retry status code
+  failures unless you opt in with `retryOnStatusCodeFailure`.
 - **The timeout is `responseTimeout`**, not `defaultCommandTimeout`. Override it
   per request with the `timeout` option.
 
@@ -201,8 +201,8 @@ The jar is shared in both directions, which is what makes hybrid tests work:
 - **Log in over HTTP, continue in the UI.** A `cy.request()` to your login
   endpoint leaves the session cookie in the browser, so the next `cy.visit()`
   loads an authenticated page. No form to fill in, no waiting on a redirect.
-- **Log in through the UI, continue over HTTP.** A session established by
-  clicking through your real login form is carried into every subsequent
+- **Log in through the UI, continue over HTTP.** Cypress carries a session
+  established by clicking through your real login form into every subsequent
   `cy.request()`, so you can assert against authenticated endpoints without
   re-authenticating or hand-building a token.
 - **Test what logging out actually does.** Because the server's `Set-Cookie`
@@ -261,8 +261,8 @@ describe('/articles', () => {
 ### Authenticate once and reuse the session
 
 Logging in over HTTP is the fastest way to get an authenticated test. Wrap it in
-[`cy.session()`](/api/commands/session) so the result is cached and restored
-instead of re-run for every test.
+[`cy.session()`](/api/commands/session) so Cypress caches and restores the
+result instead of re-running it for every test.
 
 When the API authenticates with a cookie, `cy.request()` picks it up for free,
 because Cypress reads the browser cookie jar on every request.
@@ -603,7 +603,7 @@ cy.request('/users?role=admin').then((response) => {
 
 ### Combine API calls with UI tests
 
-This is the pattern that a separate API testing tool cannot give you, because
+Combining API calls with UI tests is the pattern that a separate API testing tool cannot give you, because
 it depends on the request and the browser sharing one session. Seed state over
 HTTP, drive the application through its interface, then confirm over HTTP that
 the change persisted.
@@ -635,8 +635,7 @@ describe('checkout', () => {
 ```
 
 **The setup skipped the UI.** Logging in and filling a cart are not what this
-test is checking, so they run over HTTP in milliseconds. The clicking is spent
-only on the behavior under test. Cutting UI setup out of tests that are not
+test is checking, so they run over HTTP in milliseconds. The test clicks through only the behavior under test. Cutting UI setup out of tests that are not
 about that setup is usually the single largest speed win available in an
 end-to-end suite.
 
@@ -715,12 +714,12 @@ cy.api({ url: '/users/me' }).its('body.role').should('eq', 'admin')
 
 ## Keep an API suite fast
 
-Cypress starts a browser for each spec file. That cost is paid per spec, not per
+Cypress starts a browser for each spec file. You pay that cost per spec, not per
 test, so the way to keep an API suite fast is to amortize it rather than
 multiply it.
 
 **Put many tests in one spec.** A spec with 200 API tests pays the startup cost
-once. Two hundred specs with one test each pay it 200 times. This is the
+once. Two hundred specs with one test each pay it 200 times. Putting many tests in one spec is the
 opposite of the instinct that serves UI suites well, where small specs
 parallelize nicely, and it is the single biggest factor in how fast an API suite
 runs.
@@ -757,7 +756,7 @@ describe('/users', { testIsolation: false }, () => {
 
 Cookies now persist across the tests in that block, which is usually what you
 want: authenticate once in a `before` hook and every test in the spec inherits
-the session. It also means one test can leave state behind for the next, so keep
+the session. Persisting cookies also means one test can leave state behind for the next, so keep
 each test's own setup explicit.
 
 **Skip `cy.visit()` entirely.** An API test needs no page. As soon as a spec
@@ -780,8 +779,8 @@ showing whether the status was successful.
 
 Click the entry and Cypress prints the full detail to the browser console: the
 request URL, headers, and body it sent, the response status, headers, and body
-it received, and the value the command yielded. When redirects were followed,
-every hop is listed.
+it received, and the value the command yielded. When Cypress followed redirects,
+the console lists every hop.
 
 <DocsImage
   src="/img/api/request/console-log-request-response-body-headers-status-url.png"
@@ -802,7 +801,7 @@ the detail appears.
   alt="A request command selected in Test Replay, with the browser console below it printing the request URL, headers, and body, the response status, headers, and body, and the status, duration, body, and headers the command returned"
 />
 
-This closes the loop that usually makes API failures in CI painful. Rather than
+Request detail in Test Replay closes the loop that usually makes API failures in CI painful. Rather than
 re-running the suite locally with extra logging added to guess at what the
 server returned, you read the actual request and response from the run that
 failed.

@@ -88,8 +88,8 @@ shows the test totals. You can also format passing and failing runs differently.
   width={800}
 />
 
-You'll use [Slack's Workflow Builder](https://slack.com/help/articles/360053571454),
-a tool provided by Slack. It can receive a webhook directly and map its JSON
+The walkthrough uses [Slack's Workflow Builder](https://slack.com/help/articles/360053571454),
+a tool provided by Slack. Workflow Builder can receive a webhook directly and map its JSON
 into a message, so you don't need a separate automation account. The example
 message also shows optional Slack interactive buttons that link to actions for
 the Cypress Cloud run.
@@ -101,14 +101,14 @@ the Cypress Cloud run.
   add the webhook.
 - A Slack plan that includes Workflow Builder, and permission to create and
   publish a workflow in your workspace. Conditional (if/else) steps require a
-  paid Slack plan; a fallback that works on any plan is described below.
+  paid Slack plan; the steps below describe a fallback that works on any plan.
 
 ### Step 1: Create a webhook-triggered Slack workflow
 
 1. In Slack, open **Workflow Builder** and create a new workflow.
 2. For the way the workflow starts, choose **Starts with a webhook**.
 3. Under **Data Variables**, add a key for each payload field you want in the
-   message. Slack reads these from the top-level keys of the JSON body. You will likely want to start with fields like this:
+   message. Slack reads these from the top-level keys of the JSON body. Start with fields like this:
    - `status`
    - `projectName`
    - `runNumber`
@@ -280,7 +280,7 @@ the Cypress Cloud webhook needs no change.
 ## GitHub status checks
 
 Use the [GitHub integration](/cloud/integrations/github#Status-checks) to report
-Cypress results on the pull request. It posts commit status checks per run group
+Cypress results on the pull request. The GitHub integration posts commit status checks per run group
 or spec.
 
 For a custom check, such as your own `context` name or a pass/fail rule on

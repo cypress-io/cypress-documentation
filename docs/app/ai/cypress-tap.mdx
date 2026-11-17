@@ -15,20 +15,20 @@ sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 
 An AI agent can run a Cypress spec and get back pass or fail. What it can't get is everything that makes a failure fixable: the Command Log, the error and code frame, the DOM as it was when the command ran. That detail lives in the Cypress app, where the agent can't reach it.
 
-`cypress tap` is an extension of the cypress CLI that lets you or an agent interact with an open-mode Cypress session and read its context from the terminal. With it, an agent can run a spec and poll its status, then read the failing test's Command Log and error as the Cypress app shows them. It can also inspect the DOM of the application under test at the moment a command ran.
+`cypress tap` is an extension of the cypress CLI that you or an agent run from the terminal to interact with an open-mode Cypress session and read its context. With `cypress tap`, an agent can run a spec and poll its status, then read the failing test's Command Log and error as the Cypress app shows them. The agent can also inspect the DOM of the application under test at the moment a command ran.
 
-This allows an agent to verify its own work as it codes, catching and fixing failures in the same loop that created them.
+With `cypress tap`, an agent verifies its own work as it codes, catching and fixing failures in the same loop that created them.
 
-Any agent that can run shell commands can use it, including Cursor, Claude
+Any agent that can run shell commands can use `cypress tap`, including Cursor, Claude
 Code, GitHub Copilot, Windsurf, and Codex CLI.
 
-`cypress tap` is completely free. It ships with the Cypress App you already have, so there is no Cypress Cloud account to create, no plan to buy, and nothing extra to install.
+`cypress tap` is completely free: it ships with the Cypress App you already have, so there is no Cypress Cloud account to create, no plan to buy, and nothing extra to install.
 
 :::tip
 
 To get the most out of `cypress tap` with an agent, pair it with the
 [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) from the
-[Cypress AI Toolkit](https://github.com/cypress-io/ai-toolkit). It tells your
+[Cypress AI Toolkit](https://github.com/cypress-io/ai-toolkit). The skill tells your
 agent how to drive these commands correctly, such as polling for a real verdict
 before trusting a pass or fail, so you don't have to write those instructions
 yourself.
@@ -37,7 +37,7 @@ yourself.
 
 :::warning
 
-`cypress tap` is in [beta](/app/references/release-stages#Beta). It is enabled by
+`cypress tap` is in [beta](/app/references/release-stages#Beta). The CLI is enabled by
 default and no longer expected to change in major ways, but its commands and
 output can still change in any release while we gather feedback.
 
@@ -68,7 +68,7 @@ result when passed `--json`. Agents and scripts should prefer `--json`.
 No Cypress Cloud account and no paid subscription are required. `cypress tap`
 ships with the Cypress App you already have and drives the open mode
 session on the same machine or sandbox as the CLI, so there is nothing to sign up for and no usage
-limits to track. That holds whether or not you record runs to Cypress Cloud.
+limits to track. The same is true whether or not you record runs to Cypress Cloud.
 
 ## Available commands
 
@@ -135,8 +135,8 @@ SESSIONS (2)
 
 ### cypress tap status {#cypress-tap-status}
 
-Reports where a running Cypress session is in its lifecycle. It is built for
-polling, see [Polling for a verdict](#polling).
+Reports where a running Cypress session is in its lifecycle. `cypress tap status` is built for
+polling, see [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict).
 
 | Stage                  | Meaning                                                                                                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -205,7 +205,7 @@ SPECS (2)
 Runs (or reruns) a spec by its project-relative path, as listed by the
 [`specs`](#cypress-tap-specs). If no browser is open, Cypress launches
 one. The command requests the spec starts and returns immediately, returning does not mean the run started. Poll the
-[`status`](#cypress-tap-status) command for progress; see [Polling for a verdict](#polling).
+[`status`](#cypress-tap-status) command for progress; see [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict).
 
 ```shell title="Command"
 cypress tap run cypress/e2e/login.cy.ts
@@ -318,8 +318,8 @@ CONSOLE PROPS
 1 section collapsed — open all of it with --depth all
 ```
 
-A value long enough to bury the rest of the payload, such as a response body,
-is shown as a note of its length instead of being printed to the terminal. You can pass `--json` to get
+`cypress tap` shows a value long enough to bury the rest of the payload, such as a response body,
+as a note of its length instead of printing it to the terminal. You can pass `--json` to get
 every console property if needed.
 
 ### cypress tap pin {#cypress-tap-pin}
@@ -348,7 +348,7 @@ BEFORE EACH · h2
    1  task  db:seed
 ```
 
-Pins can't be created while a spec is running, and snapshots are kept
+You can't create pins while a spec is running, and Cypress keeps snapshots
 only for the most recent tests (see
 [`numTestsKeptInMemory`](/app/references/configuration#Global)). A rerun
 releases the pin, since the snapshot it named belongs to the previous run.
@@ -417,7 +417,7 @@ cypress tap dom --selector li --at 2
 ### cypress tap aria {#cypress-tap-aria}
 
 Reads the accessibility (ARIA) tree of the app-under-test frame, or the
-subtree rooted at a CSS selector. Structural and text-only roles are dropped,
+subtree rooted at a CSS selector. The command drops structural and text-only roles,
 leaving the compact role/name/state tree browser developer tools show.
 
 | Option            | Description                                                                                                           | Default |
@@ -477,7 +477,7 @@ STYLES (2)
 
 ## How to use the commands
 
-### Getting Started
+### Get started with the cypress tap commands
 
 :::note
 
@@ -506,7 +506,7 @@ SPECS (2)
   cypress/e2e/login.cy.ts
 ```
 
-Pick a spec to run. The command returns as soon as the run is requested, and does not
+Pick a spec to run. The command returns as soon as it requests the run, and does not
 wait for the result:
 
 ```shell title="Command"
@@ -521,7 +521,7 @@ npx cypress tap run cypress/e2e/checkout.cy.ts
 ```
 
 Poll `status` until it reports a verdict. `status` always exits 0 for a
-determinable stage, so a poller branches on the output, not the exit code. See [Polling for a verdict](#polling) for the traps (stale verdicts, empty specs that still pass, and builds that never leave loading).
+determinable stage, so a poller branches on the output, not the exit code. See [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict) for the traps (stale verdicts, empty specs that still pass, and builds that never leave loading).
 
 ```shell title="Command"
 npx cypress tap status
@@ -555,7 +555,7 @@ Checkout
 The ids on the left (`r5`) are how every other command addresses a test. From
 here, debugging is three commands away.
 
-### Polling for a verdict {#polling}
+### Poll cypress tap status for a verdict
 
 `cypress tap run` returns immediately, so you learn a run's outcome by polling its status. Four things to know before you trust what it reports:
 
@@ -596,7 +596,7 @@ TEST BODY · r5
 ```
 
 The error and code frame often answer the question on their own. Here the
-discount code was entered and applied, but the cart total never changed, so
+test entered and applied the discount code, but the cart total never changed, so
 the bug is in the application rather than the test.
 
 When the error and code frame aren't enough on their own, drill into a single Command Log entry. The `command` command shows one row's hook section, its pinnable DOM snapshots, and its console properties:
@@ -637,7 +637,7 @@ TEST BODY · r5
 
 Pinning from the terminal does the same thing to the Cypress window as
 clicking that command in the app would: the app-under-test frame switches to
-the historical snapshot, and stays there until the pin is released.
+the historical snapshot, and stays there until you release the pin.
 
 :::caution
 
@@ -675,7 +675,7 @@ STYLES (2)
   color    rgb(0, 0, 0)
 ```
 
-The snapshot confirms it: at the moment the assertion ran, `.cart-total` read `$50.00`, the pre-discount price. The click was logged as passed and the element is present and visible, so nothing swallowed the interaction, the discount never applied to the total. That points squarely at the discount logic in the app, not the test.
+The snapshot confirms it: at the moment the assertion ran, `.cart-total` read `$50.00`, the pre-discount price. The click was logged as passed and the element is present and visible, so nothing swallowed the interaction, the discount never applied to the total. The stale total points squarely at the discount logic in the app, not the test.
 
 `dom` returns HTML (whole page or per selector, capped at 30,000 characters by
 default), and `aria` returns the compact role/name/state tree that browser
@@ -699,9 +699,9 @@ reports `passed`.
 `cypress tap` is built to be driven by AI agents:
 
 - **`--json` is the contract.** Every command's JSON output is stable and
-  parseable, and the formatted terminal output is built from it.
-- **Output is bounded.** DOM, accessibility, and console-property payloads are
-  capped by default so a heavy page never floods an agent's context, with
+  parseable, and `cypress tap` builds the formatted terminal output from that JSON.
+- **Output is bounded.** `cypress tap` caps DOM, accessibility, and
+  console-property payloads by default so a heavy page never floods an agent's context, with
   explicit options to raise the caps when needed.
 - **The CLI describes itself.** `--help` lists the commands the attached
   Cypress session advertises, so an agent can discover the surface at runtime
@@ -718,10 +718,10 @@ npx cypress tap --help
 npx cypress tap pin --help
 ```
 
-Help is always available. It does not need a browser open, and with no Cypress
+Help is always available. The `--help` output does not need a browser open, and with no Cypress
 session running at all the CLI falls back to the command schema it ships with,
 so an agent can read the surface before asking you to start anything. When a
-session is attached, help is generated from that session's own schema and
+session is attached, the CLI generates help from that session's own schema, and the help
 leads with the session it resolved, so what your agent reads matches the
 Cypress it is about to drive.
 
@@ -754,11 +754,11 @@ building.
 
 To make your agent use `cypress tap`, the simplest option is to install the
 [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) from the Cypress AI
-Toolkit. It packages the workflow below, including polling for a real verdict,
+Toolkit. The skill packages the workflow below, including polling for a real verdict,
 reading results, pinning and inspecting the app, and clearing pins, so your
 agent applies it without you writing the instructions by hand.
 
-Install it with the [`skills`](https://skills.sh/) CLI:
+Install the skill with the [`skills`](https://skills.sh/) CLI:
 
 <PackageManagerTabs exec="skills add https://github.com/cypress-io/ai-toolkit --skill cypress-tap" />
 
@@ -770,7 +770,7 @@ gh skill install cypress-io/ai-toolkit cypress-tap
 
 Alternatively, add instructions to the file your agent reads:
 `AGENTS.md` for Cursor, Codex CLI, and most others, `CLAUDE.md` for Claude
-Code, or `.github/copilot-instructions.md` for GitHub Copilot. This allows
+Code, or `.github/copilot-instructions.md` for GitHub Copilot. An instructions file allows
 you to write your own instructions and workflows for your agent.
 
 ```md title="AGENTS.md"
@@ -1080,7 +1080,7 @@ alongside its accessibility node.
 
 ### When to use it?
 
-The `cypress tap` CLI gives you the ability to interact and inspect a local Cypress session while developing or debugging tests.
+Use the `cypress tap` CLI to interact with and inspect a local Cypress session while developing or debugging tests.
 
 Both the [Cloud MCP](/cloud/integrations/cloud-mcp) and the [Cloud CLI](/cloud/integrations/cloud-cli) give programmatic access to your Cypress Cloud data.
 
@@ -1088,10 +1088,10 @@ Together these tools provide the availability for you or an AI agent to fully en
 
 ### Troubleshooting
 
-- **`status` reports `not connected`.** No Cypress session was found for this
-  directory. Start one with `cypress open`, and remember that headless
+- **`status` reports `not connected`.** `cypress tap` found no Cypress session for
+  this directory. Start one with `cypress open`, and remember that headless
   `cypress run` sessions are never discoverable. In an agent sandbox, also see
-  [Troubleshooting](/app/tooling/cypress-agent-sandboxes#Troubleshooting).
+  [Troubleshoot Cypress in an agent sandbox](/app/tooling/cypress-agent-sandboxes#Troubleshoot-Cypress-in-an-agent-sandbox).
 
 - **`status` stays `loading` and never reaches a verdict.** The selected spec is
   waiting on its own build. A spec that fails to compile never starts a run, so
@@ -1123,13 +1123,13 @@ The `cypress tap` CLI is available for use for all Cypress test authors using Cy
 
 The data exposed from the `cypress tap` CLI into your terminal is strictly local session. If using the CLI within a AI agent, be mindful to ensure you are using safe test practices, like using [`cy.env()`](/api/commands/env), to prevent leaking sensitive information to your agent.
 
-Cypress does capture telemetry specifically around the usage of the CLI to inform usage patterns. The data collected includes the command name, the flags used and whether it errored. To opt-out of this behavior, set `CYPRESS_DISABLE_GUEST_TELEMETRY=0` in your terminal.
+Cypress does capture telemetry specifically around the usage of the CLI to inform usage patterns. The data collected includes the command name, the flags used, and whether it errored. To opt-out of this behavior, set `CYPRESS_DISABLE_GUEST_TELEMETRY=0` in your terminal.
 
-### CLI Limitations
+### Limitations of the cypress tap CLI
 
 - You must be on Cypress v15.21.0+ or higher to use the CLI. You cannot use `cypress tap` to interact with older versions.
-- `cypress tap` reads the most recent run of the open session. Command details
-  and DOM snapshots are kept only for the most recent tests (see
+- `cypress tap` reads the most recent run of the open session. Cypress keeps
+  command details and DOM snapshots only for the most recent tests (see
   [`numTestsKeptInMemory`](/app/references/configuration#Global)), so older
   tests may report that their details are no longer available.
 - `dom`, `aria`, `inspect`, and `pin` work only on a completed run. While a

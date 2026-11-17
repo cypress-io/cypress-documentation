@@ -196,7 +196,7 @@ cy.get('[data-cy="back-to-top"]').should('be.visible')
 
 `cy.scrollTo()` does not run the
 [actionability](/app/core-concepts/interacting-with-elements) checks that
-commands like [`.click()`](/api/commands/click) do. It scrolls an element even
+commands like [`.click()`](/api/commands/click) do. `cy.scrollTo()` scrolls an element even
 when the element is hidden, disabled, or covered by another element. Before it
 scrolls, `cy.scrollTo()` retries until the subject is attached to the DOM and is
 scrollable. Pass `ensureScrollable: false` to skip the scrollable check.
@@ -208,7 +208,7 @@ being chained off of an existing one.
 
 #### When starting a series of commands
 
-This scrolls the `window`.
+This example scrolls the `window`.
 
 ```javascript
 cy.scrollTo('bottom')
@@ -216,7 +216,7 @@ cy.scrollTo('bottom')
 
 #### When chained to an existing series of commands
 
-This scrolls the `#checkout-items` element.
+This example scrolls the `#checkout-items` element.
 
 ```javascript
 cy.get('#checkout-items').scrollTo('right')
@@ -224,7 +224,7 @@ cy.get('#checkout-items').scrollTo('right')
 
 #### When chained off `cy.window()`
 
-This scrolls the `window`, the same as starting a series of commands.
+This example scrolls the `window`, the same as starting a series of commands.
 
 ```javascript
 cy.window().scrollTo('bottom')
@@ -238,7 +238,7 @@ cy.window().scrollTo('bottom')
 
 `.scrollTo()` errors with `failed because this element is not scrollable` when
 the element you target can't scroll: either its content doesn't overflow it, or
-its `overflow` isn't `auto` or `scroll`. This usually means the scrolling
+its `overflow` isn't `auto` or `scroll`. This error usually means the scrolling
 happens on a different element, often the window, while the targeted wrapper
 grows to fit its content. Target the element whose `overflow` is `auto` or
 `scroll` instead, or scroll the window.
@@ -269,7 +269,7 @@ or
 
 - `.scrollTo()` requires being chained off a command that yields a DOM element
   or the `window`.
-- `.scrollTo()` requires a single element. It errors when the subject contains
+- `.scrollTo()` requires a single element. `.scrollTo()` errors when the subject contains
   more than one element.
 - `.scrollTo()` requires the element to be scrollable, unless you pass
   `ensureScrollable: false`.
@@ -278,8 +278,8 @@ or
 
 - `.scrollTo()` automatically waits for the element to be scrollable, unless you
   pass `ensureScrollable: false`.
-- `.scrollTo()` itself is not retried. It scrolls once. Assertions chained after
-  `.scrollTo()` are retried until they pass or time out. See
+- Cypress doesn't retry `.scrollTo()` itself. `.scrollTo()` scrolls once. Cypress retries assertions chained after
+  `.scrollTo()` until they pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
 <HeaderTimeouts />

@@ -35,7 +35,7 @@ in the [GitHub Action Documentation](https://docs.github.com/en/actions).
   title="GitHub Actions + Cypress: Actions & Workflows"
 />
 
-Workflows can be packaged and shared as
+You can package and share workflows as
 [GitHub Actions](https://github.com/features/actions). GitHub maintains many,
 such as the [checkout](https://github.com/marketplace/actions/checkout) and
 [Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts)
@@ -84,7 +84,7 @@ for more information.
 
 The example below is a basic CI setup and job using the
 [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) to
-run Cypress tests. This GitHub Action configuration is placed within
+run Cypress tests. Place this GitHub Action configuration within
 `.github/workflows/main.yml`.
 
 ```yaml
@@ -109,12 +109,12 @@ jobs:
 
 **How this action works:**
 
-- On _push_ to this repository, this job will provision and start a
+- On _push_ to this repository, this job provisions and starts a
   GitHub-hosted Ubuntu Linux instance to run the outlined `steps` for the
   declared `cypress-run` job within the `jobs` section of the configuration.
 - The [GitHub checkout Action](https://github.com/marketplace/actions/checkout)
-  is used to check out our code from our GitHub repository.
-- Finally, our Cypress GitHub Action will:
+  checks out our code from our GitHub repository.
+- Finally, our Cypress GitHub Action does the following:
   - Install npm dependencies
   - Build the project (`npm run build`)
   - Start the project web server (`npm start`)
@@ -164,7 +164,7 @@ Cypress locally and in CI.
 
 GitHub Actions
 [requires using a Linux runner](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idcontainer) when specifying a container image.
-It does not support running Docker images on Windows or macOS runners.
+GitHub Actions does not support running Docker images on Windows or macOS runners.
 
 Below, we extend the previous example by adding the `container` attribute using a
 [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers)
@@ -207,14 +207,14 @@ If you are testing with Firefox, you must specify the non-root user `1001` as ab
 
 ## Caching Dependencies and Build Artifacts
 
-When working with actions that have multiple jobs, it is recommended to have an
-initial "install" job that will download any dependencies and build your app,
+When working with actions that have multiple jobs, we recommend having an
+initial "install" job that downloads any dependencies and builds your app,
 and then cache these assets for use later by subsequent jobs.
 
-The Cypress GitHub Action will automatically cache and restore your Node
+The Cypress GitHub Action automatically caches and restores your Node
 dependencies for you.
 
-For build assets, you will need to cache and restore them manually.
+For build assets, you need to cache and restore them manually.
 
 The `install` job below uses the
 [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)
@@ -294,25 +294,24 @@ recording to [Cypress Cloud](https://on.cypress.io/cloud).
 GitHub Actions offers a
 [matrix strategy](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix)
 for declaring different job configurations for a single job definition. Jobs
-declared within a matrix strategy can run in parallel, which enables us to run
-multiples instances of Cypress at the same time, as we will see later in this
+declared within a matrix strategy can run in parallel, so multiple
+instances of Cypress run at the same time, as shown later in this
 section.
 
 Before diving into an example of a parallelization setup, it is important to
-understand the two different types of GitHub Action jobs that we will declare:
+understand the two different types of GitHub Action jobs that the workflow declares:
 
-- **Install Job**: A job that installs and caches dependencies that will be used
-  by subsequent jobs later in the GitHub Action workflow.
+- **Install Job**: A job that installs and caches dependencies that subsequent
+  jobs use later in the GitHub Action workflow.
 - **Worker Job**: A job that handles the execution of Cypress tests and depends
   on the _install job_.
 
 ### Install Job
 
 The separation of installation from test running is necessary when running
-parallel jobs. It allows for the reuse of various build steps aided by caching.
+parallel jobs. Separating installation allows for the reuse of various build steps aided by caching.
 
-First, we'll define the `install` step that will be used by the worker jobs
-defined in the matrix strategy.
+First, define the `install` step, which the worker jobs in the matrix strategy use.
 
 For the `steps`, notice that we pass `runTests: false` to the Cypress GitHub
 Action to instruct it only to install and cache Cypress and npm dependencies
@@ -320,7 +319,7 @@ _without running the tests_.
 
 The
 [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)
-action will save the state of the `build` directory for the worker jobs.
+action saves the state of the `build` directory for the worker jobs.
 
 ```yaml
 name: Cypress Tests
@@ -351,10 +350,10 @@ jobs:
 
 ### Worker Jobs
 
-Next, we define the worker job named "cypress-run" that will run Cypress tests
+Next, we define the worker job named "cypress-run" that runs Cypress tests
 as part of a parallelized matrix strategy.
 
-The `download-artifact` action will retrieve the **dist** directory saved in the
+The `download-artifact` action retrieves the **dist** directory saved in the
 install job.
 
 ```yaml
@@ -397,21 +396,21 @@ jobs:
 
 <strong>Ensure Correct Container</strong>
 
-If a Docker container was used in the install job, the same Docker container
-must also be used in the worker jobs.
+If the install job uses a Docker container, the worker jobs must also use the
+same Docker container.
 
 :::
 
 #### Setting up Parallelization
 
-To set up multiple containers to run in parallel, the matrix option of the
-strategy configuration can be set to containers: [1, 2, 3, 4, 5], where the
-number of items defined in the containers array will be how many instances of
-the job will start up.
+To set up multiple containers to run in parallel, set the matrix option of the
+strategy configuration to containers: [1, 2, 3, 4, 5], where the
+number of items defined in the containers array is how many instances of the
+job start up.
 
-For instance, `containers: [1, 2, 3, 4, 5]` will provision five worker instances
-to run in parallel. For our purposes, the array's values are arbitrary and
-aren't used in the steps.
+For instance, `containers: [1, 2, 3, 4, 5]` provisions five worker instances
+to run in parallel. For our purposes, the array's values are arbitrary, and
+the steps don't use them.
 
 ### Specifying Browsers in Parallel Builds
 
@@ -422,7 +421,7 @@ Your test run might fail if Cypress Cloud detects differences in the browser ver
 
 To work around this issue, we recommend using a
 [cypress/browsers](#Testing-with-Cypress-Docker-Images) Docker image, which uses one consistent browser version.
-This shields the workflow from browser version changes due to possible incomplete GitHub runner image deployments.
+The image shields the workflow from browser version changes due to possible incomplete GitHub runner image deployments.
 
 As mentioned in [Testing with Cypress Docker Images](#Testing-with-Cypress-Docker-Images),
 this option is only available with GitHub Actions Linux runners.
@@ -491,7 +490,7 @@ To see additional how-to examples, you can also refer to our
 ### Re-run jobs passing with empty tests
 
 We recommend passing the `GITHUB_TOKEN` secret (created by the GH Action
-automatically) as a system environment variable in CI/CD. This will allow the accurate
+automatically) as a system environment variable in CI/CD. The token allows the accurate
 identification of each build to avoid confusion when re-running a build.
 
 ```yml
@@ -548,7 +547,7 @@ jobs:
 We also recommend adding `COMMIT_INFO_SHA` to re-enable
 [Cypress bot PR comments](/cloud/integrations/github#Pull-request-comments).
 See
-[this comment](https://github.com/cypress-io/github-action/issues/124#issuecomment-716584972)
+[the comment on cypress-io/github-action issue #124](https://github.com/cypress-io/github-action/issues/124#issuecomment-716584972)
 for more details.
 
 :::

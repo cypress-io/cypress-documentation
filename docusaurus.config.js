@@ -218,7 +218,7 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cypressconf-2026',
+        id: 'cloud-webhooks-nov-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
         // The content is raw HTML. src/clientModules/fullstoryEvents.ts labels
         // its links "Docs Announcement - Link" with this id, unless a link
@@ -226,7 +226,7 @@ const config = {
         // or Cloud needs the attributes from
         // conversionLinkAttributes(href, SURFACES.announcement) written into
         // the <a>.
-        content: `🌟 Join teams building and shipping quality applications with confidence at CypressConf 2026, October 20-22. <a href="https://cypress.registration.goldcast.io/events/670deb6c-06ee-4ce8-858b-8a4db3a62eb1?utm_medium=announcement-bar&utm_source=docs.cypress.io&utm_campaign=cypressconf2026">Register today</a>`,
+        content: `🔗 Need test results somewhere new? Cypress webhooks send run results to Jira, PagerDuty, Zapier, or your own service the moment a run finishes. <a href="https://docs.cypress.io/cloud/integrations/webhooks?utm_source=docs.cypress.io&utm_medium=announcement-bar">Learn More</a>`,
         isCloseable: true,
       },
       footer: {

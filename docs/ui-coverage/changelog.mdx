@@ -32,7 +32,7 @@ sidebar_position: 200
 
 ## Week of Dec 19, 2025
 
-- **Document scoping for nested contexts (`documentScope`):** The `elementFilters`, `elements`, `elementGroups`, and `allowedInteractionCommands` configuration properties now accept an optional `documentScope` field that scopes selectors to specific document hosts, such as iframes or shadow DOM hosts. This lets you filter, identify, group, or restrict interactions for elements inside nested document contexts without changing your application's DOM. Chain multiple hosts in the array to target elements within nested documents, such as an iframe that contains a shadow DOM component. See the [Element Filters](/ui-coverage/configuration/elementfilters), [Elements](/ui-coverage/configuration/elements), [Element Groups](/ui-coverage/configuration/elementgroups), and [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands) documentation for details and examples.
+- **Document scoping for nested contexts (`documentScope`):** The `elementFilters`, `elements`, `elementGroups`, and `allowedInteractionCommands` configuration properties now accept an optional `documentScope` field that scopes selectors to specific document hosts, such as iframes or shadow DOM hosts. The `documentScope` field lets you filter, identify, group, or restrict interactions for elements inside nested document contexts without changing your application's DOM. Chain multiple hosts in the array to target elements within nested documents, such as an iframe that contains a shadow DOM component. See the [Element Filters](/ui-coverage/configuration/elementfilters), [Elements](/ui-coverage/configuration/elements), [Element Groups](/ui-coverage/configuration/elementgroups), and [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands) documentation for details and examples.
 
 ## Week of Dec 12, 2025
 
@@ -111,7 +111,7 @@ sidebar_position: 200
 
 ## Week of Jun 24, 2024
 
-- **View configuration information for each run:** The properties tab now shows the configuration set for the project at the start of the run. This helps you understand what might be driving a score change and distinguishes configuration changes from other factors, such as changes to your application, tests, and Cypress versions. See [viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
+- **View configuration information for each run:** The properties tab now shows the configuration set for the project at the start of the run. The run configuration helps you understand what might be driving a score change and distinguishes configuration changes from other factors, such as changes to your application, tests, and Cypress versions. See [viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
 - **Anchor elements considered interactive:** Anchor elements (`a` tags) are now considered interactive even when they do not have an `href` attribute.
 
 ## Week of May 20, 2024

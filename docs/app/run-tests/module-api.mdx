@@ -11,7 +11,7 @@ slug: /app/references/module-api
 # Run Cypress from Node.js
 
 You can require Cypress as a node module from your application under test and
-run Cypress via Node.js. This can be useful when you want access to the test
+run Cypress via Node.js. Running Cypress from Node.js can be useful when you want access to the test
 results directly after the run. With this workflow, for example, you can:
 
 - Send a notification about failing tests with included screenshot images
@@ -84,12 +84,12 @@ Just like the [Command Line options](/app/references/command-line) for
 | `port`                    | _number_            | Override default port                                                                                                                                                                                        |
 | `posixExitCodes`          | _boolean_           | Exit with a POSIX-compliant exit code rather than the number of failed tests.                                                                                                                                |
 | `project`                 | _string_            | Path to a specific project                                                                                                                                                                                   |
-| `quiet`                   | _boolean_           | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/app/tooling/reporters) will print.                                                              |
+| `quiet`                   | _boolean_           | If passed, Cypress doesn't print its output to `stdout`. Only output from the configured [Mocha reporter](/app/tooling/reporters) prints.                                                                    |
 | `record`                  | _boolean_           | Whether to record the test run                                                                                                                                                                               |
 | `reporter`                | _string_            | Specify a [Mocha reporter](/app/tooling/reporters)                                                                                                                                                           |
 | `reporterOptions`         | _object_            | Specify [Mocha reporter](/app/tooling/reporters) options                                                                                                                                                     |
 | `runnerUi`                | _boolean_           | Whether to display the Cypress Runner UI. Defaults to `false` when [Test Replay](/cloud/features/test-replay) is enabled. Otherwise defaults to `true`.                                                      |
-| `slowTestThreshold`       | _number_            | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                                      |
+| `slowTestThreshold`       | _number_            | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test displays in orange text in the default reporter.                                                                          |
 | `spec`                    | _string_            | Specify the specs to run, see examples below                                                                                                                                                                 |
 | `tag`                     | _string_            | Identify a run with a tag or tags                                                                                                                                                                            |
 | `testingType`             | _string_            | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`                                                                                                                         |
@@ -165,7 +165,7 @@ cypress.run({
 
 #### Use modern syntax
 
-If your Node version allows you can use the modern `async / await` syntax to
+If your Node version supports it, use the modern `async / await` syntax to
 wait for the Promise returned by the `cypress.run` method.
 
 ```js
@@ -244,10 +244,9 @@ You can find the TypeScript definition for the results object in the
 ### Handling errors
 
 Even when tests fail or a spec errors, the `Promise` resolves with the test results.
-If a spec errors, the error message will be in the `runs` array under the `error` field.
-The `Promise` is only rejected if Cypress cannot run for some reason (for example if
-a binary has not been installed or it cannot find a module dependency). In that
-case, the `Promise` will be rejected with a detailed error.
+If a spec errors, the error message is in the `runs` array under the `error` field.
+The `Promise` only rejects if Cypress cannot run for some reason (for example if you haven't installed the binary or Cypress cannot find a module dependency). In that
+case, the `Promise` rejects with a detailed error.
 
 There is a third option - Cypress could run, but the tests could not start for
 some reason. In that case the resolved value is an object with two fields

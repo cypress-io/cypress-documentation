@@ -95,7 +95,7 @@ cy.get('input[name="email"]').should('have.value', '')
 ```
 
 Chaining the assertion directly off `.clear()` retries only against the element
-`.clear()` acted on. If that element is replaced in the DOM, the assertion keeps
+`.clear()` acted on. If your application replaces that element in the DOM, the assertion keeps
 checking the detached copy. See
 [Actions should be at the end of chains](/app/core-concepts/retry-ability#Actions-should-be-at-the-end-of-chains-not-the-middle).
 
@@ -203,7 +203,7 @@ cy.get('input[name="name"]').clear()
 cy.get('input[name="name"]').type('Jane Lane')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/clear/clear-input-in-cypress.png"

@@ -174,7 +174,7 @@ paused line, and for `subject` under "Local" in the "Scope" pane:
 ### `.debug()` pauses once per call
 
 `.debug()` is a query, so Cypress retries it along with the queries before it
-while any chained assertions are failing. It only logs and hits the breakpoint
+while any chained assertions are failing. `.debug()` only logs and hits the breakpoint
 the first time it runs. The "Debug Info" block shows the subject from that
 first run, which may differ from the subject Cypress yields once the assertions
 pass.

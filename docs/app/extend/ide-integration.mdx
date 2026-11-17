@@ -13,7 +13,7 @@ slug: /app/tooling/IDE-integration
 Cypress integrates with the IDEs and code editors you already use, including
 Visual Studio Code, JetBrains IDEs, Vim, and more.
 
-Because Cypress tests are written in JavaScript or TypeScript, your editor's
+Because you write Cypress tests in JavaScript or TypeScript, your editor's
 existing language tooling applies to your test code, and Cypress ships with
 TypeScript type declarations so autocomplete works with little or no setup.
 
@@ -115,7 +115,7 @@ including types for custom commands.
 The simplest way to see IntelliSense when typing a Cypress command or assertion
 is to add a
 [triple-slash directive](http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html)
-to the head of your JavaScript or TypeScript testing file. This turns
+to the head of your JavaScript or TypeScript testing file. The directive turns
 IntelliSense on for that file. Copy the comment line below and paste it into
 your spec file.
 
@@ -201,7 +201,7 @@ common causes:
 
 The official
 [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
-integrates with any ESLint-capable editor. It configures Cypress and Mocha
+integrates with any ESLint-capable editor. The plugin configures Cypress and Mocha
 globals, eliminating false "undefined variable" errors in spec files, and
 provides lint rules that flag Cypress anti-patterns as you write tests.
 
@@ -305,8 +305,8 @@ editor, navigating to custom command definitions, and managing `.only` /
 
 :::caution
 
-Except where noted, these extensions are built and maintained by community
-authors, not by Cypress. Before adopting one, check its marketplace listing for
+Except where noted, community authors, not Cypress, build and maintain these
+extensions. Before adopting one, check its marketplace listing for
 recent updates and compatibility with your Cypress version.
 
 :::
@@ -315,8 +315,8 @@ recent updates and compatibility with your Cypress version.
 
 - [Cypress Test Explorer](https://marketplace.visualstudio.com/items?itemName=dpanshug.cypress-test-explorer):
   Discover, navigate, and run Cypress tests from VS Code's native Testing
-  sidebar. Reads the `specPattern` from your Cypress configuration and lets you
-  run tests headlessly or open them in the Cypress app.
+  sidebar. Reads the `specPattern` from your Cypress configuration and runs
+  tests headlessly or opens them in the Cypress app.
 - [Cypress Helper](https://marketplace.visualstudio.com/items?itemName=shevtsov.vscode-cy-helper):
   Go-to-definition for custom commands, autocomplete for fixtures and aliases,
   and code lenses to open specs in Cypress.
@@ -355,8 +355,8 @@ Visual Studio Marketplace, so some extensions above may not be available.
   The official plugin developed and maintained by JetBrains, with dedicated
   Cypress support. Run and debug tests from the editor across IntelliJ IDEA
   Ultimate, WebStorm, PhpStorm, PyCharm, GoLand, Rider, RubyMine, and other
-  JetBrains IDEs. It includes the test automation capabilities previously
-  offered in JetBrains Aqua, which was discontinued in 2025.
+  JetBrains IDEs. The plugin includes the test automation capabilities previously
+  offered in JetBrains Aqua, which JetBrains discontinued in 2025.
 - [Cypresso](https://plugins.jetbrains.com/plugin/13819-cypresso) (formerly
   "Cypress Support"): A community plugin that integrates Cypress under the
   common IntelliJ test framework, with run configurations, debugging, and

@@ -13,7 +13,7 @@ Load a fixed set of data located in a file.
 Tests are easiest to trust when every run starts from the same data.
 `cy.fixture()` loads known test data, such as JSON records, images, and CSV
 files, from your [`fixturesFolder`](/app/references/configuration#Folders--Files).
-That keeps the data out of your spec code, lets many tests share it, and means a
+Loading data from fixtures keeps the data out of your spec code, lets many tests share it, and means a
 test fails because your app changed, not because the data did.
 
 Reach for `cy.fixture()` when you need to:
@@ -203,7 +203,7 @@ cy.fixture<User[]>('users').then((users) => {
 #### Read a JSON fixture as raw text
 
 Pass an encoding to yield the file's contents as a string instead of the parsed
-object. This helps when you want the exact text of the file, such as to compare
+object. The raw string helps when you want the exact text of the file, such as to compare
 it with a raw request body.
 
 ```javascript
@@ -350,9 +350,9 @@ cy.wait('@getUser').then(({ response }) => {
 
 #### Load a fixture in `beforeEach()` and read it with `cy.get()`
 
-Aliases are cleared between tests, so load the fixture in a `beforeEach()` hook
-and read the alias back with [`cy.get()`](/api/commands/get#Alias). This works
-with arrow functions, unlike the [`this` context](#Share-fixture-data-through-the-this-context).
+Cypress clears aliases between tests, so load the fixture in a `beforeEach()` hook
+and read the alias back with [`cy.get()`](/api/commands/get#Alias). Reading the alias
+this way works with arrow functions, unlike the [`this` context](#Share-fixture-data-through-the-this-context).
 
 ```javascript
 describe('User list', () => {
@@ -410,7 +410,7 @@ cy.fixture('users/admin').then((admin) => {
 cy.location('pathname').should('eq', '/dashboard')
 ```
 
-Fixtures are committed with your tests, so keep real secrets out of them and
+You commit fixtures with your tests, so keep real secrets out of them and
 read those with [`cy.env()`](/api/commands/env) instead.
 
 #### Seed your backend with fixture data
@@ -478,8 +478,8 @@ it answers appears in the test body without a live server behind it:
   alt="Command Log with the Routes panel showing GET /users/** stubbed, and a fetch to /users/1 answered by it"
 />
 
-`cy.intercept()` serves image and `.zip` fixtures as raw bytes. Other binary
-files, such as `.mp4` or `.pdf`, are read as `utf8` text by default, which
+`cy.intercept()` serves image and `.zip` fixtures as raw bytes. `cy.intercept()` reads other binary
+files, such as `.mp4` or `.pdf`, as `utf8` text by default, which
 corrupts them. To serve one of those byte for byte, add `null` as the encoding
 after a comma:
 
@@ -515,8 +515,8 @@ To read a file differently, pass an [`encoding`](#Arguments) as the second
 argument.
 
 These defaults describe what `cy.fixture()` yields. When you serve a fixture
-from [`cy.intercept()`](#Serve-a-fixture-directly-from-cyintercept), image and
-`.zip` fixtures are sent as raw bytes instead of `base64`.
+from [`cy.intercept()`](#Serve-a-fixture-directly-from-cyintercept), Cypress sends image and
+`.zip` fixtures as raw bytes instead of `base64`.
 
 ### Share fixture data through the `this` context
 
@@ -615,8 +615,8 @@ cy.task('getFileSize', 'cypress/fixtures/large.zip').then((size) => {
 The first time you load a fixture, Cypress caches its contents, keyed on the
 path exactly as you wrote it and the encoding. Later `cy.fixture()` calls with
 the same path and encoding yield the cached contents, even if the file has
-changed on disk. Because the key is the path as written, `cy.fixture('users')`
-and `cy.fixture('users.json')` are cached separately, so use one form
+changed on disk. Because the key is the path as written, Cypress caches `cy.fixture('users')`
+and `cy.fixture('users.json')` separately, so use one form
 consistently to read the file only once.
 
 When you write to a file inside the
@@ -682,7 +682,7 @@ cy.fixture('todo.json').then((todo) => {
 - `cy.fixture()` requires being chained off of `cy`.
 - `cy.fixture()` requires
   [`fixturesFolder`](/app/references/configuration#Folders--Files) to be set.
-  It fails if `fixturesFolder` is `false`.
+  `cy.fixture()` fails if `fixturesFolder` is `false`.
 - `cy.fixture()` requires `filePath` to resolve to a file inside the
   `fixturesFolder`.
 - `cy.fixture()` requires the file to exist. If no file matches `filePath`, or
@@ -692,13 +692,13 @@ cy.fixture('todo.json').then((todo) => {
 
 <HeaderAssertions />
 
-- `cy.fixture()` will only run assertions you have chained once, and will not
+- `cy.fixture()` only runs assertions you have chained once, and does not
   [retry](/app/core-concepts/retry-ability).
 
 <HeaderTimeouts />
 
 - `cy.fixture()` can time out waiting for the Cypress server to send the
-  fixture. It waits for the `timeout` option, which defaults to
+  fixture. The command waits for the `timeout` option, which defaults to
   [`responseTimeout`](/app/references/configuration#Timeouts).
 - `cy.fixture()` yields cached contents without waiting on the server, so a
   cached fixture never times out.

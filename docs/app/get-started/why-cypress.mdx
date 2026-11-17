@@ -10,13 +10,13 @@ slug: /app/get-started/why-cypress
 
 Cypress is a quality platform for teams shipping modern web applications. We bring together end-to-end testing, component testing, accessibility checks, and a clear view of test coverage into a connected workflow that runs locally and in CI, so you can catch problems before your users do.
 
-Most teams come to Cypress looking for a better way to write tests for their front end. They stay because, as the team and the application grow, **Cypress does more than a testing tool would.**
+Most teams come to Cypress looking for a better way to write tests for their front end. Teams stay because, as the team and the application grow, **Cypress does more than a testing tool would.**
 
 The same platform helps a single developer write their first test, a QA team manage thousands of specs, an accessibility partner track regressions, and an engineering lead see whether a release is safe to ship.
 
 **What you write in Cypress becomes part of how your team ships software.** Tests run while you build. Results flow into CI. Failures, flake patterns, accessibility issues, and untested areas of your app surface in one place the whole team can act on.
 
-**By the time a change is ready to merge, your team should already know whether it's safe to ship.** That's how Cypress reduces the cost and risk of releasing software: fewer surprises in production, fewer hours lost to test maintenance, and a release cadence you can trust.
+**By the time a change is ready to merge, your team should already know whether it's safe to ship.** Knowing before merge is how Cypress reduces the cost and risk of releasing software: fewer surprises in production, fewer hours lost to test maintenance, and a release cadence you can trust.
 
 Cypress provides solutions for:
 
@@ -42,11 +42,11 @@ of your test suite and the quality of your application.
 
 **Install the Cypress app and start writing tests as you build.** The app is free and open source.
 
-This is where the day-to-day cost of testing lives. Most teams spend more time debugging broken tests than writing new ones, and most of that time goes to one question: what was the state of the app when the test failed?
+Local development is where the day-to-day cost of testing lives. Most teams spend more time debugging broken tests than writing new ones, and most of that time goes to one question: what was the state of the app when the test failed?
 
 Cypress is built around making that question fast to answer:
 
-- **[Time Travel](/app/core-concepts/open-mode#Command-Log)** snapshots let you replay every step of a test locally instead of guessing.
+- **[Time Travel](/app/core-concepts/open-mode#Command-Log)** snapshots replay every step of a test locally, so you don't have to guess.
 - **[Automatic waiting](/app/core-concepts/introduction-to-cypress#Cypress-is-Not-Like-jQuery)** removes the timing logic that other tools require you to hand-write and maintain.
 - **[Studio AI](/app/guides/cypress-studio)** records interactions and suggests assertions, so you spend less time authoring boilerplate.
 
@@ -59,13 +59,13 @@ Less time on test maintenance is more time shipping features.
 [Cypress Cloud](/cloud/get-started/introduction) replaces guesswork with evidence:
 
 - **[Test Replay](/cloud/features/test-replay)** replays the test exactly as it executed during the run for zero-configuration debugging.
-- **[Flaky test management](/cloud/features/flaky-test-management)** surfaces flake patterns so they get fixed instead of quietly suppressed.
+- **[Flaky test management](/cloud/features/flaky-test-management)** surfaces flake patterns so your team fixes them instead of quietly suppressing them.
 - **[Branch Review](/cloud/features/branch-review)** gives every pull request a pre-merge picture of the test signal, so "are we good to merge?" has a real answer before code lands on main.
 - **[Smart Orchestration](/cloud/features/smart-orchestration/parallelization)** keeps CI fast as your suite grows by parallelizing specs, prioritizing the ones most likely to fail, and cancelling builds that are clearly broken.
 
 Faster, more trustworthy CI is the difference between a team that ships every day and a team that ships when they get lucky.
 
-If your team uses AI coding assistants, [Cloud MCP](/cloud/integrations/cloud-mcp) <Icon useCypressIcon name="general-sparkle-double-large" className="inline mt-[-4px]" fillColor="white" /> gives them the same run and failure context inside your IDE. You'll never have to wonder: _Why did this fail?_
+If your team uses AI coding assistants, [Cloud MCP](/cloud/integrations/cloud-mcp) <Icon useCypressIcon name="general-sparkle-double-large" className="inline mt-[-4px]" fillColor="white" /> gives them the same run and failure context inside your IDE. You never have to wonder: _Why did this fail?_
 
 ### Scale quality with premium products
 
@@ -75,7 +75,7 @@ The stakes grow with the questions. Accessibility issues caught in development c
 
 Two premium products meet this stage:
 
-- **[Cypress Accessibility](/accessibility/get-started/introduction)** surfaces accessibility issues continuously during your normal test runs, with no setup, code changes, or performance penalty. Issues get caught in development rather than after launch.
+- **[Cypress Accessibility](/accessibility/get-started/introduction)** surfaces accessibility issues continuously during your normal test runs, with no setup, code changes, or performance penalty. You catch issues in development rather than after launch.
 - **[UI Coverage](/ui-coverage/get-started/introduction)** gives engineers, product, and QA a single shared view of which parts of your app your tests reach and which they don't.
 
 ## Features
@@ -158,7 +158,7 @@ Cypress can be used to ensure several different types of tests. Used together, t
 
 Cypress was originally designed to run [end-to-end (E2E) tests](/app/end-to-end-testing/writing-your-first-end-to-end-test) on anything that
 runs in a browser. A typical E2E test visits the application in a browser and
-performs actions via the UI just like a real user would. They catch the failures your users would actually see, which is what makes them so valuable in the moments before code ships.
+performs actions via the UI just like a real user would. E2E tests catch the failures your users would actually see, which is what makes them so valuable in the moments before code ships.
 
 ```js
 it('adds todos', () => {
@@ -243,8 +243,8 @@ it('uses custom text for the button label', () => {
 ### Accessibility Testing
 
 You can write Cypress tests to check the accessibility of your application, and use plugins to run broad accessibility scans.
-When combined with [Cypress Accessibility](/accessibility/get-started/introduction) in Cypress Cloud, insights can be surfaced when specific
-accessibility standards are not met through your testing, with no configuration required. See our [Accessibility Testing guide](/app/guides/accessibility-testing) for more details.
+[Cypress Accessibility](/accessibility/get-started/introduction) in Cypress Cloud surfaces insights from your existing tests when your application
+does not meet specific accessibility standards, with no configuration required. See our [Accessibility Testing guide](/app/guides/accessibility-testing) for more details.
 
 ```js
 it('adds todos', () => {
@@ -291,7 +291,7 @@ productivity, makes testing an enjoyable experience, and generates developer
 happiness. We hold ourselves accountable to champion a testing process **that
 actually works**.
 
-We believe our documentation should be approachable. This means enabling our
+We believe our documentation should be approachable. Approachable documentation means enabling our
 readers to understand fully not just the **what** but the **why** as well.
 
 We want to help developers build a new generation of modern applications faster,
@@ -302,8 +302,8 @@ areas for improvement.
 
 We know that in order for us to be successful we must enable, nurture, and
 foster an ecosystem that thrives on open source. Every line of test code is an
-investment in **your codebase**, it will never be coupled to us as a paid
-service or company. Tests will be able to run and work independently, _always_.
+investment in **your codebase**, it is never coupled to us as a paid
+service or company. Tests can run and work independently, _always_.
 
 We believe testing needs a lot of ❤️ and we are here to build a tool, a service,
 and a community that everyone can learn and benefit from. We're solving the
@@ -317,7 +317,7 @@ that makes everyone happy.
 
 Most testing tools (like Selenium) operate by running outside of the browser and
 executing remote commands across the network. _Cypress is the exact opposite._
-Cypress is executed in the same run loop as your application.
+Cypress executes in the same run loop as your application.
 
 Behind Cypress is a Node server process. Cypress and the Node process constantly
 communicate, synchronize, and perform tasks on behalf of each other. Having
@@ -327,12 +327,12 @@ browser for tasks that require a higher privilege.
 
 Cypress ultimately controls the entire automation process from top to bottom,
 which puts it in the unique position of being able to understand everything
-happening in and outside of the browser. This means Cypress is capable of
+happening in and outside of the browser. This full control means Cypress is capable of
 delivering more consistent results than any other testing tool.
 
 Because Cypress is
 [installed locally](/app/get-started/install-cypress) on your machine,
-it can additionally tap into the operating system for automation tasks. This
+it can additionally tap into the operating system for automation tasks. Access to the operating system
 makes performing tasks such as
 [taking screenshots, recording videos](/app/guides/screenshots-and-videos),
 general [file system operations](/api/commands/task), and
@@ -357,7 +357,7 @@ For instance you can:
   response status codes to be 500.
 - Modify DOM elements directly - like forcing hidden elements to be shown.
 - Use 3rd party plugins programmatically. Instead of fussing with complex UI
-  widgets like multi selects, autocompletes, drop downs, tree views or
+  widgets like multi selects, autocompletes, drop downs, tree views, or
   calendars, you can call methods directly from your test code to control them.
 - [Prevent Google Analytics from loading _before_ any of your application code executes](/app/references/configuration#blockHosts)
   when testing.
@@ -377,11 +377,11 @@ For instance you can:
 
 ### Shortcuts
 
-Cypress allows for browser context to be cached with
-[`cy.session()`](/api/commands/session). This means as a user, you only need to
+Cypress caches browser context with
+[`cy.session()`](/api/commands/session). Caching the browser context means as a user, you only need to
 perform authentication once for the entirety of your test suite, and restore the
-saved session between each test. That means you do not have to visit a login
-page, type in a username and password and wait for the page to load and/or
+saved session between each test. Restoring the session means you do not have to visit a login
+page, type in a username and password, and wait for the page to load and/or
 redirect for every test you run. You can accomplish this once with
 [`cy.session()`](/api/commands/session) and if needed,
 [`cy.origin()`](/api/commands/origin).
@@ -391,15 +391,15 @@ redirect for every test you run. You can accomplish this once with
 Flake is one of the largest hidden costs in any test suite. Reducing it is one of the most direct ways Cypress keeps a suite trustworthy over time.
 
 Cypress knows and understands everything that happens in your application
-synchronously. It is notified the moment the page loads and the moment the page
-unloads. Cypress even knows how fast an element is animating and will
-[wait for it to stop animating](/app/core-concepts/interacting-with-elements#Animations).
+synchronously. Cypress is notified the moment the page loads and the moment the page
+unloads. Cypress even knows how fast an element is animating and
+[waits for it to stop animating](/app/core-concepts/interacting-with-elements#Animations).
 Additionally, it
 [automatically waits for elements to become visible](/app/core-concepts/interacting-with-elements#Visibility),
 to [become enabled](/app/core-concepts/interacting-with-elements#Disability),
 and to
 [stop being covered](/app/core-concepts/interacting-with-elements#Covering).
-When pages begin to transition, Cypress will pause command execution until the
+When pages begin to transition, Cypress pauses command execution until the
 following page is fully loaded. You can also tell Cypress to
 [wait](/api/commands/wait) on specific network requests to finish.
 
@@ -411,12 +411,12 @@ Above all else Cypress is built for usability.
   failed your test.
 - There is a rich UI which visually shows you the command execution, assertions,
   network requests, spies, stubs, page loads, or URL changes.
-- The Cypress App takes snapshots of your application and enables you to time travel back
+- The Cypress App takes snapshots of your application, so you can time travel back
   to the state it was in when commands ran.
 - You can use the Developer Tools while your tests run to see every console
   message or network request. You can inspect elements and use
-  debugger statements in your spec or application code - you can use all the tools you're already comfortable with. This
-  enables you to test and develop all at the same time.
+  debugger statements in your spec or application code - you can use all the tools you're already comfortable with. With the Developer Tools open during a run,
+  you test and develop at the same time.
 
 ### Trade offs
 
@@ -440,7 +440,7 @@ If you're interested in understanding more, we've written
 />
 
 Cypress makes it quick and easy to start testing, and as you begin to test your
-app, **you'll often wonder if you're using best practices or scalable
+app, **you often wonder if you're using best practices or scalable
 strategies**.
 
 {/* prettier-ignore */}

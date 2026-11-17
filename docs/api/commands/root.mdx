@@ -45,7 +45,7 @@ Pass in an options object to change the default behavior of `.root()`.
 `cy.root()` yields the root DOM element.
 
 The root element yielded is `<html>` by default. However, when calling `.root()`
-from a [`.within()`](/api/commands/within) command, the root element will point
+from a [`.within()`](/api/commands/within) command, the root element points
 to the element you are "within".
 
 `cy.root()` is a query, and it is _safe_ to chain further commands.
@@ -80,7 +80,7 @@ cy.get('form').within(($form) => {
 
 <HeaderAssertions />
 
-- `cy.root()` will automatically [retry](/app/core-concepts/retry-ability)
+- `cy.root()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
 <HeaderTimeouts />
@@ -99,7 +99,7 @@ cy.get('.query-ul').within(() => {
 })
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/root/find-root-element-and-assert.png"

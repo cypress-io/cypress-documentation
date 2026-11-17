@@ -196,10 +196,9 @@ cy.get('form').within(($form) => {
 
 The subject yielded by `.within()` is _always_ the original parent element. Any
 command you run, value you return, or [`cy.wrap()`](/api/commands/wrap) you call
-**inside** the callback has no effect on what `.within()` yields. This is true
-even when `.within()` is used inside a
-[custom command](/api/cypress-api/custom-commands) or when `.within()` blocks are
-nested.
+**inside** the callback has no effect on what `.within()` yields. This rule is true
+even when you use `.within()` inside a
+[custom command](/api/cypress-api/custom-commands) or nest `.within()` blocks.
 
 If you need to yield an element found inside the scope, query it _after_ the
 `.within()` block instead. For example, scope to the parent with
@@ -233,7 +232,7 @@ cy.get('.ag-header-cell')
 
 <HeaderAssertions />
 
-- `.within()` will only run assertions you have chained once, and will not
+- `.within()` only runs assertions you have chained once, and does not
   [retry](/app/core-concepts/retry-ability).
 
 <HeaderTimeouts />
@@ -250,7 +249,7 @@ cy.get('.query-form').within((el) => {
 })
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/within/go-within-other-dom-elements.png"

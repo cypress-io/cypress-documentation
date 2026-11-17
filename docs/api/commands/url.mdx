@@ -41,7 +41,7 @@ const url = cy.url() // Yields a chainable, not the URL string
 cy.get('a').url() // Ignores the link, yields the page's URL
 ```
 
-Cypress commands are enqueued and run later, so `cy.url()` never returns the URL
+Cypress enqueues commands and runs them later, so `cy.url()` never returns the URL
 directly. To work with the string, read it in a [`.then()`](/api/commands/then)
 callback or save it as an [alias](/api/commands/as):
 

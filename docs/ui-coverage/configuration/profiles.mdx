@@ -108,7 +108,7 @@ cypress run --record --tag "aq-config-localization-audit"
 
 Profiles can override configuration at any level, including configuration specific to Cypress Accessibility or UI Coverage when your project has both products enabled. Because `uiCoverage` and `accessibility` merge one level deep, a profile can add or replace a single nested property while inheriting the rest.
 
-Here the base configuration groups every product card into one [element group](/ui-coverage/configuration/elementgroups) so the repeated cards count once and don't dominate the score. A suite that specifically exercises each card variant, tagged `aq-config-card-variants`, needs the opposite: the same cards split into separate groups so featured and standard cards are tracked independently. The two groupings can't both be the base configuration, so the difference lives in a profile.
+Here the base configuration groups every product card into one [element group](/ui-coverage/configuration/elementgroups) so the repeated cards count once and don't dominate the score. A suite that specifically exercises each card variant, tagged `aq-config-card-variants`, needs the opposite: the same cards split into separate groups so UI Coverage tracks featured and standard cards independently. The two groupings can't both be the base configuration, so the difference lives in a profile.
 
 #### Config
 
@@ -159,11 +159,11 @@ Here the base configuration groups every product card into one [element group](/
 cypress run --record --tag "aq-config-card-variants"
 ```
 
-Inside `uiCoverage`, the profile replaces `elementGroups` with its own two groups while the sibling `attributeFilters` is inherited; only the keys the profile names are replaced. On every other run, the single "Product card" group still applies.
+Inside `uiCoverage`, the profile replaces `elementGroups` with its own two groups while inheriting the sibling `attributeFilters`; the profile replaces only the keys it names. On every other run, the single "Product card" group still applies.
 
 ### Profile selection with multiple matching tags
 
-Two teams share one Cypress Cloud project, and each has a profile that scopes the report to the views they own. A shared nightly job is tagged for both teams. When more than one tag matches a profile name, Cypress Cloud uses the first matching profile in the `profiles` array, regardless of the order the tags appear on the run.
+Two teams share one Cypress Cloud project, and each has a profile that scopes the report to the views they own. A shared nightly job carries tags for both teams. When more than one tag matches a profile name, Cypress Cloud uses the first matching profile in the `profiles` array, regardless of the order the tags appear on the run.
 
 #### Config
 
@@ -212,7 +212,7 @@ Two teams share one Cypress Cloud project, and each has a profile that scopes th
 cypress run --record --tag "aq-config-team-account,aq-config-team-checkout"
 ```
 
-Both tags match a profile, but Cypress Cloud applies `aq-config-team-checkout` because it appears first in the `profiles` array, even though `aq-config-team-account` is listed first among the tags. The checkout team's report is produced; tag order on the command line doesn't change the outcome.
+Both tags match a profile, but Cypress Cloud applies `aq-config-team-checkout` because it appears first in the `profiles` array, even though `aq-config-team-account` comes first among the tags. Cypress Cloud produces the checkout team's report; tag order on the command line doesn't change the outcome.
 
 ## See also
 

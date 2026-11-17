@@ -338,7 +338,7 @@ cy.get('.notification').filter('.error').should('not.exist')
 
 These three commands narrow a selection in different ways:
 
-- `.filter()` keeps the elements in the current subject that match. It never
+- `.filter()` keeps the elements in the current subject that match. `.filter()` never
   looks inside them.
 - [`.find()`](/api/commands/find) searches the descendants of the current
   subject.
@@ -367,10 +367,10 @@ cy.get('ul').contains('Services') // yields <li>Services</li>
 
 <HeaderAssertions />
 
-- `.filter()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.filter()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.filter()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.filter()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
