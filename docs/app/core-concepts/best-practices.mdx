@@ -292,7 +292,7 @@ Let's investigate how we could target it:
 | `cy.getByRole('button', { name: 'Submit' }).click()` | <Icon name="check-circle" color="green" /> Depends            | Much better. Checks both the role and the accessible name, so it's coupled to each. |
 | `cy.get('[data-cy="submit"]').click()`               | <Icon name="check-circle" color="green" /> Always             | Best. Isolated from all changes.                                                    |
 
-Targeting the element above by `tag`, `class` or `id` is very volatile and
+Targeting the element above by `tag`, `class`, or `id` is very volatile and
 highly subject to change. You may swap out the element, you may refactor CSS and
 update ID's, or you may add or remove classes that affect the style of the
 element.
