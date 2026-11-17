@@ -88,9 +88,9 @@ supported for use in `Cypress.Commands.overwrite()`
 
 :::
 
-| Option        | Accepts                        | Default | Description                                   |
-| ------------- | ------------------------------ | ------- | --------------------------------------------- |
-| `prevSubject` | `Boolean`, `String` or `Array` | `false` | how to handle the previously yielded subject. |
+| Option        | Accepts                         | Default | Description                                   |
+| ------------- | ------------------------------- | ------- | --------------------------------------------- |
+| `prevSubject` | `Boolean`, `String`, or `Array` | `false` | how to handle the previously yielded subject. |
 
 The `prevSubject` accepts the following values:
 
@@ -1224,7 +1224,7 @@ cy.wrap([]).click() // has subject, but not `element`, will error
 
 #### `.trigger()`
 
-Require subject be one of the following types: `element`, `document` or `window`
+Require subject be one of the following types: `element`, `document`, or `window`
 
 <Tabs>
 <TabItem value="cypress/support/commands.js">
