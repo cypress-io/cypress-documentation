@@ -12,7 +12,7 @@ sidebar_position: 60
 When a CI run fails, it's common to re-run the job before investigating the failure deeply, especially if the failure is unexplained or seems like the result of typical flake or some known instability in the CI environment.
 
 That CI rerun usually executes your entire test suite again,
-including the specs that already passed. When Re-run optimization is enabled and you are recording to Cypress Cloud, Cypress automatically detects when a CI re-run is happening, and avoids re-running what already passed.
+including the specs that already passed. When Re-run Optimization is enabled and you are recording to Cypress Cloud, Cypress automatically detects when a CI re-run is happening, and avoids re-running what already passed.
 
 Skipping passed work speeds up your CI process and removes redundant testing, and makes your runs more resilient to inherently unstable environments or services.
 
