@@ -12,7 +12,7 @@ sidebar_position: 60
 When a CI run fails, it's common to re-run the job before investigating the failure deeply, especially if the failure is unexplained or seems like the result of typical flake or some known instability in the CI environment.
 
 That CI rerun usually executes your entire test suite again,
-including the specs that already passed. When re-run optimization is in enabled and you are recording to Cypress Cloud, Cypress automatically detects when a CI re-run is happening, and avoids re-running what already passed.
+including the specs that already passed. When Re-run optimization is enabled and you are recording to Cypress Cloud, Cypress automatically detects when a CI re-run is happening, and avoids re-running what already passed.
 
 Skipping passed work speeds up your CI process and removes redundant testing, and makes your runs more resilient to inherently unstable environments or services.
 
@@ -153,7 +153,7 @@ Sets the default behavior for every project in the organization.
 - **Run everything again** rebuilds the full suite on a rerun. **Run everything again** is the default
   for existing organizations.
 - **Run only failed specs** re-executes spec files that contained any failure.
-  **Run only failed specs** will be the default for newly created organizations.
+  **Run only failed specs** is the default for newly created organizations.
 - **Run only failed tests** re-executes tests that failed. Requires Cypress
   15.21.0 or later.
 
@@ -258,9 +258,8 @@ whichever run is complete at the time it begins.
 
 ## Behavior and limitations
 
-These tradeoffs are why the feature is experimental and opt-in. For most reruns
-the speed and cost savings far outweigh them, but it's worth understanding them
-before enabling Re-run optimization on critical pipelines:
+Keep these behaviors in mind before enabling Re-run optimization on critical
+pipelines. For most reruns, the speed and cost savings far outweigh them:
 
 - **Cypress doesn't carry passing results forward.** A rerun-optimized run shows only the specs and tests that were re-executed. Work that passed in the anchor run does not appear in the rerun's results.
 - **Cypress skips passing work for up to 5 chained reruns.** Re-run optimization
