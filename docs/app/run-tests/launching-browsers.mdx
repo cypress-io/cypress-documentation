@@ -550,7 +550,9 @@ CLI, Cypress launches browsers **headlessly** by default. The browser runs
 without a visible UI. Headless mode is what makes Cypress well suited to Continuous
 Integration, where there is no display to render to and headless runs are faster
 and lighter. When running [cypress open](/app/references/command-line#cypress-open),
-the browser is **always headed** so you can watch and debug interactively.
+the browser is headed by default, so you can watch and debug interactively.
+[`cypress open --headless`](/app/references/command-line#cypress-open-headless)
+starts a session with no visible window for `cypress tap` to drive.
 
 How Cypress launches each browser headlessly differs slightly:
 
