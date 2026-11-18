@@ -186,13 +186,9 @@ jobs:
           name: dist
           path: dist
 
-      # Pinned to an exact Chrome for Testing build, since both the runner's
-      # Chrome and the setup-chrome default track the latest stable. Raise it
-      # only after the suite passes on the newer build.
       - name: Install Chrome for Testing
         uses: browser-actions/setup-chrome@v2
         with:
-          chrome-version: 157.0.8103.78
           install-dependencies: true
 
       # Installs dependencies, restores the cached Cypress binary, serves the
@@ -251,7 +247,6 @@ jobs:
       - name: Install Chrome for Testing
         uses: browser-actions/setup-chrome@v2
         with:
-          chrome-version: 157.0.8103.78
           install-dependencies: true
 
       - name: Run Cypress
