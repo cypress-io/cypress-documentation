@@ -80,6 +80,7 @@ jobs:
         if: steps.changed.outputs.changed == 'true'
         uses: browser-actions/setup-chrome@v2
         with:
+          chrome-version: 157.0.8103.78
           install-dependencies: true
 
       # plugins_list.cy.ts is the spec for the page this data renders. It
