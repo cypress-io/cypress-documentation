@@ -76,6 +76,14 @@ import UICovPremiumNote from '@site/docs/partials/_ui-coverage-premium-note.mdx'
 import ResultsApiEnvVars from '@site/docs/partials/_results-api-env-vars.mdx'
 import FixtureVsReadFile from '@site/docs/partials/_fixture-vs-readfile.mdx'
 import UrlPartsDiagram from '@site/docs/partials/_url-parts-diagram.mdx'
+import KeyboardKeysTable from '@site/docs/partials/_keyboard-keys-table.mdx'
+import CookieProperties from '@site/docs/partials/_cookie-properties.mdx'
+import FileEncodings from '@site/docs/partials/_file-encodings.mdx'
+import ClickModifierKeys from '@site/docs/partials/_click-modifier-keys.mdx'
+import ActionPositionDiagram from '@site/docs/partials/_action-position-diagram.mdx'
+import SpecObjectProperties from '@site/docs/partials/_spec-object-properties.mdx'
+import CtFrameworkInstallation from '@site/docs/partials/_ct-framework-installation.mdx'
+import CtDevServerConfigLink from '@site/docs/partials/_ct-dev-server-config-link.mdx'
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -282,4 +290,12 @@ export default {
   ResultsApiEnvVars,
   FixtureVsReadFile,
   UrlPartsDiagram,
+  KeyboardKeysTable,
+  CookieProperties,
+  FileEncodings,
+  ClickModifierKeys,
+  ActionPositionDiagram,
+  SpecObjectProperties,
+  CtFrameworkInstallation,
+  CtDevServerConfigLink,
 }
