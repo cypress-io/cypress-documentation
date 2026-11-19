@@ -52,15 +52,7 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
-- `domain`: _(String)_
-- `expiry`: _(Number)_ _(if specified)_
-- `hostOnly`: _(Boolean)_ _(not always reported)_
-- `httpOnly`: _(Boolean)_
-- `name`: _(String)_
-- `path`: _(String)_
-- `sameSite`: _(String)_ _(if specified)_
-- `secure`: _(Boolean)_
-- `value`: _(String)_
+<CookieProperties />
 
 `cy.getCookie()` is a query, and it is _safe_ to chain further commands.
 `cy.getCookie()` re-reads the cookie on each [retry](/app/core-concepts/retry-ability), and the
