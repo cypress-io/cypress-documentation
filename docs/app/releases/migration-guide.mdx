@@ -2067,7 +2067,7 @@ The Session and Origin experiment has been released as General Availability
 free of issues in the majority of use cases. With releasing this as GA, the
 `experimentalSessionAndOrigin` flag has been removed, the
 [`cy.origin()`](/api/commands/origin) and
-[`cy.session()`](/api/commands/session) commands are generally available and
+[`cy.session()`](/api/commands/session) commands are generally available, and
 [Test Isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 is enabled by default.
 
@@ -2366,7 +2366,7 @@ describe('Dashboard', () => {
   })
 ```
 
-#### `cy.server()`, `cy.route()` and `Cypress.Server.defaults`
+#### `cy.server()`, `cy.route()`, and `Cypress.Server.defaults`
 
 The` cy.server()` and` cy.route()` commands and the `Cypress.server.defaults`
 API has been removed. Use the [`cy.intercept()`](/api/commands/intercept)
@@ -3478,7 +3478,7 @@ the `specPattern` option (or via the `--spec` command line option or `spec`
 module API option, if specified).
 
 Here are a few examples, assuming the value of `videosFolder` is
-`cypress/videos`, `screenshotsFolder` is `cypress/screenshots` and
+`cypress/videos`, `screenshotsFolder` is `cypress/screenshots`, and
 `cy.screenshot('my-screenshot')` is called once per spec file:
 
 **Example 1**

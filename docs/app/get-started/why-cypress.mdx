@@ -357,7 +357,7 @@ For instance you can:
   response status codes to be 500.
 - Modify DOM elements directly - like forcing hidden elements to be shown.
 - Use 3rd party plugins programmatically. Instead of fussing with complex UI
-  widgets like multi selects, autocompletes, drop downs, tree views or
+  widgets like multi selects, autocompletes, drop downs, tree views, or
   calendars, you can call methods directly from your test code to control them.
 - [Prevent Google Analytics from loading _before_ any of your application code executes](/app/references/configuration#blockHosts)
   when testing.
@@ -381,7 +381,7 @@ Cypress caches browser context with
 [`cy.session()`](/api/commands/session). Caching the browser context means as a user, you only need to
 perform authentication once for the entirety of your test suite, and restore the
 saved session between each test. Restoring the session means you do not have to visit a login
-page, type in a username and password and wait for the page to load and/or
+page, type in a username and password, and wait for the page to load and/or
 redirect for every test you run. You can accomplish this once with
 [`cy.session()`](/api/commands/session) and if needed,
 [`cy.origin()`](/api/commands/origin).

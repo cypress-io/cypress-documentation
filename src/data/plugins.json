@@ -682,6 +682,14 @@
           "badge": "vendor",
           "vendor": "PactFlow",
           "npm": "@pactflow/pact-cypress-adapter"
+        },
+        {
+          "name": "cypress-network-chaos",
+          "description": "Simulate slow networks, failed and dropped requests, timeouts and offline mode with one-line commands, plus a suite-wide chaos mode.",
+          "link": "https://github.com/SnehalP75/cypress-network-chaos",
+          "keywords": ["network", "throttling", "offline", "chaos"],
+          "badge": "community",
+          "npm": "cypress-network-chaos"
         }
       ]
     },
@@ -1044,9 +1052,9 @@
           "vendor": "Sauce Labs"
         },
         {
-          "name": "LambdaTest SmartUI",
-          "description": "Visual regression testing for Cypress tests on LambdaTest's SmartUI cloud.",
-          "link": "https://www.lambdatest.com/support/docs/smartui-cypress-sdk/",
+          "name": "TestMu AI SmartUI",
+          "description": "Visual regression testing for Cypress tests on the TestMu AI (formerly LambdaTest) SmartUI cloud.",
+          "link": "https://www.testmuai.com/support/docs/smartui-cypress-sdk/",
           "npm": "@lambdatest/cypress-driver",
           "keywords": [
             "screenshots",
@@ -1055,7 +1063,7 @@
             "cross-browser"
           ],
           "badge": "vendor",
-          "vendor": "LambdaTest"
+          "vendor": "TestMu AI"
         },
         {
           "name": "Cypress Image Diff",
