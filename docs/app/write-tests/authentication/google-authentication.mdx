@@ -431,3 +431,57 @@ ReactDOM.render(
   document.getElementById('root')
 )
 ```
+
+## Alternative: test against a mock OAuth provider
+
+Outside production, you can point your app's Google OAuth configuration at a
+hosted mock provider such as
+[Mockatoo](https://mockatoo.globalunderdog.com). Keep the real Google
+configuration for production, and select the mock provider only in a development
+or test profile. Your app keeps its real sign-in UI flow, while `cy.origin()`
+handles the mock provider's login and consent pages.
+
+The app setup depends on your auth library; see
+[Mockatoo's Cypress guide](https://mockatoo.globalunderdog.com/docs/cypress).
+Set `CYPRESS_MOCKATOO_TEST_EMAIL` and `CYPRESS_MOCKATOO_TEST_PASSWORD` in your
+environment before running the test.
+
+```ts copyTsToJs title="cypress/e2e/google-auth.cy.ts"
+const MOCKATOO_URL = 'https://app.mockatoo.globalunderdog.com'
+
+type Credentials = {
+  MOCKATOO_TEST_EMAIL?: string
+  MOCKATOO_TEST_PASSWORD?: string
+}
+
+it('signs in with Google through a mock provider', () => {
+  cy.visit('/')
+  cy.contains('button', 'Sign in with Google').click()
+  cy.env<Credentials>(['MOCKATOO_TEST_EMAIL', 'MOCKATOO_TEST_PASSWORD']).then(
+    ({ MOCKATOO_TEST_EMAIL, MOCKATOO_TEST_PASSWORD }) => {
+      if (!MOCKATOO_TEST_EMAIL || !MOCKATOO_TEST_PASSWORD) {
+        throw new Error(
+          'Set CYPRESS_MOCKATOO_TEST_EMAIL and CYPRESS_MOCKATOO_TEST_PASSWORD.'
+        )
+      }
+
+      cy.origin(
+        MOCKATOO_URL,
+        {
+          args: {
+            email: MOCKATOO_TEST_EMAIL,
+            password: MOCKATOO_TEST_PASSWORD,
+          },
+        },
+        ({ email, password }) => {
+          cy.get('#email').type(email)
+          cy.get('#password').type(password, { log: false })
+          cy.contains('button', 'Log in with password').click()
+          cy.contains('button', 'Authorize').click()
+        }
+      )
+    }
+  )
+  cy.contains('h1', 'Your session').should('be.visible')
+})
+```
