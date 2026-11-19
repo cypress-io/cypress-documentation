@@ -84,7 +84,6 @@ import ActionPositionDiagram from '@site/docs/partials/_action-position-diagram.
 import SpecObjectProperties from '@site/docs/partials/_spec-object-properties.mdx'
 import CtFrameworkInstallation from '@site/docs/partials/_ct-framework-installation.mdx'
 import CtDevServerConfigLink from '@site/docs/partials/_ct-dev-server-config-link.mdx'
-import CloudChatNotifications from '@site/docs/partials/_cloud-chat-notifications.mdx'
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -299,5 +298,4 @@ export default {
   SpecObjectProperties,
   CtFrameworkInstallation,
   CtDevServerConfigLink,
-  CloudChatNotifications,
 }
