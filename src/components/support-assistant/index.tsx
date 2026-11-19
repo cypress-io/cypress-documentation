@@ -92,7 +92,9 @@ export function SupportAssistantProvider({
       setIsOpen(open)
       writeOpen(open)
       if (open) {
-        pendingFocus.current = moveFocus
+        // Never cleared here: a click that lands before hydration's effects flush is followed by the
+        // reopen on load, which must not cancel the reader's focus move.
+        if (moveFocus) pendingFocus.current = true
         setFrameSrc(
           (src) =>
             src ??
