@@ -277,7 +277,9 @@ Organization admins and owners can enable and disable the AI capabilities for th
   alt="Image showing the Cypress AI organization setting"
 />
 
-:::note Automatic redaction of sensitive fields
+:::note
+
+**Automatic redaction of sensitive fields**
 
 When Cypress AI test-authoring tools read your app's DOM, Cypress automatically excludes values from sensitive field types before sending any data to the AI model. The redaction applies to password fields (`input[type=password]`), credit card fields using standard autocomplete attributes, and hidden inputs (`input[type=hidden]`). The tools still use the surrounding DOM structure and exclude only the field values.
 
