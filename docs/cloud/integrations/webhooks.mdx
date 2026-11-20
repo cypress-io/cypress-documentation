@@ -141,8 +141,8 @@ events to your endpoint.
 
 ## Filter webhook deliveries by branch
 
-A branch filter sends a webhook only the runs you care about, so your endpoint
-does not have to receive and discard the rest. For example, you can deliver
+A branch filter limits a webhook to runs on the branches you choose, so your
+endpoint doesn't receive and discard the rest. For example, you can deliver
 only runs on your `main` branch.
 
 In the **Add webhook** or **Edit webhook** dialog, under **Filters**, select
@@ -156,12 +156,11 @@ payload the webhook would send, the same way as the
 and [Microsoft Teams](/cloud/integrations/microsoft-teams#Filter-notifications-by-tag-run-group-or-branch)
 branch filters:
 
-- If more than one branch is selected, a run matches when it was recorded on any
+- If you select more than one branch, a run matches when it was recorded on any
   of them. Branch names must match exactly.
-- If **Unknown branch** is the only branch selected, only runs recorded without
-  branch information match.
-- An empty filter matches every run. A webhook with no filter receives every
-  run, which is the default.
+- If you select only **Unknown branch**, only runs recorded without branch
+  information match.
+- With no branches selected, the webhook receives every run (the default).
 
 The filter applies to every event the webhook sends. Every event's payload
 includes `commitBranch`, so to see why a delivery matched, read that field.
