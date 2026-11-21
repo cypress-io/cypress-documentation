@@ -480,13 +480,14 @@ inside a folder for its spec file:
 the spec file's path, minus any parent folders that all spec files share.
 Cypress names each file by these rules:
 
-| Screenshot                                                        | File name                                                                                                |
-| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Default, with no name passed                                      | `{testName}.png`, from the suite and test titles, such as `users -- shows the list.png`                  |
-| Duplicate of an earlier screenshot                                | ` (1)`, ` (2)`, and so on appended, such as `{testName} (1).png` or `{name} (1).png`                     |
-| Failure screenshot                                                | `{testName} (failed).png`                                                                                |
-| Named                                                             | `{name}.png`, with a `/` in the name creating folders                                                    |
-| Taken during a [test retry](/app/guides/test-retries#Screenshots) | ` (attempt {n})` appended, such as `{testName} (attempt 2).png` or `{testName} (failed) (attempt 2).png` |
+| Screenshot                                                        | File name                                                                                                              |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Default, with no name passed                                      | `{testName}.png`, from the suite and test titles, such as `users -- shows the list.png`                                |
+| Duplicate of an earlier screenshot                                | ` (1)`, ` (2)`, and so on appended, such as `{testName} (1).png` or `{name} (1).png`                                   |
+| Failure screenshot                                                | `{testName} (failed).png`                                                                                              |
+| Failure screenshot from a hook                                    | `{testName} -- {hookTitle} (failed).png`, as described in [hook failures](#Failure-screenshot-names-for-hook-failures) |
+| Named                                                             | `{name}.png`, with a `/` in the name creating folders                                                                  |
+| Taken during a [test retry](/app/guides/test-retries#Screenshots) | ` (attempt {n})` appended, such as `{testName} (attempt 2).png` or `{testName} (failed) (attempt 2).png`               |
 
 Cypress numbers duplicates, named or not, across several `cypress run`
 processes that share a project folder too, so one run never overwrites another
@@ -551,6 +552,82 @@ cypress/screenshots/
     ├── my flaky tests -- passes on retry (failed).png     ← attempt 1, automatic failure screenshot
     └── my flaky tests -- passes on retry (attempt 2).png  ← attempt 2, cy.screenshot()
 ```
+
+#### Failure screenshot names for hook failures
+
+When a hook fails, the failure screenshot's name adds the hook's title after the
+test's title: `{testName} -- {hookTitle} (failed).png`. The hook title is the
+hook type, such as `before each hook`, followed by the hook function's name when
+the hook is a named function. Cypress removes the quotes and the colon that
+appear in the reporter's version of the title, so `"before each" hook: signIn`
+becomes `before each hook signIn`. An anonymous hook adds only the type, such as
+`before each hook`.
+
+The test in the name is the one the hook ran for:
+
+- `beforeEach()` and `afterEach()`: the current test
+- `before()`: the first test that runs in the hook's suite
+- `after()`: the last test that ran in the hook's suite
+
+The suite titles in the name come from the suites that contain the hook, not the
+test. When a hook in `describe('outer')` fails for a test inside a nested
+`describe('inner')`, the name leaves out `inner`, as in
+`outer -- nested test -- before each hook signIn (failed).png`.
+
+This spec has a named `beforeEach()` hook that fails on every attempt of a
+retried test, and a named `after()` hook that fails after the last test in its
+suite:
+
+```javascript title="cypress/e2e/users/account.cy.js"
+describe('profile', { retries: { runMode: 1 } }, () => {
+  beforeEach(function signIn() {
+    cy.visit('/sign-in')
+    cy.get('[data-cy=sign-in-form]').should('be.visible')
+  })
+
+  it('shows the user name', () => {
+    cy.get('[data-cy=user-name]').should('be.visible')
+  })
+})
+
+describe('orders', () => {
+  beforeEach(() => {
+    cy.visit('/orders')
+  })
+
+  it('lists orders', () => {
+    cy.get('h1').should('be.visible')
+  })
+
+  it('cancels an order', () => {
+    cy.get('h1').should('be.visible')
+  })
+
+  after(function deleteOrders() {
+    cy.request('DELETE', '/api/orders')
+  })
+})
+```
+
+In `cypress run`, it saves three failure screenshots:
+
+```text
+cypress/screenshots/
+└── account.cy.js/
+    ├── orders -- cancels an order -- after all hook deleteOrders (failed).png
+    ├── profile -- shows the user name (failed).png
+    └── profile -- shows the user name -- before each hook signIn (failed) (attempt 2).png
+```
+
+The `(attempt {n})` suffix comes after `(failed)`, as it does for any retried
+test. A `beforeEach()` failure on an attempt that Cypress retries counts as a
+failure of the test itself, so that attempt's screenshot has no hook title. Only
+the screenshot from the final attempt names the hook. An `afterEach()` failure
+names the hook on every attempt.
+
+To rename screenshots as Cypress saves them, such as to match a report's file
+names, use the
+[`after:screenshot` event](/api/node-events/after-screenshot-api).
 
 :::info
 
