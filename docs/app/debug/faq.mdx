@@ -465,6 +465,20 @@ Read our extensive
 [Conditional Testing Guide](/app/guides/conditional-testing) which
 explains this in detail.
 
+### <Icon name="angle-right" /> How do I verify that an element never appeared on the page?
+
+A `.should('not.exist')` assertion passes the first time Cypress finds no
+matching element, so the assertion can pass before the element renders or after
+the element renders and disappears. Increasing the `timeout` doesn't change
+that, since the assertion still passes on its first try.
+
+To check that an element never appeared, either wait for the work that would
+render the element before asserting, or register a `MutationObserver` in
+[`cy.visit()`](/api/commands/visit)'s `onBeforeLoad` option to record every
+element the app adds. See
+[Verify that an element never appears](/app/references/assertions#Verify-that-an-element-never-appears)
+for both approaches.
+
 ### <Icon name="angle-right" /> Can I stop a test partway through and keep the steps that already ran?
 
 There is no API to abort a test midway and have it count as **passed** with
