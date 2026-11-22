@@ -515,8 +515,8 @@ For a more complete example you can check out the
 The `devServerEvents` event emitter communicates compile lifecycle
 events between your server and Cypress:
 
-- Emit `dev-server:compile:success` to notify Cypress that a build finished and
-  tests can run.
+- Emit `dev-server:compile:success` when a rebuild finishes, so Cypress reruns
+  the open spec.
 - Listen for `dev-server:specs:changed` to be notified when Cypress updates the
   set of active spec files (e.g. when a new spec is added), so you can
   recompile the new entry points.
@@ -560,7 +560,7 @@ export const startDevServer = ({
   const clientScript = `<script type="module">
     const CypressInstance = (window.Cypress = parent.Cypress)
     CypressInstance.onSpecWindow(window, [
-      ${supportUrl ? `() => import('${route}/${supportUrl}'),` : ''}
+      ${supportUrl ? `() => import(${JSON.stringify(`${route}/${supportUrl}`)}),` : ''}
       () => import('${route}/' + CypressInstance.spec.relative),
     ])
     CypressInstance.action('app:window:before:load', window)
@@ -568,9 +568,8 @@ export const startDevServer = ({
 
   const server = createServer(async (req, res) => {
     try {
-      const file = new URL(req.url ?? '/', 'http://localhost').pathname.slice(
-        route.length
-      )
+      const { pathname } = new URL(req.url ?? '/', 'http://localhost')
+      const file = decodeURIComponent(pathname.slice(route.length))
 
       if (file === '/index.html') {
         const html = await readFile(
@@ -580,8 +579,13 @@ export const startDevServer = ({
         res.setHeader('Content-Type', 'text/html')
         res.end(html.replace('</head>', `${clientScript}</head>`))
       } else {
+        const filePath = path.join(projectRoot, file)
+        // Refuse a decoded path such as `..%2F.env` that leaves the project.
+        if (path.relative(projectRoot, filePath).startsWith('..')) {
+          throw new Error(`Outside the project: ${file}`)
+        }
         res.setHeader('Content-Type', 'text/javascript')
-        res.end(await readFile(path.join(projectRoot, file)))
+        res.end(await readFile(filePath))
       }
     } catch {
       res.statusCode = 404
@@ -590,7 +594,8 @@ export const startDevServer = ({
   })
 
   return new Promise((resolve) => {
-    server.listen(0, () => {
+    // Listen on localhost only, so other machines can't read your project files.
+    server.listen(0, 'localhost', () => {
       const { port } = server.address() as { port: number }
       resolve({ port, close: (done) => server.close(done) })
     })
@@ -620,6 +625,20 @@ import { startDevServer } from './cypress/dev-server'
 ```
 
 :::
+
+The index file needs a `<head>` for the script and an element to mount into:
+
+```html title="cypress/support/component-index.html"
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div data-cy-root></div>
+  </body>
+</html>
+```
 
 With no framework adapter, Cypress has no built-in `cy.mount()`. Define one in
 your component support file that renders an element into the
