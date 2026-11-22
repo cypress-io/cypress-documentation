@@ -237,8 +237,9 @@ cy.wait('@saveFinalNotes').its('response.statusCode').should('eq', 200)
 The handler adds its alias alongside any alias another route gives the same
 request, so a shared intercept that aliases every request by its GraphQL
 operation name keeps working. The conditional route has to see the request
-before any route that sends a response, so define it after a stubbing route.
-See
+before any route that sends a response, so define it after a stubbing route, or
+set `middleware: true` when it has to come first, such as in a `beforeEach()`
+hook. See
 [Add more than one alias to an intercepted request](/api/commands/intercept#Add-more-than-one-alias-to-an-intercepted-request).
 
 To assert on the requests sent so far instead, use
@@ -247,11 +248,11 @@ suffix. `cy.get()` is a query, so the assertion retries until one of the
 interceptions matches:
 
 ```js
-cy.intercept('POST', '/graphql').as('saveNotes')
+cy.intercept('POST', '/graphql').as('graphql')
 
 cy.get('[data-cy=notes]').type('final')
 
-cy.get('@saveNotes.all').should((interceptions) => {
+cy.get('@graphql.all').should((interceptions) => {
   const notes = interceptions.map(
     (interception) => interception.request.body.variables?.input?.notes
   )
@@ -260,7 +261,7 @@ cy.get('@saveNotes.all').should((interceptions) => {
 })
 ```
 
-`cy.get('@saveNotes.all')` includes each interception as soon as its request
+`cy.get('@graphql.all')` includes each interception as soon as its request
 goes out, so a matching request's `response` can still be `undefined`. When the
 test needs the response, wait on a per-request alias.
 
