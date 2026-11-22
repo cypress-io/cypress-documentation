@@ -386,14 +386,14 @@ events.
 ## Mount Storybook stories in Vue component tests
 
 Component tests can reuse the [Storybook](https://storybook.js.org/) stories you
-already write. A story already sets up the component with the args and
-decorators that make it render, so the test starts from a working state and
-goes straight to the assertions.
+already write. A story sets up the component with the args and decorators that
+make it render, so the test starts from a working state and goes straight to the
+assertions.
 
-Storybook's portable stories API does the work, so Cypress needs no plugin. `composeStories()` from
-`@storybook/vue3` turns each story in a CSF file into a component with the
-story's args and decorators applied, and `cy.mount()` accepts that component
-like any other.
+Storybook's portable stories API does the work, so Cypress needs no plugin.
+`composeStories()` from `@storybook/vue3` turns each story in a CSF file into a
+component with the story's args and decorators applied, and `cy.mount()`
+accepts that component like any other.
 
 Given this component and its stories:
 
@@ -452,7 +452,7 @@ it('overrides story args with props', () => {
 
 ### Apply Storybook preview settings in component tests
 
-Global decorators, args, and parameters in `.storybook/preview` apply only when
+Global decorators and args in `.storybook/preview` apply only when
 you pass them to `setProjectAnnotations()`. Call it once in the component
 support file, next to the code that registers `cy.mount()`, and every composed
 story picks them up:
@@ -471,7 +471,7 @@ Cypress.Commands.add('mount', mount)
 
 A decorator written as a `template` string, like the one in
 `Button.stories.js`, needs the build of Vue that includes the template compiler.
-Without it, the decorator renders nothing and Vue logs
+Without it, the story renders nothing and Vue logs
 `Component provided template option but runtime compilation is not supported in this build of Vue`.
 Alias `vue` to `vue/dist/vue.esm-bundler.js` in the Vite config Cypress uses, so
 the alias applies to your tests and not to your production build:
@@ -515,14 +515,22 @@ story renders. With a decorator, that element is the decorator's wrapper, so a
 single click on the component reaches the spy twice: once from the component's
 emitted event and once from the native click on the wrapper. Set
 `inheritAttrs: false` on the composed story so the listener reaches only the
-component:
+component.
 
-```js title="src/components/Button.cy.js"
+The setting changes the composed story itself, so every test in the spec that
+mounts the story gets it. Set it once, right after `composeStories()`, so the
+scope is clear at a glance:
+
+```js title="src/components/ButtonEvents.cy.js"
+import { composeStories } from '@storybook/vue3'
+import * as stories from './Button.stories'
+
+const { Primary } = composeStories(stories)
+Object.assign(Primary, { inheritAttrs: false })
+
 it('emits click', () => {
   const onClick = cy.spy().as('onClick')
-  cy.mount(Object.assign(Primary, { inheritAttrs: false }), {
-    props: { onClick },
-  })
+  cy.mount(Primary, { props: { onClick } })
   cy.get('button').click()
   cy.get('@onClick').should('have.been.calledOnce')
 })
