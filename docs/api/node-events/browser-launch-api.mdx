@@ -333,9 +333,10 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 
 ### Use fake video for webcam testing
 
-By default, Cypress passes the Chrome command line switch to enable a fake video
-for a media stream. The fake video is to better enable testing webcam functionality
-without having to have the necessary hardware to test.
+By default, Cypress launches Chromium-based browsers with the
+`--use-fake-device-for-media-stream` and `--use-fake-ui-for-media-stream`
+switches. The switches replace the camera with a fake video and accept the
+camera permission prompt, so you can test webcam features without a camera.
 
 <DocsImage
   src="/img/api/browser-launch-fake-video.gif"
@@ -364,6 +365,136 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 ```
 
 :::
+
+#### Change the fake webcam video between tests
+
+Testing how an app handles different camera input, such as a valid and an
+expired QR code, needs a different video in each test. Changing the
+`--use-file-for-fake-video-capture` argument per test or per spec has no effect.
+Chrome reads the switch once, when the browser starts, and Cypress fires
+`before:browser:launch` only when it launches a browser. Cypress keeps the same
+browser open from spec to spec: in `cypress run`, each spec after the first
+opens in a new tab.
+
+What you can change is the file the switch points to. Chrome reads that file
+again each time the app starts the camera with `getUserMedia()`. Point the
+switch at a placeholder file, and copy the video each test needs over the
+placeholder with [`cy.task()`](/api/commands/task):
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+import path from 'path'
+```
+
+```ts
+const fixtures = path.join(config.projectRoot, 'cypress', 'fixtures')
+// The file Chrome reads the fake camera video from. The task
+// overwrites it, so don't point it at one of your source videos.
+const fakeWebcam = path.join(fixtures, 'fake-webcam.y4m')
+
+// Start each run from the same video
+fs.copyFileSync(path.join(fixtures, 'webcam-default.y4m'), fakeWebcam)
+
+on('before:browser:launch', (browser, launchOptions) => {
+  if (browser.family === 'chromium' && browser.name !== 'electron') {
+    launchOptions.args.push(`--use-file-for-fake-video-capture=${fakeWebcam}`)
+  }
+
+  return launchOptions
+})
+
+on('task', {
+  setFakeWebcamVideo(fileName: string) {
+    fs.copyFileSync(path.join(fixtures, fileName), fakeWebcam)
+
+    return null
+  },
+})
+```
+
+:::
+
+In the spec, swap the video before the app starts the camera:
+
+```js title="cypress/e2e/scan.cy.js"
+it('accepts a valid QR code', () => {
+  cy.task('setFakeWebcamVideo', 'valid-qr.y4m')
+  // The scan page starts the camera when it loads
+  cy.visit('/scan')
+  cy.contains('Code accepted')
+})
+
+it('rejects an expired QR code', () => {
+  cy.task('setFakeWebcamVideo', 'expired-qr.y4m')
+  cy.visit('/scan')
+  cy.contains('Code expired')
+})
+```
+
+When the camera is already on before the swap, start it again after the swap.
+Reload the page with [`cy.reload()`](/api/commands/reload), or use the app's
+own control that stops the stream's tracks and calls `getUserMedia()` again.
+
+Keep these behaviors in mind:
+
+- The task overwrites the placeholder, so give the placeholder its own file
+  name. Because the config recreates the placeholder on each run, you can add
+  it to `.gitignore`.
+- A stream that's already open can pick up the overwritten file partway
+  through, or keep playing the previous video, depending on the browser
+  version, the platform, and the video format. Swapping before the camera starts
+  gives each test a predictable video.
+- The switch belongs to Chromium, so this approach doesn't apply to Firefox or
+  WebKit. Electron ignores `launchOptions.args`, so the approach doesn't apply
+  to Electron either.
+- The approach relies on how Chrome reads the fake capture file, not on a
+  Cypress API, so a browser update can change how it behaves. If the video
+  stops changing between tests in your browser,
+  [stub `getUserMedia()`](#Stub-getUserMedia-with-a-fixture-video) instead.
+
+#### Stub getUserMedia() with a fixture video
+
+Stubbing `navigator.mediaDevices.getUserMedia()` hands the app a stream the
+test controls, without Chrome's fake capture switches, so the stub also works
+in Electron. Load the video with [`cy.fixture()`](/api/commands/fixture), play
+it in a `<video>` element the test creates, and return the element's
+`captureStream()`:
+
+```js title="cypress/e2e/scan.cy.js"
+it('accepts a valid QR code', () => {
+  cy.fixture('valid-qr.webm', null).then((videoFile) => {
+    cy.visit('/scan', {
+      onBeforeLoad(win) {
+        const player = win.document.createElement('video')
+        player.muted = true
+        player.loop = true
+        player.src = win.URL.createObjectURL(
+          new win.Blob([videoFile], { type: 'video/webm' })
+        )
+
+        cy.stub(win.navigator.mediaDevices, 'getUserMedia').callsFake(
+          async () => {
+            await player.play()
+
+            return player.captureStream()
+          }
+        )
+      },
+    })
+  })
+
+  cy.contains('Code accepted')
+})
+```
+
+Chromium-based browsers, including Electron, support `captureStream()` on a
+`<video>` element. Firefox names the method `mozCaptureStream()`. TypeScript's
+DOM types don't declare `captureStream()` on video elements, so a `.ts` spec
+needs a type assertion for the call. To stream a still image, such
+as a single QR code, draw the image on a `<canvas>` and return the canvas's
+`captureStream()`, which Chrome and Firefox both support.
 
 ### Support unique file download mime types
 
