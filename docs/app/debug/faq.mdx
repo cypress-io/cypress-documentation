@@ -421,7 +421,21 @@ If you're trying to assert on an input's value:
 cy.get('input').should('have.value', 'abc')
 ```
 
-If you'd like to massage or work with the text prior to an assertion:
+To match part of the value, use `include.value` or its alias `contain.value`.
+Both chainers work on a `<textarea>` too:
+
+```javascript
+// passes when the value includes 'ab'
+cy.get('input').should('include.value', 'ab')
+cy.get('textarea').should('contain.value', 'ab')
+```
+
+`.should('contain', 'ab')` checks the element's text content rather than its
+value, so it doesn't match what a user typed into an input. See
+[Value assertions](/app/references/assertions#Value) for more examples.
+
+If you'd like to massage or work with the text prior to an assertion, such as
+matching it against a regular expression:
 
 ```javascript
 cy.get('input')

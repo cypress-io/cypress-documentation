@@ -97,31 +97,35 @@ You commonly use these chainers after using DOM commands like:
 
 {/* textlint-disable */}
 
-| Chainers                | Assertion                                                                                                                    |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| attr(_name_, _[value]_) | `.should('have.attr', 'bar')`<br />`expect($el).to.have.attr('foo', 'bar')`                                                  |
-| prop(_name_, _[value]_) | `.should('have.prop', 'disabled', false)`<br />`expect($el).to.have.prop('disabled', false)`                                 |
-| css(_name_, _[value]_)  | `.should('have.css', 'background-color', 'rgb(0, 0, 0)')`<br />`expect($el).to.have.css('background-color', 'rgb(0, 0, 0)')` |
-| data(_name_, _[value]_) | `.should('have.data', 'foo', 'bar')`<br />`expect($el).to.have.data('foo', 'bar')`                                           |
-| class(_className_)      | `.should('have.class', 'foo')`<br />`expect($el).to.have.class('foo')`                                                       |
-| id(_id_)                | `.should('have.id', 'foo')`<br />`expect($el).to.have.id('foo')`                                                             |
-| html(_html_)            | `.should('have.html', 'I love testing')`<br />`expect($el).to.have.html('with Cypress')`                                     |
-| text(_text_)            | `.should('have.text', 'I love testing')`<br />`expect($el).to.have.text('with Cypress')`                                     |
-| value(_value_)          | `.should('have.value', 'test@dev.com')`<br />`expect($el).to.have.value('test@dev.com')`                                     |
-| visible                 | `.should('be.visible')`<br />`expect($el).to.be.visible`                                                                     |
-| hidden                  | `.should('be.hidden')`<br />`expect($el).to.be.hidden`                                                                       |
-| selected                | `.should('be.selected')`<br />`expect($option).not.to.be.selected`                                                           |
-| checked                 | `.should('be.checked')`<br />`expect($input).not.to.be.checked`                                                              |
-| focus[ed]               | `.should('have.focus')`<br />`expect($input).not.to.be.focused`<br />`expect($input).to.have.focus`                          |
-| enabled                 | `.should('be.enabled')`<br />`expect($input).to.be.enabled`                                                                  |
-| disabled                | `.should('be.disabled')`<br />`expect($input).to.be.disabled`                                                                |
-| empty                   | `.should('be.empty')`<br />`expect($el).not.to.be.empty`                                                                     |
-| exist                   | `.should('exist')`<br />`expect($nonexistent).not.to.exist`                                                                  |
-| match(_selector_)       | `.should('match', ':empty')`<br />`expect($emptyEl).to.match(':empty')`                                                      |
-| contain(_text_)         | `.should('contain', 'text')`<br />`expect($el).to.contain('text')`                                                           |
-| descendants(_selector_) | `.should('have.descendants', 'div')`<br />`expect($el).to.have.descendants('div')`                                           |
+| Chainers                | Assertion                                                                                                                                                                    |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| attr(_name_, _[value]_) | `.should('have.attr', 'bar')`<br />`expect($el).to.have.attr('foo', 'bar')`                                                                                                  |
+| prop(_name_, _[value]_) | `.should('have.prop', 'disabled', false)`<br />`expect($el).to.have.prop('disabled', false)`                                                                                 |
+| css(_name_, _[value]_)  | `.should('have.css', 'background-color', 'rgb(0, 0, 0)')`<br />`expect($el).to.have.css('background-color', 'rgb(0, 0, 0)')`                                                 |
+| data(_name_, _[value]_) | `.should('have.data', 'foo', 'bar')`<br />`expect($el).to.have.data('foo', 'bar')`                                                                                           |
+| class(_className_)      | `.should('have.class', 'foo')`<br />`expect($el).to.have.class('foo')`                                                                                                       |
+| id(_id_)                | `.should('have.id', 'foo')`<br />`expect($el).to.have.id('foo')`                                                                                                             |
+| html(_html_)            | `.should('have.html', 'I love testing')`<br />`expect($el).to.have.html('with Cypress')`                                                                                     |
+| text(_text_)            | `.should('have.text', 'I love testing')`<br />`expect($el).to.have.text('with Cypress')`                                                                                     |
+| value(_value_)          | `.should('have.value', 'test@dev.com')`<br />`.should('include.value', '@dev')`<br />`expect($el).to.have.value('test@dev.com')`<br />`expect($el).to.include.value('@dev')` |
+| visible                 | `.should('be.visible')`<br />`expect($el).to.be.visible`                                                                                                                     |
+| hidden                  | `.should('be.hidden')`<br />`expect($el).to.be.hidden`                                                                                                                       |
+| selected                | `.should('be.selected')`<br />`expect($option).not.to.be.selected`                                                                                                           |
+| checked                 | `.should('be.checked')`<br />`expect($input).not.to.be.checked`                                                                                                              |
+| focus[ed]               | `.should('have.focus')`<br />`expect($input).not.to.be.focused`<br />`expect($input).to.have.focus`                                                                          |
+| enabled                 | `.should('be.enabled')`<br />`expect($input).to.be.enabled`                                                                                                                  |
+| disabled                | `.should('be.disabled')`<br />`expect($input).to.be.disabled`                                                                                                                |
+| empty                   | `.should('be.empty')`<br />`expect($el).not.to.be.empty`                                                                                                                     |
+| exist                   | `.should('exist')`<br />`expect($nonexistent).not.to.exist`                                                                                                                  |
+| match(_selector_)       | `.should('match', ':empty')`<br />`expect($emptyEl).to.match(':empty')`                                                                                                      |
+| contain(_text_)         | `.should('contain', 'text')`<br />`expect($el).to.contain('text')`                                                                                                           |
+| descendants(_selector_) | `.should('have.descendants', 'div')`<br />`expect($el).to.have.descendants('div')`                                                                                           |
 
 {/* textlint-enable */}
+
+The `contain` chainer matches an element's text content, not the current value
+of an `<input>` or `<textarea>`. To match part of a value, use `include.value`
+or its alias `contain.value`, as shown in [Value](#Value).
 
 ## Sinon-Chai
 
@@ -198,7 +202,18 @@ cy.get('form').find('input').should('not.have.class', 'disabled')
 ```javascript
 // retry until this textarea has the correct value
 cy.get('textarea').should('have.value', 'foo bar baz')
+// retry until this textarea's value includes the given substring
+cy.get('textarea').should('include.value', 'bar')
+// retry until this input's value includes '@' ('contain.value' works the same)
+cy.get('input').should('contain.value', '@')
+// retry until this input's value does not include a space
+cy.get('input').should('not.include.value', ' ')
 ```
+
+Use a value chainer rather than `contain` here. `contain` checks text content:
+on an `<input>`, which has none, `.should('contain', 'bar')` fails even when the
+value includes `bar`. On a `<textarea>`, `contain` matches the text written in
+the page's markup, not what the user typed.
 
 ### Text Content
 
