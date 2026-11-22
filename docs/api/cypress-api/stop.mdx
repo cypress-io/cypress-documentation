@@ -42,11 +42,13 @@ afterEach(function () {
 })
 ```
 
-The `isLastAttempt` check waits for the final attempt when [test retries](/app/guides/test-retries) are on, so a test that passes on a retry doesn't stop the run. With the experimental `detect-flake-but-always-fail` strategy and `stopIfAnyPassed: true`, a test whose final attempt passes still counts as failed, but `this.currentTest.state` reads `'passed'`, so the hook doesn't stop the run.
+The `isLastAttempt` check waits for the final attempt when [test retries](/app/guides/test-retries) are on, so a test that passes on a retry doesn't stop the spec. The experimental `detect-flake-but-always-fail` strategy fails any test with a failed attempt. When that test's final attempt passes, `this.currentTest.state` reads `'passed'`, so the hook doesn't stop the spec.
 
 To skip only the remaining tests in one `describe` block and let the rest of the spec run, see [Skip dependent Cypress tests after a failure](/app/core-concepts/writing-and-organizing-tests#Skip-dependent-Cypress-tests-after-a-failure).
 
 ### Abort tests when a condition is met
+
+This example reads an `environment` value from your `expose` configuration with [`Cypress.expose()`](/api/cypress-api/expose). When the value isn't `'staging'`, the hook stops the spec, and Cypress skips its remaining tests.
 
 ```javascript
 beforeEach(() => {

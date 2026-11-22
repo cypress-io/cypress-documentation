@@ -902,10 +902,10 @@ Keep these details in mind:
   bound to the test context.
 - The `isLastAttempt` check matters when [test retries](/app/guides/test-retries)
   are on. Without it, a failed first attempt marks the block as failed, and
-  Cypress skips the retry that would have passed. With the experimental
-  `detect-flake-but-always-fail` strategy and `stopIfAnyPassed: true`, a test
-  whose final attempt passes still counts as failed, but
-  `this.currentTest.state` reads `'passed'`, so the tests after it still run.
+  Cypress skips the retry that would have passed. The experimental
+  `detect-flake-but-always-fail` strategy fails any test with a failed attempt.
+  When that test's final attempt passes, `this.currentTest.state` reads
+  `'passed'`, so the tests after it still run.
 - `testIsolation: false` keeps the page between tests in the block, which is
   what lets the second test pick up where the first one left off.
 
@@ -1293,8 +1293,9 @@ can fix it.
 
 ### Pending
 
-A **pending** test is one that Cypress intentionally doesn't run because you
-told it not to. A test ends up pending in four ways:
+A **pending** test is one that Cypress intentionally doesn't run, either because
+you told it not to or because your test code skipped it at runtime. A test ends
+up pending in four ways:
 
 - **The test has no body**: a placeholder for a test you haven't written yet, such
   as `it('is not written yet')`.
@@ -1305,7 +1306,7 @@ told it not to. A test ends up pending in four ways:
   in a `beforeEach` hook, as in
   [skipping dependent tests after a failure](#Skip-dependent-Cypress-tests-after-a-failure).
 
-Each of the four tests below is pending (the browser-specific one is pending
+The four tests below show the first three ways. Each one is pending (the browser-specific one is pending
 whenever the run isn't using Chrome):
 
 ```js
@@ -1337,7 +1338,7 @@ describe('TodoMVC', () => {
   alt="Cypress with four pending test"
 />
 
-In each case you've knowingly told Cypress to hold off, so it reports the test
+In each case your test code told Cypress to hold off, so it reports the test
 as pending rather than passed or failed.
 
 ### Skipped
