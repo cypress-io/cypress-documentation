@@ -33,7 +33,7 @@ You can [install Cypress](/app/get-started/install-cypress) on Mac,
 Linux, and Windows. For additional information, see our
 [System requirements](/app/get-started/install-cypress#System-requirements).
 
-### <Icon name="angle-right" /> Which browsers does Cypress support, and can I use one it doesn't detect, such as Island?
+### <Icon name="angle-right" /> Can I run Cypress in Island or another undetected browser?
 
 Cypress detects the browsers in the
 [Supported browsers](/app/references/launching-browsers#Supported-browsers)
@@ -46,10 +46,10 @@ First, try passing the browser's executable path to `--browser`:
 
 <CypressCommandTabs command="open --browser /path/to/Island" />
 
-Cypress runs the executable with `--version` and launches the browser when the
-output matches a browser family Cypress knows.
+Cypress reads the executable's version and launches the browser when the version
+matches a browser Cypress knows, such as Chrome or Chromium.
 [Launching by a path](/app/references/launching-browsers#Launching-by-a-path)
-covers this option in more detail.
+describes the `--browser` path option in more detail.
 
 If Cypress reports `Unable to find browser with path`, add the browser to
 `config.browsers` in `setupNodeEvents` with `family: 'chromium'`. The browser
