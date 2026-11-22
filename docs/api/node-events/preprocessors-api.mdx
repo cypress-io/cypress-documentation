@@ -199,6 +199,88 @@ Webpack config resolves aliases instead. See
 
 :::
 
+### Resolve import map specifiers in spec files
+
+Import maps in your application work in Cypress the same way they work in the
+browser. When you visit a page with a `<script type="importmap">`, the page's
+modules resolve the bare specifiers the import map defines.
+
+Spec and support files don't load through that page. The preprocessor bundles
+them before they reach the browser, so an import map in your application's HTML
+doesn't apply to them. A spec that imports a specifier only the import map
+defines fails to compile with a "Module not found" error.
+
+To import the same modules in a spec, map each specifier again where the
+preprocessor reads it. For example, this import map resolves `@app/format.js` in
+the application to `/src/format.js`:
+
+```html title="index.html"
+<script type="importmap">
+  {
+    "imports": {
+      "@app/": "/src/"
+    }
+  }
+</script>
+```
+
+The spec imports the same specifier:
+
+```ts copyTsToJs title="cypress/e2e/format.cy.ts"
+import { formatPrice } from '@app/format.js'
+
+it('formats prices in dollars', () => {
+  expect(formatPrice(5)).to.equal('$5.00')
+})
+```
+
+In a project with TypeScript installed, add the mapping to
+`compilerOptions.paths` in your `tsconfig.json`. The default preprocessor
+resolves those paths, and TypeScript finds the module's types, with no
+preprocessor config:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "paths": {
+      "@app/*": ["./src/*"]
+    }
+  }
+}
+```
+
+`allowJs` makes TypeScript read types from a `.js` module such as
+`src/format.js`. A project whose mapped modules are `.ts` files doesn't need
+`allowJs`.
+
+In a project without TypeScript, install the packages from
+[Install the batteries-included preprocessor packages](#Install-the-batteries-included-preprocessor-packages)
+and map `@app` to the `src` folder under `resolve.alias`:
+
+:::cypress-config-plugin-example
+
+```ts
+import path from 'path'
+import webpackPreprocessor from '@cypress/webpack-batteries-included-preprocessor'
+```
+
+```ts
+const webpackOptions = webpackPreprocessor.getFullWebpackOptions()
+
+webpackOptions.resolve.alias = {
+  '@app': path.resolve(__dirname, 'src'),
+}
+
+on('file:preprocessor', webpackPreprocessor({ webpackOptions }))
+```
+
+:::
+
+An import map's `/src/` is a URL path on your server, while `paths` and
+`resolve.alias` point to folders on disk. Point each mapping at the folder your
+server serves for that URL path.
+
 ## Excluding files from being watched
 
 Certain tools generate files as a side effect of a build (for example,
