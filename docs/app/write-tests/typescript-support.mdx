@@ -564,7 +564,8 @@ When writing the declaration:
 
 Once TypeScript loads the declaration, for example because the project imports
 the plugin, the user's configuration type-checks the key and still uses
-`defineConfig()`:
+`defineConfig()`. In `cypress.config.ts`, TypeScript types `config.requestBaseUrl`
+in `setupNodeEvents` as `string | undefined`:
 
 :::cypress-config-example
 
@@ -573,7 +574,7 @@ the plugin, the user's configuration type-checks the key and still uses
   requestBaseUrl: 'https://api.cypress.io',
   e2e: {
     setupNodeEvents(on, config) {
-      // config.requestBaseUrl is typed as string | undefined
+      // config.requestBaseUrl holds the user's value
     },
   },
 }
@@ -583,7 +584,7 @@ the plugin, the user's configuration type-checks the key and still uses
 
 The plugin's code in the browser reads the same key with `Cypress.config()`:
 
-```typescript title="cypress/support/commands.ts"
+```typescript title="src/support.ts"
 const requestBaseUrl = Cypress.config('requestBaseUrl') // string | undefined
 ```
 
