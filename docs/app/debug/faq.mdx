@@ -1827,8 +1827,8 @@ recipe.
 
 ### <Icon name="angle-right" /> Can I take a heap snapshot or find memory leaks in a Cypress test?
 
-Yes, in Chromium-based browsers such as Chrome, Chrome for Testing, Edge, and
-Electron. Both approaches below send
+Yes, in Chromium-based browsers such as Chrome, Chrome for Testing, Chromium,
+and Edge. Both approaches below send
 [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
 commands at the exact test step you choose:
 
@@ -1847,8 +1847,7 @@ rather than checking one absolute value.
 `Cypress.automation('remote:debugger:protocol', ...)` sends a DevTools Protocol
 command to the browser and resolves with the result. Wrap the call in
 `cy.then()` so the command runs at its place in the test instead of when Cypress
-first reads the test body. The `browser` option skips the test in browsers
-outside the Chromium family. This test forces garbage collection, reads the used
+first reads the test body. This test forces garbage collection, reads the used
 heap size, repeats an action 20 times, and then checks how far the heap grew:
 
 ```js title="memory.cy.js"
@@ -1880,6 +1879,10 @@ it(
 )
 ```
 
+The `{ browser: { family: 'chromium' } }`
+[test configuration](/app/references/configuration#Test-Configuration) skips
+the test in browsers outside the Chromium family, such as Firefox.
+
 :::caution
 
 `Cypress.automation()` is an internal API rather than a documented public one,
@@ -1890,6 +1893,11 @@ so its behavior can change between Cypress versions.
 When the `"Open dialog"` button leaks memory on every click, the assertion fails
 with a message such as `expected 12461860 to be below 5000000`. Pick a threshold
 from the growth you see on a passing run, with some headroom.
+
+Set the threshold from `cypress run`. In `cypress open`, the Command Log keeps a
+DOM snapshot of each command for time travel, and those snapshots add to the
+heap. To measure in `cypress open`, set
+[`numTestsKeptInMemory`](/app/references/configuration#Global) to `0`.
 
 #### Save a heap snapshot at a Cypress test step
 
@@ -1950,7 +1958,7 @@ setup({
 Call the handler at each step you want to capture. The handler writes each file
 to `cypress/heap-snapshots/` in your project and yields the file's name:
 
-```js title="memory.cy.js"
+```js title="heap-snapshot.cy.js"
 it(
   'captures heap snapshots before and after the dialog opens',
   { browser: { family: 'chromium' } },
