@@ -1,6 +1,6 @@
 ---
 title: 'Advanced installation in Cypress: custom binary, cache & proxy'
-description: 'Configure advanced Cypress installation: install a custom binary or version, change the cache folder, install behind a proxy, mirror, or custom CA, and skip the binary download.'
+description: 'Configure advanced Cypress installation: install a custom binary or version, change the cache or App Data folder, install behind a proxy, mirror, or custom CA, and skip the binary download.'
 sidebar_label: Installation options
 sidebar_position: 40
 slug: /app/references/advanced-installation
@@ -88,6 +88,9 @@ typically solves, so you can find the right tool for your situation:
   stored. The most common goal is faster CI: point it at a directory your CI
   provider caches between runs so the download becomes a cache hit. A custom cache folder is also
   useful on locked-down machines where the default cache location isn't writable.
+  `CYPRESS_CACHE_FOLDER` moves only the binary. To move the browser profiles and
+  project state Cypress writes at run time, see
+  [Cypress App Data location](#Cypress-App-Data-location-on-each-operating-system).
 - **`CYPRESS_RUN_BINARY`**: Use this when you want to launch a specific binary
   already on disk instead of the one resolved from the cache, for example a
   binary you unzipped to a known location.
@@ -780,6 +783,49 @@ $env:CYPRESS_SKIP_VERIFY = "true"
 </TabItem>
 </Tabs>
 
+## Cypress App Data location on each operating system
+
+Cypress App Data is the data the Cypress App writes while it runs: browser
+profiles, saved project state, spec bundles, and the Electron browser's
+partitions. Cypress App Data lives apart from the [binary cache](#Binary-cache),
+so `CYPRESS_CACHE_FOLDER` has no effect on where Cypress writes it.
+
+Cypress stores App Data in a `Cypress` folder inside the operating system's
+per-user data directory:
+
+| Operating system | Per-user data directory                              | Default App Data folder                 |
+| ---------------- | ---------------------------------------------------- | --------------------------------------- |
+| Linux            | `$XDG_CONFIG_HOME`, or `~/.config` when it isn't set | `~/.config/Cypress`                     |
+| macOS            | `~/Library/Application Support`                      | `~/Library/Application Support/Cypress` |
+| Windows          | `%APPDATA%`                                          | `%APPDATA%\Cypress`                     |
+
+The Cypress App keeps its own files in a `cy` folder inside the App Data folder,
+such as `~/.config/Cypress/cy/production` on Linux.
+[Clear App Data](/app/references/troubleshooting#Clear-App-Data) shows what the
+`cy` folder contains and how to reset it.
+
+### Move Cypress App Data on a CI machine
+
+Cypress creates and writes to its App Data folder every time it launches, so a CI
+agent that can't write to the default location fails before any spec runs. Point
+the App Data folder at a writable directory to fix the failure, or to keep App
+Data out of a shared home directory.
+
+On Linux, set `XDG_CONFIG_HOME` to a writable directory before Cypress launches:
+
+```shell
+export XDG_CONFIG_HOME=/var/lib/jenkins/.config
+```
+
+With that value, Cypress writes App Data to `/var/lib/jenkins/.config/Cypress`.
+Other tools that follow the XDG convention read `XDG_CONFIG_HOME` too, so set the
+variable in the environment of the CI step that runs Cypress rather than for the
+whole agent.
+
+On Linux and macOS, Cypress resolves `~` from the `HOME` environment variable, so
+a different `HOME` also moves the App Data folder. When App Data shows up
+somewhere unexpected, check where `HOME` points with `echo ~`.
+
 ## Privacy and messaging
 
 Cypress sends a small amount of data outbound and occasionally surfaces
@@ -969,10 +1015,10 @@ To remove only the older cached versions while keeping the one currently in use,
 Alternatively, delete the [Cypress binary cache](#Binary-cache) (see above) manually.
 See [Managing the binary cache](#Managing-the-binary-cache) for the full set of cache commands.
 
-**To delete cached [Cypress App Data](/app/references/troubleshooting#Clear-App-Data), manually delete the following directories / folders:**
+**To delete cached [Cypress App Data](#Cypress-App-Data-location-on-each-operating-system), manually delete the following directories / folders:**
 
 - macOS: `~/Library/Application Support/Cypress`
-- Linux: `~/.config/Cypress`
+- Linux: `~/.config/Cypress`, or `$XDG_CONFIG_HOME/Cypress` when `XDG_CONFIG_HOME` is set
 - Windows: `$APPDATA/Cypress` (POSIX-syntax) or `%APPDATA%\Cypress` (Windows-syntax)
 
 Refer to your package manager documentation for details of package manager `cache clean` commands to remove other packages cached by npm, Yarn, pnpm, or Bun.
