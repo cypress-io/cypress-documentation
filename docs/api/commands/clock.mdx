@@ -176,7 +176,7 @@ cy.clock().then((clock) => {
 You can call `cy.clock()` again for this purpose later in a chain if necessary.
 The repeated call yields the clock that already exists and ignores any
 arguments, so it can't change `now` or `functionNames`. Use
-`clock.setSystemTime()` to change the current time on the current page, or
+`clock.setSystemTime()` to change the time on the current page, or
 [restore the clock and create a new one](#Change-the-date-partway-through-a-test-with-cyclock)
 to change the time that later page loads start from.
 
