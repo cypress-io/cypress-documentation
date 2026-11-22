@@ -1,6 +1,6 @@
 ---
 title: 'Angular examples'
-description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, and customize `cy.mount()` for Angular and the Angular Router.
+description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, override component providers and imports with TestBed, and customize `cy.mount()` for Angular and the Angular Router.
 sidebar_label: Angular examples
 sidebar_position: 20
 slug: /app/component-testing/angular/examples
@@ -76,6 +76,11 @@ cy.mount(ComponentThatFetchesData, {
 })
 ```
 
+These options don't replace a provider listed in a component's own
+`@Component({ providers })` or a child in a standalone component's `imports`.
+To replace those, see
+[Override component providers and imports with TestBed](/app/component-testing/angular/examples#Override-component-providers-and-imports-with-TestBed).
+
 See
 [Default Declarations, Providers, or Imports](/app/component-testing/angular/examples#Default-Declarations-Providers-or-Imports)
 to set up common options in a custom `cy.mount()` command to avoid having to
@@ -90,6 +95,164 @@ This self-sufficiency means that in most cases you can mount a Standalone Compon
 ```ts
 cy.mount(MyStandaloneComponent)
 ```
+
+## Override component providers and imports with TestBed
+
+The `providers`, `imports`, and `declarations` options configure the test
+module, the same as `TestBed.configureTestingModule()`. A component's own
+metadata sits outside that module: a provider listed in
+`@Component({ providers })` takes precedence over one from the test module, and
+a standalone component renders the children in its own `imports` array.
+
+To replace either one, call Angular's static
+[`TestBed.overrideComponent()`](https://angular.dev/api/core/testing/TestBed#overrideComponent)
+or
+[`TestBed.overrideProvider()`](https://angular.dev/api/core/testing/TestBed#overrideProvider)
+before `cy.mount()`. Both methods work on the component you mount, on its
+children, and on a component in a template string, so `cy.mount()` needs no
+extra option for them.
+
+The examples below test a `Dashboard` that imports two standalone children.
+`SalesChart` draws a chart for its `region` input, and `Welcome` gets a message
+from a service it provides itself:
+
+```ts title="src/app/welcome/welcome.ts"
+import { Component, Injectable, inject } from '@angular/core'
+
+@Injectable()
+export class WelcomeService {
+  message() {
+    return 'Welcome back!'
+  }
+}
+
+@Component({
+  selector: 'app-welcome',
+  template: `<p data-cy="welcome">{{ message }}</p>`,
+  providers: [WelcomeService],
+})
+export class Welcome {
+  readonly message = inject(WelcomeService).message()
+}
+```
+
+```ts title="src/app/dashboard/dashboard.ts"
+import { Component } from '@angular/core'
+import { SalesChart } from '../sales-chart/sales-chart'
+import { Welcome } from '../welcome/welcome'
+
+@Component({
+  selector: 'app-dashboard',
+  imports: [Welcome, SalesChart],
+  template: `
+    <app-welcome />
+    <app-sales-chart region="EMEA" />
+  `,
+})
+export class Dashboard {}
+```
+
+### Replace a component-level provider with a test double
+
+Passing `{ providers: [{ provide: WelcomeService, useValue: ... }] }` to
+`cy.mount(Welcome)` leaves the message unchanged, because `Welcome` resolves
+`WelcomeService` from its own `providers` first. Set the component's providers
+with `TestBed.overrideComponent()` instead:
+
+```ts title="src/app/welcome/welcome.cy.ts"
+import { TestBed } from '@angular/core/testing'
+import { Welcome, WelcomeService } from './welcome'
+
+it('shows the message from a test double', () => {
+  TestBed.overrideComponent(Welcome, {
+    set: {
+      providers: [
+        {
+          provide: WelcomeService,
+          useValue: { message: () => 'Hello from a test double' },
+        },
+      ],
+    },
+  })
+
+  cy.mount(Welcome)
+
+  cy.get('[data-cy=welcome]').should('have.text', 'Hello from a test double')
+})
+```
+
+`set` replaces the component's whole `providers` array. Use `add` or `remove`
+to change single entries and keep the rest.
+
+### Replace a provider in a child component
+
+`TestBed.overrideProvider()` replaces a provider wherever Angular resolves it,
+including a child component's own `providers`. The test below mounts
+`Dashboard` and replaces the `WelcomeService` that `Welcome` provides:
+
+```ts title="src/app/dashboard/dashboard.cy.ts"
+import { TestBed } from '@angular/core/testing'
+import { WelcomeService } from '../welcome/welcome'
+import { Dashboard } from './dashboard'
+
+it('shows the welcome message from a test double', () => {
+  TestBed.overrideProvider(WelcomeService, {
+    useValue: { message: () => 'Hello from a test double' },
+  })
+
+  cy.mount(Dashboard)
+
+  cy.get('[data-cy=welcome]').should('have.text', 'Hello from a test double')
+})
+```
+
+### Stub a standalone child component in a shallow test
+
+A shallow test renders a component without its real children. To swap a child
+that a standalone component imports, remove the child from the component's
+`imports` and add a stub with the same selector and inputs:
+
+```ts title="src/app/dashboard/dashboard.cy.ts"
+import { Component, input } from '@angular/core'
+import { TestBed } from '@angular/core/testing'
+import { SalesChart } from '../sales-chart/sales-chart'
+import { Dashboard } from './dashboard'
+
+@Component({
+  selector: 'app-sales-chart',
+  template: `<p data-cy="sales-chart-stub">Sales chart for {{ region() }}</p>`,
+})
+class SalesChartStub {
+  readonly region = input.required<string>()
+}
+
+it('renders a stub in place of the sales chart', () => {
+  TestBed.overrideComponent(Dashboard, {
+    remove: { imports: [SalesChart] },
+    add: { imports: [SalesChartStub] },
+  })
+
+  cy.mount(Dashboard)
+
+  cy.get('[data-cy=sales-chart-stub]').should(
+    'have.text',
+    'Sales chart for EMEA'
+  )
+})
+```
+
+### TestBed override behaviors in component tests
+
+Keep these behaviors in mind when you override metadata with `TestBed`:
+
+- Cypress resets the testing module after each test, so an override lasts for
+  one test. To apply the same override to every test in a block, set it in a
+  `beforeEach()` hook.
+- Make the `TestBed` calls before `cy.mount()` runs. Once the component mounts,
+  an override throws an error saying the test module has already been
+  instantiated.
+- A second `cy.mount()` in the same test resets the testing module, which clears
+  the overrides. Put each mount that needs an override in its own test.
 
 ## Using Angular Template Syntax
 

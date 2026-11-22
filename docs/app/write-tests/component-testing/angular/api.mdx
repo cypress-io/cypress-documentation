@@ -135,6 +135,13 @@ it('Has spy', () => {
 Additional module configurations needed while mounting the component, like
 providers, declarations, imports, and even component @Inputs()
 
+`MountConfig` extends Angular's
+[`TestModuleMetadata`](https://angular.dev/api/core/testing/TestModuleMetadata),
+so `providers`, `declarations`, and `imports` configure the test module. To
+replace a provider from a component's own `@Component({ providers })` or a
+child in a standalone component's `imports`, see
+[Override component providers and imports with TestBed](/app/component-testing/angular/examples#Override-component-providers-and-imports-with-TestBed).
+
 <table class="api-table">
   <caption>members</caption>
   <thead>
