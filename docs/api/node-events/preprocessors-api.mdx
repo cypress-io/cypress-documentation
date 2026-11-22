@@ -1,6 +1,6 @@
 ---
 title: 'Preprocessors API'
-description: 'Prepare support and spec files for the browser with preprocessors.'
+description: 'Prepare support and spec files for the browser with preprocessors, and change the default webpack config Cypress uses for end-to-end specs.'
 sidebar_label: 'Preprocessors API'
 ---
 
@@ -47,7 +47,7 @@ and adds the loaders and webpack options for:
 
 ## Change the default webpack config for end-to-end specs
 
-Most changes to how Cypress bundles end-to-end specs are small: an extra loader
+Most changes to how Cypress bundles end-to-end specs are small: an extra module
 rule, a `resolve.alias`, or a `resolve.fallback` for a Node built-in. You can
 make that one change on top of the default webpack config instead of
 rebuilding the config by hand.
@@ -79,8 +79,8 @@ TypeScript specs fail to compile with:
 TypeError: webpack_preprocessor_1.default.getResolvedTypescriptVersion is not a function
 ```
 
-npm refuses to install version 8 against that peer range, so with npm, add an
-`overrides` entry to your `package.json` first. The entry tells npm to give the
+With npm, add an `overrides` entry to your `package.json` first, since npm
+won't install version 8 against that peer range. The entry tells npm to give the
 batteries-included package the `@cypress/webpack-preprocessor` version your
 project installs:
 
@@ -135,8 +135,8 @@ on(
 :::
 
 With `typescript: true`, the preprocessor resolves `typescript` from the
-directory of your `tsconfig.json`, the same way the default does. Without it, a
-TypeScript spec fails with "You are attempting to run a TypeScript file, but do
+directory of your `tsconfig.json`. Without `typescript: true`, a TypeScript spec
+fails with "You are attempting to run a TypeScript file, but do
 not have TypeScript installed", even when TypeScript is installed.
 
 The same steps apply to the other common changes:
