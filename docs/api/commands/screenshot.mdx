@@ -484,8 +484,8 @@ Cypress names each file by these rules:
 | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | Default, with no name passed                                      | `{testName}.png`, from the suite and test titles, such as `users -- shows the list.png`                                |
 | Duplicate of an earlier screenshot                                | ` (1)`, ` (2)`, and so on appended, such as `{testName} (1).png` or `{name} (1).png`                                   |
-| Failure screenshot                                                | `{testName} (failed).png`                                                                                              |
-| Failure screenshot from a hook                                    | `{testName} -- {hookTitle} (failed).png`, as described in [hook failures](#Failure-screenshot-names-for-hook-failures) |
+| Failure screenshot from a hook                                    | `{testName} -- {hookTitle} (failed).png`, as described in [hook failures](#Failure-screenshot-names-when-a-hook-fails) |
+| Failure screenshot from a test                                    | `{testName} (failed).png`                                                                                              |
 | Named                                                             | `{name}.png`, with a `/` in the name creating folders                                                                  |
 | Taken during a [test retry](/app/guides/test-retries#Screenshots) | ` (attempt {n})` appended, such as `{testName} (attempt 2).png` or `{testName} (failed) (attempt 2).png`               |
 
@@ -553,7 +553,7 @@ cypress/screenshots/
     └── my flaky tests -- passes on retry (attempt 2).png  ← attempt 2, cy.screenshot()
 ```
 
-#### Failure screenshot names for hook failures
+#### Failure screenshot names when a hook fails
 
 When a hook fails, the failure screenshot's name adds the hook's title after the
 test's title: `{testName} -- {hookTitle} (failed).png`. The hook title is the
@@ -582,6 +582,7 @@ suite:
 describe('profile', { retries: { runMode: 1 } }, () => {
   beforeEach(function signIn() {
     cy.visit('/sign-in')
+    // fails: the sign-in form never renders
     cy.get('[data-cy=sign-in-form]').should('be.visible')
   })
 
@@ -604,6 +605,7 @@ describe('orders', () => {
   })
 
   after(function deleteOrders() {
+    // fails: the server responds with a 500 error
     cy.request('DELETE', '/api/orders')
   })
 })
