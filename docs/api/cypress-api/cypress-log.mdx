@@ -279,7 +279,7 @@ const state = log.get('state') // 'pending'
 
 ## Notes
 
-### Cypress.log() entry order in the Command Log
+### `Cypress.log()` entry order in the Command Log
 
 `Cypress.log()` adds its entry to the Command Log the moment JavaScript calls
 it. Cypress queues commands and runs them later, so where the call sits decides
@@ -308,8 +308,10 @@ const chooseOption = (label) => {
 }
 
 it('chooses several options', () => {
+  const labels = ['a', 'b', 'c']
+
   cy.visit('index.html')
-  ;['a', 'b', 'c'].forEach(chooseOption)
+  labels.forEach(chooseOption)
 })
 ```
 
