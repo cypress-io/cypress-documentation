@@ -917,7 +917,7 @@ A suite that normally surfaces a failure at the 20-minute mark can surface it in
 
 ### Disable video: use Test Replay instead
 
-Video recording is one of the most common sources of hidden CI overhead. When `video: true` is set and you're recording to Cypress Cloud, Cypress captures a video for every spec file, then compresses it and uploads it before the next spec can start. On machines with limited CPU (typical of CI environments), the compression step is the most expensive part. You pay this overhead even for specs where every test passed and no one ever watches the recording.
+Video recording is one of the most common sources of hidden CI overhead. When `video: true` is set and you're recording to Cypress Cloud, Cypress captures a video for every spec file, then uploads it before the next spec can start. When [`videoCompression`](/app/references/configuration#Videos) is enabled, Cypress also compresses each video first, and on machines with limited CPU (typical of CI environments), the compression step is the most expensive part. You pay this overhead even for specs where every test passed and no one ever watches the recording.
 
 :::info
 
@@ -925,7 +925,7 @@ Video recording is disabled by default in Cypress. If you've never set `video: t
 
 :::
 
-If your team still needs videos of failing specs, keep `video: true` and [skip video compression for passing specs](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests) by deleting their videos in the `after:spec` event, which fires before Cypress compresses the video.
+If your team still needs videos of failing specs, keep `video: true` and [delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests). The `after:spec` event fires before Cypress processes the video, so deleting a passing spec's video skips uploading it and, when `videoCompression` is enabled, compressing it.
 
 Disable video in your Cypress configuration:
 

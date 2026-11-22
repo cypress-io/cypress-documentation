@@ -88,7 +88,8 @@ format. Part of this encoding process includes video compression.
 
 Compression is disabled by default, meaning Cypress skips this step
 completely, so the file size of the video is larger, but the encoding
-process is faster. Setting
+process is faster. Setting `videoCompression` to `false` or `0` disables
+compression. Setting
 [`videoCompression`](/app/references/configuration#Videos) to `true`
 coerces the video compression value to 32 Constant Rate Factor (CRF), which takes
 longer to process, but results in a smaller video.
@@ -132,14 +133,14 @@ value used to compress the video. Here are some common scenarios:
 - If your videos are extremely low quality, try decreasing the CRF value.
 
 A lower `videoCompression` value spends less time compressing and results in
-a bigger video file size and higher quality video. Setting `videoCompression` to
-`false` or `0` skips compression for every video.
+a bigger video file size and higher quality video.
 
 **Skip video compression for passing specs**
 
 During `cypress run`, Cypress fires the
 [`after:spec`](/api/node-events/after-spec-api) event before compressing the
-spec's video. When an `after:spec` handler deletes the video, Cypress skips
+spec's video. When [`videoCompression`](/app/references/configuration#Videos)
+is enabled and an `after:spec` handler deletes the video, Cypress skips
 compressing that video, whether or not the run records to Cypress Cloud.
 Cypress then spends compression time only on the videos you keep, such as the
 videos of failing specs. To set this up, see
@@ -209,8 +210,9 @@ locally without reproducing the failure on your machine.
 
 You may want to have more control over which videos you want to keep and upload
 to Cypress Cloud. Deleting a video in the `after:spec` event saves disk space on
-the machine and skips the time Cypress spends compressing the video and
-uploading it to [Cypress Cloud](/cloud/get-started/introduction).
+the machine. Cypress also skips compressing the deleted video when
+`videoCompression` is enabled, and skips uploading it when recording to
+[Cypress Cloud](/cloud/get-started/introduction).
 
 To only process videos in the case that a test fails, you can
 [delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests),
