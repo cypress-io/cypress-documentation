@@ -2009,6 +2009,29 @@ information on doing so.
 If something appears missing from the spec list, make sure the files have the
 [proper extension and the `specPattern` is correctly defined](/app/component-testing/component-framework-configuration#Spec-Pattern-for-Component-Tests).
 
+### <Icon name="angle-right" /> Can I mount Storybook stories in Vue component tests?
+
+Yes. Storybook's portable stories API turns each story in a CSF file into a
+component, and `cy.mount()` mounts that component like any other, so Cypress
+needs no plugin. `composeStories()` from `@storybook/vue3` applies each story's
+args and decorators:
+
+```js title="src/components/Button.cy.js"
+import { composeStories } from '@storybook/vue3'
+import * as stories from './Button.stories'
+
+const { Primary } = composeStories(stories)
+
+it('renders the Primary story', () => {
+  cy.mount(Primary)
+  cy.get('button').should('have.text', 'Primary')
+})
+```
+
+To apply your `.storybook/preview` settings, compile `template` decorators, and
+spy on events from a decorated story, see
+[Mount Storybook stories in Vue component tests](/app/component-testing/vue/examples#Mount-Storybook-stories-in-Vue-component-tests).
+
 ### <Icon name="angle-right" /> How do I fix ESLint errors for things like using the global Cypress objects?
 
 If you experience ESLint errors in your code editor around Cypress globals (`cy`,
