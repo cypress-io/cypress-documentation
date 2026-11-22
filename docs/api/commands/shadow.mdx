@@ -32,6 +32,7 @@ cy.get('.shadow-host').shadow()
 cy.shadow() // Errors, cannot be chained off 'cy'
 cy.task('log', 'hello').shadow() // Errors, 'task' does not yield DOM element
 cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
+cy.get('video').shadow() // Errors, the browser's own shadow roots are closed
 ```
 
 ### Arguments
@@ -66,12 +67,70 @@ Pass in an options object to change the default behavior of `.shadow()`.
 cy.get('.shadow-host').shadow().find('.my-button').click()
 ```
 
+## Notes
+
+### Closed and user-agent shadow roots in `.shadow()`
+
+`.shadow()` traverses open shadow roots, the kind a page creates with
+`attachShadow({ mode: 'open' })`. To find a shadow root, `.shadow()` reads the
+subject's
+[`shadowRoot`](https://developer.mozilla.org/en-US/docs/Web/API/Element/shadowRoot)
+property, and the browser returns `null` for two other kinds of shadow root:
+
+- Closed shadow roots, which a page creates with
+  `attachShadow({ mode: 'closed' })`
+- User-agent shadow roots, which the browser builds to render elements such as
+  `<video controls>`, `<audio controls>`, and `<input type="number">`
+
+The browser
+[keeps both kinds out of reach of JavaScript](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM#encapsulation_from_javascript)
+on the page, and Cypress queries the DOM with the same APIs your application's
+scripts use. So `.shadow()` retries until it times out on an element like a
+`<video>`, even though the browser's DevTools show a `#shadow-root (user-agent)`
+inside it:
+
+```text
+Timed out retrying after 4000ms: Expected the subject to host a shadow root, but never found it.
+```
+
+The [`includeShadowDom`](/app/references/configuration#Global) option searches
+open shadow roots only, too. A query with `includeShadowDom: true` doesn't find
+elements inside a closed or user-agent shadow root, such as a media control's
+pseudo-element.
+
+To test an element that renders a user-agent shadow root, drive it the way your
+application does: through the element's own properties and methods, or with
+the keys a user presses.
+
+```html title="index.html"
+<video id="intro-video" src="intro.webm" controls muted></video>
+<input id="quantity" type="number" value="1" />
+```
+
+```javascript title="spec.cy.js"
+// the browser shows its media controls
+cy.get('#intro-video').should('have.prop', 'controls', true)
+
+// play the video without clicking the control's play button;
+// .its(0) yields the <video> element, which has the play() method
+cy.get('#intro-video').its(0).invoke('play')
+cy.get('#intro-video').should('have.prop', 'paused', false)
+
+// step the value up, as the spin button's up arrow does
+cy.get('#quantity').type('{uparrow}')
+cy.get('#quantity').should('have.value', '2')
+```
+
+For a closed shadow root in your own components, test what the component
+exposes on its host element, such as its attributes, properties, and events.
+
 ## Rules
 
 <HeaderRequirements />
 
 - `.shadow()` requires being chained off a command that yields a DOM element
-  that is a shadow host (i.e. has a shadow root directly attached to it).
+  that hosts an open shadow root directly. Closed and user-agent shadow roots
+  [can't be traversed](#Closed-and-user-agent-shadow-roots-in-shadow).
 
 <HeaderAssertions />
 

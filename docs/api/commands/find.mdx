@@ -46,11 +46,11 @@ A selector used to match descendant DOM elements.
 
 Pass in an options object to change the default behavior of `.find()`.
 
-| Option             | Default                                                                        | Description                                                                                                       |
-| ------------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                               |
-| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                              |
-| `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to also search inside the shadow roots of the subject and its descendants, including nested shadow roots. |
+| Option             | Default                                                                        | Description                                                                                                                                                                                                                                        |
+| ------------------ | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                                                                                                                                                               |
+| `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to also search inside the open shadow roots of the subject and its descendants, including nested shadow roots. Closed and user-agent shadow roots are [never searched](/api/commands/shadow#Closed-and-user-agent-shadow-roots-in-shadow). |
 
 <HeaderYields />
 
