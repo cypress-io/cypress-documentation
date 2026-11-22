@@ -271,8 +271,8 @@ cy.contains('Bienvenue')
 ```
 
 To send a header with every request in a test, including `cy.reload()`, link
-clicks, and form submissions, add it with a `cy.intercept()` middleware in a
-`beforeEach()`, as shown in
+clicks, and form submissions, add it with a `cy.intercept()` route that sets
+`middleware: true` in a `beforeEach()`, as shown in
 [Add, modify, or delete a header to all outgoing requests](/api/commands/intercept#Add-modify-or-delete-a-header-to-all-outgoing-requests).
 
 #### Visit an error page with `failOnStatusCode: false`

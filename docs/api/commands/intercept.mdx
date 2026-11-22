@@ -762,11 +762,12 @@ beforeEach(() => {
 ```
 
 To send a header with every page request, such as a header your server checks
-before skipping an interstitial page, set it the same way. The middleware runs
-on every request the browser sends to a matching URL, so the header goes out
-with `cy.visit()`, `cy.reload()`, link clicks, and form submissions, and it
-stays in place after `cy.clearCookies()`. The [`headers`](/api/commands/visit#Arguments)
-option of `cy.visit()` covers only the initial request of that visit.
+before skipping an interstitial page, set the header in a `middleware: true`
+intercept. The middleware runs on every request the browser sends to a matching
+URL, so the header goes out with `cy.visit()`, `cy.reload()`, link clicks, and
+form submissions. `cy.clearCookies()` leaves the header in place. The
+[`headers` option of `cy.visit()`](/api/commands/visit#Arguments) covers only
+the initial request of that visit.
 
 ```js
 beforeEach(() => {
