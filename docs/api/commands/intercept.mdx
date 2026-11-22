@@ -1631,32 +1631,57 @@ reported, and treat the phrase for a standard code as redundant with it.
 
 :::
 
-**Note about `body`:** If the response header contains
-`Content-Type: application/json` and the body contains valid JSON, the `body` is
-an `object`. And if the body contains binary content, the `body` is a buffer.
+**Note about `body`:** If the response has a JSON `Content-Type` header, such as
+`application/json`, and the body contains valid JSON, the `body` is an `object`.
+And if the body contains binary content, the `body` is a buffer.
 
-Cypress relies on the `Content-Type: application/json` header to decide whether
-to parse the body as JSON. If that header is absent, Cypress yields the body as a
-`string` even when it contains JSON. A `string` body commonly comes from responses that
-omit a `Content-Type` header. For example, a `304 Not Modified` response, which
-[per RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232#section-4.1) is not
-expected to include representation metadata such as `Content-Type`, or a `301`
-redirect. When asserting on `response.body` for these responses, either assert
+Cypress relies on the `Content-Type` header to decide whether to parse the body as
+JSON. If your server sends JSON without that header, Cypress yields the body as a
+`string`. When asserting on `response.body` for these responses, either assert
 against the string value or parse it yourself with `JSON.parse()`:
 
 ```js
-cy.wait('@getResource').then(({ response }) => {
-  // when no `Content-Type: application/json` header is present,
-  // `response.body` is a string and must be parsed before
-  // asserting on its properties
-  const body =
-    typeof response.body === 'string'
-      ? JSON.parse(response.body)
-      : response.body
-
-  expect(body).to.have.property('id')
-})
+cy.wait('@getResource')
+  .its('response.body')
+  // no JSON `Content-Type` header, so the body is a string
+  .then((body) => JSON.parse(body))
+  .should('have.property', 'id')
 ```
+
+**Note about `304 Not Modified`:** A `304` response has no body to parse. When
+your server answers the browser's conditional request with a `304`, what Cypress
+yields depends on the network path:
+
+- On the legacy network path, used by Electron, Firefox, and WebKit, and by every
+  browser when [`forceHttp1`](/app/references/configuration#forceHttp1) is `true`,
+  Cypress sees the `304` itself. `response.statusCode` is `304` and
+  `response.body` is an empty string, so `JSON.parse()` throws on it.
+- In Chrome, Chromium, and Edge on the native browser network, Cypress yields the
+  complete `200` response, with the body parsed the same way as any other response.
+  See
+  [Revalidated responses report `200` instead of `304`](/app/guides/native-network-interception#Revalidated-responses-report-200-instead-of-304).
+
+To get the full body on the legacy network path, remove the conditional request
+headers in a request handler. Without them, your server has nothing to compare
+against and answers with a `200` and the full body:
+
+```js
+cy.intercept('GET', '/api/user', (req) => {
+  delete req.headers['if-none-match']
+  delete req.headers['if-modified-since']
+}).as('getUser')
+
+cy.visit('/')
+// the reload would otherwise revalidate the cached response
+cy.reload()
+
+cy.wait('@getUser')
+cy.wait('@getUser').its('response.body').should('have.property', 'id')
+```
+
+On the native browser network, the browser still sends the conditional request
+after the handler removes the headers, and `cy.wait()` already yields the full
+response there.
 
 `res` also has some optional properties you can set to control
 Cypress-specific behavior:

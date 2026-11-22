@@ -120,12 +120,13 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 :::info
 
-Cypress parses `response.body` into an `object` only when the response includes a
-`Content-Type: application/json` header. Responses that omit this header, such
-as a `304 Not Modified` or `301` redirect, yield `response.body` as a `string`.
-See
-[the note about `body`](/api/commands/intercept#Response-object-properties) in
-the `cy.intercept()` documentation for details and an example.
+Cypress parses `response.body` into an `object` only when the response has a JSON
+`Content-Type` header, such as `application/json`. JSON sent without one yields
+`response.body` as a `string`. A `304 Not Modified` has no body, so on the legacy
+network path `response.body` is an empty string, while Chrome, Chromium, and Edge
+on the native browser network yield the complete `200` response. See
+[the notes about `body` and `304 Not Modified`](/api/commands/intercept#Response-object-properties)
+in the `cy.intercept()` documentation for details and examples.
 
 :::
 
