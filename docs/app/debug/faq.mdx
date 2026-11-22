@@ -1825,6 +1825,150 @@ Cypress tests are slower than "normal" use. Still, you can access the native
 [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom)
 recipe.
 
+### <Icon name="angle-right" /> Can I take a heap snapshot or find memory leaks in a Cypress test?
+
+Yes, in Chromium-based browsers such as Chrome, Chrome for Testing, Edge, and
+Electron. Both approaches below send
+[Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
+commands at the exact test step you choose:
+
+- Read the heap size in the spec and fail the test when an action makes the
+  heap grow too much.
+- Save a full heap snapshot file at any step with the
+  [`@cypress/puppeteer`](/app/guides/multi-tab-testing#Set-up-cypresspuppeteer-in-your-project)
+  plugin, then inspect the file in Chrome DevTools.
+
+The numbers cover the whole Cypress tab, which holds the Cypress runner as well
+as the iframe your app runs in. Compare two readings taken in the same test
+rather than checking one absolute value.
+
+#### Check heap growth in a spec
+
+`Cypress.automation('remote:debugger:protocol', ...)` sends a DevTools Protocol
+command to the browser and resolves with the result. Wrap the call in
+`cy.then()` so the command runs at its place in the test instead of when Cypress
+first reads the test body. This test forces garbage collection, reads the used
+heap size, repeats an action 20 times, and then checks how far the heap grew:
+
+```js title="memory.cy.js"
+const sendCdp = (command, params = {}) =>
+  cy.then(() =>
+    Cypress.automation('remote:debugger:protocol', { command, params })
+  )
+
+it('keeps heap growth small while the dialog opens and closes', () => {
+  cy.visit('/')
+
+  sendCdp('HeapProfiler.collectGarbage')
+  sendCdp('Runtime.getHeapUsage').then(({ usedSize: before }) => {
+    Cypress._.times(20, () => {
+      cy.contains('button', 'Open dialog').click()
+      cy.contains('button', 'Close').click()
+    })
+
+    sendCdp('HeapProfiler.collectGarbage')
+    sendCdp('Runtime.getHeapUsage').then(({ usedSize: after }) => {
+      cy.log(`Heap grew by ${after - before} bytes`)
+      expect(after - before).to.be.lessThan(5_000_000)
+    })
+  })
+})
+```
+
+When the `"Open dialog"` button leaks memory on every click, the assertion fails
+with a message such as `expected 12461860 to be below 5000000`. Pick a threshold
+from the growth you see on a passing run, with some headroom.
+
+#### Save a heap snapshot at a test step
+
+A heap snapshot lists every object on the heap and what keeps each one alive,
+which helps you find the cause of a leak. Install and set up
+[`@cypress/puppeteer`](/app/guides/multi-tab-testing#Set-up-cypresspuppeteer-in-your-project),
+then register a handler that opens a DevTools Protocol session on the Cypress
+tab, collects the snapshot chunks, and writes them to a file:
+
+:::cypress-config-plugin-example
+
+```ts
+import { setup } from '@cypress/puppeteer'
+import fs from 'node:fs/promises'
+import path from 'node:path'
+```
+
+```ts
+setup({
+  on,
+  onMessage: {
+    async takeHeapSnapshot(browser, name: string) {
+      // The Cypress tab's URL contains /__/, and your app runs in an iframe inside it
+      const pages = await browser.pages()
+      const cypressTab = pages.find((page) => page.url().includes('/__/'))
+
+      if (!cypressTab) throw new Error('Could not find the Cypress tab')
+
+      const session = await cypressTab.createCDPSession()
+      const chunks: string[] = []
+
+      session.on('HeapProfiler.addHeapSnapshotChunk', ({ chunk }) => {
+        chunks.push(chunk)
+      })
+
+      await session.send('HeapProfiler.collectGarbage')
+      await session.send('HeapProfiler.takeHeapSnapshot')
+      await session.detach()
+
+      const file = path.join(
+        'cypress',
+        'heap-snapshots',
+        `${name}.heapsnapshot`
+      )
+
+      await fs.mkdir(path.dirname(file), { recursive: true })
+      await fs.writeFile(file, chunks.join(''))
+
+      return file
+    },
+  },
+})
+```
+
+:::
+
+Call the handler at each step you want to capture. The handler yields the path
+of the file it wrote:
+
+```js title="memory.cy.js"
+it('captures heap snapshots before and after the dialog opens', () => {
+  cy.visit('/')
+  cy.puppeteer('takeHeapSnapshot', 'before-dialog')
+
+  Cypress._.times(20, () => {
+    cy.contains('button', 'Open dialog').click()
+    cy.contains('button', 'Close').click()
+  })
+
+  cy.puppeteer('takeHeapSnapshot', 'after-dialog').should(
+    'equal',
+    'cypress/heap-snapshots/after-dialog.heapsnapshot'
+  )
+})
+```
+
+To compare the two files, open Chrome DevTools, go to the **Memory** panel, and
+load each `.heapsnapshot` file. Select the later snapshot and choose
+**Comparison** to list the objects created between the two steps.
+
+Keep these behaviors in mind:
+
+- Each snapshot file is often 50 MB or more, because the snapshot includes the
+  Cypress runner. Add `cypress/heap-snapshots/` to your `.gitignore`.
+- A large heap takes several seconds to capture. A handler that runs longer
+  than [`taskTimeout`](/app/references/configuration#Timeouts) fails the
+  command.
+- Headed Google Chrome 137 and later can't launch with `@cypress/puppeteer`
+  registered. Run headless, or use Chrome for Testing or Chromium, as described
+  in [Browser support for @cypress/puppeteer](/app/guides/multi-tab-testing#Browser-support-for-cypresspuppeteer).
+
 ## Integrations with Other Tools/Frameworks/Libraries
 
 ### <Icon name="angle-right" /> Can I test React applications using Cypress?
