@@ -775,9 +775,40 @@ Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We
 suggest using [https://globster.xyz](https://globster.xyz) to test what files
 would match.
 
-Cypress automatically adds the `**/node_modules/**` pattern to `excludeSpecPattern`,
-and you don't need to specify it (and can't override it). See [`e2e`](#e2e)
-or [`component`](#component) testing-specific options.
+Cypress skips files inside `node_modules` when it looks for specs, so you don't
+need to add `**/node_modules/**` to `excludeSpecPattern`. Cypress searches
+`node_modules` only when one of the following is true:
+
+- A pattern in `specPattern` contains `node_modules`.
+- The `supportFile` path contains `node_modules` (for finding the support file).
+- The project itself is inside a `node_modules` folder.
+
+`excludeSpecPattern` still applies in each case. For example, to run specs
+shipped in a package installed in your project:
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    specPattern: 'node_modules/@your-org/e2e-tests/e2e/**/*.cy.js',
+    supportFile: 'node_modules/@your-org/e2e-tests/support/e2e.js',
+  },
+}
+```
+
+:::
+
+:::caution
+
+The default end-to-end [preprocessor](/api/node-events/preprocessors-api)
+doesn't compile TypeScript or run Babel on files inside `node_modules`, so a
+`.ts` spec there fails to compile. Publish the package's specs and support file
+as JavaScript, or configure your own preprocessor to compile them.
+
+:::
+
+See [`e2e`](#e2e) or [`component`](#component) testing-specific options.
 
 ### forceHttp1
 
@@ -1181,6 +1212,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 | [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                                                                 |
 | [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                                                       |
 | [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                                                  |
+| [13.6.3](/app/references/changelog#13-6-3)   | Stopped skipping `node_modules` when finding specs or the support file if `specPattern`, `supportFile`, or the project path contains `node_modules`.                            |
 | [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`.                                   |
 | [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                                                   |
 | [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                                                           |
