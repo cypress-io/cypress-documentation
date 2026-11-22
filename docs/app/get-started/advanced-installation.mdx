@@ -1,6 +1,6 @@
 ---
 title: 'Advanced installation in Cypress: custom binary, cache & proxy'
-description: 'Configure advanced Cypress installation: install a custom binary or version, change the cache folder, install behind a proxy, mirror, or custom CA, and skip the binary download.'
+description: 'Configure advanced Cypress installation: install a custom binary or version, change the cache or App Data folder, install behind a proxy, mirror, or custom CA, and skip the binary download.'
 sidebar_label: Installation options
 sidebar_position: 40
 slug: /app/references/advanced-installation
@@ -90,7 +90,7 @@ typically solves, so you can find the right tool for your situation:
   useful on locked-down machines where the default cache location isn't writable.
   `CYPRESS_CACHE_FOLDER` moves only the binary. To move the browser profiles and
   project state Cypress writes at run time, see
-  [Cypress App Data location](#Cypress-App-Data-location).
+  [Cypress App Data location](#Cypress-App-Data-location-on-each-operating-system).
 - **`CYPRESS_RUN_BINARY`**: Use this when you want to launch a specific binary
   already on disk instead of the one resolved from the cache, for example a
   binary you unzipped to a known location.
@@ -666,10 +666,6 @@ environment:
 
 If you use Bun, [`BUN_INSTALL_CACHE_DIR`](https://bun.sh/docs/install/cache) controls Bun's package cache and is independent of `CYPRESS_CACHE_FOLDER`, which stores the Cypress binary.
 
-The binary cache holds only the binary. Cypress writes browser profiles and
-project state to a separate folder that `CYPRESS_CACHE_FOLDER` doesn't move. See
-[Cypress App Data location](#Cypress-App-Data-location).
-
 See also
 [Continuous Integration - Caching](/app/continuous-integration/overview#Caching)
 section in the documentation.
@@ -787,7 +783,7 @@ $env:CYPRESS_SKIP_VERIFY = "true"
 </TabItem>
 </Tabs>
 
-## Cypress App Data location
+## Cypress App Data location on each operating system
 
 Cypress App Data is the data the Cypress App writes while it runs: browser
 profiles, saved project state, spec bundles, and the Electron browser's
@@ -828,8 +824,7 @@ whole agent.
 
 On Linux and macOS, Cypress resolves `~` from the `HOME` environment variable, so
 a different `HOME` also moves the App Data folder. When App Data shows up
-somewhere unexpected, check where `HOME` points with `echo ~`. On Windows, Cypress
-builds the App Data path from `%APPDATA%`.
+somewhere unexpected, check where `HOME` points with `echo ~`.
 
 ## Privacy and messaging
 
@@ -1020,7 +1015,7 @@ To remove only the older cached versions while keeping the one currently in use,
 Alternatively, delete the [Cypress binary cache](#Binary-cache) (see above) manually.
 See [Managing the binary cache](#Managing-the-binary-cache) for the full set of cache commands.
 
-**To delete cached [Cypress App Data](#Cypress-App-Data-location), manually delete the following directories / folders:**
+**To delete cached [Cypress App Data](#Cypress-App-Data-location-on-each-operating-system), manually delete the following directories / folders:**
 
 - macOS: `~/Library/Application Support/Cypress`
 - Linux: `~/.config/Cypress`, or `$XDG_CONFIG_HOME/Cypress` when `XDG_CONFIG_HOME` is set
