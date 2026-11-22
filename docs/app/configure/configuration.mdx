@@ -640,7 +640,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 :::
 
-#### Block every host except an allowlist with negation
+#### Allow only listed hosts with a negated `blockHosts` pattern
 
 A pattern that starts with `!` negates the match, so it matches every host
 _except_ the ones it names. To block all traffic except the hosts your tests
@@ -661,7 +661,7 @@ With this configuration, Cypress allows requests to `localhost:3000` and
 `www.cypress.io`.
 
 Cypress checks a URL against each pattern in `blockHosts` separately and blocks
-the request when **any** pattern matches. A negated pattern can't carve an
+the request as soon as one pattern matches. A negated pattern can't carve an
 exception out of another pattern, so keep the whole allowlist in one pattern:
 
 - ❌ `['*', '!localhost:3000']` blocks `localhost:3000`, because `*` matches it
