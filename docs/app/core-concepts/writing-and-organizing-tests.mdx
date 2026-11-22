@@ -1171,9 +1171,10 @@ about and run `cypress tap run` with the spec to rerun on each change:
 />
 
 Each time a file under `src/` or `cypress/fixtures/` changes, the open Cypress
-session reruns `cypress/e2e/login.cy.ts`. Any watcher that runs a shell command
-works the same way, including `nodemon`, `watchexec`, or a script in your
-build tool. To declare the watched files in your Cypress config instead, use
+session reruns `cypress/e2e/login.cy.ts`. Saving a watched file during a run
+stops that run and starts the spec again from the first command. Any watcher
+that runs a shell command works the same way, including `nodemon`, `watchexec`,
+or a script in your build tool. To declare the watched files in your Cypress config instead, use
 the community plugin
 [`cypress-watch-and-reload`](https://github.com/bahmutov/cypress-watch-and-reload).
 
