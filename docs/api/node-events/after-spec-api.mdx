@@ -100,8 +100,8 @@ on('after:spec', (spec, results) => {
 ### Delete the recorded video if the spec passed
 
 You can delete the recorded video for a spec when certain conditions are met.
-Deleting the video skips the compression and uploading of the video when recording to
-Cypress Cloud.
+Cypress fires `after:spec` before compressing the video, so deleting the video
+skips compressing it and, when recording to Cypress Cloud, uploading it.
 
 The example below shows how to delete the recorded video for specs with no
 failing tests.
@@ -130,8 +130,8 @@ on(
 ### Delete the recorded video if no tests retried
 
 You can delete the recorded video for a spec when certain conditions are met.
-Deleting the video skips the compression and uploading of the video when recording to
-Cypress Cloud.
+Cypress fires `after:spec` before compressing the video, so deleting the video
+skips compressing it and, when recording to Cypress Cloud, uploading it.
 
 The example below shows how to delete the recorded video for specs that had no
 retry attempts when using Cypress [test retries](/app/guides/test-retries).

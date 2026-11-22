@@ -925,6 +925,8 @@ Video recording is disabled by default in Cypress. If you've never set `video: t
 
 :::
 
+If your team still needs videos of failing specs, keep `video: true` and [skip video compression for passing specs](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests) by deleting their videos in the `after:spec` event, which fires before Cypress compresses the video.
+
 Disable video in your Cypress configuration:
 
 :::cypress-config-example

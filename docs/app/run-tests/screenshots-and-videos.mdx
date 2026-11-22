@@ -132,7 +132,18 @@ value used to compress the video. Here are some common scenarios:
 - If your videos are extremely low quality, try decreasing the CRF value.
 
 A lower `videoCompression` value spends less time compressing and results in
-a bigger video file size and higher quality video.
+a bigger video file size and higher quality video. Setting `videoCompression` to
+`false` or `0` skips compression for every video.
+
+**Skip video compression for passing specs**
+
+During `cypress run`, Cypress fires the
+[`after:spec`](/api/node-events/after-spec-api) event before compressing the
+spec's video. When an `after:spec` handler deletes the video, Cypress skips
+compressing that video, whether or not the run records to Cypress Cloud.
+Cypress then spends compression time only on the videos you keep, such as the
+videos of failing specs. To set this up, see
+[delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests).
 
 :::info
 
@@ -197,9 +208,9 @@ locally without reproducing the failure on your machine.
 ### Control which videos to keep and upload to Cypress Cloud
 
 You may want to have more control over which videos you want to keep and upload
-to Cypress Cloud. Deleting videos after the run can save resource space on the
-machine as well as skip the time used to process, compress, and upload the video
-to [Cypress Cloud](/cloud/get-started/introduction).
+to Cypress Cloud. Deleting a video in the `after:spec` event saves disk space on
+the machine and skips the time Cypress spends compressing the video and
+uploading it to [Cypress Cloud](/cloud/get-started/introduction).
 
 To only process videos in the case that a test fails, you can
 [delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests),
