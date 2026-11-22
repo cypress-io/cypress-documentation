@@ -401,34 +401,26 @@ For more guidance around aliasing requests with GraphQL, see
 ### Add more than one alias to an intercepted request
 
 A request can carry more than one alias. Every `cy.intercept()` route that a
-request reaches records the request under that route's own alias, so a custom
-command and the test that calls it can each alias the same request with a route
-of their own.
+request reaches records the request under that route's own alias, so code in
+different places, such as a custom command and the test that calls it, can each
+alias the same request with a route of its own.
 
 Routes run in the order described in
 [Interception lifecycle](#Interception-lifecycle), and the first route that
 responds ends the chain. A route that only adds an alias has to run before the
 route that responds, so define it after the responding route:
 
-```js title="cypress/support/commands.js"
-Cypress.Commands.add('stubUsers', () => {
-  cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('stubUsers')
-})
-```
+```js
+cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('stubUsers')
 
-```js title="users.cy.js"
-it('aliases the stubbed request twice', () => {
-  cy.stubUsers()
+// defined after the stub, so it sees the request before the stub responds
+cy.intercept('GET', '/api/users').as('getUsers')
 
-  // defined after the stub, so it sees the request before the stub responds
-  cy.intercept('GET', '/api/users').as('getUsers')
+cy.get('[data-cy="load-users"]').click()
 
-  cy.get('[data-cy="load-users"]').click()
-
-  // both aliases resolve to the same request
-  cy.wait(['@stubUsers', '@getUsers']).then(([stubbed, aliased]) => {
-    expect(stubbed.id).to.eq(aliased.id)
-  })
+// both aliases resolve to the same request
+cy.wait(['@stubUsers', '@getUsers']).then(([stubbed, aliased]) => {
+  expect(stubbed.id).to.eq(aliased.id)
 })
 ```
 
@@ -445,7 +437,7 @@ cy.intercept(
   () => {}
 ).as('getUsers')
 
-cy.stubUsers()
+cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('stubUsers')
 ```
 
 ### Waiting on a request
