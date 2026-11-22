@@ -189,10 +189,11 @@ common causes:
   server. In VS Code, open the command palette (`cmd+shift+p` on Mac,
   `ctrl+shift+p` on Windows) and run "TypeScript: Restart TS Server". If that
   doesn't help, restart the editor.
-- **Jest types are clashing with Cypress types.** If your project also uses
-  Jest, `@types/jest` defines the same globals (`describe`, `it`, `expect`)
-  and can override Cypress's definitions. See
-  [Clashing types with Jest](/app/tooling/typescript-support#Clashing-types-with-Jest).
+- **Unit test types are clashing with Cypress types.** If your project also
+  uses Jest, Jasmine, or Vitest globals, their type definitions declare the same
+  globals (`describe`, `it`, `expect`) and can override Cypress's definitions.
+  See
+  [Cypress types clashing with Jest, Jasmine, or Vitest](/app/tooling/typescript-support#Cypress-types-clashing-with-Jest-Jasmine-or-Vitest).
 - **Your editor is using a different TypeScript version.** In VS Code, run
   "TypeScript: Select TypeScript Version" from the command palette and choose
   your workspace version.
