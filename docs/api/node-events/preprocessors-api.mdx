@@ -210,9 +210,9 @@ them before they reach the browser, so an import map in your application's HTML
 doesn't apply to them. A spec that imports a specifier only the import map
 defines fails to compile with a "Module not found" error.
 
-To import the same modules in a spec, map each specifier again under
-`resolve.alias`. For example, this import map resolves `@app/format.js` in the
-application to `/src/format.js`:
+To import the same modules in a spec, map each specifier again where the
+preprocessor reads it. For example, this import map resolves `@app/format.js` in
+the application to `/src/format.js`:
 
 ```html title="index.html"
 <script type="importmap">
@@ -226,7 +226,7 @@ application to `/src/format.js`:
 
 The spec imports the same specifier:
 
-```js title="cypress/e2e/format.cy.js"
+```ts copyTsToJs title="cypress/e2e/format.cy.ts"
 import { formatPrice } from '@app/format.js'
 
 it('formats prices in dollars', () => {
@@ -234,7 +234,29 @@ it('formats prices in dollars', () => {
 })
 ```
 
-The config maps `@app` to the `src` folder the import map points to:
+In a project with TypeScript installed, add the mapping to
+`compilerOptions.paths` in your `tsconfig.json`. The default preprocessor
+resolves those paths, and TypeScript finds the module's types, with no
+preprocessor config:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "paths": {
+      "@app/*": ["./src/*"]
+    }
+  }
+}
+```
+
+`allowJs` makes TypeScript read types from a `.js` module such as
+`src/format.js`. A project whose mapped modules are `.ts` files doesn't need
+`allowJs`.
+
+In a project without TypeScript, install the packages from
+[Install the batteries-included preprocessor packages](#Install-the-batteries-included-preprocessor-packages)
+and map `@app` to the `src` folder under `resolve.alias`:
 
 :::cypress-config-plugin-example
 
@@ -250,20 +272,14 @@ webpackOptions.resolve.alias = {
   '@app': path.resolve(__dirname, 'src'),
 }
 
-on(
-  'file:preprocessor',
-  webpackPreprocessor({
-    // Keeps TypeScript support. Leave it out if your project doesn't use TypeScript.
-    typescript: true,
-    webpackOptions,
-  })
-)
+on('file:preprocessor', webpackPreprocessor({ webpackOptions }))
 ```
 
 :::
 
-An import map's `/src/` is a URL path on your server, and the alias is a folder
-on disk. Point each alias at the folder your server serves for that URL path.
+An import map's `/src/` is a URL path on your server, while `paths` and
+`resolve.alias` point to folders on disk. Point each mapping at the folder your
+server serves for that URL path.
 
 ## Excluding files from being watched
 
