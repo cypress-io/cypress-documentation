@@ -761,6 +761,21 @@ beforeEach(() => {
 })
 ```
 
+To send a header with every page request, such as a header your server checks
+before skipping an interstitial page, set it the same way. The middleware runs
+on every request the browser sends to a matching URL, so the header goes out
+with `cy.visit()`, `cy.reload()`, link clicks, and form submissions, and it
+stays in place after `cy.clearCookies()`. The [`headers`](/api/commands/visit#Arguments)
+option of `cy.visit()` covers only the initial request of that visit.
+
+```js
+beforeEach(() => {
+  cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
+    req.headers['x-bypass-interstitial'] = '1'
+  })
+})
+```
+
 #### Dynamically stubbing a response
 
 You can use the [`req.reply()`][req-reply] function to dynamically control the
