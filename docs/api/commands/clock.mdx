@@ -174,9 +174,11 @@ cy.clock().then((clock) => {
 ```
 
 You can call `cy.clock()` again for this purpose later in a chain if necessary.
-The repeated call yields the clock that already exists and ignores any arguments, so it can't
-change `now` or `functionNames`. Use `clock.setSystemTime()` to change the
-current time.
+The repeated call yields the clock that already exists and ignores any
+arguments, so it can't change `now` or `functionNames`. Use
+`clock.setSystemTime()` to change the current time on the current page, or
+[restore the clock and create a new one](#Change-the-date-partway-through-a-test-with-cyclock)
+to change the time that later page loads start from.
 
 ```javascript
 cy.clock()
@@ -252,6 +254,33 @@ beforeEach(() => {
   cy.visit('/reports')
 })
 ```
+
+#### Change the date partway through a test with `cy.clock()`
+
+Calling `cy.clock(now)` a second time in the same test doesn't change the date,
+because `cy.clock()` yields the clock that already exists and ignores its
+arguments. To start later page loads from a different date, restore the current
+clock first, then create a new clock with the new `now` before you call
+[`cy.reload()`](/api/commands/reload) or [`cy.visit()`](/api/commands/visit).
+
+```javascript
+cy.clock(Date.UTC(2021, 2, 31))
+cy.visit('/index.html')
+cy.get('#today').should('have.text', '2021-03-31')
+
+// replace the clock, then reload so the page picks up the new date
+cy.clock().invoke('restore')
+cy.clock(Date.UTC(2021, 4, 20))
+cy.reload()
+cy.get('#today').should('have.text', '2021-05-20')
+```
+
+Call `cy.clock()` again after `restore()`, rather than calling
+`clock.setSystemTime()` on the restored clock. A restored clock no longer
+controls the page's time functions, so `setSystemTime()` on that clock has no
+effect. To change the date on the current page without reloading, call
+`setSystemTime()` on the active clock instead, as shown in
+[Change current system time](#Change-current-system-time).
 
 #### Test a midnight date rollover with `cy.clock()`
 
@@ -406,7 +435,9 @@ of a test, the page under test reloads or changes.
 
 Each new page gets a fresh fake clock that starts again at the original `now`
 value (or the unix epoch). Time you advanced with `cy.tick()` on the previous
-page and timers it registered don't carry over to the new page.
+page and timers it registered don't carry over to the new page. To start the
+new page from a different time, see
+[Change the date partway through a test](#Change-the-date-partway-through-a-test-with-cyclock).
 
 ## Rules
 
