@@ -28,22 +28,37 @@ You can retrieve all of the data that is viewable in
 
 ## Overview of the API
 
-You access the reporting data using an API key from Cloud.
-Visit Integrations → Enterprise API in Cypress Cloud and copy the API key that has been created for your
-organization. There is nothing to enable. If you are subscribed to the Enterprise Cypress Cloud plan
-the ability to access your test data via API is already enabled.
+You access the reporting data with an organization API key. Your Cypress Cloud plan must include the Data Extract API.
+If it doesn't, **Request trial** from the **Data Extract API** section of the Integrations page.
 
-<DocsImage
-  src="/img/cloud/features/analytics/enterprise-reporting-jwt.png"
-  alt="Cloud Enterprise Reporting API download data"
-/>
-
-<br />A couple of things to note:
+A couple of things to note:
 
 - Data shown in Enterprise Reporting is not real-time. For aggregated data it is available as of midnight UTC of the current day.
   I.e. - data is populated through "end of day yesterday". However, individual result data is near real-time and is available
   30 minutes after the run has completed. The sections below specify the endpoints that return near real-time data.
 - Historical data is available as specified by your data retention limit in Cypress Cloud.
+
+## Generate a key
+
+Each organization has one Data Extract API key at a time. Organization owners and admins manage it
+from the **Data Extract API** section of the Integrations page in Cypress Cloud.
+
+<DocsImage
+  src="/img/cloud/features/analytics/enterprise-reporting-jwt.png"
+  alt="Cloud Data Extract API key configuration"
+/>
+
+If your organization has no key yet, select **Generate API key**. Cypress Cloud shows the key once.
+Copy it and store it somewhere safe, because you can't view it again after you close the dialog.
+Afterward, the Integrations page shows only the start of the key and the date it was issued.
+
+## Regenerate a key
+
+Select **Regenerate** to replace the current key. The current key stops working immediately, and Cypress Cloud asks you to
+confirm first. Update every script, BI connection, or scheduled job that uses the old key with the new one.
+
+An organization can't have more than one active key, so you can't keep the old key running while you
+switch over to a new one.
 
 ## API endpoint details
 
