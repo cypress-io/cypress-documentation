@@ -751,7 +751,7 @@ You can add, modify, or delete a header to all outgoing requests using a
 `beforeEach()` in the
 [supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
-```js
+```js title="cypress/support/e2e.js"
 beforeEach(() => {
   cy.intercept(
     { url: 'http://localhost:3001/**', middleware: true },
