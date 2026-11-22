@@ -212,9 +212,9 @@ cy.get('#book-results').should('have.length', 1)
 `cy.wait()` yields the next matching request, whatever its body holds. An
 assertion that fails on that request doesn't make `cy.wait()` move on to a
 later one, because `cy.wait()` is not a query (see
-[Retry-ability](#Retry-ability)). The difference matters when your app sends an unknown
-number of similar requests, such as a debounced autosave, and the test cares
-about one of them.
+[Retry-ability](#Retry-ability)). The difference matters when your app sends an
+unknown number of similar requests, such as a debounced autosave, and the test
+cares about one of them.
 
 To wait for the request that carries a specific value, alias only that request.
 Set `req.alias` in a route handler when the body matches, as in
@@ -236,7 +236,9 @@ cy.wait('@saveFinalNotes').its('response.statusCode').should('eq', 200)
 
 The handler adds its alias alongside any alias another route gives the same
 request, so a shared intercept that aliases every request by its GraphQL
-operation name keeps working. See
+operation name keeps working. The conditional route has to see the request
+before any route that sends a response, so define it after a stubbing route.
+See
 [Add more than one alias to an intercepted request](/api/commands/intercept#Add-more-than-one-alias-to-an-intercepted-request).
 
 To assert on the requests sent so far instead, use
@@ -251,7 +253,7 @@ cy.get('[data-cy=notes]').type('final')
 
 cy.get('@saveNotes.all').should((interceptions) => {
   const notes = interceptions.map(
-    (interception) => interception.request.body.variables.input.notes
+    (interception) => interception.request.body.variables?.input?.notes
   )
 
   expect(notes).to.include('final')
