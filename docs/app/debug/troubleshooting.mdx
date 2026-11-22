@@ -524,6 +524,18 @@ the end of the path:
 cypress open --browser C:/User/Application/browser.exe:chrome
 ```
 
+For a portable browser, pass the path to the browser's own executable, not to
+the portable app's launcher. For example, `FirefoxPortable.exe` from
+PortableApps.com is a launcher that starts Firefox for you. On Windows, Cypress
+reads the browser version from the file you pass to `--browser`, so pointing at
+the launcher reports the launcher's version in an error such as
+`Cypress does not support running Custom Firefox version 2`. Point `--browser`
+at the `firefox.exe` inside the Firefox Portable folder instead:
+
+```shell
+cypress open --browser C:/path/to/FirefoxPortable/App/Firefox64/firefox.exe
+```
+
 ### Cypress failed to make a connection to the Chrome DevTools Protocol
 
 Cypress controls Chrome, Chromium, and Edge through the

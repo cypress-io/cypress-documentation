@@ -34,6 +34,7 @@ Find the section for what you want to do:
 | Change the real response               | `req.continue()` with a callback           | [Modifying the real server response with `req.continue()`](#Modifying-the-real-server-response-with-reqcontinue)      |
 | Test a server error or network failure | `statusCode` or `forceNetworkError`        | [Stubbing a server error or a network failure](#Stubbing-a-server-error-or-a-network-failure)                         |
 | Test a slow network                    | `delay` or `throttleKbps`                  | [Throttle or delay all incoming responses](#Throttle-or-delay-all-incoming-responses)                                 |
+| Delay a request before it's sent       | a `routeHandler` that returns a Promise    | [Delay an intercepted request](#Delay-an-intercepted-request-before-it-reaches-the-server)                            |
 | Check that a request was not made      | the `.all` alias suffix                    | [Asserting that an intercepted request was not made](#Asserting-that-an-intercepted-request-was-not-made)             |
 | Keep intercepts from slowing tests     | scoped routes and `blockHosts`             | [`cy.intercept()` and test performance](#cyintercept-and-test-performance)                                            |
 | Fix an intercept that doesn't match    | the Routes panel and `Cypress.minimatch()` | [Troubleshooting a `cy.intercept()` route that doesn't match](#Troubleshooting-a-cyintercept-route-that-doesnt-match) |
@@ -751,13 +752,29 @@ You can add, modify, or delete a header to all outgoing requests using a
 `beforeEach()` in the
 [supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
-```js
+```js title="cypress/support/e2e.js"
 beforeEach(() => {
   cy.intercept(
     { url: 'http://localhost:3001/**', middleware: true },
     // Delete 'if-none-match' header from all outgoing requests
     (req) => delete req.headers['if-none-match']
   )
+})
+```
+
+To send a header with every page request, such as a header your server checks
+before skipping an interstitial page, set the header in a `middleware: true`
+intercept. The middleware runs on every request the browser sends to a matching
+URL, so the header goes out with `cy.visit()`, `cy.reload()`, link clicks, and
+form submissions. `cy.clearCookies()` leaves the header in place. The
+[`headers` option of `cy.visit()`](/api/commands/visit#Arguments) covers only
+the initial request of that visit.
+
+```js title="cypress/support/e2e.js"
+beforeEach(() => {
+  cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
+    req.headers['x-bypass-interstitial'] = '1'
+  })
 })
 ```
 
@@ -803,6 +820,27 @@ cy.intercept('POST', '/login', (req) => {
   })
 })
 ```
+
+#### Delay an intercepted request before it reaches the server
+
+When a route handler returns a Promise, Cypress holds the request at the proxy
+until the Promise resolves, so the server receives the request only after the
+delay. The delay leaves time to test what the application does while a request
+is still pending, such as cancelling an upload. A request the application
+cancels during the delay never reaches the server.
+
+```js title="spec.cy.js"
+cy.intercept('POST', '/files/upload', () => {
+  // hold the upload for 1 second before Cypress sends it to the server
+  return new Promise((resolve) => setTimeout(resolve, 1000))
+}).as('upload')
+```
+
+The Promise must resolve within the
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts), or the test
+fails with a timeout error. The `delay` and `throttleKbps` options apply to the
+response, not the request. See
+[Throttle or delay all incoming responses](#Throttle-or-delay-all-incoming-responses).
 
 #### Passing a request to the next request handler
 
@@ -922,6 +960,9 @@ cy.intercept('/users', (req) => {
 
 You can throttle or delay all incoming responses using a `beforeEach()` in the
 [supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
+The `throttleKbps` and `delay` options, `res.setThrottle()`, and `res.setDelay()`
+apply only to the response. To hold the request before it reaches the server,
+see [Delay an intercepted request before it reaches the server](#Delay-an-intercepted-request-before-it-reaches-the-server).
 
 ```js
 // Throttle API responses to simulate real-world conditions

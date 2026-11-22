@@ -33,17 +33,42 @@ You can [install Cypress](/app/get-started/install-cypress) on Mac,
 Linux, and Windows. For additional information, see our
 [System requirements](/app/get-started/install-cypress#System-requirements).
 
-### <Icon name="angle-right" /> Do you support native mobile apps?
+### <Icon name="angle-right" /> Can I run Cypress in Island or another undetected browser?
 
-Cypress will never be able to run on a native mobile app, but we can test some
+Cypress detects the browsers in the
+[Supported browsers](/app/references/launching-browsers#Supported-browsers)
+list automatically. Other Chromium-based browsers, such as the
+[Island](https://www.island.io/) enterprise browser, [Brave](https://brave.com/),
+or [Vivaldi](https://vivaldi.com/), don't appear in the browser list on their
+own, but you can add them yourself.
+
+First, try passing the browser's executable path to `--browser`:
+
+<CypressCommandTabs command="open --browser /path/to/Island" />
+
+Cypress reads the executable's version and launches the browser when the version
+matches a browser Cypress knows, such as Chrome or Chromium.
+[Launching by a path](/app/references/launching-browsers#Launching-by-a-path)
+describes the `--browser` path option in more detail.
+
+If Cypress reports `Unable to find browser with path`, add the browser to
+`config.browsers` in `setupNodeEvents` with `family: 'chromium'`. The browser
+then appears in the browser list in `cypress open`, and Cypress drives it like
+any other browser in the `chromium` family. The
+[Customize available browsers](/app/references/launching-browsers#Customize-available-browsers)
+section has a complete example.
+
+### <Icon name="angle-right" /> Does Cypress support native mobile apps?
+
+Cypress doesn't run on native mobile apps, but Cypress can test some
 functionality of mobile web browsers and test mobile applications that are
 developed in a browser, such as with
 [the Ionic framework](https://ionicframework.com/).
 
-Currently you can control the viewport with the
-[`cy.viewport()`](/api/commands/viewport) command to test responsive, mobile
-views in a website or web application. You can also mimic certain behaviors like
-swiping using [custom commands](/api/cypress-api/custom-commands).
+The [`cy.viewport()`](/api/commands/viewport) command controls the viewport
+size, so you can test responsive, mobile views in a website or web application.
+You can also mimic certain behaviors, such as swiping, with
+[custom commands](/api/cypress-api/custom-commands).
 
 You can read our blog post on
 [end-to-end testing mobile apps with Ionic and Cypress](https://www.cypress.io/blog/2020/07/08/end-to-end-testing-mobile-apps-with-ionic-and-cypress/?utm_source=docs.cypress.io&utm_medium=app-faq)
@@ -464,6 +489,20 @@ What you're asking about is conditional testing and control flow.
 Read our extensive
 [Conditional Testing Guide](/app/guides/conditional-testing) which
 explains this in detail.
+
+### <Icon name="angle-right" /> How do I verify that an element never appeared on the page?
+
+A `.should('not.exist')` assertion passes the first time Cypress finds no
+matching element, so the assertion can pass before the element renders or after
+the element renders and disappears. Increasing the `timeout` doesn't change
+that: extra time only gives the assertion more chances to pass.
+
+To check that an element never appeared, either wait for the work that would
+render the element before asserting, or register a `MutationObserver` in
+[`cy.visit()`](/api/commands/visit)'s `onBeforeLoad` option to record every
+element the app adds. See
+[Verify that an element never appears on the page](/app/references/assertions#Verify-that-an-element-never-appears-on-the-page)
+for both approaches.
 
 ### <Icon name="angle-right" /> Can I stop a test partway through and keep the steps that already ran?
 
@@ -1983,6 +2022,29 @@ information on doing so.
 
 If something appears missing from the spec list, make sure the files have the
 [proper extension and the `specPattern` is correctly defined](/app/component-testing/component-framework-configuration#Spec-Pattern-for-Component-Tests).
+
+### <Icon name="angle-right" /> Can I mount Storybook stories in Vue component tests?
+
+Yes. Storybook's portable stories API turns each story in a CSF file into a
+component, and `cy.mount()` mounts that component like any other, so Cypress
+needs no plugin. `composeStories()` from `@storybook/vue3` applies each story's
+args and decorators:
+
+```js title="src/components/Button.cy.js"
+import { composeStories } from '@storybook/vue3'
+import * as stories from './Button.stories'
+
+const { Primary } = composeStories(stories)
+
+it('renders the Primary story', () => {
+  cy.mount(Primary)
+  cy.get('button').should('have.text', 'Primary')
+})
+```
+
+To apply your `.storybook/preview` settings, compile `template` decorators, and
+spy on events from a decorated story, see
+[Mount Storybook stories in Vue component tests](/app/component-testing/vue/examples#Mount-Storybook-stories-in-Vue-component-tests).
 
 ### <Icon name="angle-right" /> How do I fix ESLint errors for things like using the global Cypress objects?
 
