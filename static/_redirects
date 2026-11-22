@@ -135,6 +135,8 @@
 /zh-cn/guides/references/configuration /app/references/configuration 301
 /guides/references/legacy-configuration /app/references/configuration 301
 /guides/overview/why-cypress /app/get-started/why-cypress 301
+/app/overview/why-cypress /app/get-started/why-cypress 301
+/app/overview/why-cypress.html /app/get-started/why-cypress 301
 /guides/overview/key-differences /app/get-started/why-cypress 301
 /guides/getting-started/installing-cypress /app/get-started/install-cypress 301
 /guides/getting-started/opening-the-app /app/get-started/open-the-app 301
