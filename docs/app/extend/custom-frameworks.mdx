@@ -33,9 +33,9 @@ frameworks.
 
 There are a few requirements for authoring a Framework Definition.
 
-- [Definition File](#Framework-Definition) (we recommending naming this
+- [Definition File](#Framework-Definition) (we recommend naming this
   `definition.cjs`)
-- [Mount Adapter](#Mount-Adapter) (we recommending naming this `index.mjs`)
+- [Mount Adapter](#Mount-Adapter) (we recommend naming this `index.mjs`)
 - A [`package.json`](#packagejson) with the correct conventions
 
 The Definition is required when users configure Component Testing for the first
@@ -46,11 +46,12 @@ To simplify this process, we recommend starting development using
 
 ## Framework Definition
 
-Below is a minimal Framework Definition. `defineFrameworkDefinition`
-is purely for type safety, similar to `defineConfig` in `cypress.config`.
+Below is a minimal Framework Definition. `defineComponentFramework`, exported
+from the `cypress` package, is purely for type safety, similar to
+`defineConfig` in `cypress.config`. The function returns the object you pass in.
 
-There is one important convention; the `type` key in `defineFrameworkDefinition`
-should match the name of your package on npm, and should use one of the
+There is one important convention: the `type` key in `defineComponentFramework`
+must match the name of your package on npm, and must use one of the
 following naming conventions:
 
 - `cypress-ct-*`
@@ -73,11 +74,14 @@ recommend naming this `definition.cjs`. In our
 [official template](https://github.com/cypress-io/cypress-ct-definition-template),
 this file is at the root level of the package.
 
-```js
-const { defineFrameworkDefinition } = require('cypress')
+```js title="definition.cjs"
+const { defineComponentFramework } = require('cypress')
 
+/**
+ * @type {Cypress.CypressComponentDependency}
+ */
 const solidDep = {
-  // Unique, semantic identifier.
+  // Identifier that is unique within this definition.
   type: 'solid-js',
 
   // Human readable name.
@@ -97,12 +101,12 @@ const solidDep = {
   description:
     'A declarative, efficient, and flexible JavaScript library for building user interfaces.',
 
-  // Minimum supported version.
+  // Semver range of supported versions, checked with `semver.satisfies()`.
   minVersion: '^1.6.0',
 }
 
 /**
- * Similar to above. Create an smooth, seamless setup experience
+ * Similar to above. Create a smooth, seamless setup experience
  * by ensuring the user has all the necessary dependencies.
  * @type {Cypress.CypressComponentDependency}
  */
@@ -118,7 +122,7 @@ const solidVitePlugin = {
 /**
  * The actual definition.
  */
-module.exports = defineFrameworkDefinition({
+module.exports = defineComponentFramework({
   /**
    * This should match the `npm` package name.
    * The convention required to ensure your Definition is processed
@@ -144,12 +148,13 @@ module.exports = defineFrameworkDefinition({
    * based on the user's project.
    * In this example, if a module matching `solidDep`
    * is found in the user's project,
-   * Solid.js will automatically be selected when configuring Component Testing.
+   * Solid.js is automatically selected when configuring Component Testing.
    */
   detectors: [solidDep],
 
   /**
-   * Supply a set of dependencies a project should have to use this Framework Definition. The user will be prompted to install them if they are not found.
+   * Supply a set of dependencies a project should have to use this Framework Definition.
+   * The user is prompted to install any that are missing or outside their `minVersion` range.
    * Optionally, supply different dependencies based on the chosen bundler.
    */
   dependencies: (bundler) => {
@@ -161,7 +166,7 @@ module.exports = defineFrameworkDefinition({
    * Optional, but good for branding your Framework Definition.
    */
   icon: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 166 155.3"><path d="M163 35S110-4 69 5l-3 1c-6 2-11 5-14 9l-2 3-15 26 26 5c11 7 25 10 38 7l46 9 18-30z" fill="#76b3e1"/><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="27.5" y1="3" x2="152" y2="63.5"><stop offset=".1" stop-color="#76b3e1"/><stop offset=".3" stop-color="#dcf2fd"/><stop offset="1" stop-color="#76b3e1"/></linearGradient><path d="M163 35S110-4 69 5l-3 1c-6 2-11 5-14 9l-2 3-15 26 26 5c11 7 25 10 38 7l46 9 18-30z" opacity=".3" fill="url(#a)"/><path d="M52 35l-4 1c-17 5-22 21-13 35 10 13 31 20 48 15l62-21S92 26 52 35z" fill="#518ac8"/><linearGradient id="b" gradientUnits="userSpaceOnUse" x1="95.8" y1="32.6" x2="74" y2="105.2"><stop offset="0" stop-color="#76b3e1"/><stop offset=".5" stop-color="#4377bb"/><stop offset="1" stop-color="#1f3b77"/></linearGradient><path d="M52 35l-4 1c-17 5-22 21npm install https://cdn.cypress.io/beta/npm/12.6.0/darwin-arm64/feature/ct-public-api-ab820f062d313fbef51665bdd1d883c69d89b3be/cypress.tgz-13 35 10 13 31 20 48 15l62-21S92 26 52 35z" opacity=".3" fill="url(#b)"/><linearGradient id="c" gradientUnits="userSpaceOnUse" x1="18.4" y1="64.2" x2="144.3" y2="149.8"><stop offset="0" stop-color="#315aa9"/><stop offset=".5" stop-color="#518ac8"/><stop offset="1" stop-color="#315aa9"/></linearGradient><path d="M134 80a45 45 0 00-48-15L24 85 4 120l112 19 20-36c4-7 3-15-2-23z" fill="url(#c)"/><linearGradient id="d" gradientUnits="userSpaceOnUse" x1="75.2" y1="74.5" x2="24.4" y2="260.8"><stop offset="0" stop-color="#4377bb"/><stop offset=".5" stop-color="#1a336b"/><stop offset="1" stop-color="#1a336b"/></linearGradient><path d="M114 115a45 45 0 00-48-15L4 120s53 40 94 30l3-1c17-5 23-21 13-34z" fill="url(#d)"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 166 155.3"><path d="M163 35S110-4 69 5l-3 1c-6 2-11 5-14 9l-2 3-15 26 26 5c11 7 25 10 38 7l46 9 18-30z" fill="#76b3e1"/><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="27.5" y1="3" x2="152" y2="63.5"><stop offset=".1" stop-color="#76b3e1"/><stop offset=".3" stop-color="#dcf2fd"/><stop offset="1" stop-color="#76b3e1"/></linearGradient><path d="M163 35S110-4 69 5l-3 1c-6 2-11 5-14 9l-2 3-15 26 26 5c11 7 25 10 38 7l46 9 18-30z" opacity=".3" fill="url(#a)"/><path d="M52 35l-4 1c-17 5-22 21-13 35 10 13 31 20 48 15l62-21S92 26 52 35z" fill="#518ac8"/><linearGradient id="b" gradientUnits="userSpaceOnUse" x1="95.8" y1="32.6" x2="74" y2="105.2"><stop offset="0" stop-color="#76b3e1"/><stop offset=".5" stop-color="#4377bb"/><stop offset="1" stop-color="#1f3b77"/></linearGradient><path d="M52 35l-4 1c-17 5-22 21-13 35 10 13 31 20 48 15l62-21S92 26 52 35z" opacity=".3" fill="url(#b)"/><linearGradient id="c" gradientUnits="userSpaceOnUse" x1="18.4" y1="64.2" x2="144.3" y2="149.8"><stop offset="0" stop-color="#315aa9"/><stop offset=".5" stop-color="#518ac8"/><stop offset="1" stop-color="#315aa9"/></linearGradient><path d="M134 80a45 45 0 00-48-15L24 85 4 120l112 19 20-36c4-7 3-15-2-23z" fill="url(#c)"/><linearGradient id="d" gradientUnits="userSpaceOnUse" x1="75.2" y1="74.5" x2="24.4" y2="260.8"><stop offset="0" stop-color="#4377bb"/><stop offset=".5" stop-color="#1a336b"/><stop offset="1" stop-color="#1a336b"/></linearGradient><path d="M114 115a45 45 0 00-48-15L4 120s53 40 94 30l3-1c17-5 23-21 13-34z" fill="url(#d)"/></svg>
   `,
 })
 ```
@@ -182,6 +187,157 @@ installed them all, so Cypress is prompting us to do so:
   alt="required dependencies"
 />
 
+### Fields in a third-party Framework Definition
+
+`defineComponentFramework` accepts these fields. Cypress validates the
+definition when the setup wizard loads, and a package that fails validation
+appears in the wizard as a warning instead of a framework option.
+
+| Field               | Required | Description                                                                                                                                                                                                                                      |
+| ------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `dependencies`      | Yes      | A function that receives the bundler the user chose, `'vite'` or `'webpack'`, and returns an array of [dependencies](#Fields-in-a-Framework-Definition-dependency). See [bundler dependencies](#Return-different-dependencies-for-each-bundler). |
+| `detectors`         | Yes      | An array of dependencies that identify a project using your framework. The setup wizard preselects your definition when every detector is installed at a version inside its `minVersion` range.                                                  |
+| `icon`              | No       | A raw SVG string that the setup wizard shows with your framework's name.                                                                                                                                                                         |
+| `name`              | Yes      | The label the setup wizard shows for your framework.                                                                                                                                                                                             |
+| `supportedBundlers` | Yes      | The bundlers your definition works with: `'vite'`, `'webpack'`, or both.                                                                                                                                                                         |
+| `type`              | Yes      | Your package's name on npm, starting with `cypress-ct-` or `@org/cypress-ct-`.                                                                                                                                                                   |
+
+Cypress uses the definition's `type` in three places, so `type` must be the
+exact name of your package:
+
+- The setup wizard validates the prefix. A definition whose `type` doesn't start
+  with `cypress-ct-` or `@org/cypress-ct-` isn't offered as an option.
+- The setup wizard writes `type` to `component.devServer.framework` in the
+  user's `cypress.config` file. Each time Component Testing opens, Cypress finds
+  your definition by that value and checks the project's dependencies against it.
+- The generated support file imports `mount` from `type`, as shown in
+  [Mount Adapter](#Mount-Adapter).
+
+### Fields in a Framework Definition dependency
+
+Each entry in `detectors` and in the array `dependencies` returns is a
+`Cypress.CypressComponentDependency` object with these fields. All of them are
+required strings.
+
+| Field         | Description                                                                                                                                                                                                                                                 |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `description` | Text the setup wizard shows with the dependency. The package's own description on npm is a good choice.                                                                                                                                                     |
+| `installer`   | The package specifier in the install command the setup wizard generates. Add a version or tag when you need one, such as `solid-js@next`.                                                                                                                   |
+| `minVersion`  | A semver range of supported versions, such as `>=1.6.0`. See [writing `minVersion`](#Write-a-dependencys-minVersion-as-a-semver-range).                                                                                                                     |
+| `name`        | The dependency's name as the setup wizard shows it.                                                                                                                                                                                                         |
+| `package`     | The package name on npm. Cypress resolves it from the user's project to read the installed version.                                                                                                                                                         |
+| `type`        | An identifier that is unique within your definition, such as `solid-js`. Cypress tells dependencies apart by `type` when it reports mismatched ones, so two entries with the same `type` appear as one. Cypress uses `vite` and `webpack` for the bundlers. |
+
+### Write a dependency's `minVersion` as a semver range
+
+Despite its name, `minVersion` is a range rather than a minimum. Cypress checks
+the installed version with
+[`semver.satisfies()`](https://github.com/npm/node-semver#usage), using the same
+range syntax as the `dependencies` in a `package.json` file. An exact version
+such as `'2.0.0'` accepts only `2.0.0`, so a user on `2.1.0` fails the check.
+
+| `minVersion`           | Accepts                               | Rejects           |
+| ---------------------- | ------------------------------------- | ----------------- |
+| `'2.0.0'`              | `2.0.0` only                          | `2.0.1`, `2.1.0`  |
+| `'^2.0.0'`             | `2.0.0` up to, not including, `3.0.0` | `3.0.0`           |
+| `'^0.20.0'`            | `0.20.x` only                         | `0.21.0`, `1.0.0` |
+| `'>=2.0.0'`            | `2.0.0` and every later version       | `1.9.0`           |
+| `'^1.6.0 \|\| ^2.0.0'` | `1.6.0` up to, not including, `3.0.0` | `1.5.0`, `3.0.0`  |
+
+To set a true minimum, use `>=`. A caret range on a package below `1.0.0`
+matches a single minor version, so `^0.20.0` rejects `0.21.0`. For a framework
+that is still in `0.x`, `>=0.20.0` keeps working as new releases come out.
+Prerelease versions count, so `>=2.0.0` accepts `2.1.0-beta.1`.
+
+A dependency outside its range is treated the same as a missing one:
+
+- A detector outside its range keeps the setup wizard from preselecting your
+  definition.
+- The setup wizard asks the user to install the dependency.
+- Each time Component Testing opens, Cypress warns that the project's
+  dependencies don't match the configured framework.
+
+### Return different dependencies for each bundler
+
+The `dependencies` function receives the bundler the user chose in the setup
+wizard, so a definition that supports both Vite and webpack can ask for
+different packages with each one. Cypress calls the function synchronously, so
+return the array itself rather than a promise. Cypress adds the chosen bundler
+to the list for you, so leave `vite` and `webpack` out.
+
+This definition asks for `vite-plugin-solid` with Vite and for Babel's Solid
+preset and loader with webpack:
+
+```js title="definition.cjs"
+const { defineComponentFramework } = require('cypress')
+
+/**
+ * @type {Cypress.CypressComponentDependency}
+ */
+const solidDep = {
+  type: 'solid-js',
+  name: 'Solid',
+  package: 'solid-js',
+  installer: 'solid-js',
+  description:
+    'A declarative, efficient, and flexible JavaScript library for building user interfaces.',
+  minVersion: '>=1.6.0',
+}
+
+/**
+ * @type {Cypress.CypressComponentDependency}
+ */
+const solidVitePlugin = {
+  type: 'solid-js-vite-plugin',
+  name: 'Vite Plugin Solid',
+  package: 'vite-plugin-solid',
+  installer: 'vite-plugin-solid',
+  description: 'A simple integration to run solid-js with vite',
+  minVersion: '>=2.0.0',
+}
+
+/**
+ * @type {Cypress.CypressComponentDependency}
+ */
+const babelPresetSolid = {
+  type: 'babel-preset-solid',
+  name: 'Babel Preset Solid',
+  package: 'babel-preset-solid',
+  installer: 'babel-preset-solid',
+  description: 'Babel preset to transform JSX for Solid.js',
+  minVersion: '>=1.6.0',
+}
+
+/**
+ * @type {Cypress.CypressComponentDependency}
+ */
+const babelLoader = {
+  type: 'babel-loader',
+  name: 'Babel Loader',
+  package: 'babel-loader',
+  installer: 'babel-loader',
+  description: 'babel module loader for webpack',
+  minVersion: '>=9.0.0',
+}
+
+module.exports = defineComponentFramework({
+  type: '@lmiller1990/cypress-ct-solid-js',
+  name: 'Solid.js',
+  supportedBundlers: ['vite', 'webpack'],
+  detectors: [solidDep],
+  dependencies: (bundler) => {
+    if (bundler === 'vite') {
+      return [solidDep, solidVitePlugin]
+    }
+
+    return [solidDep, babelPresetSolid, babelLoader]
+  },
+})
+```
+
+With webpack selected, the setup wizard checks for `solid-js`,
+`babel-preset-solid`, `babel-loader`, and `webpack`.
+
 ## Mount Adapter
 
 The second part of defining a Framework Definition is the Mount Adapter. The Mount Adapter is
@@ -191,7 +347,7 @@ By default, Cypress looks for the Mount Adapter as a `mount` function that is a 
 export** from the package. Write the `mount` function in an `index.mjs` file. This
 example is for a [Solid.js](https://www.solidjs.com/) mount adapter:
 
-```js
+```js title="index.mjs"
 import { getContainerEl, setupHooks } from '@cypress/mount-utils'
 import { render } from 'solid-js/web'
 
@@ -262,6 +418,19 @@ Cypress.Commands.add('mount', mount)
 </TabItem>
 </Tabs>
 
+The import path is the definition's
+[`type`](#Fields-in-a-third-party-Framework-Definition).
+
+### Add page-level setup to the component index file
+
+The setup wizard also creates `cypress/support/component-index.html`, the page
+every component mounts into (the
+[`indexHtmlFile`](/app/references/configuration#component) option). Setup that
+has to be on the page before a test runs, such as a framework's loader script,
+belongs in that file rather than in `mount`, which runs inside each test. The
+file is part of the user's project, so describe the change your framework
+needs in your package's README.
+
 ## package.json
 
 The final thing you need is a correctly configured `package.json`. We created this
@@ -276,7 +445,7 @@ There are two fields of note:
   Framework Definition. The `node` entry points to the Definition file, and the
   `default` entry points to the Mount Adapter:
 
-```json {2,5-8}
+```json title="package.json" {2,5-8}
 {
   "name": "@lmiller1990/cypress-ct-solid-js",
   "version": "0.0.4",
@@ -285,23 +454,30 @@ There are two fields of note:
     "node": "./definition.cjs",
     "default": "./index.mjs"
   },
-  "files": [
-    "package.json",
-    "definition.cjs",
-    "index.mjs"
-  ],
+  "files": ["package.json", "definition.cjs", "index.mjs"],
   "dependencies": {
-    "@cypress/mount-utils": "^4.0.0"
+    "@cypress/mount-utils": "^5.0.0"
   },
   "devDependencies": {
     "solid-js": "^1.6.0"
   },
   "peerDependencies": {
-    "solid-js": "^1.6.0"
-    "cypress": "^12.7.0"
+    "solid-js": "^1.6.0",
+    "cypress": ">=12.7.0"
   }
 }
 ```
+
+Cypress and the user's dev server load the two entries differently, which is
+why the package ships two module formats:
+
+- Cypress resolves your package from its Node.js process and loads the `node`
+  entry with `require()`, so the Definition file must be CommonJS. If you
+  compile it from TypeScript, either `module.exports =` or a compiled
+  `export default` works, since Cypress reads the module's `default` export
+  when it has one.
+- The user's dev server bundles the `default` entry into the browser, so the
+  Mount Adapter is an ES module like the rest of their component test code.
 
 ## Testing
 
