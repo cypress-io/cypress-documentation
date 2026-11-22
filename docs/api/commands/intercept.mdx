@@ -751,13 +751,29 @@ You can add, modify, or delete a header to all outgoing requests using a
 `beforeEach()` in the
 [supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
-```js
+```js title="cypress/support/e2e.js"
 beforeEach(() => {
   cy.intercept(
     { url: 'http://localhost:3001/**', middleware: true },
     // Delete 'if-none-match' header from all outgoing requests
     (req) => delete req.headers['if-none-match']
   )
+})
+```
+
+To send a header with every page request, such as a header your server checks
+before skipping an interstitial page, set the header in a `middleware: true`
+intercept. The middleware runs on every request the browser sends to a matching
+URL, so the header goes out with `cy.visit()`, `cy.reload()`, link clicks, and
+form submissions. `cy.clearCookies()` leaves the header in place. The
+[`headers` option of `cy.visit()`](/api/commands/visit#Arguments) covers only
+the initial request of that visit.
+
+```js title="cypress/support/e2e.js"
+beforeEach(() => {
+  cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
+    req.headers['x-bypass-interstitial'] = '1'
+  })
 })
 ```
 
