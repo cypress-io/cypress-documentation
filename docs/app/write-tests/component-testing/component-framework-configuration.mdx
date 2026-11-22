@@ -542,10 +542,10 @@ these components skips the bundler and serves your project files as they are:
 - Every other path under `devServerPublicPathRoute` returns the matching file
   from your project root, unchanged.
 
-The dev server below uses only Node's built-in `http` module, so it adds no
-dependencies to your project:
+The dev server below uses only Node's built-in `http`, `fs`, and `path`
+modules, so it adds no dependencies to your project:
 
-```ts title="cypress/dev-server.ts" copyTsToJs
+```ts copyTsToJs title="cypress/dev-server.ts"
 import { createServer } from 'node:http'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -556,6 +556,9 @@ const contentTypes: Record<string, string> = {
   '.js': 'text/javascript',
   '.json': 'application/json',
   '.mjs': 'text/javascript',
+  '.png': 'image/png',
+  '.svg': 'image/svg+xml',
+  '.woff2': 'font/woff2',
 }
 
 // Runs in the spec iframe and loads the support file and spec as native ES modules.
@@ -575,18 +578,18 @@ const clientScript = `
   CypressInstance.action('app:window:before:load', window)
 `
 
-export function startDevServer({
+export const startDevServer = ({
   cypressConfig,
-}: Cypress.DevServerConfig): Promise<Cypress.ResolvedDevServerConfig> {
+}: Cypress.DevServerConfig): Promise<Cypress.ResolvedDevServerConfig> => {
   const { devServerPublicPathRoute, indexHtmlFile, projectRoot } = cypressConfig
 
   const server = createServer(async (req, res) => {
-    const { pathname } = new URL(req.url ?? '/', 'http://localhost')
-    const requestPath = decodeURIComponent(
-      pathname.slice(devServerPublicPathRoute.length)
-    )
-
     try {
+      const { pathname } = new URL(req.url ?? '/', 'http://localhost')
+      const requestPath = decodeURIComponent(
+        pathname.slice(devServerPublicPathRoute.length)
+      )
+
       if (requestPath === '/index.html') {
         const html = await readFile(
           path.join(projectRoot, indexHtmlFile),
@@ -656,7 +659,8 @@ your component support file that renders an element into the
 
 ```js title="cypress/support/component.js"
 Cypress.Commands.add('mount', (element) => {
-  cy.get('[data-cy-root]').invoke('empty').invoke('append', element)
+  cy.get('[data-cy-root]').invoke('empty')
+  cy.get('[data-cy-root]').invoke('append', element)
   return cy.wrap(element)
 })
 ```
@@ -698,6 +702,11 @@ the browser can resolve, such as `./counter-button.js`. Bare package imports
 like `import { html } from 'lit'` need an
 [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap)
 in your index file or a bundler.
+
+The server doesn't watch your files. To rerun the open spec when you save a
+file during `cypress open`, watch your source files and emit
+`dev-server:compile:success` on `devServerEvents` when one changes, as
+described in [Fully Custom Dev Server](#Fully-Custom-Dev-Server).
 
 [Community framework definitions](/app/component-testing/custom-frameworks)
 still require Vite or Webpack, since they plug into one of the built-in dev
