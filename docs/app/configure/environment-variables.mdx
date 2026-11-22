@@ -106,6 +106,10 @@ Set environment variables in your Cypress configuration file under the `env` key
 
 Create a `cypress.env.json` file in your project root. Values here override conflicting environment variables in your Cypress configuration.
 
+`cypress.env.json` sets only `cy.env()` values. A `baseUrl` key in the file
+doesn't change the `baseUrl` configuration option. See
+[Configuration overrides vs. cy.env() values](#Configuration-overrides-vs-cyenv-values).
+
 ```json
 {
   "host": "veronica.dev.local",
@@ -128,7 +132,14 @@ export CYPRESS_HOST=laura.dev.local
 export cypress_api_server=http://localhost:8888/api/v1/
 ```
 
-Cypress automatically removes the leading `CYPRESS_` or `cypress_` prefix and normalizes the name.
+Cypress removes the leading `CYPRESS_` or `cypress_` prefix and keeps the rest
+of the name exactly as written, so the variables above are read as
+`cy.env(['HOST'])` and `cy.env(['api_server'])`.
+
+A `CYPRESS_*` variable named after a configuration option, such as
+`CYPRESS_BASE_URL`, sets that option instead and isn't readable with
+`cy.env()`. See
+[CYPRESS\_\* variables named after configuration options](#CYPRESS_-variables-named-after-configuration-options).
 
 :::danger
 
@@ -169,6 +180,11 @@ cypress run --env credentials='{"apiKey":"secret-key-12345","auth":{"user":"jane
 See the [`--env`](/app/references/command-line#cypress-run-env-lt-env-gt) command
 line reference for more details.
 
+Like `cypress.env.json`, `--env` sets only `cy.env()` values. To change a
+configuration option such as `baseUrl` from the command line, use
+[`--config`](/app/references/command-line#cypress-run-config-lt-config-gt)
+instead.
+
 ### 5. setupNodeEvents
 
 Set environment variables dynamically in the `setupNodeEvents` function:
@@ -187,6 +203,82 @@ export default defineConfig({
 ```
 
 :::
+
+## Configuration overrides vs. cy.env() values
+
+Setting `baseUrl` in `cypress.env.json` or with `--env baseUrl=...` doesn't
+change where [`cy.visit()`](/api/commands/visit) goes. Those two methods only
+set values for `cy.env()`. Configuration options such as `baseUrl`,
+`viewportWidth`, or `defaultCommandTimeout` change only through the methods
+that reach the Cypress configuration:
+
+| Method                                                                           | Changes configuration options | Sets `cy.env()` values |
+| -------------------------------------------------------------------------------- | ----------------------------- | ---------------------- |
+| `--config` CLI flag                                                              | Yes                           | No                     |
+| `--env` CLI flag                                                                 | No                            | Yes                    |
+| Cypress configuration file                                                       | Yes                           | Yes, in the `env` key  |
+| `cypress.env.json`                                                               | No                            | Yes                    |
+| `CYPRESS_*` variable named after a configuration option, like `CYPRESS_BASE_URL` | Yes                           | No                     |
+| Any other `CYPRESS_*` variable, like `CYPRESS_HOST`                              | No                            | Yes                    |
+| `setupNodeEvents`                                                                | Yes                           | Yes, in `config.env`   |
+
+Whatever `setupNodeEvents` returns takes precedence over the other methods in
+this table.
+
+### CYPRESS\_\* variables named after configuration options
+
+Cypress checks every `CYPRESS_*` variable against the names of its
+configuration options. A variable matches when the name after the prefix is
+the option name as written (`CYPRESS_baseUrl`) or the option name in upper
+snake case (`CYPRESS_BASE_URL`). A matching variable sets that configuration
+option, and Cypress removes the variable from the values `cy.env()` reads:
+
+```shell
+export CYPRESS_BASE_URL=http://localhost:8080
+```
+
+```javascript title="cypress/e2e/spec.cy.js"
+it('reads baseUrl from configuration, not from cy.env()', () => {
+  expect(Cypress.config('baseUrl')).to.eq('http://localhost:8080')
+
+  cy.env(['BASE_URL', 'baseUrl']).then(({ BASE_URL, baseUrl }) => {
+    expect(BASE_URL).to.be.undefined
+    expect(baseUrl).to.be.undefined
+  })
+})
+```
+
+To use the same value as a configuration option and in `cy.env()`, set it
+under a name that isn't a configuration option, such as `CYPRESS_APP_URL`, and
+read that name with `cy.env()`.
+
+### Override baseUrl locally without committing it
+
+To point your own runs at a different server while the committed configuration
+keeps its default, read a variable of your own in the configuration file:
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+  },
+}
+```
+
+:::
+
+```shell
+BASE_URL=http://localhost:8080 npx cypress open
+```
+
+The configuration file reads `BASE_URL` each time Cypress loads it, so a value
+from a git-ignored `.env` file that you load with a package such as `dotenv`
+works the same way. Cypress reads `CYPRESS_*` variables from the environment
+it starts in, before it loads the configuration file, so setting
+`process.env.CYPRESS_BASE_URL` from inside the configuration file has no
+effect. Read a variable of your own instead, as shown above.
 
 ## Set exposed configuration
 
