@@ -777,14 +777,20 @@ would match.
 
 Cypress skips files inside `node_modules` when it looks for specs, so you don't
 need to add `**/node_modules/**` to `excludeSpecPattern`. Cypress searches
-`node_modules` only when one of the following is true:
+`node_modules` for specs only when one of the following is true:
 
-- A pattern in `specPattern` contains `node_modules`.
-- The `supportFile` path contains `node_modules` (for finding the support file).
+- A pattern in the configured `specPattern` contains `node_modules`. A
+  [`--spec`](/app/references/command-line#cypress-run-spec-lt-spec-gt) value
+  that points into `node_modules` isn't enough on its own, because `--spec` only
+  narrows the specs that `specPattern` already matches.
 - The project itself is inside a `node_modules` folder.
 
-`excludeSpecPattern` still applies in each case. For example, to run specs
-shipped in a package installed in your project:
+`excludeSpecPattern` still filters the specs Cypress finds there. Cypress finds
+a support file inside `node_modules` when the `supportFile` path contains
+`node_modules` or the project is inside a `node_modules` folder.
+`excludeSpecPattern` never filters the support file.
+
+For example, to run specs shipped in a package installed in your project:
 
 :::cypress-config-example
 
@@ -799,12 +805,18 @@ shipped in a package installed in your project:
 
 :::
 
+While `cypress open` is running, Cypress doesn't watch `node_modules` for
+changes. A spec added, removed, or renamed there, such as by reinstalling the
+package, shows up in the spec list after you restart Cypress.
+
 :::caution
 
 The default end-to-end [preprocessor](/api/node-events/preprocessors-api)
-doesn't compile TypeScript or run Babel on files inside `node_modules`, so a
-`.ts` spec there fails to compile. Publish the package's specs and support file
-as JavaScript, or configure your own preprocessor to compile them.
+doesn't compile TypeScript or run Babel on any file whose path contains
+`node_modules`. A TypeScript or JSX spec or support file fails to compile when
+it ships in a package, and so does every TypeScript or JSX file in a project
+that sits inside a `node_modules` folder. Publish the package's specs and support
+file as plain JavaScript, or configure your own preprocessor to compile them.
 
 :::
 
