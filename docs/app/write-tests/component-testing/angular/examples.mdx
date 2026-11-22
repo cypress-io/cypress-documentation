@@ -1,6 +1,6 @@
 ---
 title: 'Angular examples'
-description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, and customize `cy.mount()` for Angular and the Angular Router.
+description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals and i18n translations, and customize `cy.mount()` for Angular and the Angular Router.
 sidebar_label: Angular examples
 sidebar_position: 20
 slug: /app/component-testing/angular/examples
@@ -351,6 +351,140 @@ cy.get('[data-cy="test-component-count-incr"]').click()
 
 cy.get('@countChange').should('have.been.called')
 ```
+
+## Test Angular i18n translations in component tests
+
+A component test can check the text a reader sees in each language, not only
+the source strings in your templates. Cypress runs Angular's runtime
+translation from `@angular/localize`: the test loads a map of translations,
+mounts the component, and asserts on the translated text.
+
+:::info
+Cypress compiles component tests just in time and skips Angular's build-time
+localization. The `i18n` locales and the `localize` option in `angular.json`
+don't inline translations into a component test, so a mounted component renders
+its source text until the test loads translations at runtime.
+:::
+
+### Set up `$localize` for Angular component tests
+
+If the app doesn't use `@angular/localize` yet, add the package:
+
+<PackageManagerTabs run="ng add @angular/localize" />
+
+Then import `@angular/localize/init` in the component support file, and clear
+the loaded translations after each test:
+
+```ts title="cypress/support/component.ts"
+import '@angular/localize/init'
+import { clearTranslations } from '@angular/localize'
+
+afterEach(() => {
+  clearTranslations()
+})
+```
+
+The import defines the global `$localize` function and its types. Without the
+import, the build reports `Cannot find name '$localize'` for a component that
+calls `$localize`, even after `ng add`, because Cypress replaces the `types`
+list from the app's `tsconfig.app.json` when it builds component tests.
+`clearTranslations()` restores the source text, so the translations one test
+loads don't carry over into the next test.
+
+### Create Angular translation files for component tests
+
+`loadTranslations()` takes an object that maps each message ID to its
+translated text. Extract the app's messages as JSON to get those IDs:
+
+<PackageManagerTabs run="ng extract-i18n --format json --output-path src/locale" />
+
+The command writes the source text to `src/locale/messages.json`. Copy that file
+for each language and translate the values:
+
+```json title="src/locale/messages.fr.json"
+{
+  "locale": "fr",
+  "translations": {
+    "2470120160871425761": "Bienvenue dans la boutique",
+    "7488886800994603769": "Articles dans votre panier : {$count}"
+  }
+}
+```
+
+Angular writes XLIFF (`.xlf`) by default, and Cypress doesn't read XLIFF files
+in component tests. Convert XLIFF translations to JSON, or parse them into an
+object of message IDs and translated text yourself, before passing them to
+`loadTranslations()`.
+
+### Assert translated text in Angular component tests
+
+The component below marks its heading with the `i18n` attribute and builds its
+cart label with `$localize`:
+
+```ts title="src/app/greeting/greeting.ts"
+import { Component, input } from '@angular/core'
+
+@Component({
+  selector: 'app-greeting',
+  template: `
+    <h1 data-cy="title" i18n>Welcome to the store</h1>
+    <p data-cy="cart">{{ cartLabel() }}</p>
+  `,
+})
+export class Greeting {
+  readonly items = input(0)
+
+  cartLabel() {
+    return $localize`Items in your cart: ${this.items()}:count:`
+  }
+}
+```
+
+Each test reads a translation file with [`cy.readFile()`](/api/commands/readfile),
+passes its `translations` to `loadTranslations()`, and then mounts the
+component. A German file, `src/locale/messages.de.json`, has the same shape as
+the French one:
+
+```ts title="src/app/greeting/greeting.cy.ts"
+import { loadTranslations } from '@angular/localize'
+import { Greeting } from './greeting'
+
+describe('Greeting', () => {
+  it('renders French', () => {
+    cy.readFile('src/locale/messages.fr.json').then(({ translations }) => {
+      loadTranslations(translations)
+    })
+    cy.mount(Greeting, { componentProperties: { items: 2 } })
+
+    cy.get('[data-cy=title]').should('have.text', 'Bienvenue dans la boutique')
+    cy.get('[data-cy=cart]').should(
+      'have.text',
+      'Articles dans votre panier : 2'
+    )
+  })
+
+  it('renders German', () => {
+    cy.readFile('src/locale/messages.de.json').then(({ translations }) => {
+      loadTranslations(translations)
+    })
+    cy.mount(Greeting, { componentProperties: { items: 2 } })
+
+    cy.get('[data-cy=title]').should('have.text', 'Willkommen im Shop')
+    cy.get('[data-cy=cart]').should('have.text', 'Artikel im Warenkorb: 2')
+  })
+
+  it('renders the source text when no translations are loaded', () => {
+    cy.mount(Greeting, { componentProperties: { items: 2 } })
+
+    cy.get('[data-cy=title]').should('have.text', 'Welcome to the store')
+    cy.get('[data-cy=cart]').should('have.text', 'Items in your cart: 2')
+  })
+})
+```
+
+Load translations before `cy.mount()`. `$localize` translates each message as
+the component renders, so translations loaded after the mount don't update text
+the component already rendered.
 
 ## Testing Error States
 
