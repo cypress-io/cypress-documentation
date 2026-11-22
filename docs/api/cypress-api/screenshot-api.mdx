@@ -233,8 +233,8 @@ Keep these behaviors in mind:
 
 - Cypress takes failure screenshots only during `cypress run`, and only while
   `screenshotOnRunFailure` is `true`.
-- A failure in a `beforeEach` or `afterEach` hook produces a screenshot for the
-  test the hook ran for.
+- A failure in a `beforeEach` hook produces a screenshot for the test the hook
+  ran for.
 - With [test retries](/app/guides/test-retries), Cypress takes a screenshot and
   emits `test:after:run` for each failed attempt, so each attempt gets its own
   screenshot.
