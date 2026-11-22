@@ -190,6 +190,72 @@ on(
 
 :::
 
+### Resolve import map specifiers in spec files
+
+Import maps in your application work in Cypress the same way they work in the
+browser. When you visit a page with a `<script type="importmap">`, the page's
+modules resolve the bare specifiers the import map defines.
+
+Spec and support files don't load through that page. The preprocessor bundles
+them before they reach the browser, so an import map in your application's HTML
+doesn't apply to them. A spec that imports a specifier only the import map
+defines fails to compile with a "Module not found" error.
+
+To import the same modules in a spec, map each specifier again under
+`resolve.alias`. For example, this import map resolves `@app/format.js` in the
+application to `/src/format.js`:
+
+```html title="index.html"
+<script type="importmap">
+  {
+    "imports": {
+      "@app/": "/src/"
+    }
+  }
+</script>
+```
+
+The spec imports the same specifier:
+
+```js title="cypress/e2e/format.cy.js"
+import { formatPrice } from '@app/format.js'
+
+it('formats prices in dollars', () => {
+  expect(formatPrice(5)).to.equal('$5.00')
+})
+```
+
+The config maps `@app` to the `src` folder the import map points to:
+
+:::cypress-config-plugin-example
+
+```ts
+import path from 'path'
+import webpackPreprocessor from '@cypress/webpack-batteries-included-preprocessor'
+```
+
+```ts
+const webpackOptions = webpackPreprocessor.getFullWebpackOptions()
+
+webpackOptions.resolve.alias = {
+  '@app': path.resolve(__dirname, 'src'),
+}
+
+on(
+  'file:preprocessor',
+  webpackPreprocessor({
+    // Keeps TypeScript support. Leave it out if your project doesn't use TypeScript.
+    typescript: true,
+    webpackOptions,
+  })
+)
+```
+
+:::
+
+An import map's `/src/` is a URL path on your server, and the alias is a folder
+on disk. Point each alias at the folder your server serves for that URL path.
+
 :::info
 
 This page covers aliases in **end-to-end** spec and support files, which the
