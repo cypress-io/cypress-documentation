@@ -59,13 +59,13 @@ for your component to mount successfully, you can set them in the options
 (similar to setting them up in `ngModule` in a app):
 
 :::info
-Cypress adds a standalone component to the `imports` of the test module, so
-`providers`, and the providers that modules in `imports` contribute, reach a
-standalone component the same way they reach any other component. A standalone
-component's template uses only the components, directives, and pipes in its own
-`imports` array, so `declarations`, and the declarables that modules in
-`imports` export, don't apply to its template. Angular throws an error if a
-standalone component itself is listed in `declarations`.
+Cypress adds a standalone component to the test module's `imports`, so
+`providers` work with standalone components, including the providers of any
+module passed in `imports`. A standalone component's template uses only what
+its own `imports` array lists. Components, directives, and pipes from
+`declarations`, or exported by a module in `imports`, aren't available to that
+template, and Angular throws an error if the standalone component itself is in
+`declarations`.
 :::
 
 ```ts
@@ -509,7 +509,42 @@ Below is a sample mount command that provides the Router and navigates to an
 `initialUrl` from the options, much like `initialEntries` for React Router's
 `MemoryRouter`:
 
-```ts copyTsToJs title="cypress/support/component.ts"
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/component.js"
+import { provideRouter, Router } from '@angular/router'
+import { mount } from 'cypress/angular'
+
+function customMount(component, config = {}) {
+  const {
+    routes = [],
+    initialUrl = '/',
+    providers = [],
+    ...mountConfig
+  } = config
+
+  return mount(component, {
+    ...mountConfig,
+    // Providers from the test come last so they take precedence,
+    // such as a stub for ActivatedRoute
+    providers: [provideRouter(routes), ...providers],
+  }).then((response) => {
+    const router = response.fixture.debugElement.injector.get(Router)
+
+    return cy
+      .wrap(router.navigateByUrl(initialUrl), { log: false })
+      .then(() => response)
+  })
+}
+
+Cypress.Commands.add('mount', customMount)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress/support/component.ts"
 import { Type } from '@angular/core'
 import { provideRouter, Router, Routes } from '@angular/router'
 import { mount, MountConfig, MountResponse } from 'cypress/angular'
@@ -562,6 +597,9 @@ declare global {
 
 Cypress.Commands.add('mount', customMount)
 ```
+
+</TabItem>
+</Tabs>
 
 `router.navigateByUrl()` returns a promise, so the command wraps it with
 [`cy.wrap()`](/api/commands/wrap) to have Cypress wait for the navigation to
