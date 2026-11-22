@@ -263,7 +263,21 @@ arguments. To start later page loads from a different date, restore the current
 clock first, then create a new clock with the new `now` before you call
 [`cy.reload()`](/api/commands/reload) or [`cy.visit()`](/api/commands/visit).
 
-```javascript
+```html title="index.html"
+<!doctype html>
+<html>
+  <body>
+    <div id="today"></div>
+    <script>
+      document.getElementById('today').textContent = new Date()
+        .toISOString()
+        .slice(0, 10)
+    </script>
+  </body>
+</html>
+```
+
+```javascript title="cypress/e2e/date.cy.js"
 cy.clock(Date.UTC(2021, 2, 31))
 cy.visit('/index.html')
 cy.get('#today').should('have.text', '2021-03-31')
