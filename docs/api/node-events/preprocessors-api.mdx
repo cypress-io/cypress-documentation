@@ -31,32 +31,125 @@ The code contains comments that explain how it uses the preprocessor API.
 
 ## Defaults
 
-By default, Cypress comes packaged with the **webpack preprocessor** already
-installed.
+When your config doesn't register a `file:preprocessor` event, Cypress bundles
+end-to-end spec and support files with
+[`@cypress/webpack-batteries-included-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-batteries-included-preprocessor).
+Cypress ships its own copy of this preprocessor, so the default needs no
+install. The batteries-included preprocessor wraps the lower-level
+[`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
+and adds the loaders and webpack options for:
 
-The webpack preprocessor handles:
-
-- ES2015 and JSX via Babel
-- TypeScript
+- ES2015+ and JSX via Babel
+- TypeScript, when your project has `typescript` installed, including the
+  aliases under `compilerOptions.paths` in your `tsconfig.json`
+- The `buffer`, `os`, `path`, `process`, and `stream` Node built-ins
 - Watching and caching files
 
-:::info
+## Change the default webpack config for end-to-end specs
 
-Are you looking to change the **default options** for webpack?
+Most changes to how Cypress bundles end-to-end specs are small: an extra loader
+rule, a `resolve.alias`, or a `resolve.fallback` for a Node built-in. You can
+make that one change on top of the default webpack config instead of
+rebuilding the config by hand.
+
+Registering a `file:preprocessor` event replaces the default preprocessor
+entirely, so your handler has to provide everything the default did. The
+batteries-included preprocessor's `getFullWebpackOptions()` returns a fresh copy
+of the webpack options Cypress uses by default. Change that copy, then pass it
+back to the batteries-included preprocessor.
+
+:::caution
+
+Start from `@cypress/webpack-batteries-included-preprocessor`, not from
+`@cypress/webpack-preprocessor`'s `defaultOptions`. The lower-level defaults
+only run JavaScript through Babel, so starting from them drops TypeScript
+support and the Node built-ins the default config provides.
 
 :::
 
-If you already use webpack in your project, you can pass in your webpack config
-as shown in the
+### Install the batteries-included preprocessor packages
+
+Your project needs its own copy of `@cypress/webpack-batteries-included-preprocessor`
+and of `@cypress/webpack-preprocessor` version 8. The batteries-included
+package declares a peer dependency of `@cypress/webpack-preprocessor@^6.0.4`,
+but version 6 is missing a function the batteries-included package calls, so
+TypeScript specs fail to compile with:
+
+```text
+TypeError: webpack_preprocessor_1.default.getResolvedTypescriptVersion is not a function
+```
+
+npm refuses to install version 8 against that peer range, so with npm, add an
+`overrides` entry to your `package.json` first. The entry tells npm to give the
+batteries-included package the `@cypress/webpack-preprocessor` version your
+project installs:
+
+```json title="package.json"
+{
+  "overrides": {
+    "@cypress/webpack-batteries-included-preprocessor": {
+      "@cypress/webpack-preprocessor": "$@cypress/webpack-preprocessor"
+    }
+  }
+}
+```
+
+Then install both packages. Yarn, pnpm, and Bun install version 8 without an
+override and print a peer dependency warning.
+
+<PackageManagerTabs
+  install="@cypress/webpack-batteries-included-preprocessor @cypress/webpack-preprocessor@^8"
+  dev
+/>
+
+### Add a webpack rule to the default end-to-end config
+
+The following config adds a rule that imports `.txt` files as strings and keeps
+everything else from the default config:
+
+:::cypress-config-plugin-example
+
+```ts
+import webpackPreprocessor from '@cypress/webpack-batteries-included-preprocessor'
+```
+
+```ts
+const webpackOptions = webpackPreprocessor.getFullWebpackOptions()
+
+// Import .txt files as strings
+webpackOptions.module.rules.push({
+  test: /\.txt$/,
+  type: 'asset/source',
+})
+
+on(
+  'file:preprocessor',
+  webpackPreprocessor({
+    // Keeps TypeScript support. Leave it out if your project doesn't use TypeScript.
+    typescript: true,
+    webpackOptions,
+  })
+)
+```
+
+:::
+
+With `typescript: true`, the preprocessor resolves `typescript` from the
+directory of your `tsconfig.json`, the same way the default does. Without it, a
+TypeScript spec fails with "You are attempting to run a TypeScript file, but do
+not have TypeScript installed", even when TypeScript is installed.
+
+The same steps apply to the other common changes:
+
+- A `resolve.alias` entry, shown in
+  [Resolving import path aliases](#Resolving-import-path-aliases)
+- A `resolve.fallback` for a Node built-in the default doesn't provide, shown in
+  the
+  [Cypress 15 migration guide](/app/references/migration-guide#cypresswebpack-batteries-included-preprocessor-no-longer-shims-all-built-ins-provided-by-webpack-v4)
+
+If your project already has its own webpack config, pass that config to
+`@cypress/webpack-preprocessor` instead, as shown in the
 [webpack preprocessor options](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor#options).
-
-If you don't use webpack in your project or would like to keep the majority of
-the default options, you can
-[modify the default options](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor#modifying-default-options).
-Editing the options covers cases like:
-
-- Adding your own Babel plugins
-- Modifying options for TypeScript compilation
 
 ## Resolving import path aliases
 
@@ -65,52 +158,38 @@ If your spec or support files import modules through path aliases (for example
 files must know how to resolve the alias, otherwise the spec fails to compile
 with a "module not found" error.
 
-The default webpack preprocessor does **not** read aliases from your
-`package.json` `_moduleAliases` field, and it does **not** automatically apply
-the `compilerOptions.paths` from your `tsconfig.json` (those are a TypeScript
-type-checking feature, not a bundler feature). You need to tell the bundler about
-the aliases explicitly.
+In a project with TypeScript installed, the default preprocessor already
+resolves the aliases under `compilerOptions.paths` in your `tsconfig.json`, so
+those imports work with no preprocessor config.
 
-The most direct option is to add a `resolve.alias` entry to the webpack config
-you pass to the preprocessor:
+The default preprocessor doesn't read aliases from anywhere else, such as the
+`_moduleAliases` field in `package.json`, and doesn't read `tsconfig.json` in a
+project without TypeScript. For those aliases, install the packages from
+[Install the batteries-included preprocessor packages](#Install-the-batteries-included-preprocessor-packages)
+and add a `resolve.alias` entry to the default webpack options:
 
 :::cypress-config-plugin-example
 
-```javascript
-const webpackPreprocessor = require('@cypress/webpack-preprocessor')
-const path = require('path')
-
-const options = webpackPreprocessor.defaultOptions
-options.webpackOptions.resolve = {
-  ...options.webpackOptions.resolve,
-  alias: {
-    '@': path.resolve(__dirname, '../../src'),
-  },
-}
-
-on('file:preprocessor', webpackPreprocessor(options))
+```ts
+import path from 'path'
+import webpackPreprocessor from '@cypress/webpack-batteries-included-preprocessor'
 ```
 
-:::
+```ts
+const webpackOptions = webpackPreprocessor.getFullWebpackOptions()
 
-To reuse the aliases already declared under `compilerOptions.paths` in your
-`tsconfig.json` instead of restating them, add
-[`tsconfig-paths-webpack-plugin`](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin)
-to `resolve.plugins`:
-
-:::cypress-config-plugin-example
-
-```javascript
-const webpackPreprocessor = require('@cypress/webpack-preprocessor')
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
-
-const options = webpackPreprocessor.defaultOptions
-options.webpackOptions.resolve = {
-  ...options.webpackOptions.resolve,
-  plugins: [new TsconfigPathsPlugin()],
+webpackOptions.resolve.alias = {
+  '@': path.resolve(__dirname, 'src'),
 }
 
-on('file:preprocessor', webpackPreprocessor(options))
+on(
+  'file:preprocessor',
+  webpackPreprocessor({
+    // Keeps TypeScript support. Leave it out if your project doesn't use TypeScript.
+    typescript: true,
+    webpackOptions,
+  })
+)
 ```
 
 :::
