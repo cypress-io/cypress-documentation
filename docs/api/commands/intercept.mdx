@@ -407,12 +407,7 @@ alias the same request with a route of its own.
 
 Chaining a second `.as()` onto one route doesn't add an alias. `cy.intercept()`
 yields `null`, and `.as()` yields the same subject it was given, so the second
-`.as()` aliases `null`, and `cy.wait()` on that alias fails:
-
-```js
-// ❌ `@second` is an alias for `null`, not the route
-cy.intercept('GET', '/api/users').as('first').as('second')
-```
+`.as()` aliases `null`, and `cy.wait()` on that alias fails.
 
 Routes run in the order described in
 [Interception lifecycle](#Interception-lifecycle), and the first route that
