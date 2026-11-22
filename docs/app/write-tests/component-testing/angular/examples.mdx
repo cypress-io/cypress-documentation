@@ -116,6 +116,21 @@ The examples below test a `Dashboard` that imports two standalone children.
 `SalesChart` draws a chart for its `region` input, and `Welcome` gets a message
 from a service it provides itself:
 
+```ts title="src/app/sales-chart/sales-chart.ts"
+import { Component, input } from '@angular/core'
+
+@Component({
+  selector: 'app-sales-chart',
+  template: `<canvas
+    data-cy="sales-chart"
+    [attr.aria-label]="'Sales for ' + region()"
+  ></canvas>`,
+})
+export class SalesChart {
+  readonly region = input.required<string>()
+}
+```
+
 ```ts title="src/app/welcome/welcome.ts"
 import { Component, Injectable, inject } from '@angular/core'
 
@@ -186,9 +201,10 @@ to change single entries and keep the rest.
 
 ### Replace a provider in a child component
 
-`TestBed.overrideProvider()` replaces a provider wherever Angular resolves it,
-including a child component's own `providers`. The test below mounts
-`Dashboard` and replaces the `WelcomeService` that `Welcome` provides:
+`TestBed.overrideProvider()` replaces a provider in the test module and in the
+components it compiles, including a child component's own `providers`. The test
+below mounts `Dashboard` and replaces the `WelcomeService` that `Welcome`
+provides:
 
 ```ts title="src/app/dashboard/dashboard.cy.ts"
 import { TestBed } from '@angular/core/testing'
@@ -212,7 +228,7 @@ A shallow test renders a component without its real children. To swap a child
 that a standalone component imports, remove the child from the component's
 `imports` and add a stub with the same selector and inputs:
 
-```ts title="src/app/dashboard/dashboard.cy.ts"
+```ts title="src/app/dashboard/dashboard-shallow.cy.ts"
 import { Component, input } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { SalesChart } from '../sales-chart/sales-chart'
@@ -238,6 +254,7 @@ it('renders a stub in place of the sales chart', () => {
     'have.text',
     'Sales chart for EMEA'
   )
+  cy.get('[data-cy=sales-chart]').should('not.exist')
 })
 ```
 
