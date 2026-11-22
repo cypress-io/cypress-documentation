@@ -1,6 +1,6 @@
 ---
 title: 'Angular examples'
-description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, and customize `cy.mount()` for Angular and the Angular Router.
+description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, inject Angular services with TestBed, test Angular signals, and customize `cy.mount()` for Angular and the Angular Router.
 sidebar_label: Angular examples
 sidebar_position: 20
 slug: /app/component-testing/angular/examples
@@ -146,6 +146,258 @@ it('clicking + fires a change event with the incremented value', () => {
   cy.get('@changeSpy').should('have.been.calledWith', 101)
 })
 ```
+
+## Inject Angular services from dependency injection
+
+Some of what a component does lands in a service rather than in its template. A
+component test checks that work by getting the service from Angular's
+dependency injection, then confirming what a stateful fake recorded after a
+click, answering requests through `HttpTestingController`, or dispatching
+actions to a state store. Cypress has no built-in command for injection, and
+`cy.mount()` yields only the `fixture` and the `component`. `cypress/angular`
+mounts components with Angular's own `TestBed` from `@angular/core/testing`,
+though, so the `TestBed` a spec imports is the one that configured the mounted
+component, and `TestBed.inject()` returns providers from that test module.
+
+Call `TestBed.inject()` inside `.then()` after `cy.mount()`. The `CartService`
+below keeps the cart in a signal, and `ProductComponent` adds to the cart
+without displaying it:
+
+```ts title="src/app/cart.service.ts"
+import { Injectable, signal } from '@angular/core'
+
+@Injectable({ providedIn: 'root' })
+export class CartService {
+  private readonly items = signal<string[]>([])
+
+  add(product: string) {
+    this.items.update((items) => [...items, product])
+  }
+
+  getItems() {
+    return this.items()
+  }
+}
+```
+
+```ts title="src/app/product.component.ts"
+import { Component, inject } from '@angular/core'
+import { CartService } from './cart.service'
+
+@Component({
+  selector: 'app-product',
+  template: `<button data-cy="buy" (click)="buy()">Buy</button>`,
+})
+export class ProductComponent {
+  private readonly cart = inject(CartService)
+
+  buy() {
+    this.cart.add('Cypress T-shirt')
+  }
+}
+```
+
+The test clicks the `"Buy"` button, then checks the cart:
+
+```ts title="src/app/product.component.cy.ts"
+import { TestBed } from '@angular/core/testing'
+import { CartService } from './cart.service'
+import { ProductComponent } from './product.component'
+
+it('adds the product to the cart', () => {
+  cy.mount(ProductComponent)
+  cy.get('[data-cy=buy]').click()
+
+  cy.then(() => TestBed.inject(CartService))
+    .invoke('getItems')
+    .should('deep.equal', ['Cypress T-shirt'])
+})
+```
+
+[`.invoke()`](/api/commands/invoke) calls `getItems()` again each time
+`.should()` retries, so the assertion waits for the cart to update.
+`TestBed.inject()` returns whatever the test module provides for a token. When
+the test passes a fake in `providers`, such as
+`{ provide: CartService, useValue: cartFake }`, `TestBed.inject(CartService)`
+returns `cartFake`.
+
+### Call `TestBed.inject()` inside the command chain
+
+`cy.mount()` queues a command, and Cypress configures `TestBed` for the
+component when that command runs, not when the test function calls
+`cy.mount()`. A `TestBed.inject()` call at the top level of the test runs
+before the test module is configured, so Angular creates an empty test module to
+answer the call, and the mount fails:
+
+```ts
+// ❌ Runs before cy.mount() configures TestBed
+const cart = TestBed.inject(CartService)
+
+cy.mount(ProductComponent)
+```
+
+```text
+Error: Cannot configure the test module when the test module has already been instantiated. Make sure you are not using `inject` before `TestBed.configureTestingModule`.
+```
+
+Keep `TestBed.inject()` in a `.then()` callback, or in another command, that
+comes after `cy.mount()`. Cypress also resets `TestBed` after each test and when
+a test calls `cy.mount()` again, so inject the service again after each mount
+rather than keeping a reference to the old instance.
+
+### Get providers from a component's own injector
+
+`TestBed.inject()` reads from the test module's injector. When a component lists
+a service in its own `providers` array, Angular creates a separate instance for
+that component, and `TestBed.inject()` returns the module's instance instead.
+Get the component's instance from the injector on the `fixture` that
+`cy.mount()` yields. With `CartService` in the `providers` of
+`ProductComponent`, the test below aliases the component's cart and checks it
+after the click:
+
+```ts
+cy.mount(ProductComponent)
+  .then(({ fixture }) => fixture.debugElement.injector.get(CartService))
+  .as('cart')
+
+cy.get('[data-cy=buy]').click()
+
+cy.get<CartService>('@cart')
+  .invoke('getItems')
+  .should('deep.equal', ['Cypress T-shirt'])
+```
+
+### Answer HTTP requests with `HttpTestingController`
+
+The same pattern drives Angular's testing controllers. The `UserListComponent`
+below loads users with `HttpClient`:
+
+```ts title="src/app/user-list.component.ts"
+import { HttpClient } from '@angular/common/http'
+import { Component, inject } from '@angular/core'
+import { toSignal } from '@angular/core/rxjs-interop'
+
+type User = { id: number; name: string }
+
+@Component({
+  selector: 'app-user-list',
+  template: `
+    <ul>
+      @for (user of users(); track user.id) {
+        <li>{{ user.name }}</li>
+      }
+    </ul>
+  `,
+})
+export class UserListComponent {
+  readonly users = toSignal(inject(HttpClient).get<User[]>('/api/users'), {
+    initialValue: [],
+  })
+}
+```
+
+Provide `provideHttpClient()` and `provideHttpClientTesting()`, then answer the
+request through `HttpTestingController`:
+
+```ts title="src/app/user-list.component.cy.ts"
+import { provideHttpClient } from '@angular/common/http'
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing'
+import { TestBed } from '@angular/core/testing'
+import { UserListComponent } from './user-list.component'
+
+it('lists the users the API returns', () => {
+  cy.mount(UserListComponent, {
+    providers: [provideHttpClient(), provideHttpClientTesting()],
+  })
+
+  cy.then(() => {
+    TestBed.inject(HttpTestingController)
+      .expectOne('/api/users')
+      .flush([{ id: 1, name: 'Jane' }])
+  })
+
+  cy.get('li').should('have.text', 'Jane')
+})
+```
+
+To stub the request at the network layer instead, leave out
+`provideHttpClientTesting()` and stub `/api/users` with
+[`cy.intercept()`](/api/commands/intercept).
+
+### Add a custom `cy.inject()` command for Angular
+
+To skip the `.then()` in each test, add an `inject` command to the component
+support file, next to `mount`:
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/component.js"
+import { TestBed } from '@angular/core/testing'
+import { mount } from 'cypress/angular'
+
+Cypress.Commands.add('mount', mount)
+Cypress.Commands.add('inject', (token) =>
+  cy.wrap(TestBed.inject(token), { log: false })
+)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress/support/component.ts"
+import { ProviderToken } from '@angular/core'
+import { TestBed } from '@angular/core/testing'
+import { mount } from 'cypress/angular'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount
+      /**
+       * Gets a provider from the Angular TestBed injector
+       * @param token The class or InjectionToken to look up
+       */
+      inject<T>(token: ProviderToken<T>): Chainable<T>
+    }
+  }
+}
+
+Cypress.Commands.add('mount', mount)
+Cypress.Commands.add('inject', (token) =>
+  cy.wrap(TestBed.inject(token), { log: false })
+)
+```
+
+</TabItem>
+</Tabs>
+
+The command yields the service through [`cy.wrap()`](/api/commands/wrap), and
+`{ log: false }` keeps that inner `wrap` out of the Command Log. Because
+`cy.inject()` is a Cypress command, Cypress runs `TestBed.inject()` in order
+after the commands before it, including `cy.mount()`. So `cy.inject()` works at
+the top level of the test:
+
+```ts title="src/app/product.component.cy.ts"
+import { CartService } from './cart.service'
+import { ProductComponent } from './product.component'
+
+it('adds the product to the cart', () => {
+  cy.mount(ProductComponent)
+  cy.get('[data-cy=buy]').click()
+
+  cy.inject(CartService)
+    .invoke('getItems')
+    .should('deep.equal', ['Cypress T-shirt'])
+})
+```
+
+`cy.inject()` reads from `TestBed`, the same as `TestBed.inject()`. For a
+service in a component's own `providers`, use the fixture's injector as shown in
+[Get providers from a component's own injector](#Get-providers-from-a-components-own-injector).
 
 ## Working with Legacy @Input() Decorators
 
