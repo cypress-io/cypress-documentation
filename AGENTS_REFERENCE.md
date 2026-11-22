@@ -85,11 +85,14 @@ Three files at the site root index all of that, and none is hand-maintained:
   alphabetically rather than introducing positions into a folder that doesn't use
   them. Only add `sidebar_position` where the folder already relies on it.
 - **Moving, renaming, or deleting a page requires a redirect.** Add a `301` line
-  to `static/_redirects` (it already holds ~200) so existing bookmarks and
+  to `static/_redirects` so existing bookmarks and
   inbound links keep working:
   ```text title="static/_redirects"
   /old/path /new/path 301
   ```
+  Write each source once, without `.html` or a trailing slash: at build time
+  `plugins/redirect-variants.js` adds both spellings of every exact rule, since
+  Cloudflare matches a source exactly and old bookmarks use either one.
   Cloudflare applies an exact-path rule before any wildcard (`*`) rule, so add
   exact paths above the wildcards at the end of the file. Avoid a new wildcard
   that overlaps an existing one: Cloudflare doesn't reliably pick the first of
