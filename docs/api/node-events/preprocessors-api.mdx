@@ -190,6 +190,15 @@ on(
 
 :::
 
+:::info
+
+This page covers aliases in **end-to-end** spec and support files, which the
+preprocessor bundles. For **component testing**, the dev server's Vite or
+Webpack config resolves aliases instead. See
+[Resolving import path aliases](/app/component-testing/component-framework-configuration#Resolving-import-path-aliases).
+
+:::
+
 ### Resolve import map specifiers in spec files
 
 Import maps in your application work in Cypress the same way they work in the
@@ -255,15 +264,6 @@ on(
 
 An import map's `/src/` is a URL path on your server, and the alias is a folder
 on disk. Point each alias at the folder your server serves for that URL path.
-
-:::info
-
-This page covers aliases in **end-to-end** spec and support files, which the
-preprocessor bundles. For **component testing**, the dev server's Vite or
-Webpack config resolves aliases instead. See
-[Resolving import path aliases](/app/component-testing/component-framework-configuration#Resolving-import-path-aliases).
-
-:::
 
 ## Excluding files from being watched
 
