@@ -1326,6 +1326,21 @@ recipe.
 In the end, it's up to you to know your implementation and to test enough to
 cover everything.
 
+### <Icon name="angle-right" /> Why does a PDF open in Chrome instead of downloading during `cypress run`?
+
+Chrome, Chromium, and Edge open PDFs in their built-in PDF viewer, headless or
+headed. When your app opens a PDF with `window.open()` or a link with
+`target="_blank"`, the browser shows the PDF in the viewer and doesn't save it
+to the [`downloadsFolder`](/app/references/configuration#Downloads).
+
+A PDF setting you change in the browser during `cypress open` doesn't help in
+`cypress run`, because each `cypress run` starts from a fresh browser profile.
+To save PDFs to the `downloadsFolder` instead, set the
+`always_open_pdf_externally` preference in the `before:browser:launch` event.
+See
+[Download PDFs instead of opening them in Chrome](/api/node-events/browser-launch-api#Download-PDFs-instead-of-opening-them-in-Chrome)
+for the configuration.
+
 ### <Icon name="angle-right" /> Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command.
