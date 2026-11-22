@@ -769,7 +769,7 @@ form submissions. `cy.clearCookies()` leaves the header in place. The
 [`headers` option of `cy.visit()`](/api/commands/visit#Arguments) covers only
 the initial request of that visit.
 
-```js
+```js title="cypress/support/e2e.js"
 beforeEach(() => {
   cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
     req.headers['x-bypass-interstitial'] = '1'
