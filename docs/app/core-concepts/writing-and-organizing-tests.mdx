@@ -319,6 +319,101 @@ beforeEach(() => {
   alt="Global hooks for tests"
 />
 
+#### Run Cypress global setup and teardown once per run
+
+A `before()` or `after()` hook in the support file runs once per spec file, not
+once per run, because Cypress loads the support file again for every spec. For
+setup and teardown that run once for the whole run, choose by what the work
+needs:
+
+- For Node.js code only, such as a database script or an API client, use
+  [`before:run`](/api/node-events/before-run-api) and
+  [`after:run`](/api/node-events/after-run-api), which run once at the start
+  and end of `cypress run`.
+- For Cypress commands, such as `cy.request()` or a custom command, in a
+  `cypress run` on one machine, count the specs in Node and gate the
+  support-file hooks, as shown below.
+- For a parallel run, or cleanup that has to happen even if Cypress stops early,
+  use CI steps before and after the Cypress jobs. In a
+  [parallel run](/cloud/features/smart-orchestration/parallelization), every
+  Node event fires on each machine, so the gated hooks run the setup on every
+  machine and usually never run the teardown.
+
+To gate the support-file hooks, track the run in `setupNodeEvents`, whose Node
+process stays alive for the whole run. Count the specs with `before:run` and
+[`after:spec`](/api/node-events/after-spec-api), and expose the state to the
+browser through [`cy.task()`](/api/commands/task):
+
+:::cypress-config-plugin-example
+
+```ts
+let setupDone = false
+let totalSpecs = 0
+let finishedSpecs = 0
+
+on('before:run', (details) => {
+  totalSpecs = details.specs?.length ?? 0
+})
+
+on('after:spec', () => {
+  finishedSpecs += 1
+})
+
+on('task', {
+  shouldRunSetup() {
+    return !setupDone
+  },
+  markSetupDone() {
+    setupDone = true
+    return null
+  },
+  isLastSpec() {
+    return finishedSpecs === totalSpecs - 1
+  },
+})
+```
+
+:::
+
+The support file asks those tasks whether to act. The relative URLs resolve
+against your [`baseUrl`](/app/references/configuration#e2e):
+
+```ts copyTsToJs title="cypress/support/e2e.ts"
+before(() => {
+  cy.task('shouldRunSetup').then((shouldRun) => {
+    if (shouldRun) {
+      cy.request('POST', '/api/test-users')
+      cy.task('markSetupDone')
+    }
+  })
+})
+
+after(() => {
+  cy.task('isLastSpec').then((isLast) => {
+    if (isLast) {
+      cy.request('DELETE', '/api/test-users')
+    }
+  })
+})
+```
+
+The setup runs in the first spec that runs its hooks. `markSetupDone` runs only
+after the setup request succeeds, so a failed setup runs again in the next
+spec; make the setup request safe to repeat. The teardown runs in the last
+spec, even when earlier tests fail, and a run filtered with `--spec` counts
+only the specs it runs.
+
+The teardown depends on the last spec running its `after()` hook, so it
+doesn't run when:
+
+- The last spec has no tests, fails to load, or crashes the browser.
+- The run stops before its last spec, such as a run cancelled by
+  [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation).
+- The specs run in `cypress open`. There, `before:run` and `after:spec` fire
+  only with the
+  [`experimentalInteractiveRunEvents`](/app/references/experiments#Configuration)
+  flag, and `details.specs` is undefined even with it.
+
 ## Cypress fixtures for repeatable test data
 
 Fixtures are external pieces of static data your tests can load on demand.
