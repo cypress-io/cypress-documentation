@@ -397,6 +397,39 @@ on('before:browser:launch', (browser, options) => {
 
 :::
 
+### Download PDFs instead of opening them in Chrome
+
+Chrome, Chromium, and Edge include a built-in PDF viewer, in
+[headless mode](/app/references/launching-browsers#Headless-mode) as well as
+headed. When your app opens a PDF, for example with `window.open()` or a link
+with `target="_blank"`, the browser displays the PDF in the viewer and doesn't
+save it to the [`downloadsFolder`](/app/references/configuration#Downloads).
+Each `cypress run` also starts from a fresh browser profile, so a PDF setting
+you changed in the browser during `cypress open` doesn't carry over.
+
+To save PDFs to the `downloadsFolder` instead, set the
+`always_open_pdf_externally` preference:
+
+:::cypress-config-plugin-example
+
+```ts
+on('before:browser:launch', (browser, launchOptions) => {
+  if (browser.family === 'chromium' && browser.name !== 'electron') {
+    launchOptions.preferences.default.plugins = {
+      always_open_pdf_externally: true,
+    }
+  }
+
+  return launchOptions
+})
+```
+
+:::
+
+The preference applies to every PDF the browser loads, so PDFs that your app
+shows in an `<iframe>` or `<embed>` also download instead of rendering on the
+page.
+
 ### Set a Firefox flag
 
 If we need to set a particular Firefox flag, like `browser.send_pings` we can do
