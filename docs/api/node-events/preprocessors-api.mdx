@@ -296,6 +296,18 @@ to webpack's file watcher, which uses
 [`anymatch`](https://github.com/micromatch/anymatch) internally and therefore
 accepts glob strings, regular expressions, or functions.
 
+:::caution
+
+These examples register `@cypress/webpack-preprocessor` in place of the
+[default preprocessor](#Defaults). Without `webpackOptions`,
+`@cypress/webpack-preprocessor` bundles with its own defaults, which only run
+JavaScript through Babel. In a TypeScript project, pass your webpack config as
+`webpackOptions` next to `watchOptions`. Otherwise, a spec that uses TypeScript
+syntax such as an `enum` fails with "TypeScript enum is not supported in
+strip-only mode".
+
+:::
+
 :::cypress-config-plugin-example
 
 ```javascript

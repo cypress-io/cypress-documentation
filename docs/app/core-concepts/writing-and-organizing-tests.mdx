@@ -1206,22 +1206,23 @@ Cypress watches **nothing** during
 
 The component responsible for the file-watching behavior in Cypress is the
 [`@cypress/webpack-batteries-included-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-batteries-included-preprocessor).
-This preprocessor is the default one packaged with Cypress, and Cypress
-registers it automatically when you don't provide your own `file:preprocessor` event. The preprocessor
-builds on the lower-level
-[`webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
-and bundles the loaders and configuration needed to give you TypeScript and
-JSX support out of the box with zero configuration. That zero-config support is
-the reason most projects never have to think about bundling at all.
+Cypress ships this preprocessor and registers it automatically when your config
+doesn't register a `file:preprocessor` event. The preprocessor builds on the
+lower-level
+[`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
+and adds the loaders and webpack options for JSX and, when your project has
+`typescript` installed, TypeScript, with no configuration.
 
-If you need further control of the file-watching behavior you can configure this
-preprocessor explicitly: it exposes options that control behavior such as _what_
-is watched and the delay before emitting an "update" event after a change.
+To add a module rule or an alias while keeping that TypeScript support, start
+from the default webpack config, as shown in
+[Change the default webpack config for end-to-end specs](/api/node-events/preprocessors-api#Change-the-default-webpack-config-for-end-to-end-specs).
+To stop generated files from triggering a rerun, see
+[Excluding files from being watched](/api/node-events/preprocessors-api#Excluding-files-from-being-watched).
 
-Cypress also ships other [file-watching preprocessors](/app/plugins/plugins-list) -
-you have to configure these explicitly if you want to use them.
-
-- [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
+A project with its own webpack config can register
+`@cypress/webpack-preprocessor` with that config instead. The
+[plugins list](/app/plugins/plugins-list) has preprocessors for other bundlers,
+such as esbuild and Vite.
 
 ## Understanding test results
 
