@@ -28,6 +28,7 @@ Find the section for what you want to do:
 | I want to…                             | Use                                        | See                                                                                                                   |
 | -------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
 | Wait for a request                     | `cy.intercept(url).as()` and `cy.wait()`   | [Waiting on a request](#Waiting-on-a-request)                                                                         |
+| Give one request more than one alias   | one aliased route per alias                | [Add more than one alias to an intercepted request](#Add-more-than-one-alias-to-an-intercepted-request)               |
 | Return fixed data                      | a [`StaticResponse`][staticresponse]       | [Stubbing a response](#Stubbing-a-response)                                                                           |
 | Decide the response at request time    | `req.reply()`                              | [Providing a stub response with `req.reply()`][req-reply]                                                             |
 | Change what's sent to the server       | a [`routeHandler`][arg-routehandler]       | [Modifying an outgoing request](#Modifying-an-outgoing-request)                                                       |
@@ -396,6 +397,56 @@ For more guidance around aliasing requests with GraphQL, see
 [Working with GraphQL](/app/guides/network-requests#Working-with-GraphQL).
 
 :::
+
+### Add more than one alias to an intercepted request
+
+A request can carry more than one alias. Every `cy.intercept()` route that a
+request reaches records the request under that route's own alias. Code in
+different places, such as a custom command and the test that calls it, can each
+alias the same request with a route of its own.
+
+Chaining a second `.as()` onto one route doesn't add an alias. `cy.intercept()`
+yields `null`, and `.as()` yields the same subject it was given, so the second
+`.as()` aliases `null`, and `cy.wait()` on that alias fails.
+
+Routes run in the order described in
+[Interception lifecycle](#Interception-lifecycle), and the first route that
+responds ends the chain. A route that only adds an alias has to run before the
+route that responds. Define it after the responding route:
+
+```js
+cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('stubUsers')
+
+// defined after the stub, so it sees the request before the stub responds
+cy.intercept('GET', '/api/users').as('getUsers')
+
+cy.get('[data-cy="load-users"]').click()
+
+// both aliases resolve to the same request
+cy.wait(['@stubUsers', '@getUsers']).then(([stubbed, aliased]) => {
+  expect(stubbed.id).to.eq(aliased.id)
+})
+```
+
+An alias-only route defined before the responding route never sees the request,
+and waiting on its alias times out. When the alias-only route has to come first,
+such as in a `beforeEach()` hook, set `middleware: true` to run the route ahead
+of the others. A `middleware` route requires a `routeHandler`. Pass an empty
+function that leaves the request for the next route:
+
+```js
+// defined before the stub, so it needs `middleware: true` to run first
+cy.intercept(
+  { method: 'GET', url: '/api/users', middleware: true },
+  () => {}
+).as('getUsers')
+
+cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('stubUsers')
+```
+
+A route handler can also add an alias by setting `req.alias`, as in
+[Aliasing individual requests](#Aliasing-individual-requests). Each handler that
+sets `req.alias` adds its own alias to the request.
 
 ### Waiting on a request
 
