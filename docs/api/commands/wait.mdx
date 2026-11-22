@@ -221,7 +221,7 @@ Set `req.alias` in a route handler when the body matches, as in
 [Aliasing individual requests](/api/commands/intercept#Aliasing-individual-requests),
 and wait on that alias:
 
-```js
+```js title="cypress/e2e/notes.cy.js"
 cy.intercept('POST', '/graphql', (req) => {
   if (req.body.variables?.input?.notes === 'final') {
     req.alias = 'saveFinalNotes'
@@ -247,7 +247,7 @@ To assert on the requests sent so far instead, use
 suffix. `cy.get()` is a query, so the assertion retries until one of the
 interceptions matches:
 
-```js
+```js title="cypress/e2e/notes.cy.js"
 cy.intercept('POST', '/graphql').as('graphql')
 
 cy.get('[data-cy=notes]').type('final')
