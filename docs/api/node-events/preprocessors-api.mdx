@@ -52,11 +52,14 @@ rule, a `resolve.alias`, or a `resolve.fallback` for a Node built-in. You can
 make that one change on top of the default webpack config instead of
 rebuilding the config by hand.
 
-Registering a `file:preprocessor` event replaces the default preprocessor
-entirely, so your handler has to provide everything the default did. The
-batteries-included preprocessor's `getFullWebpackOptions()` returns a fresh copy
-of the webpack options Cypress uses by default. Change that copy, then pass it
-back to the batteries-included preprocessor.
+If your project already has its own webpack config, pass that config to
+`@cypress/webpack-preprocessor` instead, as shown in the
+[webpack preprocessor options](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor#options).
+
+The batteries-included preprocessor's `getFullWebpackOptions()` returns a copy
+of the default webpack config. Change the copy and pass it back to the
+batteries-included preprocessor, and everything else the default does keeps
+working.
 
 :::caution
 
@@ -69,38 +72,36 @@ support and the Node built-ins the default config provides.
 
 ### Install the batteries-included preprocessor packages
 
-Your project needs its own copy of `@cypress/webpack-batteries-included-preprocessor`
-and of `@cypress/webpack-preprocessor` version 8. The batteries-included
-package declares a peer dependency of `@cypress/webpack-preprocessor@^6.0.4`,
-but version 6 is missing a function the batteries-included package calls, so
-TypeScript specs fail to compile with:
-
-```text
-TypeError: webpack_preprocessor_1.default.getResolvedTypescriptVersion is not a function
-```
-
-With npm, add an `overrides` entry to your `package.json` first, since npm
-won't install version 8 against that peer range. The entry tells npm to give the
-batteries-included package the `@cypress/webpack-preprocessor` version your
-project installs:
+Install `@cypress/webpack-batteries-included-preprocessor` and version 8 of
+`@cypress/webpack-preprocessor` in your project. With npm, first add this
+`overrides` entry to your `package.json`. The entry makes npm use your
+project's version of `@cypress/webpack-preprocessor` everywhere, including
+inside the batteries-included package:
 
 ```json title="package.json"
 {
   "overrides": {
-    "@cypress/webpack-batteries-included-preprocessor": {
-      "@cypress/webpack-preprocessor": "$@cypress/webpack-preprocessor"
-    }
+    "@cypress/webpack-preprocessor": "$@cypress/webpack-preprocessor"
   }
 }
 ```
 
-Then install both packages. Yarn, pnpm, and Bun install version 8 without an
-override and print a peer dependency warning.
+Then install both packages:
 
 <PackageManagerTabs
   install="@cypress/webpack-batteries-included-preprocessor @cypress/webpack-preprocessor@^8"
   dev
 />
+
+The batteries-included package lists version 6 of
+`@cypress/webpack-preprocessor` as its peer dependency, and version 6 fails
+TypeScript specs with the following error. Without the override, npm won't
+install version 8. Yarn, pnpm, and Bun install version 8 and print a peer
+dependency warning.
+
+```text
+TypeError: webpack_preprocessor_1.default.getResolvedTypescriptVersion is not a function
+```
 
 ### Add a webpack rule to the default end-to-end config
 
@@ -134,10 +135,9 @@ on(
 
 :::
 
-With `typescript: true`, the preprocessor resolves `typescript` from the
-directory of your `tsconfig.json`. Without `typescript: true`, a TypeScript spec
-fails with "You are attempting to run a TypeScript file, but do
-not have TypeScript installed", even when TypeScript is installed.
+In a TypeScript project, leaving out `typescript: true` makes specs fail with
+"You are attempting to run a TypeScript file, but do not have TypeScript
+installed", even though TypeScript is installed.
 
 The same steps apply to the other common changes:
 
@@ -146,10 +146,6 @@ The same steps apply to the other common changes:
 - A `resolve.fallback` for a Node built-in the default doesn't provide, shown in
   the
   [Cypress 15 migration guide](/app/references/migration-guide#cypresswebpack-batteries-included-preprocessor-no-longer-shims-all-built-ins-provided-by-webpack-v4)
-
-If your project already has its own webpack config, pass that config to
-`@cypress/webpack-preprocessor` instead, as shown in the
-[webpack preprocessor options](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor#options).
 
 ## Resolving import path aliases
 
@@ -162,9 +158,9 @@ In a project with TypeScript installed, the default preprocessor already
 resolves the aliases under `compilerOptions.paths` in your `tsconfig.json`, so
 those imports work with no preprocessor config.
 
-The default preprocessor doesn't read aliases from anywhere else, such as the
-`_moduleAliases` field in `package.json`, and doesn't read `tsconfig.json` in a
-project without TypeScript. For those aliases, install the packages from
+For other aliases, such as ones in the `_moduleAliases` field of
+`package.json`, or for any alias in a project without TypeScript, install the
+packages from
 [Install the batteries-included preprocessor packages](#Install-the-batteries-included-preprocessor-packages)
 and add a `resolve.alias` entry to the default webpack options:
 
