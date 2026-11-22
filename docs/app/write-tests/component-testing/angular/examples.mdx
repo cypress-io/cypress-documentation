@@ -199,7 +199,7 @@ it('shows the message from a test double', () => {
 `set` replaces the component's whole `providers` array. Use `add` or `remove`
 to change single entries and keep the rest.
 
-### Replace a provider in a child component
+### Replace a provider in an Angular child component
 
 `TestBed.overrideProvider()` replaces a provider in the test module and in the
 components it compiles, including a child component's own `providers`. The test
@@ -267,7 +267,8 @@ Keep these behaviors in mind when you override metadata with `TestBed`:
   `beforeEach()` hook.
 - Make the `TestBed` calls before `cy.mount()` runs. Once the component mounts,
   an override throws an error saying the test module has already been
-  instantiated.
+  instantiated. When a `beforeEach()` hook mounts the component, set the
+  override in that hook before `cy.mount()`, not in the test body.
 - A second `cy.mount()` in the same test resets the testing module, which clears
   the overrides. Put each mount that needs an override in its own test.
 
