@@ -426,9 +426,13 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 :::
 
-The preference applies to every PDF the browser loads, so PDFs that your app
-shows in an `<iframe>` or `<embed>` also download instead of rendering on the
-page.
+The preference also turns off the PDF viewer for PDFs that your app shows in an
+`<iframe>` or `<embed>`. The browser shows an "Open" button in their place
+instead of the rendered PDF.
+
+The preference applies to Chrome, Chromium, and Edge. Electron doesn't save
+these PDFs to the `downloadsFolder` either, so run specs that check a PDF
+download in one of those browsers.
 
 ### Set a Firefox flag
 
