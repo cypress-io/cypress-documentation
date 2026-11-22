@@ -1,6 +1,6 @@
 ---
 title: 'Advanced installation in Cypress: custom binary, cache & proxy'
-description: 'Configure advanced Cypress installation: install a custom binary or version, change the cache or App Data folder, install behind a proxy, mirror, or custom CA, and skip the binary download.'
+description: 'Configure advanced Cypress installation: install a custom binary or version, change the cache or App Data folder, install behind a proxy, mirror, or custom CA, verify the binary checksum, and skip the binary download.'
 sidebar_label: Installation options
 sidebar_position: 40
 slug: /app/references/advanced-installation
@@ -175,7 +175,9 @@ To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the
   ```shell
   CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress
   ```
-- Specify a file to install locally instead of using the internet.
+- Specify a file to install locally instead of using the internet. Cypress
+  doesn't check a local file, so
+  [verify its checksum](#Verify-a-Cypress-binary-with-its-checksum) first.
   ```shell
   CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress
   ```
@@ -401,6 +403,100 @@ for all available platforms.
 https://download.cypress.io/desktop/15.16.0?platform=win32&arch=x64
 ```
 
+### Verify a Cypress binary with its checksum
+
+A binary `.zip` that reaches you from anywhere other than `download.cypress.io`,
+such as an internal file share, an artifact store, or a package you maintain,
+is only as trustworthy as the path the file took. Comparing the file's checksum
+with the one Cypress published confirms the file is the exact `.zip` Cypress
+built. The CDN serves that checksum in a response header, so a `HEAD` request
+reads the checksum without downloading the binary again.
+
+Cypress release binaries on the CDN include these response headers:
+
+| Header                | Value                                                |
+| --------------------- | ---------------------------------------------------- |
+| `x-amz-meta-checksum` | SHA-512 hash of the `.zip`, in lowercase hexadecimal |
+| `x-amz-meta-size`     | Size of the `.zip` in bytes                          |
+
+Request the CDN URL for the version and platform,
+`https://cdn.cypress.io/desktop/<version>/<platform>-<arch>/cypress.zip`, or a
+[download URL](#Download-URLs), which redirects to the CDN. The `-L` flag makes
+`curl` follow that redirect:
+
+```shell
+curl -sIL "https://download.cypress.io/desktop/16.3.0?platform=linux&arch=x64" | grep -i '^x-amz-meta-'
+```
+
+```text
+x-amz-meta-checksum: 9174ca3baac9086bc54ed6b60f22bb0f53a4fe865eb14ef6de2f8cad170acf2b61987473b86d8a5940f3d1e9633fa9f7e78033c52951f227fcf7a3556e66fe85
+x-amz-meta-size: 254967305
+```
+
+To compare the published checksum with a `cypress.zip` in the current
+directory, run the commands for your operating system. Change the version and
+platform in the URL to match the file you have.
+
+<Tabs groupId="operating-system">
+<TabItem value="macos" label="macOS" default>
+
+```shell
+url=https://cdn.cypress.io/desktop/16.3.0/darwin-arm64/cypress.zip
+expected=$(curl -sI "$url" | awk 'tolower($1) == "x-amz-meta-checksum:" { print $2 }' | tr -d '\r')
+echo "$expected  cypress.zip" | shasum -a 512 --check
+```
+
+</TabItem>
+<TabItem value="linux" label="Linux">
+
+```shell
+url=https://cdn.cypress.io/desktop/16.3.0/linux-x64/cypress.zip
+expected=$(curl -sI "$url" | awk 'tolower($1) == "x-amz-meta-checksum:" { print $2 }' | tr -d '\r')
+echo "$expected  cypress.zip" | sha512sum --check
+```
+
+</TabItem>
+<TabItem value="windows" label="Windows">
+
+```powershell title="PowerShell"
+$url = 'https://cdn.cypress.io/desktop/16.3.0/win32-x64/cypress.zip'
+$response = Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing
+$expected = [string]$response.Headers['x-amz-meta-checksum']
+$actual = (Get-FileHash -Path .\cypress.zip -Algorithm SHA512).Hash
+$expected -eq $actual
+```
+
+</TabItem>
+</Tabs>
+
+On macOS and Linux, a matching file prints `cypress.zip: OK`. In PowerShell, a
+matching file prints `True`. Any other result means the file differs from the
+binary Cypress published, so don't install that file.
+
+Cypress doesn't guarantee these headers for every binary on the CDN: older
+releases and pre-release binaries may not have them. When a response has no
+`x-amz-meta-checksum` header, the CDN has no published checksum to compare
+against. In that case `shasum` and `sha512sum` report that they found no
+properly formatted checksum lines, and PowerShell prints `False`.
+
+`cypress install` reads the same headers from the response that serves the
+`.zip`, and how much the CLI checks depends on where the binary comes from:
+
+- From `download.cypress.io` or `cdn.cypress.io`, the CLI compares the
+  downloaded file's checksum and size with the headers whenever the response
+  includes them.
+- From a [mirror](#Mirroring) or a [`CYPRESS_INSTALL_BINARY`](#Install-binary)
+  URL, the CLI checks the checksum only if your server sends the
+  `x-amz-meta-checksum` header. Without that header, the CLI compares only the
+  file size, from `x-amz-meta-size` or `Content-Length` when your server sends
+  one, which catches a truncated download but not a changed file.
+- From a local file (`CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip`), the
+  CLI unzips the file without checking it, so verify the checksum before you
+  install.
+
+When the CLI's check fails, the install stops with a `Corrupted download` error
+that lists the expected and computed checksum or size.
+
 ### Mirroring
 
 When many machines install Cypress from inside a restricted network, hosting a
@@ -419,7 +515,10 @@ Cypress then attempts to download a binary with this format:
 
 Your mirror server must handle requests to `/desktop/:version` with `platform`
 and `arch` query parameters, and serve the appropriate Cypress binary as a
-`.zip` file.
+`.zip` file. For `cypress install` to verify the binary's checksum, your mirror
+also sends the `x-amz-meta-checksum` and `x-amz-meta-size` headers that the CDN
+returns for that file. See
+[Verify a Cypress binary with its checksum](#Verify-a-Cypress-binary-with-its-checksum).
 
 **Supported platform and architecture combinations:**
 
