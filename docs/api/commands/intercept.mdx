@@ -2163,7 +2163,8 @@ are some workarounds:
 
 ## `cy.intercept()` and service workers
 
-`cy.intercept()` sees a request when it leaves the browser for the network. A
+`cy.intercept()` sees a request when the request leaves the browser for the
+network. A
 [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 that answers a request itself, with a `Response` the worker builds or one it
 reads from Cache Storage, keeps that request inside the browser. Cypress never
@@ -2171,13 +2172,14 @@ sees the request, so no route matches it, a stub on that route doesn't reach the
 page, and `cy.wait()` on the route's alias fails with `No request ever occurred`.
 The page still receives the worker's response.
 
-Mock Service Worker (MSW) works this way in the browser: its worker answers
-each request that a handler mocks with a `Response` the worker builds. Moving
-from `cy.route()` to `cy.intercept()` is often where teams first notice this,
-since `cy.route()` watched XHR requests from inside the page.
+Mock Service Worker (MSW) works this way in the browser: for each request a
+handler mocks, the MSW worker builds the `Response` itself. Teams moving from
+`cy.route()` to `cy.intercept()` often meet this behavior first, since
+`cy.route()` watched XHR requests from inside the page.
 
-A worker that passes a request on with `fetch(event.request)` sends it to the
-network, where `cy.intercept()` matches and stubs it like any other request:
+A worker that passes a request on with `fetch(event.request)` sends the request
+to the network, where `cy.intercept()` matches and stubs it like any other
+request. This worker shows both cases:
 
 ```js title="sw.js"
 self.addEventListener('fetch', (event) => {
@@ -2223,9 +2225,9 @@ To test requests that a service worker answers, use one of these approaches:
   ```
 
 - Keep the worker running, and spy on `fetch` in the app's window with
-  [`cy.spy()`](/api/commands/spy). The spy records every call the app makes,
-  including the ones the worker answers, while the response still comes from
-  the worker. For an app that uses `XMLHttpRequest`, spy on
+  [`cy.spy()`](/api/commands/spy). The spy records every `fetch` call the app
+  makes, including the ones the worker answers, while the response still comes
+  from the worker. For an app that uses `XMLHttpRequest`, spy on
   `win.XMLHttpRequest.prototype.open` instead.
 
   ```js title="spec.cy.js"
