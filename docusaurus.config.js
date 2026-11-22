@@ -145,6 +145,7 @@ const config = {
     require.resolve('./plugins/llm'),
     require.resolve('./plugins/faq-structured-data'),
     require.resolve('./plugins/og-image-cards'),
+    require.resolve('./plugins/redirect-variants'),
     // ....
     function docusaurusTailwindcssPlugin(context, options) {
       return {
