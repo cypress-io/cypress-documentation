@@ -452,10 +452,9 @@ it('overrides story args with props', () => {
 
 ### Apply Storybook preview settings in component tests
 
-Global decorators and args in `.storybook/preview` apply only when
-you pass them to `setProjectAnnotations()`. Call it once in the component
-support file, next to the code that registers `cy.mount()`, and every composed
-story picks them up:
+Global decorators and args in `.storybook/preview` apply only when you pass them
+to `setProjectAnnotations()`. Call it once in the component support file, next
+to the code that registers `cy.mount()`, and every composed story picks them up:
 
 ```js title="cypress/support/component.js"
 import { setProjectAnnotations } from '@storybook/vue3'
@@ -474,13 +473,14 @@ A decorator written as a `template` string, like the one in
 Without it, the story renders nothing and Vue logs
 `Component provided template option but runtime compilation is not supported in this build of Vue`.
 Alias `vue` to `vue/dist/vue.esm-bundler.js` in the Vite config Cypress uses, so
-the alias applies to your tests and not to your production build:
+the alias applies to your tests and not to your production build.
+
+When `viteConfig` is set, Cypress uses it in place of your project's
+`vite.config`, which drops that file's plugins and aliases. Set `configFile`
+inside `viteConfig` to your config's filename, such as `vite.config.ts`, so Vite
+loads it and merges the alias on top:
 
 :::cypress-config-example
-
-```ts
-import vue from '@vitejs/plugin-vue'
-```
 
 ```ts
 {
@@ -489,7 +489,7 @@ import vue from '@vitejs/plugin-vue'
       framework: 'vue',
       bundler: 'vite',
       viteConfig: {
-        plugins: [vue()],
+        configFile: 'vite.config.js',
         resolve: {
           alias: {
             vue: 'vue/dist/vue.esm-bundler.js',
@@ -509,9 +509,10 @@ alias.
 
 ### Spy on events from a decorated Storybook story
 
-A composed story is a functional component, so Vue passes the event listeners in
-`props` to the story's component as args and also to the outermost element the
-story renders. With a decorator, that element is the decorator's wrapper, so a
+Storybook passes the props you give `cy.mount()` to the story's component as
+args. A composed story is also a functional component, so Vue passes the event
+listeners among those props to the outermost element the story renders too. With
+a decorator, that element is the decorator's wrapper, so a
 single click on the component reaches the spy twice: once from the component's
 emitted event and once from the native click on the wrapper. Set
 `inheritAttrs: false` on the composed story so the listener reaches only the
