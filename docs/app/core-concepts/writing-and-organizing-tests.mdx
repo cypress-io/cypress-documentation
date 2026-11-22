@@ -1146,6 +1146,38 @@ modern JS-based stack, you likely already have some form of hot module
 replacement watching your application code (HTML, CSS, JS, etc.) and reloading
 it in response to changes, so Cypress doesn't duplicate that work.
 
+#### Rerun specs when application files change
+
+Hot module replacement reloads your app, but it doesn't rerun your spec. To
+rerun a spec whenever a file outside the spec graph changes, such as your
+application code or a fixture, pair a file watcher with
+[`cypress tap run`](/app/tooling/cypress-tap#cypress-tap-run). The
+`cypress tap run` command starts or reruns a spec in a running
+`cypress open` session, so the watcher starts a fresh run each time a watched
+file changes.
+
+Start Cypress with `cypress open`, then select your testing type and a
+Chromium-based browser, since `cypress tap` drives Chromium-based browsers only.
+Then install a file watcher. This example uses
+[`chokidar-cli`](https://www.npmjs.com/package/chokidar-cli):
+
+<PackageManagerTabs install="chokidar-cli" dev />
+
+In a second terminal, from the same project directory, watch the files you care
+about and run `cypress tap run` with the spec to rerun on each change:
+
+<PackageManagerTabs
+  run={`chokidar "src/**/*" "cypress/fixtures/**/*" -c "cypress tap run cypress/e2e/login.cy.ts"`}
+/>
+
+Each time a file under `src/` or `cypress/fixtures/` changes, the open Cypress
+session reruns `cypress/e2e/login.cy.ts`. Saving a watched file during a run
+stops that run and starts the spec again from the first command. Any watcher
+that runs a shell command works the same way, including `nodemon`, `watchexec`,
+or a script in your build tool. To declare the watched files in your Cypress config instead, use
+the community plugin
+[`cypress-watch-and-reload`](https://github.com/bahmutov/cypress-watch-and-reload).
+
 #### Disable file watching
 
 Set the [`watchForFileChanges`](/app/references/configuration#Global)
