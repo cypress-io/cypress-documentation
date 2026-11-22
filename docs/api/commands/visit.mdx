@@ -51,9 +51,13 @@ When `baseUrl` is set, Cypress prefixes the URL with it. Without a `baseUrl`,
 provide a fully qualified URL, or Cypress serves the path as a local file. See
 [how `cy.visit()` prefixes URLs with `baseUrl`](#How-cyvisit-prefixes-URLs-with-baseUrl).
 
-Visiting a new origin reloads the Cypress window. To visit a different origin
-in the same test, use [`cy.origin()`](/api/commands/origin), even when the
-origins share a superdomain (unless
+When the first `cy.visit()` in a test goes to an origin other than the Cypress
+window's, Cypress reloads the window at that origin and restarts the test, so
+commands before the visit run twice. See
+[how the first `cy.visit()` to a new origin restarts the test](#How-the-first-cyvisit-to-a-new-origin-restarts-the-test).
+To visit a different origin in the same test, use
+[`cy.origin()`](/api/commands/origin), even when the origins share a
+superdomain (unless
 [`injectDocumentDomain`](/app/references/configuration#injectDocumentDomain) is
 enabled).
 
@@ -477,6 +481,22 @@ cy.wait('@getUsers')
 
 Routes you register before `cy.visit()` are already active when the page starts
 loading, so they catch the requests your app makes as soon as it runs.
+
+### How the first `cy.visit()` to a new origin restarts the test
+
+The Cypress window starts on `localhost` at a random port, or on the `baseUrl`
+origin when `baseUrl` is set. When the first `cy.visit()` in a test goes to a
+different origin, including a different subdomain unless `injectDocumentDomain`
+is enabled, Cypress reloads its window at the new origin and runs the test again
+from the beginning. Commands queued before the visit run a second time, along
+with the `beforeEach` hooks and the suite's `before` hooks, so side effects in
+commands such as `cy.task()` and `cy.request()` repeat.
+
+To keep side effects from repeating, set `baseUrl` to the origin your tests visit
+first, call `cy.visit()` before any side effect, or wrap the visit in
+[`cy.origin()`](/api/commands/origin). See
+[First `cy.visit()` to a new origin restarts the test](/app/guides/cross-origin-testing#First-cyvisit-to-a-new-origin-restarts-the-test)
+for examples of each.
 
 ### Visiting cross-origin sites with `cy.visit()`
 

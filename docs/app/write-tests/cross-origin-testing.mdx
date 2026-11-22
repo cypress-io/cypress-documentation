@@ -67,6 +67,103 @@ supplies it.
 
 :::
 
+### First `cy.visit()` to a new origin restarts the test
+
+Before a test visits a page, the Cypress window is on one origin. Without a
+[`baseUrl`](/app/references/configuration#Global), that origin is `localhost`
+on a random port. With a `baseUrl`, the window starts on the `baseUrl` origin.
+
+When the first [`cy.visit()`](/api/commands/visit) in a test goes to a
+different origin, Cypress saves the state of the run, reloads its window at the
+new origin, and restarts the current test from the beginning. Cypress compares
+the full origin, so a change of scheme, hostname, or port restarts the test,
+including a move between subdomains such as `app.cypress.io` and
+`auth.cypress.io`. With
+[`injectDocumentDomain`](/app/references/configuration#injectDocumentDomain)
+enabled, Cypress compares superdomains instead, and a subdomain change doesn't
+restart the test.
+
+The restart is expected behavior, and everything that ran before the visit runs
+a second time:
+
+- Commands queued before the `cy.visit()` in the test
+- The `beforeEach` hooks that run ahead of the test
+- The `before` hooks of the suite, even when a later test in the spec is the
+  one that restarts
+
+A side effect in [`cy.task()`](/api/commands/task) or
+[`cy.request()`](/api/commands/request) before the visit repeats, so a database gets seeded twice or a test account gets
+created twice. In the following spec, with no `baseUrl` set, the `db:seed` task
+runs twice:
+
+```javascript title="cypress/e2e/dashboard.cy.js"
+it('shows the seeded projects', () => {
+  cy.task('db:seed') // runs twice
+  cy.visit('http://localhost:3000/dashboard') // restarts the test
+  cy.contains('h1', 'Dashboard')
+})
+```
+
+After the restart, the Cypress window stays on the new origin, so a later test
+whose first visit goes to the same origin doesn't restart. A later test whose
+first visit goes to yet another origin restarts again. Use any of the following
+approaches to keep side effects from repeating.
+
+#### Set `baseUrl` to the origin your tests visit first
+
+When `baseUrl` matches the origin of the first visit, the Cypress window already
+starts there, and the test doesn't restart.
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+  },
+}
+```
+
+:::
+
+A `baseUrl` prevents the restart only for tests that first visit the `baseUrl`
+origin. A test that first visits a different origin, such as a confirmation
+link on another host, still restarts.
+
+#### Visit the new origin before any side effects
+
+Make `cy.visit()` the first command that runs, so the restart happens before any
+side effect. A `before` hook runs ahead of `beforeEach`, so keep side effects out
+of `before` hooks, or make the visit the first command in them.
+
+```javascript title="cypress/e2e/dashboard.cy.js"
+beforeEach(() => {
+  cy.visit('http://localhost:3000') // the test restarts here, if at all
+  cy.task('db:seed')
+})
+
+it('shows the seeded projects', () => {
+  cy.visit('http://localhost:3000/dashboard')
+  cy.contains('h1', 'Dashboard')
+})
+```
+
+#### Wrap the first visit in `cy.origin()`
+
+A `cy.visit()` inside [`cy.origin()`](/api/commands/origin) loads the page
+without reloading the Cypress window, so the test doesn't restart. Run the
+commands that interact with the page inside the same `cy.origin()` callback.
+
+```javascript title="cypress/e2e/dashboard.cy.js"
+it('shows the seeded projects', () => {
+  cy.task('db:seed') // runs once
+  cy.origin('http://localhost:3000', () => {
+    cy.visit('/dashboard')
+    cy.contains('h1', 'Dashboard')
+  })
+})
+```
+
 ## Limitations
 
 Although we do our **very best** to ensure your
@@ -92,7 +189,8 @@ The error happens because the commands that you expected to run on the second do
 actually run on the first domain.
 
 Without `cy.origin()`, you can visit different origins in _different_ tests,
-but not in the _same_ test.
+but not in the _same_ test. Each test whose first visit changes the origin
+[restarts once](#First-cyvisit-to-a-new-origin-restarts-the-test).
 
 #### Examples of test cases that error without the use of `cy.origin`
 

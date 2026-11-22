@@ -1249,7 +1249,7 @@ domain, but adding a `baseUrl` can also save some time during the initial
 startup of your Cypress tests.
 
 When you start running your tests, Cypress does not know the url of the app you
-plan to test. So, Cypress initially opens on `https://localhost` + a random
+plan to test. So, Cypress initially opens on `http://localhost` + a random
 port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
@@ -1259,12 +1259,18 @@ port.
   alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.cy.js"
 />
 
-As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
-switches to the url of the main window to the url specified in your visit. This switch
-can result in a 'flash' or 'reload' when your tests first start.
+When the first [cy.visit()](/api/commands/visit) in a test goes to a different
+origin, Cypress reloads the main window at the origin of the visit and restarts
+the test from the beginning. Commands that ran before the visit run a second
+time, including `before` and `beforeEach` hooks, so a side effect in
+[cy.task()](/api/commands/task) or [cy.request()](/api/commands/request)
+repeats. See
+[how the first `cy.visit()` to a new origin restarts the test](/app/guides/cross-origin-testing#First-cyvisit-to-a-new-origin-restarts-the-test).
 
-By setting the `baseUrl`, you can avoid this reload altogether. Cypress
+Setting `baseUrl` to the origin your tests visit first avoids the reload. Cypress
 loads the main window in the `baseUrl` you specified as soon as your tests start.
+A test that first visits a different origin still reloads the main window and
+restarts.
 
 ### Cypress configuration file
 
