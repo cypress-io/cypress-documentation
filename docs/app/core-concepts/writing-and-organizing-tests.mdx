@@ -326,17 +326,18 @@ once per run, because Cypress loads the support file again for every spec. For
 setup and teardown that run once for the whole run, choose by what the work
 needs:
 
-- **Node.js code only**, such as a database script or an API client:
+- For Node.js code only, such as a database script or an API client, use
   [`before:run`](/api/node-events/before-run-api) and
-  [`after:run`](/api/node-events/after-run-api) run once at the start and end
-  of `cypress run`.
-- **Cypress commands**, such as `cy.request()` or a custom command, in a
-  `cypress run` on one machine: count the specs in Node and gate the
+  [`after:run`](/api/node-events/after-run-api), which run once at the start
+  and end of `cypress run`.
+- For Cypress commands, such as `cy.request()` or a custom command, in a
+  `cypress run` on one machine, count the specs in Node and gate the
   support-file hooks, as shown below.
-- **A parallel run, or cleanup that has to happen even if Cypress stops
-  early**: use CI steps before and after the Cypress jobs. In a
+- For a parallel run, or cleanup that has to happen even if Cypress stops early,
+  use CI steps before and after the Cypress jobs. In a
   [parallel run](/cloud/features/smart-orchestration/parallelization), every
-  Node event fires on each machine.
+  Node event fires on each machine, so the gated hooks run the setup on every
+  machine and usually never run the teardown.
 
 To gate the support-file hooks, track the run in `setupNodeEvents`, whose Node
 process stays alive for the whole run. Count the specs with `before:run` and
