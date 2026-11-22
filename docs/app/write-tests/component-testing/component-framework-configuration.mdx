@@ -562,15 +562,14 @@ const contentTypes: Record<string, string> = {
 }
 
 // Runs in the spec iframe and loads the support file and spec as native ES modules.
-const clientScript = `
+const clientScript = (supportPath: string | null) => `
   const CypressInstance = (window.Cypress = parent.Cypress)
   const route = CypressInstance.config('devServerPublicPathRoute')
-  const projectRoot = CypressInstance.config('projectRoot')
-  const supportFile = CypressInstance.config('supportFile')
+  const supportPath = ${JSON.stringify(supportPath)}
   const importsToLoad = []
 
-  if (supportFile) {
-    importsToLoad.push(() => import(route + supportFile.replace(projectRoot, '')))
+  if (supportPath) {
+    importsToLoad.push(() => import(route + '/' + supportPath))
   }
   importsToLoad.push(() => import(route + '/' + CypressInstance.spec.relative))
 
@@ -581,7 +580,14 @@ const clientScript = `
 export const startDevServer = ({
   cypressConfig,
 }: Cypress.DevServerConfig): Promise<Cypress.ResolvedDevServerConfig> => {
-  const { devServerPublicPathRoute, indexHtmlFile, projectRoot } = cypressConfig
+  const { devServerPublicPathRoute, indexHtmlFile, supportFile } = cypressConfig
+  const root = path.resolve(cypressConfig.projectRoot)
+
+  // Computed here so the URL uses forward slashes on every platform.
+  const supportPath = supportFile
+    ? path.relative(root, supportFile).split(path.sep).join('/')
+    : null
+  const scriptTag = `<script type="module">${clientScript(supportPath)}</script>`
 
   const server = createServer(async (req, res) => {
     try {
@@ -591,22 +597,15 @@ export const startDevServer = ({
       )
 
       if (requestPath === '/index.html') {
-        const html = await readFile(
-          path.join(projectRoot, indexHtmlFile),
-          'utf8'
-        )
+        const html = await readFile(path.resolve(root, indexHtmlFile), 'utf8')
         res.setHeader('Content-Type', 'text/html')
-        res.end(
-          html.replace(
-            '</head>',
-            `<script type="module">${clientScript}</script></head>`
-          )
-        )
+        // Inject before </head>, or at the end if the file has no head.
+        res.end(html.replace(/<\/head>|$/i, `${scriptTag}$&`))
         return
       }
 
-      const filePath = path.join(projectRoot, requestPath)
-      if (!filePath.startsWith(projectRoot + path.sep)) {
+      const filePath = path.resolve(root, '.' + requestPath)
+      if (!filePath.startsWith(root + path.sep)) {
         res.statusCode = 403
         res.end()
         return
@@ -628,7 +627,7 @@ export const startDevServer = ({
       const address = server.address()
       resolve({
         port: typeof address === 'object' && address ? address.port : 0,
-        close: (done) => server.close(() => done?.()),
+        close: (done) => server.close((err) => done?.(err)),
       })
     })
   })
