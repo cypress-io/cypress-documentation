@@ -585,23 +585,23 @@ each set value to show where the value has been set via the following ways:
 
 ### blockHosts
 
-By passing a string or array of strings you can block requests made to one or
-more hosts.
+`blockHosts` accepts a string or an array of strings and blocks requests to
+every host that matches.
 
 To block a host:
 
 - ✅ Pass only the host
 - ✅ Use wildcard `*` patterns
-- ✅ Include the port other than `80` and `443`
-- ❌ Do **NOT** include protocol: `http://` or `https://`
+- ✅ Include the port when it isn't `80` or `443`
+- ❌ Don't include the protocol (`http://` or `https://`)
 
 :::info
 
-Not sure what a part of the URL a host is?
-See the [Node.js guide to URL strings and URL objects](https://nodejs.org/api/url.html#url_url_strings_and_url_objects).
+Not sure which part of a URL is the host? See the
+[Node.js guide to URL strings and URL objects](https://nodejs.org/api/url.html#url_url_strings_and_url_objects).
 
-When blocking a host, we use [`minimatch`](/api/utilities/minimatch) to check
-the host. When in doubt you can test whether something matches yourself.
+Cypress matches hosts with [`minimatch`](/api/utilities/minimatch), so you can
+test a pattern against a host yourself before adding it to `blockHosts`.
 
 :::
 
@@ -613,7 +613,7 @@ https://www.google-analytics.com/ga.js
 http://localhost:1234/some/user.json
 ```
 
-These URLs would match the following blocked hosts:
+These URLs match the following blocked hosts:
 
 ```text
 www.google-analytics.com
@@ -623,20 +623,19 @@ www.google-analytics.com
 localhost:1234
 ```
 
-Because `localhost:1234` uses a port other than `80` and `443` it **must be
-included**.
+Because `localhost:1234` uses a port other than `80` or `443`, the pattern has
+to include the port. `localhost` alone doesn't match it.
 
 :::caution
 
-<strong>Subdomains</strong>
+**URLs without a subdomain**
 
-Be cautious for URL's which have no subdomain.
-
-For instance given a URL: `https://google.com/search?q=cypress`
+A `*.` pattern needs a subdomain to match, so take care with URLs that have
+none. For example, given the URL `https://google.com/search?q=cypress`:
 
 - ✅ Matches `google.com`
 - ✅ Matches `*google.com`
-- ❌ Does NOT match `*.google.com`
+- ❌ Doesn't match `*.google.com`
 
 :::
 
@@ -669,10 +668,9 @@ exception out of another pattern, so keep the whole allowlist in one pattern:
   negated pattern matches the other host
 - ✅ `'!{localhost:3000,api.cypress.io}'` blocks every host except those two
 
-When Cypress blocks a request made to a matching host, it automatically
-sends a `503` status code. As a convenience it also sets a
-`x-cypress-matched-blocked-host` header so you can see which rule it
-matched.
+Cypress responds to a blocked request with a `503` status code and sets the
+`x-cypress-matched-blocked-host` header to the pattern that matched, so you can
+see which rule blocked it.
 
 <DocsImage
   src="/img/app/references/blocked-host.png"
