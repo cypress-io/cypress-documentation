@@ -1054,6 +1054,8 @@ You can disable verification by setting the `CYPRESS_SKIP_VERIFY` environment va
 
 Prints the installed Cypress binary version, the Cypress package version, the
 version of Electron used to build Cypress, and the bundled Node version.
+[Custom reporters](/app/tooling/reporters#Nodejs-version-that-runs-custom-Cypress-reporters)
+run on the bundled Node version, not on your system Node.js.
 
 In most cases the binary and the package versions are the same, but they
 could be different if you have installed a different version of the package and

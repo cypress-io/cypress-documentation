@@ -100,6 +100,37 @@ When using custom reporters via npm, specify the package name.
 
 <CypressCommandTabs command="run --reporter mochawesome" />
 
+### Node.js version that runs custom Cypress reporters
+
+Cypress loads a custom reporter with `require` inside the Cypress app process,
+so the reporter runs on the Node.js version bundled with Cypress's Electron
+runtime, not on the Node.js version installed on your system. Your
+[Cypress configuration file](/app/references/configuration),
+[`setupNodeEvents`](/api/node-events/overview), plugins, and preprocessors run
+in a separate child process on your system Node.js.
+
+To see the Node.js version a custom reporter gets, run
+[`cypress version`](/app/references/command-line#cypress-version) and read the
+`Bundled Node version` line. The `Node Version` in the `cypress run` header and
+the [`resolvedNodeVersion`](/app/references/configuration#System) configuration
+value both report your system Node.js, which runs the configuration file but not
+the reporter.
+
+Keep these behaviors in mind when you write or choose a custom reporter:
+
+- A reporter can use only the JavaScript features and Node.js APIs of the
+  bundled Node.js version. The bundled version can be older or newer than your
+  system Node.js.
+- A native addon that a reporter loads must work with the bundled Electron
+  runtime. Electron uses a different native module ABI than Node.js, even when
+  the Node.js versions match, so an addon compiled for your system Node.js can
+  fail to load in the reporter.
+- Work that needs your system Node.js, such as post-processing test results or
+  report files, can run in
+  [`after:spec`](/api/node-events/after-spec-api) or
+  [`after:run`](/api/node-events/after-run-api) inside `setupNodeEvents`
+  instead of in the reporter.
+
 ## Reporter Options
 
 Some reporters accept options that customize their behavior. Reporter options can be
