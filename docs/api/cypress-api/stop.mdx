@@ -28,16 +28,22 @@ Cypress.stop()
 
 ### Stop tests when a test fails
 
-To ensure tests stop immediately after a failure across any spec file, add the following snippet to your `support/index.js` file:
+To stop tests after a failure in any spec file, add the following snippet to your [support file](/app/core-concepts/writing-and-organizing-tests#Support-file), such as `cypress/support/e2e.js`:
 
-```javascript
+```javascript title="cypress/support/e2e.js"
 afterEach(function () {
-  if (this.currentTest.state === 'failed') {
+  const test = this.currentTest
+  const isLastAttempt = test.currentRetry() === test.retries()
+
+  if (test.state === 'failed' && isLastAttempt) {
     Cypress.stop()
-    return
   }
 })
 ```
+
+The `isLastAttempt` check waits for the final attempt when [test retries](/app/guides/test-retries) are on, so a test that passes on a retry doesn't stop the run.
+
+To skip only the remaining tests in one `describe` block and let the rest of the spec run, see [Skip dependent Cypress tests after a failure](/app/core-concepts/writing-and-organizing-tests#Skip-dependent-Cypress-tests-after-a-failure).
 
 ### Abort tests when a condition is met
 

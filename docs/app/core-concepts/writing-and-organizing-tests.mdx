@@ -850,6 +850,68 @@ it.skip('uploads a new avatar', () => {
 })
 ```
 
+#### Skip dependent Cypress tests after a failure
+
+Tests work best when each one runs on its own (see
+[Test Isolation](#Test-Isolation)). Some flows still get split across several
+tests that build on each other, such as a checkout where one test fills the cart
+and the next one opens it. When an early test in that chain fails, every test
+after it fails too, and the extra errors bury the one that matters.
+
+A pair of hooks stops the chain at the first failure. The `afterEach` hook
+records a failure, and the `beforeEach` hook calls Mocha's
+[`this.skip()`](https://mochajs.org/#inclusive-tests) for every test after it.
+Cypress reports the skipped tests as [pending](#Pending), and tests in other
+`describe` blocks still run:
+
+```javascript title="cypress/e2e/checkout.cy.js"
+describe('Checkout', { testIsolation: false }, () => {
+  let previousTestFailed = false
+
+  beforeEach(function () {
+    if (previousTestFailed) {
+      this.skip()
+    }
+  })
+
+  afterEach(function () {
+    const test = this.currentTest
+    const isLastAttempt = test.currentRetry() === test.retries()
+
+    if (test.state === 'failed' && isLastAttempt) {
+      previousTestFailed = true
+    }
+  })
+
+  it('adds an item to the cart', () => {
+    cy.visit('/products')
+    cy.get('[data-testid="add-to-cart"]').first().click()
+    cy.get('[data-testid="cart-count"]').should('have.text', '1')
+  })
+
+  it('shows the item in the cart', () => {
+    cy.get('[data-testid="cart-link"]').click()
+    cy.get('[data-testid="cart-item"]').should('have.length', 1)
+  })
+})
+```
+
+Keep these details in mind:
+
+- The hooks use `function () {}` callbacks, not arrow functions, so `this` is
+  bound to the test context.
+- The `isLastAttempt` check matters when [test retries](/app/guides/test-retries)
+  are on. Without it, a failed first attempt marks the block as failed, and
+  Cypress skips the retry that would have passed.
+- `testIsolation: false` keeps the page between tests in the block, which is
+  what lets the second test pick up where the first one left off.
+
+To stop every remaining test in the spec file instead of one block, call
+[`Cypress.stop()`](/api/cypress-api/stop) from the `afterEach` hook. To cancel
+a whole recorded run across machines after a set number of failures, use
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) in
+Cypress Cloud.
+
 ### Test Isolation
 
 :::tip
