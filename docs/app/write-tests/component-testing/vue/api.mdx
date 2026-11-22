@@ -31,7 +31,7 @@ import { mount } from 'cypress/vue'
     <td>Signature</td>
     <td>
       mount(originalComponent: &lbrace; new (...args: any[]): {}; __vccOpts:
-      any; &rbrace;, options?: MountOptions):
+      any; &rbrace;, options?: CyMountOptions):
       Cypress.Chainable&lt;MountReturn&gt;
     </td>
   </tr>
@@ -51,17 +51,29 @@ import { mount } from 'cypress/vue'
   </tr>
   <tr>
     <td>options</td>
-    <td>MountOptions (optional)</td>
+    <td>CyMountOptions (optional)</td>
     <td>The options for mounting the component</td>
   </tr>
 </table>
 
 ## Interfaces
 
-### MountOptions
+### CyMountOptions
 
-([Vue 3 MountingOptions](https://test-utils.vuejs.org/api/#mount) or
-[Vue Test Utils](https://test-utils.vuejs.org/))
+The options `mount` accepts: the
+[Vue Test Utils mounting options](https://test-utils.vuejs.org/api/#mount), plus
+Cypress's `log` option. `cypress/vue` exports the type, so a custom
+`cy.mount()` command can type its options with it and add options of its own:
+
+```ts
+import { type CyMountOptions } from 'cypress/vue'
+import { type Router } from 'vue-router'
+
+type MountOptions = CyMountOptions<any> & { router?: Router }
+```
+
+See [Type custom `cy.mount()` options in Vue](/app/component-testing/vue/examples#Type-custom-cymount-options-in-Vue)
+for why `CyMountOptions<any>` works where `Parameters<typeof mount>` doesn't.
 
 ### MountReturn
 

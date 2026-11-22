@@ -294,9 +294,7 @@ Cypress.Commands.add('mount', (...args) => {
 <TabItem value="cypress/support/component.ts">
 
 ```ts
-import { mount } from 'cypress/vue'
-
-type MountParams = Parameters<typeof mount>
+import { mount, type CyMountOptions } from 'cypress/vue'
 
 declare global {
   namespace Cypress {
@@ -306,13 +304,13 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mount(...args: MountParams): Chainable<any>
+      mount(component: any, options?: CyMountOptions<any>): Chainable<any>
     }
   }
 }
 
-Cypress.Commands.add('mount', (...args) => {
-  return mount(...args).then(({ wrapper }) => {
+Cypress.Commands.add('mount', (component, options) => {
+  return mount(component, options).then(({ wrapper }) => {
     return cy.wrap(wrapper).as('vue')
   })
 })
@@ -354,7 +352,7 @@ to make sure the DOM has updated or any reactive events have fired.
 ```js
 cy.mount(Stepper, { props: { initial: 100 } })
 cy.get(incrementSelector).click()
-cy.get('@vue').should(({ wrapper }) => {
+cy.get('@vue').should((wrapper) => {
   expect(wrapper.emitted('change')).to.have.length
   expect(wrapper.emitted('change')[0][0]).to.equal('101')
 })
@@ -585,6 +583,22 @@ or other global app-level setups in your Vue app, you can configure them here.
 Below are a few examples that demonstrate using a custom mount command. You can
 adjust these examples for most other providers that you need to support.
 
+### Type custom `cy.mount()` options in Vue
+
+Once a custom command changes how it calls `mount()`, `mount: typeof mount` no
+longer describes it, so the TypeScript examples on this page declare the
+signature themselves. Type the options with `CyMountOptions<any>`, which
+`cypress/vue` exports, and add your own options to it with `&`, such as
+`CyMountOptions<any> & { router?: Router }`.
+
+Avoid `Parameters<typeof mount>[1]` for Vue. `mount()` from `cypress/vue` has a
+separate signature for each way to declare a component, and `Parameters<>`
+reads only the last one, the signature for components that declare `props` as
+an object. The `props` type from that signature includes array members such as
+`toString` and `forEach`, so a spec such as
+`cy.mount(HelloWorld, { props: { msg: 'Hello Cypress' } })` fails type-checking
+with `TS2322`.
+
 ### Replicating Plugins
 
 Most applications have state management or routing. Both of these are Vue
@@ -597,7 +611,6 @@ plugins.
 import { createPinia } from 'pinia' // or Vuex
 import { createI18n } from 'vue-i18n'
 import { mount } from 'cypress/vue'
-import { h } from 'vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
@@ -614,59 +627,13 @@ const i18nOptions = {
   },
 }
 
-Cypress.Commands.add('mount', (component, ...args) => {
-  args.global = args.global || {}
-  args.global.plugins = args.global.plugins || []
-  args.global.plugins.push(createPinia())
-  args.global.plugins.push(createI18n())
+Cypress.Commands.add('mount', (component, options = {}) => {
+  options.global = options.global || {}
+  options.global.plugins = options.global.plugins || []
+  options.global.plugins.push(createPinia())
+  options.global.plugins.push(createI18n(i18nOptions))
 
-  return mount(
-    () => {
-      return h(VApp, {}, component)
-    },
-    ...args
-  )
-})
-```
-
-</TabItem>
-<TabItem value="With JSX">
-
-```jsx
-import { createPinia } from 'pinia' // or Vuex
-import { createI18n } from 'vue-i18n'
-import { mount } from 'cypress/vue'
-
-// We recommend that you pull this out
-// into a constants file that you share with
-// your main.js file.
-const i18nOptions = {
-  locale: 'en',
-  messages: {
-    en: {
-      hello: 'hello!',
-    },
-    ja: {
-      hello: 'こんにちは！',
-    },
-  },
-}
-
-Cypress.Commands.add('mount', (component, ...args) => {
-  args.global = args.global || {}
-  args.global.plugins = args.global.plugins || []
-  args.global.plugins.push(createPinia())
-  args.global.plugins.push(createI18n())
-
-  // <component> is a built-in component that comes with Vue
-  return mount(
-    () => (
-      <VApp>
-        <component is={component} />
-      </VApp>
-    ),
-    ...args
-  )
+  return mount(component, options)
 })
 ```
 
@@ -676,8 +643,7 @@ Cypress.Commands.add('mount', (component, ...args) => {
 ```ts
 import { createPinia } from 'pinia' // or Vuex
 import { createI18n } from 'vue-i18n'
-import { mount } from 'cypress/vue'
-import { h } from 'vue'
+import { mount, type CyMountOptions } from 'cypress/vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
@@ -694,8 +660,6 @@ const i18nOptions = {
   },
 }
 
-type MountParams = Parameters<typeof mount>
-
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -704,23 +668,18 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mount(...args: MountParams): Chainable<any>
+      mount(component: any, options?: CyMountOptions<any>): Chainable<any>
     }
   }
 }
 
-Cypress.Commands.add('mount', (component, ...args) => {
-  args.global = args.global || {}
-  args.global.plugins = args.global.plugins || []
-  args.global.plugins.push(createPinia())
-  args.global.plugins.push(createI18n())
+Cypress.Commands.add('mount', (component, options = {}) => {
+  options.global = options.global || {}
+  options.global.plugins = options.global.plugins || []
+  options.global.plugins.push(createPinia())
+  options.global.plugins.push(createI18n(i18nOptions))
 
-  return mount(
-    () => {
-      return h(VApp, {}, component)
-    },
-    ...args
-  )
+  return mount(component, options)
 })
 ```
 
@@ -743,33 +702,37 @@ Custom `cy.mount` commands to the rescue! You may find the JSX syntax to be more
 straightforward.
 
 You also need to replicate the plugin setup steps from the Vuetify docs for
-everything to compile.
+everything to compile. The command takes `props` out of the options and passes
+them to your component, so they don't land on the wrapper that renders `VApp`.
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
 
 ```js
-import Vuetify from 'vuetify/lib'
-import { VApp } from 'vuetify'
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+import { VApp } from 'vuetify/components'
 import { mount } from 'cypress/vue'
 import { h } from 'vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
 // your main.js file.
-const vuetifyOptions = {}
+const vuetifyOptions = { components, directives }
 
-Cypress.Commands.add('mount', (component, ...args) => {
-  args.global = args.global || {}
-  args.global.plugins = args.global.plugins || []
-  args.global.plugins.push(new Vuetify(vuetifyOptions))
+Cypress.Commands.add('mount', (component, options = {}) => {
+  // Props go to your component, not to the VApp wrapper
+  const { props, ...mountOptions } = options
 
-  return mount(
-    () => {
-      return h(VApp, {}, component)
-    },
-    ...args
-  )
+  mountOptions.global = mountOptions.global || {}
+  mountOptions.global.plugins = mountOptions.global.plugins || []
+  mountOptions.global.plugins.push(createVuetify(vuetifyOptions))
+
+  return mount(() => {
+    return h(VApp, () => h(component, props))
+  }, mountOptions)
 })
 ```
 
@@ -777,28 +740,33 @@ Cypress.Commands.add('mount', (component, ...args) => {
 <TabItem value="With JSX">
 
 ```jsx
-import Vuetify from 'vuetify/lib'
-import { VApp } from 'vuetify'
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+import { VApp } from 'vuetify/components'
 import { mount } from 'cypress/vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
 // your main.js file.
-const vuetifyOptions = {}
+const vuetifyOptions = { components, directives }
 
-Cypress.Commands.add('mount', (component, ...args) => {
-  args.global = args.global || {}
-  args.global.plugins = args.global.plugins || []
-  args.global.plugins.push(new Vuetify(vuetifyOptions))
+Cypress.Commands.add('mount', (Component, options = {}) => {
+  // Props go to your component, not to the VApp wrapper
+  const { props, ...mountOptions } = options
 
-  // <component> is a built-in component that comes with Vue
+  mountOptions.global = mountOptions.global || {}
+  mountOptions.global.plugins = mountOptions.global.plugins || []
+  mountOptions.global.plugins.push(createVuetify(vuetifyOptions))
+
   return mount(
     () => (
       <VApp>
-        <component is={component} />
+        <Component {...props} />
       </VApp>
     ),
-    ...args
+    mountOptions
   )
 })
 ```
@@ -807,17 +775,18 @@ Cypress.Commands.add('mount', (component, ...args) => {
 <TabItem value="cypress/support/component.ts">
 
 ```ts
-import Vuetify from 'vuetify/lib'
-import { VApp } from 'vuetify'
-import { mount } from 'cypress/vue'
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+import { VApp } from 'vuetify/components'
+import { mount, type CyMountOptions } from 'cypress/vue'
 import { h } from 'vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
 // your main.js file.
-const vuetifyOptions = {}
-
-type MountParams = Parameters<typeof mount>
+const vuetifyOptions = { components, directives }
 
 declare global {
   namespace Cypress {
@@ -827,22 +796,22 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mount(...args: MountParams): Chainable<any>
+      mount(component: any, options?: CyMountOptions<any>): Chainable<any>
     }
   }
 }
 
-Cypress.Commands.add('mount', (component, ...args) => {
-  args.global = args.global || {}
-  args.global.plugins = args.global.plugins || []
-  args.global.plugins.push(new Vuetify(vuetifyOptions))
+Cypress.Commands.add('mount', (component, options = {}) => {
+  // Props go to your component, not to the VApp wrapper
+  const { props, ...mountOptions } = options
 
-  return mount(
-    () => {
-      return h(VApp, {}, component)
-    },
-    ...args
-  )
+  mountOptions.global = mountOptions.global || {}
+  mountOptions.global.plugins = mountOptions.global.plugins || []
+  mountOptions.global.plugins.push(createVuetify(vuetifyOptions))
+
+  return mount(() => {
+    return h(VApp, () => h(component, props))
+  }, mountOptions)
 })
 ```
 
@@ -863,26 +832,23 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 import { routes } from '../../src/router'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
-  options.global = options.global || {}
-  options.global.plugins = options.global.plugins || []
-
-  // create router if one is not provided
-  if (!options.router) {
-    options.router = createRouter({
+  // Use the router passed in from options, or create a new one
+  const {
+    router = createRouter({
       routes: routes,
       history: createMemoryHistory(),
-    })
-  }
+    }),
+    ...mountOptions
+  } = options
+
+  // Setup options object
+  mountOptions.global = mountOptions.global || {}
+  mountOptions.global.plugins = mountOptions.global.plugins || []
 
   // Add router plugin
-  options.global.plugins.push({
-    install(app) {
-      app.use(options.router)
-    },
-  })
+  mountOptions.global.plugins.push(router)
 
-  return mount(component, options)
+  return mount(component, mountOptions)
 })
 ```
 
@@ -890,12 +856,11 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 <TabItem value="cypress/support/component.ts">
 
 ```ts
-import { mount } from 'cypress/vue'
-import { createMemoryHistory, createRouter, Router } from 'vue-router'
+import { mount, type CyMountOptions } from 'cypress/vue'
+import { createMemoryHistory, createRouter, type Router } from 'vue-router'
 import { routes } from '../../src/router'
 
-type MountParams = Parameters<typeof mount>
-type OptionsParam = MountParams[1] & { router?: Router }
+type MountOptions = CyMountOptions<any> & { router?: Router }
 
 declare global {
   namespace Cypress {
@@ -903,34 +868,31 @@ declare global {
       /**
        * Helper mount function for Vue Components
        * @param component Vue Component or JSX Element to mount
-       * @param options Options passed to Vue Test Utils
+       * @param options Options passed to Vue Test Utils, plus an optional router
        */
-      mount(component: any, options?: OptionsParam): Chainable<any>
+      mount(component: any, options?: MountOptions): Chainable<any>
     }
   }
 }
 
 Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
-  options.global = options.global || {}
-  options.global.plugins = options.global.plugins || []
-
-  // create router if one is not provided
-  if (!options.router) {
-    options.router = createRouter({
+  // Use the router passed in from options, or create a new one
+  const {
+    router = createRouter({
       routes: routes,
       history: createMemoryHistory(),
-    })
-  }
+    }),
+    ...mountOptions
+  } = options
+
+  // Setup options object
+  mountOptions.global = mountOptions.global || {}
+  mountOptions.global.plugins = mountOptions.global.plugins || []
 
   // Add router plugin
-  options.global.plugins.push({
-    install(app) {
-      app.use(options.router)
-    },
-  })
+  mountOptions.global.plugins.push(router)
 
-  return mount(component, options)
+  return mount(component, mountOptions)
 })
 ```
 
@@ -991,22 +953,20 @@ import { mount } from 'cypress/vue'
 import { getStore } from '../../src/plugins/store'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
-  options.global = options.global || {}
-  options.global.stubs = options.global.stubs || {}
-  options.global.stubs['transition'] = false
-  options.global.components = options.global.components || {}
-  options.global.plugins = options.global.plugins || []
-
   // Use store passed in from options, or initialize a new one
   const { store = getStore(), ...mountOptions } = options
 
+  // Setup options object
+  mountOptions.global = mountOptions.global || {}
+  mountOptions.global.stubs = {
+    ...mountOptions.global.stubs,
+    transition: false,
+  }
+  mountOptions.global.components = mountOptions.global.components || {}
+  mountOptions.global.plugins = mountOptions.global.plugins || []
+
   // Add Vuex plugin
-  options.global.plugins.push({
-    install(app) {
-      app.use(store)
-    },
-  })
+  mountOptions.global.plugins.push(store)
 
   return mount(component, mountOptions)
 })
@@ -1024,12 +984,11 @@ ensure changes to the store don't affect other tests.
 <TabItem value="cypress/support/component.ts">
 
 ```ts
-import { mount } from 'cypress/vue'
+import { mount, type CyMountOptions } from 'cypress/vue'
 import { getStore } from '../../src/plugins/store'
-import { Store } from 'vuex'
+import type { Store } from 'vuex'
 
-type MountParams = Parameters<typeof mount>
-type OptionsParam = MountParams[1]
+type MountOptions = CyMountOptions<any> & { store?: Store<any> }
 
 declare global {
   namespace Cypress {
@@ -1037,33 +996,28 @@ declare global {
       /**
        * Helper mount function for Vue Components
        * @param component Vue Component or JSX Element to mount
-       * @param options Options passed to Vue Test Utils
+       * @param options Options passed to Vue Test Utils, plus an optional store
        */
-      mount(
-        component: any,
-        options?: OptionsParam & { store?: Store }
-      ): Chainable<any>
+      mount(component: any, options?: MountOptions): Chainable<any>
     }
   }
 }
 
 Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
-  options.global = options.global || {}
-  options.global.stubs = options.global.stubs || {}
-  options.global.stubs['transition'] = false
-  options.global.components = options.global.components || {}
-  options.global.plugins = options.global.plugins || []
-
   // Use store passed in from options, or initialize a new one
   const { store = getStore(), ...mountOptions } = options
 
+  // Setup options object
+  mountOptions.global = mountOptions.global || {}
+  mountOptions.global.stubs = {
+    ...mountOptions.global.stubs,
+    transition: false,
+  }
+  mountOptions.global.components = mountOptions.global.components || {}
+  mountOptions.global.plugins = mountOptions.global.plugins || []
+
   // Add Vuex plugin
-  options.global.plugins.push({
-    install(app) {
-      app.use(store)
-    },
-  })
+  mountOptions.global.plugins.push(store)
 
   return mount(component, mountOptions)
 })
@@ -1125,11 +1079,8 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 <TabItem value="cypress/support/component.ts">
 
 ```ts
-import { mount } from 'cypress/vue'
+import { mount, type CyMountOptions } from 'cypress/vue'
 import Button from '../../src/components/Button.vue'
-
-type MountParams = Parameters<typeof mount>
-type OptionsParam = MountParams[1]
 
 declare global {
   namespace Cypress {
@@ -1139,7 +1090,7 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mount(component: any, options?: OptionsParam): Chainable<any>
+      mount(component: any, options?: CyMountOptions<any>): Chainable<any>
     }
   }
 }

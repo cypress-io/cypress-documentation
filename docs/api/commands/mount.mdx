@@ -410,10 +410,20 @@ it('renders in the dark theme', () => {
 })
 ```
 
-The [React Router](/app/component-testing/react/examples#React-Router),
-[Redux](/app/component-testing/react/examples#Redux), and
-[Vue Router](/app/component-testing/vue/examples#Vue-Router) examples follow the
-same approach.
+The [React Router](/app/component-testing/react/examples#React-Router) and
+[Redux](/app/component-testing/react/examples#Redux) examples follow the same
+approach.
+
+For Vue, type the options with `CyMountOptions<any>` from `cypress/vue` instead
+of `Parameters<typeof mount>[1]`. `mount()` from `cypress/vue` has a separate
+signature for each way to declare a component, and `Parameters<>` reads only
+the last one, so the `props` type it produces rejects the props your specs pass.
+The [Vue Router](/app/component-testing/vue/examples#Vue-Router) example adds a
+`router` option this way:
+
+```ts
+type MountOptions = CyMountOptions<any> & { router?: Router }
+```
 
 ### Register more than one mount command
 
