@@ -33,15 +33,16 @@ To stop tests after a failure in any spec file, add the following snippet to you
 ```javascript title="cypress/support/e2e.js"
 afterEach(function () {
   const test = this.currentTest
-  const isLastAttempt = test.currentRetry() === test.retries()
+  const isLastAttempt = test.currentRetry() >= test.retries()
 
   if (test.state === 'failed' && isLastAttempt) {
     Cypress.stop()
+    return
   }
 })
 ```
 
-The `isLastAttempt` check waits for the final attempt when [test retries](/app/guides/test-retries) are on, so a test that passes on a retry doesn't stop the run.
+The `isLastAttempt` check waits for the final attempt when [test retries](/app/guides/test-retries) are on, so a test that passes on a retry doesn't stop the run. With the experimental `detect-flake-but-always-fail` strategy and `stopIfAnyPassed: true`, a test whose final attempt passes still counts as failed, but `this.currentTest.state` reads `'passed'`, so the hook doesn't stop the run.
 
 To skip only the remaining tests in one `describe` block and let the rest of the spec run, see [Skip dependent Cypress tests after a failure](/app/core-concepts/writing-and-organizing-tests#Skip-dependent-Cypress-tests-after-a-failure).
 
@@ -49,7 +50,7 @@ To skip only the remaining tests in one `describe` block and let the rest of the
 
 ```javascript
 beforeEach(() => {
-  if (env !== 'expected-condition') {
+  if (Cypress.expose('environment') !== 'staging') {
     cy.log('Stop tests - environment is not setup correctly')
     Cypress.stop()
     return

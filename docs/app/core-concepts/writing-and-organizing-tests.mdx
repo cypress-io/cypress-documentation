@@ -876,7 +876,7 @@ describe('Checkout', { testIsolation: false }, () => {
 
   afterEach(function () {
     const test = this.currentTest
-    const isLastAttempt = test.currentRetry() === test.retries()
+    const isLastAttempt = test.currentRetry() >= test.retries()
 
     if (test.state === 'failed' && isLastAttempt) {
       previousTestFailed = true
@@ -902,7 +902,10 @@ Keep these details in mind:
   bound to the test context.
 - The `isLastAttempt` check matters when [test retries](/app/guides/test-retries)
   are on. Without it, a failed first attempt marks the block as failed, and
-  Cypress skips the retry that would have passed.
+  Cypress skips the retry that would have passed. With the experimental
+  `detect-flake-but-always-fail` strategy and `stopIfAnyPassed: true`, a test
+  whose final attempt passes still counts as failed, but
+  `this.currentTest.state` reads `'passed'`, so the tests after it still run.
 - `testIsolation: false` keeps the page between tests in the block, which is
   what lets the second test pick up where the first one left off.
 
@@ -1291,13 +1294,16 @@ can fix it.
 ### Pending
 
 A **pending** test is one that Cypress intentionally doesn't run because you
-told it not to. A test ends up pending in three ways:
+told it not to. A test ends up pending in four ways:
 
 - **The test has no body**: a placeholder for a test you haven't written yet, such
   as `it('is not written yet')`.
 - **The test is explicitly skipped**: using `it.skip()` or the `xit()` alias.
 - **The test is excluded from the current browser**: a test configured with the
   `browser` option to run only in a browser you aren't currently using.
+- **The test skips itself at runtime**: a call to `this.skip()` in the test or
+  in a `beforeEach` hook, as in
+  [skipping dependent tests after a failure](#Skip-dependent-Cypress-tests-after-a-failure).
 
 Each of the four tests below is pending (the browser-specific one is pending
 whenever the run isn't using Chrome):
