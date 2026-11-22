@@ -581,28 +581,16 @@ suite:
 ```javascript title="cypress/e2e/users/account.cy.js"
 describe('profile', { retries: { runMode: 1 } }, () => {
   beforeEach(function signIn() {
-    cy.visit('/sign-in')
     // fails: the sign-in form never renders
-    cy.get('[data-cy=sign-in-form]').should('be.visible')
+    cy.get('[data-cy=sign-in-form]')
   })
 
-  it('shows the user name', () => {
-    cy.get('[data-cy=user-name]').should('be.visible')
-  })
+  it('shows the user name', () => {})
 })
 
 describe('orders', () => {
-  beforeEach(() => {
-    cy.visit('/orders')
-  })
-
-  it('lists orders', () => {
-    cy.get('h1').should('be.visible')
-  })
-
-  it('cancels an order', () => {
-    cy.get('h1').should('be.visible')
-  })
+  it('lists orders', () => {})
+  it('cancels an order', () => {})
 
   after(function deleteOrders() {
     // fails: the server responds with a 500 error
