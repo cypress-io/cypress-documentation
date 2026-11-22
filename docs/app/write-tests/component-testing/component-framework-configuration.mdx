@@ -535,87 +535,54 @@ devServerEvents.on('dev-server:specs:changed', ({ specs }) => {
 
 Vanilla JavaScript components, such as custom elements written as native ES
 modules, run in the browser without a compile step. A custom dev server for
-these components skips the bundler and serves your project files as they are:
-
-- `[devServerPublicPathRoute]/index.html` returns your `indexHtmlFile` with the
-  client script injected.
-- Every other path under `devServerPublicPathRoute` returns the matching file
-  from your project root, unchanged.
-
-The dev server below uses only Node's built-in `http`, `fs`, and `path`
-modules, so it adds no dependencies to your project:
+these components serves your project files as they are, using only Node's
+built-in modules:
 
 ```ts copyTsToJs title="cypress/dev-server.ts"
 import { createServer } from 'node:http'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
-const contentTypes: Record<string, string> = {
-  '.css': 'text/css',
-  '.html': 'text/html',
-  '.js': 'text/javascript',
-  '.json': 'application/json',
-  '.mjs': 'text/javascript',
-  '.png': 'image/png',
-  '.svg': 'image/svg+xml',
-  '.woff2': 'font/woff2',
-}
-
-// Runs in the spec iframe and loads the support file and spec as native ES modules.
-const clientScript = (supportPath: string | null) => `
-  const CypressInstance = (window.Cypress = parent.Cypress)
-  const route = CypressInstance.config('devServerPublicPathRoute')
-  const supportPath = ${JSON.stringify(supportPath)}
-  const importsToLoad = []
-
-  if (supportPath) {
-    importsToLoad.push(() => import(route + '/' + supportPath))
-  }
-  importsToLoad.push(() => import(route + '/' + CypressInstance.spec.relative))
-
-  CypressInstance.onSpecWindow(window, importsToLoad)
-  CypressInstance.action('app:window:before:load', window)
-`
-
 export const startDevServer = ({
   cypressConfig,
 }: Cypress.DevServerConfig): Promise<Cypress.ResolvedDevServerConfig> => {
-  const { devServerPublicPathRoute, indexHtmlFile, supportFile } = cypressConfig
-  const root = path.resolve(cypressConfig.projectRoot)
+  const {
+    devServerPublicPathRoute: route,
+    indexHtmlFile,
+    projectRoot,
+    supportFile,
+  } = cypressConfig
+  const supportUrl =
+    supportFile &&
+    path.relative(projectRoot, supportFile).split(path.sep).join('/')
 
-  // Computed here so the URL uses forward slashes on every platform.
-  const supportPath = supportFile
-    ? path.relative(root, supportFile).split(path.sep).join('/')
-    : null
-  const scriptTag = `<script type="module">${clientScript(supportPath)}</script>`
+  // Loads the support file and the spec into the spec iframe as ES modules.
+  const clientScript = `<script type="module">
+    const CypressInstance = (window.Cypress = parent.Cypress)
+    CypressInstance.onSpecWindow(window, [
+      ${supportUrl ? `() => import('${route}/${supportUrl}'),` : ''}
+      () => import('${route}/' + CypressInstance.spec.relative),
+    ])
+    CypressInstance.action('app:window:before:load', window)
+  </script>`
 
   const server = createServer(async (req, res) => {
     try {
-      const { pathname } = new URL(req.url ?? '/', 'http://localhost')
-      const requestPath = decodeURIComponent(
-        pathname.slice(devServerPublicPathRoute.length)
+      const file = new URL(req.url ?? '/', 'http://localhost').pathname.slice(
+        route.length
       )
 
-      if (requestPath === '/index.html') {
-        const html = await readFile(path.resolve(root, indexHtmlFile), 'utf8')
+      if (file === '/index.html') {
+        const html = await readFile(
+          path.join(projectRoot, indexHtmlFile),
+          'utf8'
+        )
         res.setHeader('Content-Type', 'text/html')
-        // Inject before </head>, or at the end if the file has no head.
-        res.end(html.replace(/<\/head>|$/i, `${scriptTag}$&`))
-        return
+        res.end(html.replace('</head>', `${clientScript}</head>`))
+      } else {
+        res.setHeader('Content-Type', 'text/javascript')
+        res.end(await readFile(path.join(projectRoot, file)))
       }
-
-      const filePath = path.resolve(root, '.' + requestPath)
-      if (!filePath.startsWith(root + path.sep)) {
-        res.statusCode = 403
-        res.end()
-        return
-      }
-
-      res.setHeader(
-        'Content-Type',
-        contentTypes[path.extname(filePath)] ?? 'application/octet-stream'
-      )
-      res.end(await readFile(filePath))
     } catch {
       res.statusCode = 404
       res.end()
@@ -624,15 +591,17 @@ export const startDevServer = ({
 
   return new Promise((resolve) => {
     server.listen(0, () => {
-      const address = server.address()
-      resolve({
-        port: typeof address === 'object' && address ? address.port : 0,
-        close: (done) => server.close((err) => done?.(err)),
-      })
+      const { port } = server.address() as { port: number }
+      resolve({ port, close: (done) => server.close(done) })
     })
   })
 }
 ```
+
+The server answers `[devServerPublicPathRoute]/index.html` with your
+`indexHtmlFile`, injecting the client script before `</head>`. Every other path
+returns the matching file from your project root as JavaScript. To serve CSS,
+images, or fonts too, set the `Content-Type` from the file extension.
 
 Pass `startDevServer` to `component.devServer`:
 
@@ -664,52 +633,42 @@ Cypress.Commands.add('mount', (element) => {
 })
 ```
 
-A spec then imports the component module and mounts it like any other
-component. The browser loads the spec and every module it imports straight
-from the dev server:
+A spec then imports the component module and mounts it. The browser loads the
+spec and every module it imports straight from the dev server:
 
-```js title="src/counter-button.js"
-class CounterButton extends HTMLElement {
-  connectedCallback() {
-    let count = 0
-    this.innerHTML = '<button type="button">Count: 0</button>'
-    const button = this.querySelector('button')
-    button.addEventListener('click', () => {
-      count += 1
-      button.textContent = `Count: ${count}`
-    })
+```js title="src/hello-world.js"
+customElements.define(
+  'hello-world',
+  class extends HTMLElement {
+    connectedCallback() {
+      this.textContent = 'Hello, world!'
+    }
   }
-}
-
-customElements.define('counter-button', CounterButton)
+)
 ```
 
-```js title="src/counter-button.cy.js"
-import './counter-button.js'
+```js title="src/hello-world.cy.js"
+import './hello-world.js'
 
-describe('<counter-button>', () => {
-  it('counts clicks', () => {
-    cy.mount(document.createElement('counter-button'))
-    cy.contains('button', 'Count: 0').click()
-    cy.contains('button', 'Count: 1')
-  })
+it('renders a greeting', () => {
+  cy.mount(document.createElement('hello-world'))
+  cy.contains('Hello, world!')
 })
 ```
 
-Because the browser runs your files as written, every import must be a path
-the browser can resolve, such as `./counter-button.js`. Bare package imports
-like `import { html } from 'lit'` need an
-[import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap)
-in your index file or a bundler.
+Keep these behaviors in mind:
 
-The server doesn't watch your files. To rerun the open spec when you save a
-file during `cypress open`, watch your source files and emit
-`dev-server:compile:success` on `devServerEvents` when one changes, as
-described in [Fully Custom Dev Server](#Fully-Custom-Dev-Server).
-
-[Community framework definitions](/app/component-testing/custom-frameworks)
-still require Vite or Webpack, since they plug into one of the built-in dev
-servers.
+- Every import must be a path the browser can resolve, such as
+  `./hello-world.js`. Bare package imports like `import { html } from 'lit'`
+  need an
+  [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap)
+  in your index file.
+- The server doesn't watch your files. To rerun the open spec when you save a
+  file during `cypress open`, emit `dev-server:compile:success` on
+  `devServerEvents` when a file changes.
+- [Community framework definitions](/app/component-testing/custom-frameworks)
+  still require Vite or Webpack, since they plug into one of the built-in dev
+  servers.
 
 ## Spec Pattern for Component Tests
 
