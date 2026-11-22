@@ -79,32 +79,35 @@ $env:HTTP_PROXY = "http://my-company-proxy.com"
   </TabItem>
 </OsTabs>
 
-You can also set `NO_PROXY` to bypass the proxy for additional domains (loopback
-addresses such as `localhost` are always bypassed):
+You can also set `NO_PROXY` to bypass the proxy for additional hosts (loopback
+addresses such as `localhost` are always bypassed). This example bypasses the
+proxy for `cypress.io` and every subdomain of `cypress.io`. See
+[how Cypress matches `NO_PROXY` entries](#How-Cypress-matches-NO_PROXY-entries)
+for why the list names the domain twice.
 
 <OsTabs>
   <TabItem value="macos" label="macOS">
 
 ```shell
-export NO_PROXY=localhost,google.com,apple.com
+export NO_PROXY=cypress.io,.cypress.io
 ```
 
   </TabItem>
   <TabItem value="linux" label="Linux">
 
 ```shell
-export NO_PROXY=localhost,google.com,apple.com
+export NO_PROXY=cypress.io,.cypress.io
 ```
 
   </TabItem>
   <TabItem value="windows" label="Windows">
 
 ```shell title="Command Prompt"
-set NO_PROXY=localhost,google.com,apple.com
+set NO_PROXY=cypress.io,.cypress.io
 ```
 
 ```shell title="PowerShell"
-$env:NO_PROXY = "localhost,google.com,apple.com"
+$env:NO_PROXY = "cypress.io,.cypress.io"
 ```
 
   </TabItem>
@@ -198,8 +201,55 @@ bypass the proxy for specific domains.
 
 ### Bypassing the proxy with `NO_PROXY`
 
-To bypass the proxy for certain domains, set the `NO_PROXY` environment variable
-to a comma-separated list of domain names that should not be proxied.
+To bypass the proxy for certain hosts, set the `NO_PROXY` environment variable
+to a list of hostnames that should not be proxied, such as
+`NO_PROXY=cypress.io,.cypress.io`. Cypress applies the same `NO_PROXY` rules when
+it downloads the binary and when it runs your tests.
+
+#### How Cypress matches `NO_PROXY` entries
+
+Cypress compares each entry with the hostname of the request:
+
+| Entry             | Bypasses the proxy for              | Still proxied                  |
+| ----------------- | ----------------------------------- | ------------------------------ |
+| `*.cypress.io`    | `docs.cypress.io`, `app.cypress.io` | `cypress.io`                   |
+| `.cypress.io`     | `docs.cypress.io`, `app.cypress.io` | `cypress.io`                   |
+| `cypress.io`      | `cypress.io` only                   | `docs.cypress.io`              |
+| `cypress.io:8443` | `cypress.io` on port `8443`         | `cypress.io` on any other port |
+| `docs.cypress.io` | `docs.cypress.io` only              | `cypress.io`, `app.cypress.io` |
+
+Keep these behaviors in mind when you write the list:
+
+- An entry without a leading `.` or `*.` matches only that exact hostname.
+- An entry that starts with `.` or `*.` matches every subdomain but not the
+  domain itself. To bypass both, list both forms: `cypress.io,.cypress.io`.
+- An entry with a `:port` matches only requests to that port. A URL without a
+  port uses the default for its protocol, so `docs.cypress.io:443` matches
+  `https://docs.cypress.io`.
+- Commas and whitespace both separate entries, so a stray space, such as the one
+  `set NO_PROXY=cypress.io && npm test` leaves at the end of the value in
+  Windows Command Prompt, doesn't break matching.
+- Matching ignores case.
+- An IP address matches only that exact address. IP ranges in CIDR notation,
+  such as `10.0.0.0/8`, aren't supported, so list each address you need.
+
+:::caution
+
+**`NO_PROXY` matching differs from curl and wget**
+
+curl and wget treat a bare entry as a domain suffix, so `NO_PROXY=cypress.io`
+also bypasses the proxy for `docs.cypress.io` in those tools. In Cypress, the
+same value still sends `docs.cypress.io` through the proxy. If a `NO_PROXY` value
+works with curl but not with Cypress, add the subdomain form next to the bare
+entry:
+
+```shell
+export NO_PROXY=cypress.io,.cypress.io
+```
+
+:::
+
+#### Loopback addresses in `NO_PROXY`
 
 Cypress always appends `127.0.0.1`, `::1`, and `localhost` to `NO_PROXY` so that
 loopback traffic is never proxied. Cypress appends these entries even when you set your own
@@ -271,12 +321,14 @@ Cypress is currently using:
   alt="Proxy configuration in the Desktop app"
 />
 
-You can also check your proxy settings from the command line. Running
-`cypress info` prints the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` values
-Cypress detects, which is a useful alternative to the Settings UI, especially in
-CI or other headless environments:
-
-<CypressCommandTabs command="info" />
+To check the proxy settings from the command line, such as in CI, run Cypress
+with the [`DEBUG` environment variable](/app/references/troubleshooting#Print-DEBUG-logs)
+set to `cypress:*` and look for lines that start with
+`cypress:server:util:proxy`. Those lines show the `HTTP_PROXY`, `HTTPS_PROXY`,
+and `NO_PROXY` values Cypress resolved, including the loopback entries it
+appends to `NO_PROXY`. A proxy URL can contain a username and password, so
+redact the output before you share it. `cypress info` doesn't print proxy
+settings.
 
 ## Managing operating system environment variables
 

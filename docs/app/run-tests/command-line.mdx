@@ -919,12 +919,6 @@ Each subcommand supports a `--help` or `-h` flag to view the options help conten
 Prints information about Cypress and the current environment such as:
 
 - A list of browsers Cypress detected on the machine.
-- Any environment variables that control
-  [proxy configuration](/app/references/proxy-configuration).
-- Any environment variables that start with the `CYPRESS` prefix (with sensitive
-  variables like
-  [record key](/cloud/account-management/projects#Record-key) masked for
-  security).
 - The location where Cypress stores run-time data.
 - The location where Cypress caches the binary.
 - Operating system information.
@@ -956,9 +950,6 @@ Examples:
 - cypress run --browser chrome
 
 Learn More: https://on.cypress.io/launching-browsers
-
-Proxy Settings: none detected
-Environment Variables: none detected
 
 Application Data: /path/to/app/data/cypress/cy/development
 Browser Profiles: /path/to/app/data/cypress/cy/development/browsers
