@@ -1,6 +1,6 @@
 ---
 title: 'Angular examples'
-description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, and customize `cy.mount()` for Angular and the Angular Router.
+description: Learn how to mount an Angular component, pass data to an Angular component, shallow test standalone components, test Angular signals, and customize `cy.mount()` for Angular and the Angular Router.
 sidebar_label: Angular examples
 sidebar_position: 20
 slug: /app/component-testing/angular/examples
@@ -76,6 +76,11 @@ cy.mount(ComponentThatFetchesData, {
 })
 ```
 
+These options don't change what a standalone component imports or provides for
+itself. To replace a standalone component's children or its component-level
+providers, see
+[Shallow test Angular standalone components](#Shallow-test-Angular-standalone-components).
+
 See
 [Default Declarations, Providers, or Imports](/app/component-testing/angular/examples#Default-Declarations-Providers-or-Imports)
 to set up common options in a custom `cy.mount()` command to avoid having to
@@ -91,6 +96,189 @@ This self-sufficiency means that in most cases you can mount a Standalone Compon
 cy.mount(MyStandaloneComponent)
 ```
 
+### Shallow test Angular standalone components
+
+A shallow test keeps a component test focused on one component. A stub stands in
+for a child that fetches data, draws a map, or shows ads, so the test renders the
+same output on every run and fails only when the component under test changes.
+
+A standalone component's template renders the components listed in its own
+`imports` array. The `imports` and `declarations` mount options configure the
+test module, not the component, so they can't replace those children. Instead,
+call Angular's
+[`TestBed.overrideComponent()`](https://angular.dev/api/core/testing/TestBed)
+before `cy.mount()` to change the component's metadata for the current test.
+
+The examples below test a `ProductPage` that renders a `ReviewsList`, which in
+turn renders an `AdBanner`:
+
+```ts title="src/app/product-page/product-page.ts"
+import { Component } from '@angular/core'
+import { ReviewsList } from '../reviews-list/reviews-list'
+
+@Component({
+  selector: 'app-product-page',
+  imports: [ReviewsList],
+  template: `
+    <h1 data-cy="product-name">Trail running shoes</h1>
+    <app-reviews-list productId="42" />
+  `,
+})
+export class ProductPage {}
+```
+
+```ts title="src/app/reviews-list/reviews-list.ts"
+import { Component, Injectable, inject, input } from '@angular/core'
+import { AdBanner } from '../ad-banner/ad-banner'
+
+@Injectable()
+export class ReviewsService {
+  summary(productId: string) {
+    return `Loading reviews for product ${productId}`
+  }
+}
+
+@Component({
+  selector: 'app-reviews-list',
+  imports: [AdBanner],
+  providers: [ReviewsService],
+  template: `
+    <p data-cy="reviews-summary">{{ reviews.summary(productId()) }}</p>
+    <app-ad-banner />
+  `,
+})
+export class ReviewsList {
+  readonly productId = input.required<string>()
+  protected readonly reviews = inject(ReviewsService)
+}
+```
+
+#### Replace a child of an Angular standalone component
+
+Declare a stub with the same selector and inputs as the child it replaces, so
+the parent's template compiles unchanged. Then `remove` the real child from the
+parent's `imports` and `add` the stub:
+
+```ts title="src/app/product-page/product-page.cy.ts"
+import { Component, input } from '@angular/core'
+import { TestBed } from '@angular/core/testing'
+import { ReviewsList } from '../reviews-list/reviews-list'
+import { ProductPage } from './product-page'
+
+@Component({
+  selector: 'app-reviews-list',
+  template: `<p data-cy="reviews-stub">Reviews for {{ productId() }}</p>`,
+})
+class ReviewsListStub {
+  readonly productId = input.required<string>()
+}
+
+it('renders the product page with a stubbed reviews list', () => {
+  TestBed.overrideComponent(ProductPage, {
+    remove: { imports: [ReviewsList] },
+    add: { imports: [ReviewsListStub] },
+  })
+
+  cy.mount(ProductPage)
+
+  cy.get('[data-cy=product-name]').should('have.text', 'Trail running shoes')
+  cy.get('[data-cy=reviews-stub]').should('have.text', 'Reviews for 42')
+  cy.get('[data-cy=reviews-summary]').should('not.exist')
+})
+```
+
+To replace the whole array instead, pass `set`, such as
+`{ set: { imports: [ReviewsListStub] } }`. A `set` override replaces every
+import the component lists, so include anything else its template still needs.
+
+#### Remove a nested component from an Angular test
+
+`TestBed.overrideComponent()` works on any component in the tree, not only the
+one you mount. The test below mounts `ProductPage` and removes `AdBanner` from
+`ReviewsList`, one level further down. Adding `CUSTOM_ELEMENTS_SCHEMA` to
+`ReviewsList` stops Angular from logging an `NG0304` "is not a known element"
+error for the `<app-ad-banner>` tag left in its template:
+
+```ts title="src/app/product-page/product-page.cy.ts"
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+import { TestBed } from '@angular/core/testing'
+import { AdBanner } from '../ad-banner/ad-banner'
+import { ReviewsList } from '../reviews-list/reviews-list'
+import { ProductPage } from './product-page'
+
+it('renders the reviews without the ad banner', () => {
+  TestBed.overrideComponent(ReviewsList, {
+    remove: { imports: [AdBanner] },
+    add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+  })
+
+  cy.mount(ProductPage)
+
+  cy.get('[data-cy=reviews-summary]').should(
+    'have.text',
+    'Loading reviews for product 42'
+  )
+  cy.get('[data-cy=ad-banner]').should('not.exist')
+})
+```
+
+#### Override imports for an Angular template mount
+
+Overrides also apply when you mount a
+[template string](#Using-Angular-Template-Syntax). Pass the standalone component
+in the `imports` mount option so the template can use its selector:
+
+```ts title="src/app/product-page/product-page.cy.ts"
+it('renders a stubbed reviews list from a template', () => {
+  TestBed.overrideComponent(ProductPage, {
+    remove: { imports: [ReviewsList] },
+    add: { imports: [ReviewsListStub] },
+  })
+
+  cy.mount('<app-product-page />', { imports: [ProductPage] })
+
+  cy.get('[data-cy=reviews-stub]').should('have.text', 'Reviews for 42')
+})
+```
+
+#### Override Angular component-level providers
+
+The `providers` mount option adds providers to the test module, so it doesn't
+replace a provider listed in a component's own `providers` array, such as
+`ReviewsService` in `ReviewsList`. To replace one, override the component's
+`providers` with the same API:
+
+```ts title="src/app/product-page/product-page.cy.ts"
+import { TestBed } from '@angular/core/testing'
+import { ReviewsList, ReviewsService } from '../reviews-list/reviews-list'
+import { ProductPage } from './product-page'
+
+it('shows the summary from a stubbed reviews service', () => {
+  TestBed.overrideComponent(ReviewsList, {
+    set: {
+      providers: [
+        { provide: ReviewsService, useValue: { summary: () => '3 reviews' } },
+      ],
+    },
+  })
+
+  cy.mount(ProductPage)
+
+  cy.get('[data-cy=reviews-summary]').should('have.text', '3 reviews')
+})
+```
+
+#### Scope TestBed overrides to a single Angular test
+
+Keep these behaviors in mind when you use `TestBed.overrideComponent()`:
+
+- Call it before `cy.mount()`. Once the component is mounted, Angular throws
+  `Cannot override component metadata when the test module has already been instantiated`.
+- Cypress resets the TestBed after each test, so an override applies only to
+  the test that sets it, and the next test renders the real components.
+- Calling `cy.mount()` a second time in the same test also resets the TestBed
+  and discards the overrides. Give each overridden scenario its own test.
+
 ## Using Angular Template Syntax
 
 The `cy.mount()` method also supports the Angular template syntax when mounting
@@ -103,8 +291,9 @@ cy.mount(`<app-stepper [count]="100"></app-stepper>`, {
 })
 ```
 
-> When using template syntax, the component needs to added to the declarations
-> in the options parameter.
+> When using template syntax, add the component to `declarations` in the
+> options parameter. Add a standalone component to `imports` instead, since
+> Angular throws an error when a standalone component is in `declarations`.
 
 Using with event emitter spy:
 
