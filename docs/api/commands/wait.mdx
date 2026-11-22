@@ -207,6 +207,61 @@ cy.wait('@getBooks')
 cy.get('#book-results').should('have.length', 1)
 ```
 
+#### Wait for a request with a specific payload
+
+`cy.wait()` yields the next matching request, whatever its body holds. An
+assertion that fails on that request doesn't make `cy.wait()` move on to a
+later one, because `cy.wait()` is not a query (see
+[Retry-ability](#Retry-ability)). The difference matters when your app sends an unknown
+number of similar requests, such as a debounced autosave, and the test cares
+about one of them.
+
+To wait for the request that carries a specific value, alias only that request.
+Set `req.alias` in a route handler when the body matches, as in
+[Aliasing individual requests](/api/commands/intercept#Aliasing-individual-requests),
+and wait on that alias:
+
+```js
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.variables?.input?.notes === 'final') {
+    req.alias = 'saveFinalNotes'
+  }
+})
+
+cy.get('[data-cy=notes]').type('final')
+
+// waits for the request whose body has notes: 'final'
+cy.wait('@saveFinalNotes').its('response.statusCode').should('eq', 200)
+```
+
+The handler adds its alias alongside any alias another route gives the same
+request, so a shared intercept that aliases every request by its GraphQL
+operation name keeps working. See
+[Add more than one alias to an intercepted request](/api/commands/intercept#Add-more-than-one-alias-to-an-intercepted-request).
+
+To assert on the requests sent so far instead, use
+[`cy.get()`](/api/commands/get#Get-all-aliased-intercepts) with the `.all`
+suffix. `cy.get()` is a query, so the assertion retries until one of the
+interceptions matches:
+
+```js
+cy.intercept('POST', '/graphql').as('saveNotes')
+
+cy.get('[data-cy=notes]').type('final')
+
+cy.get('@saveNotes.all').should((interceptions) => {
+  const notes = interceptions.map(
+    (interception) => interception.request.body.variables.input.notes
+  )
+
+  expect(notes).to.include('final')
+})
+```
+
+`cy.get('@saveNotes.all')` includes each interception as soon as its request
+goes out, so a matching request's `response` can still be `undefined`. When the
+test needs the response, wait on a per-request alias.
+
 ### Aliases
 
 #### You can pass an array of aliases that are waited on before resolving.
