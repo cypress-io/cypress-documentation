@@ -470,13 +470,13 @@ explains this in detail.
 A `.should('not.exist')` assertion passes the first time Cypress finds no
 matching element, so the assertion can pass before the element renders or after
 the element renders and disappears. Increasing the `timeout` doesn't change
-that, since the assertion still passes on its first try.
+that: extra time only gives the assertion more chances to pass.
 
 To check that an element never appeared, either wait for the work that would
 render the element before asserting, or register a `MutationObserver` in
 [`cy.visit()`](/api/commands/visit)'s `onBeforeLoad` option to record every
 element the app adds. See
-[Verify that an element never appears](/app/references/assertions#Verify-that-an-element-never-appears)
+[Verify that an element never appears on the page](/app/references/assertions#Verify-that-an-element-never-appears-on-the-page)
 for both approaches.
 
 ### <Icon name="angle-right" /> Can I stop a test partway through and keep the steps that already ran?
