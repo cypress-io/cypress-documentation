@@ -81,7 +81,7 @@ Pass in an options object to `Cypress.log()`.
 | `message`      | `command args`        | The message shown next to the command name in the Command Log.                                                            |
 | `consoleProps` | `function() {}`       | A function that returns an object. Cypress prints the object's properties in the DevTools console when you click the log. |
 | `autoEnd`      | `true`                | Set to `false` to manually control when the log ends. Required for commands that finish asynchronously.                   |
-| `type`         | `'parent'`            | The nesting type of the log entry: `'parent'` or `'child'`. Child logs appear indented beneath parent logs.               |
+| `type`         | `type of the command` | The nesting type of the log entry: `'parent'` or `'child'`. Child logs appear indented beneath parent logs.               |
 | `end`          | `false`               | Set to `true` to immediately mark the log as finished when it is created.                                                 |
 
 ### Return Value
