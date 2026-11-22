@@ -33,6 +33,31 @@ You can [install Cypress](/app/get-started/install-cypress) on Mac,
 Linux, and Windows. For additional information, see our
 [System requirements](/app/get-started/install-cypress#System-requirements).
 
+### <Icon name="angle-right" /> Which browsers does Cypress support, and can I use one it doesn't detect, such as Island?
+
+Cypress detects the browsers in the
+[Supported browsers](/app/references/launching-browsers#Supported-browsers)
+list automatically. Other Chromium-based browsers, such as the
+[Island](https://www.island.io/) enterprise browser, [Brave](https://brave.com/),
+or [Vivaldi](https://vivaldi.com/), don't appear in the browser list on their
+own, but you can add them yourself.
+
+First, try passing the browser's executable path to `--browser`:
+
+<CypressCommandTabs command="open --browser /path/to/Island" />
+
+Cypress runs the executable with `--version` and launches the browser when the
+output matches a browser family Cypress knows.
+[Launching by a path](/app/references/launching-browsers#Launching-by-a-path)
+covers this option in more detail.
+
+If Cypress reports `Unable to find browser with path`, add the browser to
+`config.browsers` in `setupNodeEvents` with `family: 'chromium'`. The browser
+then appears in the browser list in `cypress open`, and Cypress drives it like
+any other browser in the `chromium` family. The
+[Customize available browsers](/app/references/launching-browsers#Customize-available-browsers)
+section has a complete example.
+
 ### <Icon name="angle-right" /> Do you support native mobile apps?
 
 Cypress will never be able to run on a native mobile app, but we can test some
