@@ -336,7 +336,7 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 By default, Cypress launches Chromium-based browsers with the
 `--use-fake-device-for-media-stream` and `--use-fake-ui-for-media-stream`
 switches. The switches replace the camera with a fake video and accept the
-camera permission prompt, so you can test webcam features without a camera.
+camera permission prompt, so webcam tests run without a camera.
 
 <DocsImage
   src="/img/api/browser-launch-fake-video.gif"
@@ -442,6 +442,10 @@ Keep these behaviors in mind:
 - The task overwrites the placeholder, so give the placeholder its own file
   name. Because the config recreates the placeholder on each run, you can add
   it to `.gitignore`.
+- The placeholder keeps the last video a test copied in, for the rest of the
+  run and across specs. Set the video in every test that uses the camera, or
+  reset it in a `beforeEach()` with
+  `cy.task('setFakeWebcamVideo', 'webcam-default.y4m')`.
 - A stream that's already open can pick up the overwritten file partway
   through, or keep playing the previous video, depending on the browser
   version, the platform, and the video format. Swapping before the camera starts
