@@ -401,14 +401,23 @@ For more guidance around aliasing requests with GraphQL, see
 ### Add more than one alias to an intercepted request
 
 A request can carry more than one alias. Every `cy.intercept()` route that a
-request reaches records the request under that route's own alias, so code in
+request reaches records the request under that route's own alias. Code in
 different places, such as a custom command and the test that calls it, can each
 alias the same request with a route of its own.
+
+Chaining a second `.as()` onto one route doesn't add an alias. `cy.intercept()`
+yields `null`, and `.as()` yields the same subject it was given, so the second
+`.as()` aliases `null`, and `cy.wait()` on that alias fails:
+
+```js
+// ❌ `@second` is an alias for `null`, not the route
+cy.intercept('GET', '/api/users').as('first').as('second')
+```
 
 Routes run in the order described in
 [Interception lifecycle](#Interception-lifecycle), and the first route that
 responds ends the chain. A route that only adds an alias has to run before the
-route that responds, so define it after the responding route:
+route that responds. Define it after the responding route:
 
 ```js
 cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('stubUsers')
@@ -426,8 +435,8 @@ cy.wait(['@stubUsers', '@getUsers']).then(([stubbed, aliased]) => {
 
 An alias-only route defined before the responding route never sees the request,
 and waiting on its alias times out. When the alias-only route has to come first,
-such as in a `beforeEach()` hook, set `middleware: true` so the route runs ahead
-of the others. A `middleware` route requires a `routeHandler`, so pass an empty
+such as in a `beforeEach()` hook, set `middleware: true` to run the route ahead
+of the others. A `middleware` route requires a `routeHandler`. Pass an empty
 function that leaves the request for the next route:
 
 ```js
@@ -439,6 +448,10 @@ cy.intercept(
 
 cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('stubUsers')
 ```
+
+A route handler can also add an alias by setting `req.alias`, as in
+[Aliasing individual requests](#Aliasing-individual-requests). Each handler that
+sets `req.alias` adds its own alias to the request.
 
 ### Waiting on a request
 
