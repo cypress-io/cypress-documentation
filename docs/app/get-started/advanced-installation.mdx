@@ -815,10 +815,6 @@ agent that can't write to the default location fails before any spec runs. Point
 the App Data folder at a writable directory to fix the failure, or to keep App
 Data out of a shared home directory.
 
-Cypress has no configuration option or `CYPRESS_*` environment variable for the
-App Data location. The App Data folder follows the operating system variables in
-the table above instead, so changing those variables moves it.
-
 On Linux, set `XDG_CONFIG_HOME` to a writable directory before Cypress launches:
 
 ```shell
