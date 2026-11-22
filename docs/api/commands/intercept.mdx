@@ -829,7 +829,7 @@ delay. The delay leaves time to test what the application does while a request
 is still pending, such as cancelling an upload. A request the application
 cancels during the delay never reaches the server.
 
-```js
+```js title="spec.cy.js"
 cy.intercept('POST', '/files/upload', () => {
   // hold the upload for 1 second before Cypress sends it to the server
   return new Promise((resolve) => setTimeout(resolve, 1000))
