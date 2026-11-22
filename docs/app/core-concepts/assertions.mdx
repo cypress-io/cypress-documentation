@@ -388,7 +388,7 @@ render the element. Wait for the request with
 [`cy.wait()`](/api/commands/wait#Alias), then wait for UI that renders once the
 app handles the response, and only then assert that the element doesn't exist:
 
-```javascript
+```javascript title="dashboard.cy.js"
 cy.intercept('GET', '/api/notifications').as('getNotifications')
 cy.visit('/dashboard')
 cy.wait('@getNotifications')
@@ -408,7 +408,7 @@ starts watching before any of the app's code runs. The observer flags the
 banner the moment the app adds it, and the test asserts on that flag once the
 page settles:
 
-```javascript
+```javascript title="dashboard.cy.js"
 const selector = '[data-testid="error-banner"]'
 const banner = { appeared: false }
 
