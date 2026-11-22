@@ -251,20 +251,44 @@ rather than keeping a reference to the old instance.
 a service in its own `providers` array, Angular creates a separate instance for
 that component, and `TestBed.inject()` returns the module's instance instead.
 Get the component's instance from the injector on the `fixture` that
-`cy.mount()` yields. With `CartService` in the `providers` of
-`ProductComponent`, the test below aliases the component's cart and checks it
-after the click:
+`cy.mount()` yields. This version of `ProductComponent` provides its own
+`CartService`:
 
-```ts
-cy.mount(ProductComponent)
-  .then(({ fixture }) => fixture.debugElement.injector.get(CartService))
-  .as('cart')
+```ts title="src/app/product.component.ts"
+import { Component, inject } from '@angular/core'
+import { CartService } from './cart.service'
 
-cy.get('[data-cy=buy]').click()
+@Component({
+  selector: 'app-product',
+  template: `<button data-cy="buy" (click)="buy()">Buy</button>`,
+  providers: [CartService],
+})
+export class ProductComponent {
+  private readonly cart = inject(CartService)
 
-cy.get<CartService>('@cart')
-  .invoke('getItems')
-  .should('deep.equal', ['Cypress T-shirt'])
+  buy() {
+    this.cart.add('Cypress T-shirt')
+  }
+}
+```
+
+The test aliases the component's cart, then checks it after the click:
+
+```ts title="src/app/product.component.cy.ts"
+import { CartService } from './cart.service'
+import { ProductComponent } from './product.component'
+
+it('adds the product to the component cart', () => {
+  cy.mount(ProductComponent)
+    .then(({ fixture }) => fixture.debugElement.injector.get(CartService))
+    .as('cart')
+
+  cy.get('[data-cy=buy]').click()
+
+  cy.get<CartService>('@cart')
+    .invoke('getItems')
+    .should('deep.equal', ['Cypress T-shirt'])
+})
 ```
 
 ### Answer HTTP requests with `HttpTestingController`
@@ -375,8 +399,11 @@ Cypress.Commands.add('inject', (token) =>
 </TabItem>
 </Tabs>
 
-The command yields the service through [`cy.wrap()`](/api/commands/wrap), and
-`{ log: false }` keeps that inner `wrap` out of the Command Log. Because
+The command yields the service through [`cy.wrap()`](/api/commands/wrap).
+`{ log: false }` hides that inner `wrap`, so `cy.inject()` adds no entry of its
+own to the Command Log, while the `.invoke()` and assertion after it still
+appear. To show an `inject` entry, call
+[`Cypress.log()`](/api/cypress-api/cypress-log) inside the command. Because
 `cy.inject()` is a Cypress command, Cypress runs `TestBed.inject()` in order
 after the commands before it, including `cy.mount()`. So `cy.inject()` works at
 the top level of the test:
