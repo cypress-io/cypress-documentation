@@ -34,7 +34,7 @@ Find the section for what you want to do:
 | Change the real response               | `req.continue()` with a callback           | [Modifying the real server response with `req.continue()`](#Modifying-the-real-server-response-with-reqcontinue)      |
 | Test a server error or network failure | `statusCode` or `forceNetworkError`        | [Stubbing a server error or a network failure](#Stubbing-a-server-error-or-a-network-failure)                         |
 | Test a slow network                    | `delay` or `throttleKbps`                  | [Throttle or delay all incoming responses](#Throttle-or-delay-all-incoming-responses)                                 |
-| Delay a request to the server          | a route handler that returns a Promise     | [Delay the outgoing request](#Delay-the-outgoing-request-before-it-reaches-the-server)                                |
+| Delay a request before it's sent       | a `routeHandler` that returns a Promise    | [Delay an intercepted request](#Delay-an-intercepted-request-before-it-reaches-the-server)                            |
 | Check that a request was not made      | the `.all` alias suffix                    | [Asserting that an intercepted request was not made](#Asserting-that-an-intercepted-request-was-not-made)             |
 | Keep intercepts from slowing tests     | scoped routes and `blockHosts`             | [`cy.intercept()` and test performance](#cyintercept-and-test-performance)                                            |
 | Fix an intercept that doesn't match    | the Routes panel and `Cypress.minimatch()` | [Troubleshooting a `cy.intercept()` route that doesn't match](#Troubleshooting-a-cyintercept-route-that-doesnt-match) |
@@ -821,13 +821,13 @@ cy.intercept('POST', '/login', (req) => {
 })
 ```
 
-#### Delay the outgoing request before it reaches the server
+#### Delay an intercepted request before it reaches the server
 
-Cypress holds the request at its proxy until the returned Promise resolves, so a
-Promise that waits delays the request before the server receives it. A delay
-leaves time to test what the application does while a request is still pending,
-such as cancelling an upload. A request the application cancels during the
-delay never reaches the server.
+When a route handler returns a Promise, Cypress holds the request at the proxy
+until the Promise resolves, so the server receives the request only after the
+delay. The delay leaves time to test what the application does while a request
+is still pending, such as cancelling an upload. A request the application
+cancels during the delay never reaches the server.
 
 ```js
 cy.intercept('POST', '/files/upload', () => {
@@ -837,8 +837,9 @@ cy.intercept('POST', '/files/upload', () => {
 ```
 
 The Promise must resolve within the
-[`defaultCommandTimeout`](/app/references/configuration#Timeouts). The `delay`
-and `throttleKbps` options apply to the response, not the request. See
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts), or the test
+fails with a timeout error. The `delay` and `throttleKbps` options apply to the
+response, not the request. See
 [Throttle or delay all incoming responses](#Throttle-or-delay-all-incoming-responses).
 
 #### Passing a request to the next request handler
@@ -959,9 +960,9 @@ cy.intercept('/users', (req) => {
 
 You can throttle or delay all incoming responses using a `beforeEach()` in the
 [supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
-Throttling and `delay` apply to the response after the server sends it. To hold
-the request before it reaches the server, see
-[Delay the outgoing request before it reaches the server](#Delay-the-outgoing-request-before-it-reaches-the-server).
+The `throttleKbps` and `delay` options, `res.setThrottle()`, and `res.setDelay()`
+apply only to the response. To hold the request before it reaches the server,
+see [Delay an intercepted request before it reaches the server](#Delay-an-intercepted-request-before-it-reaches-the-server).
 
 ```js
 // Throttle API responses to simulate real-world conditions
