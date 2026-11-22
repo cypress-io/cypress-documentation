@@ -277,6 +277,51 @@ const name = log.get('name') // 'myCommand'
 const state = log.get('state') // 'pending'
 ```
 
+## Notes
+
+### Cypress.log() entry order in the Command Log
+
+`Cypress.log()` adds its entry to the Command Log the moment JavaScript calls
+it. Cypress queues commands and runs them later, so where the call sits decides
+where the entry lands:
+
+- **In a custom command**, the callback passed to
+  [`Cypress.Commands.add()`](/api/cypress-api/custom-commands) runs when the
+  command runs, so the entry lands in command order.
+- **In a plain helper function** called from the test body, the call runs while
+  Cypress is still queuing commands. Every entry lands before any queued command
+  runs. Wrap the call in [`cy.then()`](/api/commands/then) to run it in command
+  order instead.
+
+The helper below logs a `chooseOption` entry for each item, then the assertion
+for that item:
+
+```javascript title="spec.cy.js"
+const chooseOption = (label) => {
+  cy.then(() => {
+    Cypress.log({ name: 'chooseOption', message: label })
+  })
+
+  cy.contains('li', label, { log: false })
+    .should('be.visible')
+    .click({ log: false })
+}
+
+it('chooses several options', () => {
+  cy.visit('index.html')
+  ;['a', 'b', 'c'].forEach(chooseOption)
+})
+```
+
+Without the `cy.then()`, the Command Log shows all three `chooseOption` entries
+first, followed by all three assertions.
+
+Inside a command, an entry takes its default `name` and `type` from the command
+that's running. Call `cy.then()` directly off `cy`, as above, to log a
+top-level entry. Chained off another command, such as `cy.wrap(value).then()`,
+the entry is a child and renders indented beneath the previous entry. Pass
+`type: 'parent'` to keep it at the top level either way.
+
 ## See also
 
 - [`Commands`](/api/cypress-api/custom-commands)
