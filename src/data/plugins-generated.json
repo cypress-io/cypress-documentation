@@ -107,8 +107,8 @@
     },
     "eslint-plugin-cypress": {
       "npm": "eslint-plugin-cypress",
-      "version": "7.0.5",
-      "lastPublished": "2026-11-13T20:07:07.370Z",
+      "version": "7.1.0",
+      "lastPublished": "2026-11-19T20:35:33.311Z",
       "cypressVersion": "^16.3.0"
     },
     "TypeScript": {
@@ -316,8 +316,8 @@
     },
     "cypress-har-generator": {
       "npm": "@neuralegion/cypress-har-generator",
-      "version": "5.22.3",
-      "lastPublished": "2026-11-16T08:56:20.090Z",
+      "version": "5.22.7",
+      "lastPublished": "2026-11-17T10:55:39.415Z",
       "cypressVersion": ">=4.4.1 <12.12.0 || >=12.17.0"
     },
     "cypress-intercept-formdata": {
@@ -361,6 +361,12 @@
       "version": "2.0.0",
       "lastPublished": "2026-10-19T00:55:16.703Z",
       "cypressVersion": ">=12.17.4"
+    },
+    "cypress-network-chaos": {
+      "npm": "cypress-network-chaos",
+      "version": "1.1.0",
+      "lastPublished": "2026-11-16T15:46:58.152Z",
+      "cypressVersion": ">=12.0.0"
     },
     "cypress-mongodb": {
       "npm": "cypress-mongodb",
@@ -442,8 +448,8 @@
     },
     "allure-cypress": {
       "npm": "allure-cypress",
-      "version": "3.14.0",
-      "lastPublished": "2026-10-19T10:39:47.994Z",
+      "version": "3.15.0",
+      "lastPublished": "2026-11-17T11:41:49.575Z",
       "cypressVersion": ">=12.17.4"
     },
     "cypress-failed-log": {
@@ -465,8 +471,8 @@
     },
     "cypress-terminal-report": {
       "npm": "cypress-terminal-report",
-      "version": "7.4.0",
-      "lastPublished": "2026-09-27T11:41:33.099Z",
+      "version": "7.5.0",
+      "lastPublished": "2026-11-18T21:40:39.139Z",
       "cypressVersion": ">=10.0.0"
     },
     "cypress-xray-junit-reporter": {
@@ -499,14 +505,14 @@
     },
     "Applitools": {
       "npm": "@applitools/eyes-cypress",
-      "version": "3.65.0",
-      "lastPublished": "2026-11-16T09:47:17.697Z",
+      "version": "3.65.1",
+      "lastPublished": "2026-11-18T22:10:40.626Z",
       "cypressVersion": "^9.7"
     },
     "Argos": {
       "npm": "@argos-ci/cypress",
-      "version": "7.5.0",
-      "lastPublished": "2026-11-16T13:26:07.217Z",
+      "version": "7.6.0",
+      "lastPublished": "2026-11-17T16:17:29.306Z",
       "cypressVersion": ">=12 <17"
     },
     "Happo": {
