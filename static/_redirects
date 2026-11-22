@@ -27,7 +27,6 @@
 /guides/migrating-to-cypress/protractor /app/guides/migration/protractor-to-cypress 301
 /guides/migrating-to-cypress/selenium /app/guides/migration/selenium-to-cypress 301
 /guides/references/bundled-tools /app/references/bundled-libraries 301
-/guides/references/bundled-tools.html /app/references/bundled-libraries 301
 /guides/component-testing/quickstart-react /app/component-testing/react/overview 301
 /guides/component-testing/mounting-react /app/component-testing/react/overview 301
 /guides/component-testing/testing-react /app/component-testing/react/overview 301
@@ -91,7 +90,6 @@
 /guides/cloud/debugging/test-replay /cloud/features/test-replay 301
 /guides/cloud/debugging/recorded-runs /cloud/features/recorded-runs 301
 /api/commands /api/table-of-contents 301
-/api/commands/ /api/table-of-contents 301
 /api/commands/end /api/table-of-contents 301
 /api/commands/exec /api/commands/task 301
 /api/cypress-api/env /api/commands/env 301
