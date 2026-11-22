@@ -290,7 +290,10 @@ cy.get('[data-cy=command-palette]').should('be.visible')
 ```
 
 Pass the properties the handler reads, such as `key`, `code`, or `keyCode`, along
-with `ctrlKey`, `metaKey`, `shiftKey`, or `altKey`.
+with `ctrlKey`, `metaKey`, `shiftKey`, or `altKey`. `.trigger()` doesn't derive
+one key property from another, so passing only `keyCode: 32` leaves `code` and
+`key` unset, and a handler that checks `event.code === 'Space'` never matches.
+Pass every key property the handler reads.
 
 To press a single key the way a user does, such as Escape to close a dialog, use
 [`cy.press()`](/api/commands/press) instead. `cy.press()` dispatches native key events,
