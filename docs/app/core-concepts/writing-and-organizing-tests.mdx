@@ -319,6 +319,85 @@ beforeEach(() => {
   alt="Global hooks for tests"
 />
 
+#### Run global setup and teardown once per run
+
+A `before()` or `after()` hook in the support file runs once per spec file, not
+once per run, because Cypress loads the support file again for every spec. So
+what if your setup creates test users with `cy.request()`, and your teardown
+needs to remove them only after the last spec finishes?
+
+Node events in `setupNodeEvents` stay alive for the whole run. Count the specs
+there with [`before:run`](/api/node-events/before-run-api) and
+[`after:spec`](/api/node-events/after-spec-api), and expose the counts to the
+browser through [`cy.task()`](/api/commands/task):
+
+:::cypress-config-plugin-example
+
+```js
+let setupDone = false
+let totalSpecs = 0
+let finishedSpecs = 0
+
+on('before:run', (details) => {
+  totalSpecs = details.specs?.length ?? 0
+})
+
+on('after:spec', () => {
+  finishedSpecs += 1
+})
+
+on('task', {
+  shouldRunSetup() {
+    if (setupDone) return false
+    setupDone = true
+    return true
+  },
+  isLastSpec() {
+    return finishedSpecs === totalSpecs - 1
+  },
+})
+```
+
+:::
+
+The support file asks those tasks whether to act, so the setup runs in the
+first spec and the teardown runs in the last spec:
+
+```js title="cypress/support/e2e.js"
+before(() => {
+  cy.task('shouldRunSetup').then((shouldRun) => {
+    if (shouldRun) {
+      cy.request('POST', '/api/test-users')
+    }
+  })
+})
+
+after(() => {
+  cy.task('isLastSpec').then((isLast) => {
+    if (isLast) {
+      cy.request('DELETE', '/api/test-users')
+    }
+  })
+})
+```
+
+Because the hooks run Cypress commands, the setup and teardown can use
+`cy.request()`, custom commands, and anything else a test can. A failing test
+doesn't stop the teardown, and a run filtered with `--spec` counts only the
+specs it runs.
+
+Keep these behaviors in mind:
+
+- The counts cover `cypress run` on a single machine. In `cypress open`,
+  `before:run` and `after:spec` fire only with the
+  [`experimentalInteractiveRunEvents`](/app/references/experiments#Configuration)
+  flag.
+- Cypress skips the hooks in a spec with no tests, so the teardown runs only
+  when the last spec in the run has at least one test.
+- For teardown that doesn't need Cypress commands, such as a database cleanup
+  script, [`after:run`](/api/node-events/after-run-api) runs once at the end of
+  the run on its own.
+
 ## Cypress fixtures for repeatable test data
 
 Fixtures are external pieces of static data your tests can load on demand.
