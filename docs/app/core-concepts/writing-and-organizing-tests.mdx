@@ -1153,8 +1153,8 @@ rerun a spec whenever a file outside the spec graph changes, such as your
 application code or a fixture, pair a file watcher with
 [`cypress tap run`](/app/tooling/cypress-tap#cypress-tap-run). The
 `cypress tap run` command starts or reruns a spec in a running
-`cypress open` session, so the watcher triggers the same rerun Cypress
-performs when you save a spec file.
+`cypress open` session, so the watcher starts a fresh run each time a watched
+file changes.
 
 Start Cypress with `cypress open`, then select your testing type and a
 Chromium-based browser, since `cypress tap` drives Chromium-based browsers only.
@@ -1173,8 +1173,9 @@ about and run `cypress tap run` with the spec to rerun on each change:
 Each time a file under `src/` or `cypress/fixtures/` changes, the open Cypress
 session reruns `cypress/e2e/login.cy.ts`. Any watcher that runs a shell command
 works the same way, including `nodemon`, `watchexec`, or a script in your
-build tool. To declare the watched files in your Cypress config instead, see
-the file-watching plugins in the [plugins list](/app/plugins/plugins-list).
+build tool. To declare the watched files in your Cypress config instead, use
+the community plugin
+[`cypress-watch-and-reload`](https://github.com/bahmutov/cypress-watch-and-reload).
 
 #### Disable file watching
 
