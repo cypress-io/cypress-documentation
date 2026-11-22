@@ -265,6 +265,10 @@ For detailed information about how Cypress determines element visibility, includ
 cy.get('[data-testid="loading"]').should('not.exist')
 ```
 
+A `.should('not.exist')` assertion passes the first time Cypress finds no
+matching element. To check that an element never showed up at all, see
+[Verify that an element never appears on the page](#Verify-that-an-element-never-appears-on-the-page).
+
 ### State
 
 ```javascript
@@ -368,6 +372,76 @@ cy.get('[data-testid="new-todo"]').type('Write tests{enter}')
 // not a number of items
 cy.get('[data-testid="todos"]').should('not.have.length', 2)
 ```
+
+### Verify that an element never appears on the page
+
+Sometimes the thing you want to prove is that an element never rendered, such
+as an error banner that shouldn't show up while a page loads. A
+`.should('not.exist')` assertion can't prove that by itself. Cypress retries the
+assertion until it passes, so the assertion passes the moment the element is
+absent, including before the element renders or after it renders and goes away.
+A longer `timeout` doesn't help either: extra time only gives the assertion more
+chances to pass.
+
+So how do you know the element has had its chance to render? Tie the check to the work that would
+render the element. Wait for the request with
+[`cy.wait()`](/api/commands/wait#Alias), then wait for UI that renders once the
+app handles the response, and only then assert that the element doesn't exist:
+
+```javascript title="dashboard.cy.js"
+cy.intercept('GET', '/api/notifications').as('getNotifications')
+cy.visit('/dashboard')
+cy.wait('@getNotifications')
+// Wait for the UI that renders once the response is handled
+cy.get('[data-testid="notification-list"]').should('be.visible')
+cy.get('[data-testid="error-banner"]').should('not.exist')
+```
+
+This check confirms the element is absent once the page settles. An element
+that renders and disappears before the last assertion still slips past it.
+
+To catch an element that appears even briefly, record every element the app
+adds to the page. A
+[`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+registered in the `onBeforeLoad` option of [`cy.visit()`](/api/commands/visit)
+starts watching before any of the app's code runs. The observer flags the
+banner the moment the app adds it, and the test asserts on that flag once the
+page settles:
+
+```javascript title="dashboard.cy.js"
+const selector = '[data-testid="error-banner"]'
+const banner = { appeared: false }
+
+cy.intercept('GET', '/api/notifications').as('getNotifications')
+cy.visit('/dashboard', {
+  onBeforeLoad(win) {
+    const observer = new win.MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (
+            node instanceof win.Element &&
+            (node.matches(selector) || node.querySelector(selector))
+          ) {
+            banner.appeared = true
+          }
+        })
+      })
+    })
+
+    observer.observe(win.document, { childList: true, subtree: true })
+  },
+})
+
+cy.wait('@getNotifications')
+cy.get('[data-testid="notification-list"]').should('be.visible')
+cy.wrap(banner).its('appeared').should('be.false')
+```
+
+The observer covers the time from page load until the last assertion runs.
+When the banner renders and disappears during that time, the test fails with
+`expected true to be false`. The observer watches for elements the app adds, so
+an element that is already on the page and only shown or hidden with CSS or the
+`hidden` attribute doesn't set the flag.
 
 ## Should callback
 
