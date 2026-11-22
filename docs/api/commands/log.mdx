@@ -220,6 +220,14 @@ cy.get('li').then(($items) => {
 Read [Variables and Aliases](/app/core-concepts/variables-and-aliases) for more
 on how Cypress queues commands.
 
+### Show a custom command name in the Command Log
+
+`cy.log()` always shows its entry under the name `log`. To show an entry under
+your own name, such as a helper or custom command name, call
+[`Cypress.log()`](/api/cypress-api/cypress-log) with a `name` option. Read
+[`Cypress.log()` entry order in the Command Log](/api/cypress-api/cypress-log#Cypresslog-entry-order-in-the-Command-Log)
+to keep those entries in command order.
+
 ## Rules
 
 <HeaderRequirements />

@@ -1381,6 +1381,12 @@ to those commands, and programmatically controlling your custom command. This
 approach cleans up the Command Log and is much more visually appealing and
 understandable.
 
+A `Cypress.log()` call inside a custom command runs when the command runs, so
+its entry lands in command order. A plain helper function needs to wrap the call
+in [`cy.then()`](/api/commands/then). Read
+[`Cypress.log()` entry order in the Command Log](/api/cypress-api/cypress-log#Cypresslog-entry-order-in-the-Command-Log)
+for an example.
+
 ### `cy.hover()` and `cy.mount()`
 
 Cypress does not have `cy.hover()` or `cy.mount()` commands out-of-the-box. See
