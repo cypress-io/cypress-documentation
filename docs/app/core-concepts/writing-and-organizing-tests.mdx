@@ -365,10 +365,10 @@ on('task', {
 
 The support file asks those tasks whether to act, so the setup runs in the
 first spec that runs its hooks and the teardown runs in the last spec. The
-relative URLs resolve
-against your [`baseUrl`](/app/references/configuration#e2e):
+relative URLs resolve against your
+[`baseUrl`](/app/references/configuration#e2e):
 
-```js title="cypress/support/e2e.js"
+```ts copyTsToJs title="cypress/support/e2e.ts"
 before(() => {
   cy.task('shouldRunSetup').then((shouldRun) => {
     if (shouldRun) {
@@ -391,8 +391,9 @@ Because the hooks run Cypress commands, the setup and teardown can use
 `cy.request()`, custom commands, and anything else a test can. `markSetupDone`
 runs only after the setup request succeeds, so a failed setup runs again in the
 next spec. Make the setup request safe to repeat, so a request that fails after
-creating some of the data doesn't fail again on a duplicate. A failing test doesn't stop the teardown, and a run filtered with
-`--spec` counts only the specs it runs.
+creating some of the data doesn't fail again on a duplicate. A failing test
+doesn't stop the teardown, and a run filtered with `--spec` counts only the
+specs it runs.
 
 Keep these behaviors in mind:
 
@@ -400,25 +401,27 @@ Keep these behaviors in mind:
   and `after:spec` fire only with the
   [`experimentalInteractiveRunEvents`](/app/references/experiments#Configuration)
   flag, and even with the flag `details.specs` is undefined, so the teardown
-  never runs. The setup runs once for each time you open Cypress, not once for
-  each run.
+  never runs. The setup runs again each time the config process starts, such as
+  after you edit the config file or switch testing types, so data from each
+  setup stays behind.
 - The pattern doesn't work with
   [parallelization](/cloud/features/smart-orchestration/parallelization).
   `before:run` fires once on each machine, so every machine runs the setup, and
   each machine runs only some of the specs, so the teardown can run while
   another machine still needs the data, or not at all. For a parallel run, set
   up and tear down the data in CI steps before and after the Cypress jobs.
-- The teardown runs only if the last spec runs its `after()` hook. Cypress
-  skips the hooks in a spec with no tests, and a browser crash ends the spec
-  before the hook runs. A run that stops before its last spec, such as one
-  cancelled by
+- The teardown runs only if the last spec runs its `after()` hook. Any last
+  spec that never reaches the hook skips the teardown: a spec with no tests, a
+  spec that fails to load, or a spec that ends in a browser crash. A run that
+  stops before its last spec, such as one cancelled by
   [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation),
   skips the teardown too, so remove the data in a CI step that runs after the
   Cypress job.
 - For teardown that has to run whatever happens in the last spec, and that
   doesn't need Cypress commands, such as a database cleanup script, use
   [`after:run`](/api/node-events/after-run-api), which runs once at the end of
-  the run.
+  `cypress run`. In a parallel run, `after:run` fires once on each machine, so
+  use a CI step after all the Cypress jobs finish instead.
 
 ## Cypress fixtures for repeatable test data
 
