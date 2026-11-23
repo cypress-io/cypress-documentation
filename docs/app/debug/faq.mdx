@@ -1829,6 +1829,86 @@ Cypress tests are slower than "normal" use. Still, you can access the native
 [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom)
 recipe.
 
+### <Icon name="angle-right" /> Can I take a heap snapshot or find memory leaks in a Cypress test?
+
+Yes, in Chromium-based browsers such as Chrome, Chrome for Testing, Chromium,
+and Edge. The
+[`@cypress/puppeteer`](/app/guides/multi-tab-testing#Set-up-cypresspuppeteer-in-your-project)
+plugin opens a
+[Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
+session on the Cypress tab at any test step. Headed Google Chrome 137 and later
+can't launch with the plugin registered, so read
+[Browser support for @cypress/puppeteer](/app/guides/multi-tab-testing#Browser-support-for-cypresspuppeteer)
+first. This handler forces garbage
+collection and yields the used heap size in bytes:
+
+:::cypress-config-plugin-example
+
+```ts
+import { setup } from '@cypress/puppeteer'
+```
+
+```ts
+setup({
+  on,
+  onMessage: {
+    async getHeapUsage(browser) {
+      // The Cypress tab's URL contains /__/, and your app runs in an iframe inside it
+      const pages = await browser.pages()
+      const cypressTab = pages.find((page) => page.url().includes('/__/'))
+
+      if (!cypressTab) throw new Error('Could not find the Cypress tab')
+
+      const session = await cypressTab.createCDPSession()
+
+      await session.send('HeapProfiler.collectGarbage')
+      const { usedSize } = await session.send('Runtime.getHeapUsage')
+      await session.detach()
+
+      return usedSize
+    },
+  },
+})
+```
+
+:::
+
+This test reads the heap size, repeats an action 20 times, and fails if the heap
+grew by 5 MB or more. The `browser`
+[test configuration](/app/references/configuration#Test-Configuration) skips
+the test outside the Chromium family:
+
+```js title="memory.cy.js"
+it(
+  'keeps heap growth small while the dialog opens and closes',
+  { browser: { family: 'chromium' } },
+  () => {
+    cy.visit('/')
+
+    cy.puppeteer('getHeapUsage').then((before) => {
+      Cypress._.times(20, () => {
+        cy.contains('button', 'Open dialog').click()
+        cy.contains('button', 'Close').click()
+      })
+
+      cy.puppeteer('getHeapUsage').then((after) => {
+        expect(after - before).to.be.lessThan(5_000_000)
+      })
+    })
+  }
+)
+```
+
+The heap size covers the whole Cypress tab, including the Cypress runner, so
+compare two readings in the same test rather than one absolute value. Set the
+threshold from `cypress run`, since `cypress open` keeps a DOM snapshot of each
+command for time travel, which adds to the heap.
+
+To find what is leaking, send
+[`HeapProfiler.takeHeapSnapshot`](https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler/#method-takeHeapSnapshot)
+on the same session, save the chunks it emits to a `.heapsnapshot` file, and
+load the file in the Memory panel of Chrome DevTools.
+
 ## Integrations with Other Tools/Frameworks/Libraries
 
 ### <Icon name="angle-right" /> Can I test React applications using Cypress?
