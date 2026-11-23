@@ -107,14 +107,14 @@ enforces your policy during the test, configure the
 [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
 option. The option accepts three kinds of value:
 
-| Value      | Behavior                                                                                                                |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `false`    | _(default)_ Strip the entire CSP header. Cypress removes the policy completely before the response reaches the browser. |
-| `true`     | Keep the header, stripping only the directives that would interfere with Cypress (see below).                           |
-| `string[]` | Keep the header and the named directives, stripping everything else that Cypress would otherwise allow.                 |
+| Value      | Behavior                                                                                                                                   |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `false`    | _(default)_ Strip the entire CSP header. Cypress removes the policy completely before the response reaches the browser.                    |
+| `true`     | Keep the header, stripping the [always-stripped directives](#always-stripped-directives) and the six allowable directives listed below.    |
+| `string[]` | Keep the header, stripping the always-stripped directives and the allowable directives the array leaves out. Cypress keeps the named ones. |
 
-When you use the array form, Cypress validates the values, which must come from
-exactly these six allowable directives:
+The six allowable directives are the ones Cypress strips under `true` but can
+send to the browser when you name them in the array:
 
 - `default-src`
 - `child-src`
@@ -123,9 +123,17 @@ exactly these six allowable directives:
 - `script-src-elem`
 - `form-action`
 
-The array doesn't accept any other directive name. Regardless of which mode you
-choose, Cypress removes the [always-stripped directives](#always-stripped-directives)
-below.
+The array only re-enables directives from these six, and Cypress validation
+rejects any other directive name. Any directive that is neither allowable nor
+always stripped, such as `img-src`, `font-src`, `style-src`, or `connect-src`,
+reaches the browser whenever the option is `true` or an array, so the array
+never needs to list it.
+
+The browser applies `default-src` to any fetch directive your policy leaves
+unset. When Cypress strips `default-src`, images, fonts, and styles with no
+directive of their own load without restriction. If your policy relies on
+`default-src` to restrict images, fonts, or styles, add `default-src` to the
+array or set `img-src`, `font-src`, or `style-src` explicitly in your policy.
 
 :::caution
 
@@ -164,8 +172,10 @@ Keep the header, stripping only the directives that interfere with Cypress:
 
 :::
 
-Keep the header and only the named directives (each must be one of the six
-allowable values):
+Keep the header and also send `default-src`, `script-src`, and
+`script-src-elem` to the browser. Cypress still strips the other three allowable
+directives, while directives outside the six, such as `img-src` and `style-src`,
+reach the browser without being listed:
 
 :::cypress-config-example
 

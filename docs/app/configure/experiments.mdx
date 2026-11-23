@@ -94,8 +94,12 @@ send them to the browser:
 #### Allow Specific CSP Directives
 
 Set the `experimentalCspAllowList` option to an array of directive names marked
-as "Allowable" from the list above. Cypress then sends the specified CSP directives to
-the browser.
+as "Allowable" from the list above. Cypress sends the named directives to the
+browser and strips the allowable directives the array leaves out, along with the
+directives that are never allowable. Every other directive in your policy, such
+as `img-src`, `font-src`, or `style-src`, reaches the browser without being
+listed. The array accepts only the six allowable directives, and any other name
+fails config validation.
 
 The following configuration sends the `default-src`, `script-src`, and
 `script-src-elem` directives to the browser:

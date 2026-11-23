@@ -1561,7 +1561,11 @@ accepts three values:
 - `false` _(default)_: strip the entire CSP header.
 - `true`: keep the header, removing only the directives that interfere with
   Cypress.
-- an array of directive names: keep the header and only the named directives.
+- an array of directive names: keep the header as `true` does, and also send
+  the named directives to the browser. The array accepts only the six
+  allowable directives, such as `default-src` and `script-src`.
+  Directives such as `img-src`, `font-src`, and `style-src` reach the browser
+  with either `true` or an array, so they never need listing.
 
 :::cypress-config-example
 
