@@ -124,16 +124,16 @@ send to the browser when you name them in the array:
 - `form-action`
 
 The array only re-enables directives from these six, and Cypress validation
-rejects any other directive name. Every directive outside the six and the
-always-stripped five, such as `img-src`, `font-src`, `style-src`, or
+rejects any other directive name. Every directive outside the six and the five
+always-stripped directives, such as `img-src`, `font-src`, `style-src`, or
 `connect-src`, reaches the browser whenever the option is `true` or an array,
 so the array never needs to list it.
 
 The browser applies `default-src` to any fetch directive your policy leaves
-unset. If your policy relies on `default-src` to restrict images, fonts, or
-styles, add `default-src` to the array or set `img-src`, `font-src`, or
-`style-src` explicitly in your policy. When Cypress strips `default-src`, images,
-fonts, and styles with no directive of their own load without restriction.
+unset. When Cypress strips `default-src`, images, fonts, and styles with no
+directive of their own load without restriction. If your policy relies on
+`default-src` to restrict images, fonts, or styles, add `default-src` to the
+array or set `img-src`, `font-src`, or `style-src` explicitly in your policy.
 
 :::caution
 
