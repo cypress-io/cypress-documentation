@@ -1828,77 +1828,28 @@ recipe.
 ### <Icon name="angle-right" /> Can I take a heap snapshot or find memory leaks in a Cypress test?
 
 Yes, in Chromium-based browsers such as Chrome, Chrome for Testing, Chromium,
-and Edge. Both approaches below send
+and Edge. The
+[`@cypress/puppeteer`](/app/guides/multi-tab-testing#Set-up-cypresspuppeteer-in-your-project)
+plugin opens a
 [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
-commands at the exact test step you choose:
+session on the Cypress tab at the exact test step you choose. From that session,
+a handler can:
 
-- Read the heap size in the spec and fail the test when an action makes the
-  heap grow too much.
-- Save a full heap snapshot file at any step with the
-  [`@cypress/puppeteer`](/app/guides/multi-tab-testing#Set-up-cypresspuppeteer-in-your-project)
-  plugin, then inspect the file in Chrome DevTools.
+- Read the heap size, so the test fails when an action makes the heap grow too
+  much.
+- Save a full heap snapshot file to inspect in Chrome DevTools.
 
 The numbers cover the whole Cypress tab, which holds the Cypress runner as well
 as the iframe your app runs in. Compare two readings taken in the same test
 rather than checking one absolute value.
 
-#### Check heap growth in a Cypress spec
+#### Register heap handlers for Cypress tests
 
-`Cypress.automation('remote:debugger:protocol', ...)` sends a DevTools Protocol
-command to the browser and resolves with the result. Wrap the call in
-`cy.then()` so the command runs at its place in the test instead of when Cypress
-first reads the test body. This test forces garbage collection, reads the used
-heap size, repeats an action 20 times, and then checks how far the heap grew:
-
-```js title="memory.cy.js"
-const sendCdp = (command, params = {}) =>
-  cy.then(() =>
-    Cypress.automation('remote:debugger:protocol', { command, params })
-  )
-
-it(
-  'keeps heap growth small while the dialog opens and closes',
-  { browser: { family: 'chromium' } },
-  () => {
-    cy.visit('/')
-
-    sendCdp('HeapProfiler.collectGarbage')
-    sendCdp('Runtime.getHeapUsage').then(({ usedSize: before }) => {
-      Cypress._.times(20, () => {
-        cy.contains('button', 'Open dialog').click()
-        cy.contains('button', 'Close').click()
-      })
-
-      sendCdp('HeapProfiler.collectGarbage')
-      sendCdp('Runtime.getHeapUsage').then(({ usedSize: after }) => {
-        cy.log(`Heap grew by ${after - before} bytes`)
-        expect(after - before).to.be.lessThan(5_000_000)
-      })
-    })
-  }
-)
-```
-
-The `{ browser: { family: 'chromium' } }`
-[test configuration](/app/references/configuration#Test-Configuration) skips
-the test in browsers outside the Chromium family, such as Firefox.
-
-When the `"Open dialog"` button leaks memory on every click, the assertion fails
-with a message such as `expected 12461860 to be below 5000000`. Pick a threshold
-from the growth you see on a passing run, with some headroom.
-
-Set the threshold from `cypress run`. In `cypress open`, the Command Log keeps a
-DOM snapshot of each command for time travel, and those snapshots add to the
-heap. To measure in `cypress open`, set
-[`numTestsKeptInMemory`](/app/references/configuration#Global) to `0`.
-
-#### Save a heap snapshot at a Cypress test step
-
-A heap snapshot lists every object on the heap and what keeps each one alive,
-which helps you find the cause of a leak. Install and set up
+Install and set up
 [`@cypress/puppeteer`](/app/guides/multi-tab-testing#Set-up-cypresspuppeteer-in-your-project),
-then register a handler that opens a DevTools Protocol session on the Cypress
-tab, collects the snapshot chunks, and writes them to a file:
+then register two handlers. Each handler finds the Cypress tab, opens a
+DevTools Protocol session on it, and forces garbage collection before it
+measures:
 
 :::cypress-config-plugin-example
 
@@ -1912,8 +1863,23 @@ import path from 'node:path'
 setup({
   on,
   onMessage: {
-    async takeHeapSnapshot(browser, name: string) {
+    async getHeapUsage(browser) {
       // The Cypress tab's URL contains /__/, and your app runs in an iframe inside it
+      const pages = await browser.pages()
+      const cypressTab = pages.find((page) => page.url().includes('/__/'))
+
+      if (!cypressTab) throw new Error('Could not find the Cypress tab')
+
+      const session = await cypressTab.createCDPSession()
+
+      await session.send('HeapProfiler.collectGarbage')
+      const { usedSize } = await session.send('Runtime.getHeapUsage')
+      await session.detach()
+
+      return usedSize
+    },
+
+    async takeHeapSnapshot(browser, name: string) {
       const pages = await browser.pages()
       const cypressTab = pages.find((page) => page.url().includes('/__/'))
 
@@ -1948,8 +1914,53 @@ setup({
 
 :::
 
-Call the handler at each step you want to capture. The handler writes each file
-to `cypress/heap-snapshots/` in your project and yields the file's name:
+The `{ browser: { family: 'chromium' } }`
+[test configuration](/app/references/configuration#Test-Configuration) in the
+specs below skips each test in browsers outside the Chromium family, such as
+Firefox.
+
+#### Check heap growth in a Cypress spec
+
+`getHeapUsage` yields the used heap size in bytes. This test reads the heap size,
+repeats an action 20 times, and then checks how far the heap grew:
+
+```js title="memory.cy.js"
+it(
+  'keeps heap growth small while the dialog opens and closes',
+  { browser: { family: 'chromium' } },
+  () => {
+    cy.visit('/')
+
+    cy.puppeteer('getHeapUsage').then((before) => {
+      Cypress._.times(20, () => {
+        cy.contains('button', 'Open dialog').click()
+        cy.contains('button', 'Close').click()
+      })
+
+      cy.puppeteer('getHeapUsage').then((after) => {
+        cy.log(`Heap grew by ${after - before} bytes`)
+        expect(after - before).to.be.lessThan(5_000_000)
+      })
+    })
+  }
+)
+```
+
+When the `"Open dialog"` button leaks memory on every click, the assertion fails
+with a message such as `expected 12360692 to be below 5000000`. Pick a threshold
+from the growth you see on a passing run, with some headroom.
+
+Set the threshold from `cypress run`. In `cypress open`, the Command Log keeps a
+DOM snapshot of each command for time travel, and those snapshots add to the
+heap. To measure in `cypress open`, set
+[`numTestsKeptInMemory`](/app/references/configuration#Global) to `0`.
+
+#### Save a heap snapshot at a Cypress test step
+
+A heap snapshot lists every object on the heap and what keeps each one alive,
+which helps you find the cause of a leak. `takeHeapSnapshot` writes each file to
+`cypress/heap-snapshots/` in your project and yields the file's name. Call it at
+each step you want to capture:
 
 ```js title="heap-snapshot.cy.js"
 it(
