@@ -107,8 +107,8 @@
     },
     "eslint-plugin-cypress": {
       "npm": "eslint-plugin-cypress",
-      "version": "7.1.0",
-      "lastPublished": "2026-11-19T20:35:33.311Z",
+      "version": "7.2.0",
+      "lastPublished": "2026-11-22T19:43:36.663Z",
       "cypressVersion": "^16.3.0"
     },
     "TypeScript": {
@@ -511,8 +511,8 @@
     },
     "Argos": {
       "npm": "@argos-ci/cypress",
-      "version": "7.6.0",
-      "lastPublished": "2026-11-17T16:17:29.306Z",
+      "version": "7.6.2",
+      "lastPublished": "2026-11-22T19:00:03.382Z",
       "cypressVersion": ">=12 <17"
     },
     "Happo": {
