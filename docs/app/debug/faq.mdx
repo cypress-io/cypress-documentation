@@ -1832,31 +1832,16 @@ and Edge. The
 [`@cypress/puppeteer`](/app/guides/multi-tab-testing#Set-up-cypresspuppeteer-in-your-project)
 plugin opens a
 [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
-session on the Cypress tab at the exact test step you choose. From that session,
-a handler can:
-
-- Read the heap size, so the test fails when an action makes the heap grow too
-  much.
-- Save a full heap snapshot file to inspect in Chrome DevTools.
-
-The numbers cover the whole Cypress tab, which holds the Cypress runner as well
-as the iframe your app runs in. Compare two readings taken in the same test
-rather than checking one absolute value.
-
-#### Register heap handlers for Cypress tests
-
-Install and set up
-[`@cypress/puppeteer`](/app/guides/multi-tab-testing#Set-up-cypresspuppeteer-in-your-project),
-then register two handlers. Each handler finds the Cypress tab, opens a
-DevTools Protocol session on it, and forces garbage collection before it
-measures:
+session on the Cypress tab at any test step. Headed Google Chrome 137 and later
+can't launch with the plugin registered, so read
+[Browser support for @cypress/puppeteer](/app/guides/multi-tab-testing#Browser-support-for-cypresspuppeteer)
+first. This handler forces garbage
+collection and yields the used heap size in bytes:
 
 :::cypress-config-plugin-example
 
 ```ts
 import { setup } from '@cypress/puppeteer'
-import fs from 'node:fs/promises'
-import path from 'node:path'
 ```
 
 ```ts
@@ -1878,51 +1863,16 @@ setup({
 
       return usedSize
     },
-
-    async takeHeapSnapshot(browser, name: string) {
-      const pages = await browser.pages()
-      const cypressTab = pages.find((page) => page.url().includes('/__/'))
-
-      if (!cypressTab) throw new Error('Could not find the Cypress tab')
-
-      const session = await cypressTab.createCDPSession()
-      const chunks: string[] = []
-
-      session.on('HeapProfiler.addHeapSnapshotChunk', ({ chunk }) => {
-        chunks.push(chunk)
-      })
-
-      await session.send('HeapProfiler.collectGarbage')
-      await session.send('HeapProfiler.takeHeapSnapshot')
-      await session.detach()
-
-      const file = path.join(
-        config.projectRoot,
-        'cypress',
-        'heap-snapshots',
-        `${name}.heapsnapshot`
-      )
-
-      await fs.mkdir(path.dirname(file), { recursive: true })
-      await fs.writeFile(file, chunks.join(''))
-
-      return path.basename(file)
-    },
   },
 })
 ```
 
 :::
 
-The `{ browser: { family: 'chromium' } }`
-[test configuration](/app/references/configuration#Test-Configuration) in the
-specs below skips each test in browsers outside the Chromium family, such as
-Firefox.
-
-#### Check heap growth in a Cypress spec
-
-`getHeapUsage` yields the used heap size in bytes. This test reads the heap size,
-repeats an action 20 times, and then checks how far the heap grew:
+This test reads the heap size, repeats an action 20 times, and fails if the heap
+grew by 5 MB or more. The `browser`
+[test configuration](/app/references/configuration#Test-Configuration) skips
+the test outside the Chromium family:
 
 ```js title="memory.cy.js"
 it(
@@ -1938,7 +1888,6 @@ it(
       })
 
       cy.puppeteer('getHeapUsage').then((after) => {
-        cy.log(`Heap grew by ${after - before} bytes`)
         expect(after - before).to.be.lessThan(5_000_000)
       })
     })
@@ -1946,57 +1895,15 @@ it(
 )
 ```
 
-When the `"Open dialog"` button leaks memory on every click, the assertion fails
-with a message such as `expected 12360692 to be below 5000000`. Pick a threshold
-from the growth you see on a passing run, with some headroom.
+The heap size covers the whole Cypress tab, including the Cypress runner, so
+compare two readings in the same test rather than one absolute value. Set the
+threshold from `cypress run`, since `cypress open` keeps a DOM snapshot of each
+command for time travel, which adds to the heap.
 
-Set the threshold from `cypress run`. In `cypress open`, the Command Log keeps a
-DOM snapshot of each command for time travel, and those snapshots add to the
-heap. To measure in `cypress open`, set
-[`numTestsKeptInMemory`](/app/references/configuration#Global) to `0`.
-
-#### Save a heap snapshot at a Cypress test step
-
-A heap snapshot lists every object on the heap and what keeps each one alive,
-which helps you find the cause of a leak. `takeHeapSnapshot` writes each file to
-`cypress/heap-snapshots/` in your project and yields the file's name. Call it at
-each step you want to capture:
-
-```js title="heap-snapshot.cy.js"
-it(
-  'captures heap snapshots before and after the dialog opens',
-  { browser: { family: 'chromium' } },
-  () => {
-    cy.visit('/')
-    cy.puppeteer('takeHeapSnapshot', 'before-dialog')
-
-    Cypress._.times(20, () => {
-      cy.contains('button', 'Open dialog').click()
-      cy.contains('button', 'Close').click()
-    })
-
-    cy.puppeteer('takeHeapSnapshot', 'after-dialog').should(
-      'equal',
-      'after-dialog.heapsnapshot'
-    )
-  }
-)
-```
-
-To compare the two files, open Chrome DevTools, go to the Memory panel, and
-load each `.heapsnapshot` file. Select the later snapshot and choose
-Comparison to list the objects created between the two steps.
-
-Keep these behaviors in mind:
-
-- Each snapshot file is often 50 MB or more, because the snapshot includes the
-  Cypress runner. Add `cypress/heap-snapshots/` to your `.gitignore`.
-- A large heap takes several seconds to capture. A handler that runs longer
-  than [`taskTimeout`](/app/references/configuration#Timeouts) fails the
-  command.
-- Headed Google Chrome 137 and later can't launch with `@cypress/puppeteer`
-  registered. Run headless, or use Chrome for Testing or Chromium, as described
-  in [Browser support for @cypress/puppeteer](/app/guides/multi-tab-testing#Browser-support-for-cypresspuppeteer).
+To find what is leaking, send
+[`HeapProfiler.takeHeapSnapshot`](https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler/#method-takeHeapSnapshot)
+on the same session, save the chunks it emits to a `.heapsnapshot` file, and
+load the file in the Memory panel of Chrome DevTools.
 
 ## Integrations with Other Tools/Frameworks/Libraries
 
