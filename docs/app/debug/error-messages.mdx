@@ -998,6 +998,58 @@ If you are running in `open` mode, you can also try lowering
 If the browser running Cypress tests crashes, Cypress aborts any remaining
 tests and prints out this error.
 
+### <Icon name="exclamation-triangle" color="red" /> `* is not a valid URL`
+
+In Chrome 158 and later, `cypress run` on Cypress 16.2.1 and earlier, or on
+15.21.1 and earlier, stops with this error when it opens the next spec. The run
+fails even when every test so far has passed, and the terminal shows a stack
+trace from Cypress's own code rather than from your specs:
+
+```text
+Running:  login.cy.ts                                                 (6 of 34)
+* is not a valid URL
+Error: * is not a valid URL
+    at <embedded>:616:604067
+    at b._handleMessage (<embedded>:616:606400)
+```
+
+A CI pipeline can start failing with no change to your code or your Cypress
+version, because a setup step that installs the latest stable Chrome, such as
+`browser-actions/setup-chrome`, picks up Chrome 158 as soon as Chrome releases
+it.
+
+Cypress 16.3.0 and 15.21.2 fix the error. To upgrade:
+
+1. Install Cypress 16.3.0 or later. On Cypress 15, install 15.21.2 or later
+   instead, such as `cypress@15.21.2`.
+
+   <PackageManagerTabs install="cypress@latest" dev />
+
+2. Confirm that both the Cypress package and the Cypress binary report the new
+   version:
+
+   <CypressCommandTabs command="version" />
+
+3. Commit `package.json` and your lockfile, so CI installs the same version.
+   Cypress stores each binary version in its own cache folder, so CI downloads
+   the new binary on its next run.
+4. Run your specs again with `cypress run` in Chrome.
+
+If you can't upgrade right away, pin Chrome to version 157 in CI until you can,
+then remove the pin after you upgrade. With `browser-actions/setup-chrome` on
+GitHub Actions, set `chrome-version`:
+
+```yaml title=".github/workflows/main.yml"
+- name: Install Chrome for Testing
+  uses: browser-actions/setup-chrome@v2
+  with:
+    chrome-version: 157
+```
+
+For other CI providers, see
+[Download specific Chrome version](/app/references/launching-browsers#Download-specific-Chrome-version).
+The [16.3.0 changelog entry](/app/references/changelog#16-3-0) lists the fix.
+
 ## React Hydration Errors
 
 When running Cypress E2E tests against Server-Side Rendered (SSR) applications
