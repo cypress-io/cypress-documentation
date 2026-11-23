@@ -135,8 +135,8 @@ away from whatever a person watching the sandbox is doing. When Cypress
 detects an agent, it skips the welcome screens as long as you pass
 `--project`, `--browser` (or set `defaultBrowser` in the config), and a
 testing type. `--headless` requires a testing type, and exits right away
-without one. It needs a browser
-too, but a missing or undrivable one doesn't stop Cypress from starting:
+without one. `--headless` needs a browser too, but a missing or non-Chromium
+one doesn't stop Cypress from starting:
 `cypress tap status` reports it instead, as covered in
 [Troubleshoot Cypress in an agent sandbox](#Troubleshoot-Cypress-in-an-agent-sandbox).
 
@@ -150,12 +150,11 @@ ready. Combine it with `--headless` the same way:
 npx cypress open --headless --e2e --browser chromium --project . --detached
 ```
 
-A `--headless` session has no window to close, so stop it with `kill <pid>`,
-using the PID from `cypress tap sessions`. Since a person won't see it sitting open the way a headed session
-in a sandbox with a display would, have your agent stop the session as soon
-as it's done, and check for sessions left behind with
-[`cypress tap sessions`](/app/tooling/cypress-tap#cypress-tap-sessions) before
-starting a new one.
+A `--headless` session has no window to close, so have your agent stop it as
+soon as it's done with `kill <pid>`, using the PID from
+[`cypress tap sessions`](/app/tooling/cypress-tap#cypress-tap-sessions). Run
+`cypress tap sessions` before starting a new session, too, to find any left
+running from earlier.
 
 ### Wait for the browser
 
@@ -410,12 +409,9 @@ session leaves no window open to remind you.`}
   `setupNodeEvents` throws, Cypress stops watching the configuration, so
   restart Cypress to pick up your fix.
 
-- **`cypress open --headless` exits with an error about missing options.**
-  `--headless` needs `--e2e` or `--component` and a project up front, since
-  it has no window to ask for them in. Pass `--project` too if Cypress is
-  installed globally, and drop `--global`. A browser is also required, but
-  as its own error (see above): pass `--browser`, or set `defaultBrowser` in
-  the Cypress config.
+- **`cypress open --headless` exits right away with an error about missing
+  options.** Add `--e2e` or `--component`. If Cypress is installed globally,
+  also add `--project <path>`.
 
 - **`status` stays at `browser not selected`.** Without `--headless`, a
   stalled status can happen for two reasons. First, check that you passed
@@ -425,10 +421,9 @@ session leaves no window open to remind you.`}
   path, Cypress may not have recognized the binary at that path; read the
   reason in `cypress-open.log` and see
   [Choose a browser](#Choose-a-browser-for-cypress-tap-in-a-sandbox). With
-  `--headless`, Cypress already skips the welcome screens on its own, and an
-  unrecognized or non-Chromium browser reports `error` instead, since there's
-  no Launchpad left open to pick another one in, so `CYPRESS_AGENT_MODE`
-  doesn't apply.
+  `--headless`, Cypress skips the welcome screens on its own, so
+  `CYPRESS_AGENT_MODE` doesn't apply. An unrecognized or non-Chromium browser
+  reports `error` instead.
 
 - **Cypress ignores `ELECTRON_RUN_AS_NODE`.** Some agent environments set this
   variable, which makes Electron run as plain Node.js with no window.

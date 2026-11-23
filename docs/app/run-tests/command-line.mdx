@@ -870,15 +870,15 @@ window to choose them in, and can't be combined with
 cypress open --headless --e2e --browser chrome --project .
 ```
 
-It also needs a browser, from `--browser` or from
+`--headless` also needs a browser, from `--browser` or from
 [`defaultBrowser`](/app/references/configuration#Browser) in the project's
 Cypress config, since there's no window to pick one in either. Either way,
 pass a Chromium-based browser (Chrome, Chromium, Edge, or Electron), since
 those are the only browsers [`cypress tap`](/app/tooling/cypress-tap) can
-drive. If the session can't start, such as from a missing or undrivable
-browser or component testing that isn't set up yet, Cypress prints the reason
-and [`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status)
-reports it.
+drive. If the browser is missing or isn't Chromium-based, or component
+testing isn't set up yet, Cypress still starts, prints the reason, and
+[`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status) reports it
+as an `error`.
 
 There's no window to close, so end the session with `Ctrl+C`, or `kill <pid>`
 using the PID from `cypress tap sessions`.
