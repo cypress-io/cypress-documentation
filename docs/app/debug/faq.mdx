@@ -1883,13 +1883,6 @@ The `{ browser: { family: 'chromium' } }`
 [test configuration](/app/references/configuration#Test-Configuration) skips
 the test in browsers outside the Chromium family, such as Firefox.
 
-:::caution
-
-`Cypress.automation()` is an internal API rather than a documented public one,
-so its behavior can change between Cypress versions.
-
-:::
-
 When the `"Open dialog"` button leaks memory on every click, the assertion fails
 with a message such as `expected 12461860 to be below 5000000`. Pick a threshold
 from the growth you see on a passing run, with some headroom.
