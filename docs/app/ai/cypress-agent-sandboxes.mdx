@@ -102,10 +102,7 @@ In a sandbox, Cypress uses your project's existing `cypress.config.*` file.
 If the project has no configuration yet, Cypress creates one when an agent
 starts it with `--e2e`, or when you use `--headless`. For component testing
 (`--component`), create the configuration before you launch Cypress in a
-sandbox, so Cypress doesn't have to guess your framework and bundler; with
-`--headless`, Cypress reports a missing component testing setup as the
-reason the session couldn't start, since there's no wizard for a person to
-complete.
+sandbox, so Cypress doesn't have to guess your framework and bundler.
 
 Cypress writes a scaffolded configuration inside the sandbox, so commit it
 along with the agent's other changes. Otherwise the next session starts without
@@ -114,8 +111,8 @@ the configuration.
 ### Start Cypress in the background
 
 Run `cypress open` with a browser, a testing type, and
-[`--headless`](/app/references/command-line#cypress-open-headless), and leave
-it running:
+[`--headless`](/app/references/command-line#cypress-open-headless) (Cypress
+16.4.0 and later), and leave it running:
 
 ```shell title="Command"
 nohup npx cypress open --headless --e2e --browser chromium --project . > cypress-open.log 2>&1 &
@@ -129,17 +126,16 @@ This command writes Cypress's output to `cypress-open.log`, including errors,
 configuration problems, and the location of any files Cypress creates for you.
 Tell your agent to read this file when something goes wrong.
 
-On a version of Cypress that doesn't support `--headless` yet, drop the flag;
-Cypress still runs, but a person sharing the sandbox's display sees the
-Cypress window and its browser pop open.
+Without `--headless`, Cypress still runs, but a person sharing the sandbox's
+display sees the Cypress window and its browser pop open.
 
 `--headless` keeps the Cypress window and its browser off screen and out of
 the Dock or app switcher for the whole session, so neither one takes focus
 away from whatever a person watching the sandbox is doing. When Cypress
 detects an agent, it skips the welcome screens as long as you pass
 `--project`, `--browser` (or set `defaultBrowser` in the config), and a
-testing type; `--headless` requires `--project` and a testing type for the
-same reason, and exits right away if either is missing. It needs a browser
+testing type. `--headless` requires a testing type, and exits right away
+without one. It needs a browser
 too, but a missing or undrivable one doesn't stop Cypress from starting:
 `cypress tap status` reports it instead, as covered in
 [Troubleshoot Cypress in an agent sandbox](#Troubleshoot-Cypress-in-an-agent-sandbox).
@@ -154,8 +150,8 @@ ready. Combine it with `--headless` the same way:
 npx cypress open --headless --e2e --browser chromium --project . --detached
 ```
 
-A `--headless` session has no window to close, so stop the Cypress process
-to end it. Since a person won't see it sitting open the way a headed session
+A `--headless` session has no window to close, so stop it with `kill <pid>`,
+using the PID from `cypress tap sessions`. Since a person won't see it sitting open the way a headed session
 in a sandbox with a display would, have your agent stop the session as soon
 as it's done, and check for sessions left behind with
 [`cypress tap sessions`](/app/tooling/cypress-tap#cypress-tap-sessions) before
@@ -204,8 +200,8 @@ Electron.
 
 With `--headless`, give one of these up front, from `--browser` or
 `defaultBrowser` in the config: there's no window for a person to choose one
-in. Give any other browser, or none at all, and the session doesn't start;
-Cypress prints why, and `cypress tap status` reports it.
+in. Give any other browser, or none at all, and Cypress starts but can't run
+specs; Cypress prints why, and `cypress tap status` reports it.
 
 Pass Chrome or Chromium by name if it's on the `PATH`, or pass the path to its
 executable:

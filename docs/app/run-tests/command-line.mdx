@@ -862,7 +862,7 @@ agent runs your tests while you keep working in other apps). The browser
 Cypress launches runs headless too, so neither it nor the Cypress window takes
 focus or appears on screen.
 
-`--headless` requires `--e2e` or `--component` and a project, since there's no
+`--headless` requires `--e2e` or `--component`, since there's no
 window to choose them in, and can't be combined with
 [`--global`](#cypress-open-global):
 
@@ -880,7 +880,8 @@ browser or component testing that isn't set up yet, Cypress prints the reason
 and [`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status)
 reports it.
 
-There's no window to close, so stop the Cypress process to end the session.
+There's no window to close, so end the session with `Ctrl+C`, or `kill <pid>`
+using the PID from `cypress tap sessions`.
 
 See [Run Cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes)
 for a complete walkthrough of starting and driving a headless session.

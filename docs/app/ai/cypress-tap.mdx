@@ -95,7 +95,7 @@ A headless session has no window to choose a testing type or browser in, so
 An agent can start the session itself by running it in the background:
 
 ```shell title="Command"
-npx cypress open --headless --e2e --browser chrome &
+npx cypress open --headless --e2e --browser chrome
 ```
 
 A headless session has no window to close. The session runs until its process
@@ -903,7 +903,7 @@ Prefer `--json` output.
 
 1. Check for a session with `npx cypress tap status`. If it reports
    `not connected`, start one in the background with
-   `npx cypress open --headless --e2e --browser chrome &`
+   `npx cypress open --headless --e2e --browser chrome`
    and poll `status` until it reports `"browserAttached": true`. If it reports
    `error`, tell me the reason in its `error` field. When you're done,
    stop the session you started by killing its PID.
@@ -1080,7 +1080,7 @@ session to attach to, so start a headless one in the background first. Then
 feed the `specFilepath` straight to `cypress tap run`.
 
 ```shell title="Command"
-npx cypress open --headless --e2e --browser chrome &
+npx cypress open --headless --e2e --browser chrome
 ```
 
 ```shell title="Command"
