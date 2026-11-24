@@ -78,8 +78,8 @@
     },
     "@cypress/webpack-dev-server": {
       "npm": "@cypress/webpack-dev-server",
-      "version": "6.2.0",
-      "lastPublished": "2026-11-14T00:39:01.574Z",
+      "version": "6.2.1",
+      "lastPublished": "2026-11-24T02:49:37.002Z",
       "cypressVersion": ">=15.0.0"
     },
     "cypress-ai-vitals": {
@@ -96,8 +96,8 @@
     },
     "cypress-split": {
       "npm": "cypress-split",
-      "version": "1.25.0",
-      "lastPublished": "2026-06-15T17:13:04.625Z",
+      "version": "1.25.4",
+      "lastPublished": "2026-11-24T02:21:19.138Z",
       "cypressVersion": "^15.16.0"
     },
     "Cypress Chrome Recorder": {
@@ -238,9 +238,9 @@
     },
     "Puppeteer": {
       "npm": "@cypress/puppeteer",
-      "version": "1.0.0",
-      "lastPublished": "2026-11-12T18:13:37.280Z",
-      "cypressVersion": ">=14.0.0"
+      "version": "2.0.0",
+      "lastPublished": "2026-11-23T16:04:14.818Z",
+      "cypressVersion": ">=15.0.0"
     },
     "@testing-library/cypress": {
       "npm": "@testing-library/cypress",
@@ -540,8 +540,8 @@
     },
     "TestMu AI SmartUI": {
       "npm": "@lambdatest/cypress-driver",
-      "version": "1.0.9-beta.3",
-      "lastPublished": "2026-02-14T08:35:39.930Z",
+      "version": "1.0.9-beta.4",
+      "lastPublished": "2026-11-23T12:19:49.808Z",
       "cypressVersion": ">=10"
     },
     "Cypress Image Diff": {
@@ -576,8 +576,8 @@
     },
     "Wopee.io": {
       "npm": "@wopee-io/wopee.cy",
-      "version": "4.13.7",
-      "lastPublished": "2026-11-13T07:37:23.045Z",
+      "version": "4.13.8",
+      "lastPublished": "2026-11-23T18:16:21.751Z",
       "cypressVersion": ">=13"
     },
     "@chromatic-com/cypress": {
