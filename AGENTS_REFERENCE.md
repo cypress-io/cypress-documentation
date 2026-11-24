@@ -1916,3 +1916,31 @@ pull request `update-plugins-data.yml` opens triggers nothing. That workflow
 typechecks, builds, and runs `plugins_list.cy.ts` itself before opening the pull
 request. Anything that would newly break on a change to
 `src/data/plugins-generated.json` belongs there, not only here.
+
+### Auto-approving low-risk pull requests
+
+`auto-approve-low-risk.yml` approves a pull request as `cypress-bot[bot]` when
+Cursor Bugbot grades it **Low Risk**, which satisfies the one approving review
+`main` requires. CI's required checks still have to pass before it merges. The
+workflow mirrors the one in `cypress-io/cypress`, and approves only when all of
+these hold:
+
+- The pull request comes from a branch in this repository, not a fork.
+- The author is a person with write or admin access. Bot-opened pull requests,
+  including the nightly plugins-data update, get a human review.
+- `cursor[bot]` raised the event by writing its summary, so a person editing the
+  description never triggers an approval.
+- The commit in the summary's "Reviewed by Cursor Bugbot for commit" footer is
+  the current head.
+- No changed file sits on a protected path: `.github/`, `.cursor/` (Bugbot's own
+  rules), `.claude/`, `.husky/`, `patches/`, `package.json`,
+  `package-lock.json`, `.npmrc`, `.node-version`, `docusaurus.config.js`, or
+  `wrangler.jsonc`. Bugbot grades content risk, and those paths change how pull
+  requests are reviewed, what CI installs, or how the site deploys.
+
+Every run also reconciles the bot's existing approval: a new commit, a grade
+other than **Low Risk**, or a protected path dismisses it.
+
+The workflow runs on `pull_request_target`, so GitHub runs it as it is on
+`main`. An edit to it takes effect only once merged, and can't be tested from
+its own pull request.
