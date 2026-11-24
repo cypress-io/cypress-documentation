@@ -24,6 +24,8 @@ You don't need any of this to get started, and you can add it incrementally. Rep
 
 <AppQualityConfigEditing />
 
+<AppQualityRuntimeConfigNote />
+
 <DocsImage
   src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
   alt="The Cypress Cloud UI showing the configuration editor"
@@ -221,6 +223,17 @@ To review the configuration a specific run used, open its **Properties** tab, as
 <DocsImage
   src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
   alt="The properties tab for a run, with an Application Quality section at the bottom"
+/>
+
+The message above the configuration says where the configuration came from:
+
+- A run that used the project configuration shows when that configuration was saved and which run first applied it.
+- A run that sent its own configuration shows "Configuration provided at runtime." See the [Runtime Configuration API](/cloud/features/runtime-configuration).
+- A run whose reports were regenerated shows "This run was reprocessed with the following configuration" and how many times the reports were regenerated. The configuration shown is the one the latest regeneration used.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-cloud-properties-tab-reprocessed-config.png"
+  alt="The Application Quality section of a run's Properties tab, showing that the run was reprocessed, that its reports were regenerated 2 times, and the configuration from the latest regeneration"
 />
 
 ### From the Results API

@@ -44,6 +44,7 @@ import NativeBrowserNetworkBrowsers from '@site/docs/partials/_native-browser-ne
 import ProductHeading from '@site/src/components/product-heading'
 import AppQualityConfigEditing from '@site/docs/partials/_app-quality-config-editing.mdx'
 import AppQualityConfigWhoCanEdit from '@site/docs/partials/_app-quality-config-who-can-edit.mdx'
+import AppQualityRuntimeConfigNote from '@site/docs/partials/_app-quality-runtime-config-note.mdx'
 import Profiles from '@site/docs/partials/_profiles.mdx'
 import ReportRunChecksGithub from '@site/docs/partials/_report-run-checks-github.mdx'
 import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
@@ -258,6 +259,7 @@ export default {
   ProductHeading,
   AppQualityConfigEditing,
   AppQualityConfigWhoCanEdit,
+  AppQualityRuntimeConfigNote,
   Profiles,
   ReportRunChecksGithub,
   RecordKeyEnvVar,

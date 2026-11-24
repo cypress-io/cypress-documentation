@@ -1,0 +1,243 @@
+---
+title: 'Runtime configuration: send App Quality config from your run'
+description: 'Send a run its own App Quality configuration from the before:run event with the Runtime Configuration API, so UI Coverage, Cypress Accessibility, and Run Checks use config kept in your repository.'
+sidebar_label: Runtime Configuration API
+sidebar_position: 56
+sidebar_custom_props: { 'new_label': true }
+---
+
+<ProductHeading product="cloud" />
+
+# Runtime Configuration API
+
+A project's App Quality configuration lives in Cypress Cloud, in the
+**App Quality** tab of your project settings, and every run uses the version
+saved there. The Runtime Configuration API sends a run its own App Quality
+configuration instead, from the [`before:run`](/api/node-events/before-run-api)
+event, so the configuration can live in your repository next to your tests:
+
+- Review configuration changes in the same pull request as the code and tests
+  they affect.
+- Try a stricter [Run Check](/cloud/features/checks) or a new
+  [view](/accessibility/configuration/views) on a branch before saving it for
+  the whole project.
+- Keep a different configuration per branch or pipeline, such as stricter
+  release gates on your main branch.
+
+The configuration a run receives **replaces** the project configuration for
+that run. Cypress Cloud doesn't merge the two, so send the complete
+configuration you want the run to use. UI Coverage, Cypress Accessibility, and
+Run Checks all use it to process the run.
+
+## Endpoint
+
+```text
+POST https://api.cypress.io/runs/config
+```
+
+Cypress Cloud authenticates requests with your
+[project ID](/cloud/account-management/projects#Project-ID) and
+[record key](/cloud/account-management/projects#Record-key), the same
+credentials used to [record the run](/cloud/get-started/setup#Setup).
+
+## Send the config from `before:run`
+
+Call the API from `before:run`. Cypress fires the event after Cypress Cloud
+creates the run and before any machine claims a spec, which is the window where
+the run can still take a configuration (see
+[One configuration per run](#One-configuration-per-run)).
+
+The example below reads an `app-quality.config.json` file from your
+repository, sends it as `config.appQuality`, and throws on any error response
+so that a rejected configuration fails `cypress run` instead of passing
+unnoticed.
+
+:::cypress-config-plugin-example
+
+```ts
+on('before:run', async (details) => {
+  // `runUrl` is only set when the run was recorded. Bail out otherwise.
+  if (!details.runUrl) {
+    return
+  }
+
+  const appQuality = JSON.parse(
+    fs.readFileSync('app-quality.config.json', 'utf8')
+  )
+
+  const response = await fetch('https://api.cypress.io/runs/config', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      projectId: details.config.projectId,
+      recordKey: process.env.CYPRESS_RECORD_KEY,
+      runUrl: details.runUrl,
+      config: { appQuality },
+      schemaVersions: { appQuality: '0.1' },
+    }),
+  })
+
+  if (!response.ok) {
+    throw new Error(
+      `POST /runs/config failed with ${response.status}: ${await response.text()}`
+    )
+  }
+})
+```
+
+:::
+
+`before:run` doesn't receive the `--key` passed to `cypress run`, so the
+example reads the record key from the `CYPRESS_RECORD_KEY` environment
+variable. Import `fs` from `node:fs` at the top of your configuration file.
+
+:::caution
+
+**A rejected configuration leaves an empty run**
+
+When the handler throws, `cypress run` exits before it claims a spec. Cypress
+Cloud has already created the run, so the run stays open with no specs until
+the project's [Run Timeout](/cloud/account-management/projects#Run-Timeout)
+expires. Fix the configuration and record a new run.
+
+:::
+
+### Combine with an existing `before:run` handler
+
+Cypress keeps one handler per event, so a second `on('before:run')` in your
+configuration replaces the first. If your project or a plugin already handles
+`before:run`, call both from a single handler, or register them through a
+package such as
+[`cypress-on-fix`](https://github.com/bahmutov/cypress-on-fix), which runs
+every handler registered for an event.
+
+## Request body
+
+The request body is JSON. `projectId`, `recordKey`, and `config` are always
+required, and **exactly one** of `runUrl` or `runNumber` identifies the run.
+
+| Property         | Type     | Required    | Description                                                                                                                                                                      |
+| ---------------- | -------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `config`         | `object` | Yes         | The configuration for the run. Put the App Quality configuration under `appQuality`, written the same way as in the [App Quality editor](/accessibility/configuration/overview). |
+| `projectId`      | `string` | Yes         | The [project ID](/cloud/account-management/projects#Project-ID) of the run.                                                                                                      |
+| `recordKey`      | `string` | Yes         | A valid [record key](/cloud/account-management/projects#Record-key) for the project.                                                                                             |
+| `runNumber`      | `number` | Conditional | The run's sequential number within the project. Provide this **or** `runUrl`.                                                                                                    |
+| `runUrl`         | `string` | Conditional | The Cypress Cloud run URL (Cypress prints this when a run starts). Provide this **or** `runNumber`.                                                                              |
+| `schemaVersions` | `object` | No          | The schema version to validate each area against, such as `{ "appQuality": "0.1" }`. Each area without a version is validated against the latest. See [Validation](#Validation). |
+
+`config` can be up to 1 MB of JSON.
+
+#### Example: `curl`
+
+```shell
+curl -X POST https://api.cypress.io/runs/config \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "projectId": "abc123",
+    "recordKey": "f858a2bc-b469-4e48-be67-0876339ee7e1",
+    "runUrl": "https://cloud.cypress.io/projects/abc123/runs/42",
+    "config": {
+      "appQuality": {
+        "views": ["/checkout/*"]
+      }
+    },
+    "schemaVersions": { "appQuality": "0.1" }
+  }'
+```
+
+## One configuration per run
+
+A run uses the first configuration it receives:
+
+- **Every machine can send the same configuration.** `before:run` fires once
+  per machine in a [parallelized](/cloud/features/smart-orchestration/parallelization)
+  or grouped run. The first request sets the run's configuration, and each
+  later request with the same configuration gets a `204` response.
+- **A different configuration is rejected.** Once the run has a configuration,
+  a request with a different one gets a `409` response with the
+  `RUN_CONFIG_PINNED` code.
+- **The first claimed spec settles it.** If a machine without the
+  `before:run` handler claims a spec before any request arrives, the run uses
+  the project configuration, and later requests get a `409` response. Machines
+  that share a configuration file all register the same handler. A group that
+  records with a different `--config-file`, or as component tests when the
+  handler is only under `e2e`, needs the handler added there too.
+
+## Validation
+
+Cypress Cloud validates `config.appQuality` against the App Quality schema for
+its version. Keys that aren't part of the App Quality configuration are
+rejected, and so are areas other than `appQuality` at the top level of
+`config`. A rejected request leaves the run without a configuration, and
+Cypress Cloud doesn't store anything from it.
+
+A validation error returns `412` with the `RUN_CONFIG_INVALID` code and one
+issue per problem, each with the path to the invalid field:
+
+```json
+{
+  "code": "RUN_CONFIG_INVALID",
+  "message": "The request is invalid. Each issue names the invalid field.",
+  "payload": {
+    "issues": [
+      {
+        "path": "config.appQuality.uiCoverage",
+        "message": "Not a supported configuration option for \"uiCoverage\"."
+      }
+    ]
+  }
+}
+```
+
+Set `schemaVersions` to the version your configuration is written for. Without
+it, Cypress Cloud validates against the latest schema, so a configuration that
+passes today can start failing when a newer schema changes an option it uses.
+
+## Responses
+
+The status code and, for an error, the `code` field of the JSON body describe
+the result.
+
+| Status | `code`                                                                                              | Meaning                                                                                                                                                                    |
+| ------ | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `200`  |                                                                                                     | The run now uses this configuration. The body is `{ "runId": "...", "status": "applied" }`.                                                                                |
+| `204`  |                                                                                                     | The run already uses this configuration, for example because another machine sent it first.                                                                                |
+| `400`  | `MISSING_PROJECT_ID`, `MISSING_RECORD_KEY`, `MISSING_RUN_IDENTIFIER`, `CONFLICTING_RUN_IDENTIFIERS` | A required property is missing, or the request has both `runUrl` and `runNumber`.                                                                                          |
+| `401`  | `INVALID_RECORD_KEY`                                                                                | The record key isn't valid for the project.                                                                                                                                |
+| `404`  | `RUN_NOT_FOUND`                                                                                     | No run matches `runUrl` or `runNumber`. When the body includes `"retryable": true`, Cypress Cloud may still be creating the run, so retry the request after a few seconds. |
+| `409`  | `RUN_CONFIG_PINNED`                                                                                 | The run already uses a different configuration, either the project configuration or one sent earlier. See [One configuration per run](#One-configuration-per-run).         |
+| `412`  | `RUN_CONFIG_INVALID`                                                                                | The configuration doesn't match the schema. See [Validation](#Validation).                                                                                                 |
+| `413`  | `RUN_CONFIG_TOO_LARGE`                                                                              | `config` is larger than 1 MB.                                                                                                                                              |
+| `422`  | `INVALID_RUN_URL`, `RUN_URL_PROJECT_MISMATCH`                                                       | `runUrl` has no run number, or it belongs to a different project than `projectId`.                                                                                         |
+| `500`  | `RECORDING_SERVICE_UNAVAILABLE`                                                                     | Cypress Cloud couldn't process the request. Retry it.                                                                                                                      |
+
+## Runtime configuration in Cypress Cloud
+
+The run's **Properties** tab shows "Configuration provided at runtime." above
+the configuration the run received.
+
+<DocsImage
+  src="/img/cloud/features/runtime-configuration/cypress-cloud-properties-tab-runtime-config.png"
+  alt="The Application Quality section of a run's Properties tab, showing the message Configuration provided at runtime above the configuration the run sent"
+/>
+
+### Regenerate a run that used a runtime configuration
+
+[Regenerating](/accessibility/configuration/overview#Setting-Configuration) a
+run's reports applies the project configuration saved in Cypress Cloud, not
+the configuration the run sent. Cypress Cloud processes the reports again and
+evaluates the run's Run Checks against the project configuration, so the scores
+and check results can change. The regenerate dialog says so before you
+confirm.
+
+<DocsImage
+  src="/img/cloud/features/runtime-configuration/cypress-cloud-regenerate-modal-runtime-config.png"
+  alt="The Regenerate UI Coverage and Accessibility reports dialog, explaining that the run used a configuration provided at runtime and that regenerating applies the project's configuration"
+/>
+
+## See also
+
+- [Cypress Accessibility configuration](/accessibility/configuration/overview)
+- [Run Checks](/cloud/features/checks)
+- [UI Coverage configuration](/ui-coverage/configuration/overview)
+- [`before:run`](/api/node-events/before-run-api)

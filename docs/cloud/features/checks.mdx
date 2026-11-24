@@ -72,6 +72,8 @@ simpler set of checks than this:
 
 <AppQualityConfigEditing />
 
+<AppQualityRuntimeConfigNote />
+
 Add a `checks` array to the root of the configuration:
 
 ```json title="App Quality Config"
@@ -252,7 +254,7 @@ Product labels such as Accessibility or Test Results, metric labels such as
 Score or Failed tests, status icons, and measured values such as `95.5%` are
 produced by Cypress Cloud from the assertion type and the run.
 
-A run's checks use the App Quality configuration saved at the time the run is recorded. When you [regenerate](/accessibility/configuration/overview#Setting-Configuration) a run, Cypress Cloud evaluates its checks again against the configuration saved at that time, so you can adjust a check and see its effect on an existing run without recording again.
+A run's checks use the App Quality configuration saved at the time the run is recorded, or the configuration the run sends through the [Runtime Configuration API](/cloud/features/runtime-configuration). When you [regenerate](/accessibility/configuration/overview#Setting-Configuration) a run, Cypress Cloud evaluates its checks again against the configuration saved at that time, so you can adjust a check and see its effect on an existing run without recording again.
 
 ### Check statuses
 
