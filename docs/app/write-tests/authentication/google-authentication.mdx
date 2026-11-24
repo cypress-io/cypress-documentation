@@ -452,7 +452,7 @@ provider's issuer. For library-specific setup, see
 
 The test below wraps the sign-in in [`cy.session()`](/api/commands/session), so
 it signs in once and restores the session before each later test. Set
-`CYPRESS_MOCK_OAUTH_EMAIL` and `CYPRESS_MOCK_OAUTH_PASSWORD` to a test account
+`CYPRESS_MOCKATOO_TEST_EMAIL` and `CYPRESS_MOCKATOO_TEST_PASSWORD` to a test account
 on the mock provider before running it.
 
 ```ts copyTsToJs title="cypress/e2e/google-auth.cy.ts"
@@ -460,26 +460,29 @@ on the mock provider before running it.
 const MOCK_OAUTH_URL = 'https://auth.cypress.io'
 
 type Credentials = {
-  MOCK_OAUTH_EMAIL?: string
-  MOCK_OAUTH_PASSWORD?: string
+  MOCKATOO_TEST_EMAIL?: string
+  MOCKATOO_TEST_PASSWORD?: string
 }
 
 const loginWithMockGoogle = () => {
   cy.session('mock-google', () => {
     cy.visit('/')
     cy.contains('button', 'Sign in with Google').click()
-    cy.env<Credentials>(['MOCK_OAUTH_EMAIL', 'MOCK_OAUTH_PASSWORD']).then(
-      ({ MOCK_OAUTH_EMAIL, MOCK_OAUTH_PASSWORD }) => {
-        if (!MOCK_OAUTH_EMAIL || !MOCK_OAUTH_PASSWORD) {
+    cy.env<Credentials>(['MOCKATOO_TEST_EMAIL', 'MOCKATOO_TEST_PASSWORD']).then(
+      ({ MOCKATOO_TEST_EMAIL, MOCKATOO_TEST_PASSWORD }) => {
+        if (!MOCKATOO_TEST_EMAIL || !MOCKATOO_TEST_PASSWORD) {
           throw new Error(
-            'Set CYPRESS_MOCK_OAUTH_EMAIL and CYPRESS_MOCK_OAUTH_PASSWORD.'
+            'Set CYPRESS_MOCKATOO_TEST_EMAIL and CYPRESS_MOCKATOO_TEST_PASSWORD.'
           )
         }
 
         cy.origin(
           MOCK_OAUTH_URL,
           {
-            args: { email: MOCK_OAUTH_EMAIL, password: MOCK_OAUTH_PASSWORD },
+            args: {
+              email: MOCKATOO_TEST_EMAIL,
+              password: MOCKATOO_TEST_PASSWORD,
+            },
           },
           ({ email, password }) => {
             // These selectors match Mockatoo's login and consent pages.
