@@ -441,47 +441,71 @@ configuration for production, and select the mock provider only in a development
 or test profile. Your app keeps its real sign-in UI flow, while `cy.origin()`
 handles the mock provider's login and consent pages.
 
-The app setup depends on your auth library; see
+In the development or test profile, replace Google's authorization endpoint
+(`https://accounts.google.com/o/oauth2/v2/auth`), token endpoint
+(`https://oauth2.googleapis.com/token`), and userinfo endpoint
+(`https://www.googleapis.com/oauth2/v3/userinfo`) with the mock provider's, and
+use the client ID and secret the mock provider gives you. If your auth library
+reads Google's OpenID Connect discovery document instead, point it at the mock
+provider's issuer. For library-specific setup, see
 [Mockatoo's Cypress guide](https://mockatoo.globalunderdog.com/docs/cypress).
-Set `CYPRESS_MOCKATOO_TEST_EMAIL` and `CYPRESS_MOCKATOO_TEST_PASSWORD` in your
-environment before running the test.
+
+The test below wraps the sign-in in [`cy.session()`](/api/commands/session), so
+it signs in once and restores the session before each later test. Set
+`CYPRESS_MOCK_OAUTH_EMAIL` and `CYPRESS_MOCK_OAUTH_PASSWORD` to a test account
+on the mock provider before running it.
 
 ```ts copyTsToJs title="cypress/e2e/google-auth.cy.ts"
-const MOCKATOO_URL = 'https://app.mockatoo.globalunderdog.com'
+// Replace with your mock provider's URL
+const MOCK_OAUTH_URL = 'https://auth.cypress.io'
 
 type Credentials = {
-  MOCKATOO_TEST_EMAIL?: string
-  MOCKATOO_TEST_PASSWORD?: string
+  MOCK_OAUTH_EMAIL?: string
+  MOCK_OAUTH_PASSWORD?: string
 }
 
-it('signs in with Google through a mock provider', () => {
-  cy.visit('/')
-  cy.contains('button', 'Sign in with Google').click()
-  cy.env<Credentials>(['MOCKATOO_TEST_EMAIL', 'MOCKATOO_TEST_PASSWORD']).then(
-    ({ MOCKATOO_TEST_EMAIL, MOCKATOO_TEST_PASSWORD }) => {
-      if (!MOCKATOO_TEST_EMAIL || !MOCKATOO_TEST_PASSWORD) {
-        throw new Error(
-          'Set CYPRESS_MOCKATOO_TEST_EMAIL and CYPRESS_MOCKATOO_TEST_PASSWORD.'
+const loginWithMockGoogle = () => {
+  cy.session('mock-google', () => {
+    cy.visit('/')
+    cy.contains('button', 'Sign in with Google').click()
+    cy.env<Credentials>(['MOCK_OAUTH_EMAIL', 'MOCK_OAUTH_PASSWORD']).then(
+      ({ MOCK_OAUTH_EMAIL, MOCK_OAUTH_PASSWORD }) => {
+        if (!MOCK_OAUTH_EMAIL || !MOCK_OAUTH_PASSWORD) {
+          throw new Error(
+            'Set CYPRESS_MOCK_OAUTH_EMAIL and CYPRESS_MOCK_OAUTH_PASSWORD.'
+          )
+        }
+
+        cy.origin(
+          MOCK_OAUTH_URL,
+          {
+            args: { email: MOCK_OAUTH_EMAIL, password: MOCK_OAUTH_PASSWORD },
+          },
+          ({ email, password }) => {
+            // These selectors match Mockatoo's login and consent pages.
+            // Swap in the selectors for your provider's pages.
+            cy.get('#email').type(email)
+            cy.get('#password').type(password, { log: false })
+            cy.contains('button', 'Log in with password').click()
+            cy.contains('button', 'Authorize').click()
+          }
         )
       }
+    )
+    // Replace with an element only signed-in users see
+    cy.contains('h1', 'Your session').should('be.visible')
+  })
+}
 
-      cy.origin(
-        MOCKATOO_URL,
-        {
-          args: {
-            email: MOCKATOO_TEST_EMAIL,
-            password: MOCKATOO_TEST_PASSWORD,
-          },
-        },
-        ({ email, password }) => {
-          cy.get('#email').type(email)
-          cy.get('#password').type(password, { log: false })
-          cy.contains('button', 'Log in with password').click()
-          cy.contains('button', 'Authorize').click()
-        }
-      )
-    }
-  )
-  cy.contains('h1', 'Your session').should('be.visible')
+describe('Google sign-in with a mock provider', () => {
+  beforeEach(() => {
+    loginWithMockGoogle()
+  })
+
+  it('shows the signed-in page', () => {
+    cy.visit('/')
+    // Replace with an element only signed-in users see
+    cy.contains('h1', 'Your session').should('be.visible')
+  })
 })
 ```
