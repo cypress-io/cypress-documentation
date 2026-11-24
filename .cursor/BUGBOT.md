@@ -222,6 +222,50 @@ those catch; look for what they can't.
 - Actions must be pinned to a major tag (`@v4`), and the tag should be one that
   actually exists.
 
+## Risk level
+
+The risk level in your PR summary decides whether the PR gets a human review:
+`.github/workflows/auto-approve-low-risk.yml` approves a **Low Risk** PR
+automatically. Grade by what can go wrong for readers and the site after merge,
+not by how much code changed. A one-line docs change can still be
+**Medium Risk**. Use the highest level that any one change in the PR reaches.
+
+**High Risk**
+
+- A workflow change that adds or widens secrets, write permissions,
+  `pull_request_target`, or a step that runs pull request code.
+- A new dependency, a new `patches/` file, or a change to how CI installs or
+  deploys (`package.json` scripts, `wrangler.jsonc`, `.node-version`).
+- Turning off a build safety net, such as setting `onBrokenLinks`,
+  `onBrokenAnchors`, or `onBrokenMarkdownLinks` in `docusaurus.config.js` to
+  anything but `throw`.
+
+**Medium Risk**
+
+- A page moved, renamed, or deleted, or a changed `slug`, whether or not the PR
+  adds the `301`.
+- Any change to `static/_redirects`, and wildcard (`*`) rules above all.
+- A changed claim about how Cypress behaves: a command's behavior, defaults,
+  arguments, or yields on an `/api` page, or an option, flag, or environment
+  variable in `docs/app/references/configuration.mdx` or
+  `docs/app/references/command-line.mdx`. These need a check against
+  `cypress-io/cypress` that Bugbot can't make.
+- Migration, deprecation, or removal notes, and version numbers in a
+  `## History` table or changelog entry.
+- A change to `src/` or `plugins/` that renders on many pages: an MDX
+  component, a swizzled theme file, a remark plugin, or the LLM export.
+- A change to review or agent instructions: this file, any `AGENTS.md` or
+  `CLAUDE.md`, `AGENTS_REFERENCE.md`, or `.claude/`.
+
+**Low Risk**
+
+- Prose edits, typo fixes, and clarifications that don't change a behavior
+  claim.
+- New or updated examples, images, and admonitions on existing pages.
+- A new page that moves or removes nothing.
+
+When you can't tell which level fits, choose the higher one.
+
 ## How to comment
 
 - One comment per distinct defect, on the exact line, with the fix stated.
