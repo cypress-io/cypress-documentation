@@ -1,5 +1,7 @@
 :root {
-  --ifm-navbar-height: 72px;
+  --navbar-base-height: 72px;
+  --ifm-navbar-height: var(--navbar-base-height);
+  --docs-version-bar-height: 40px;
 }
 
 .navbar {
@@ -47,12 +49,14 @@
   height: var(--ifm-navbar-height);
 }
 
+/* A gap, not margins, so the last visible control has no trailing space. */
 .navbar__items.navbar__items--right {
   right: 24px;
   height: var(--ifm-navbar-height);
+  gap: 8px;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 996px) {
   .navbar__items.navbar__items--right {
     right: 0;
   }
@@ -65,6 +69,44 @@
 
 nav .navbar__inner {
   justify-content: center;
+}
+
+/* One flex row, so the main links never sit under the right-hand controls. */
+@media (min-width: 997px) {
+  nav .navbar__inner {
+    justify-content: space-between;
+  }
+
+  .navbar__items.navbar__items--left,
+  .navbar__items.navbar__items--right {
+    position: static;
+  }
+
+  .navbar__inner
+    > .navbar__items:not(.navbar__items--left):not(.navbar__items--right) {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+/* Infima hides .navbar__item below 997px. The version dropdown stays down to
+   sm, where src/theme/Navbar/Content hides it. */
+.navbar__items--right .dropdown.navbar__item {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar__items--right .dropdown > .navbar__link {
+  margin: 0;
+}
+
+/* Includes the sticky version bar, so the sidebar, TOC, and anchors clear it. */
+html[class*='docs-version-']:not(.docs-version-current) .main-wrapper {
+  --ifm-navbar-height: calc(
+    var(--navbar-base-height) + var(--docs-version-bar-height)
+  );
 }
 
 .navbar__link {

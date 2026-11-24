@@ -18,7 +18,10 @@ const { SECTION_TITLE_SUFFIX } = sectionTitles
 export default function MetadataWrapper(props) {
   const { metadata } = useDoc()
   const { pathname } = useLocation()
-  const segment = pathname.replace(/^\//, '').split('/')[0]
+  // An older docs version's URLs start with the version path (/15/api/...).
+  const segments = pathname.replace(/^\//, '').split('/')
+  const segment =
+    metadata.version === 'current' ? segments[0] : segments[1]
   const suffix = SECTION_TITLE_SUFFIX[segment]
   const title = metadata.title
 

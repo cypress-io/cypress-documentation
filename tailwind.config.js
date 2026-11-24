@@ -8,6 +8,8 @@ module.exports = {
     files: [
       './src/**/*.{js,ts,jsx,tsx}',
       './docs/**/*.mdx',
+      './versioned_docs/**/*.mdx',
+      './.versions/*/src/**/*.{js,ts,jsx,tsx}',
       './node_modules/@cypress-design/react-*/dist/*.mjs',
       './node_modules/@cypress-design/react-*/dist/*.css',
     ],

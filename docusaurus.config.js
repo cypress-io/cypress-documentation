@@ -18,6 +18,16 @@ const {
   conversionLinkAttributes,
 } = require('./plugins/fullstory-conversion-links')
 const rehypeFullStoryConversionLinks = require('./plugins/fullstory-conversion-links-rehype')
+const versionedDocs = require('./plugins/versioned-docs-remark')
+
+// Older docs versions exist only after `npm run versions:extract`.
+const builtVersions = fs.existsSync('./versions.json')
+  ? JSON.parse(fs.readFileSync('./versions.json', 'utf-8'))
+  : []
+const docVersions = JSON.parse(
+  fs.readFileSync('./doc-versions.json', 'utf-8')
+).filter((v) => builtVersions.includes(v.name))
+const EDIT_URL_BASE = 'https://github.com/cypress-io/cypress-documentation/tree'
 
 // Adds Fullstory conversion link attributes to the links that lead toward a
 // conversion or Cypress Cloud. Every other link passes through unchanged.
@@ -68,9 +78,22 @@ const config = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/cypress-io/cypress-documentation/tree/main/',
+          // An older version's files exist only at its tag.
+          editUrl: ({ version, docPath }) => {
+            const tag = docVersions.find((v) => v.name === version)?.tag
+            return `${EDIT_URL_BASE}/${tag || 'main'}/docs/${docPath}`
+          },
           routeBasePath: '/',
+          lastVersion: 'current',
+          versions: {
+            current: { label: 'Latest', path: '' },
+            ...Object.fromEntries(
+              docVersions.map((v) => [
+                v.name,
+                { label: v.label, path: v.name, banner: 'unmaintained' },
+              ])
+            ),
+          },
           // `exclude` replaces Docusaurus's own defaults rather than extending
           // them, so the first four patterns are those defaults, copied as-is.
           // The last two keep the per-directory agent instructions out of the
@@ -99,11 +122,16 @@ const config = {
                 },
               },
             ],
+            [versionedDocs, { siteDir: __dirname }],
           ],
           rehypePlugins: [rehypeFullStoryConversionLinks],
           showLastUpdateTime: true,
         },
         blog: false,
+        // Keep older versions from competing with current pages in search.
+        sitemap: {
+          ignorePatterns: docVersions.map((v) => `/${v.name}/**`),
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.scss'),
         },
@@ -213,7 +241,11 @@ const config = {
             to: 'https://learn.cypress.io?utm_medium=nav&utm_source=docs.cypress.io&utm_content=Learn',
             label: 'Learn',
           },
-        ], SURFACES.navbar),
+        ], SURFACES.navbar).concat(
+          docVersions.length
+            ? [{ type: 'docsVersionDropdown', position: 'right' }]
+            : []
+        ),
       },
       // optional, can be commented out
       // Styles for this are controlled in src/css/announcement-bar.scss

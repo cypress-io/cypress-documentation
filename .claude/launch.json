@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start"],
       "port": 3000
+    },
+    {
+      "name": "cypress-docs-all-versions",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "serve", "--", "--port", "3001", "--no-open"],
+      "port": 3001
     }
   ]
 }

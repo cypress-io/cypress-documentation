@@ -296,10 +296,12 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
         onMouseOver={importDocSearchModalIfNeeded}
         onClick={onOpen}
         ref={searchButtonRef}
-        className="gap-[16px] sm:w-[180px] bg-white dark:bg-gray-1000 text-gray-700 dark:text-gray-500 rounded-full p-[12px] sm:px-[16px] sm:h-[38px] border border-gray-100 dark:border-gray-900 flex items-center xl:mx-[16px]"
+        aria-label="Search"
+        // xl matches where the Ask AI button drops its label.
+        className="gap-[16px] h-[42px] w-[42px] sm:h-[38px] sm:w-[38px] justify-center p-0 xl:w-[180px] xl:justify-start xl:px-[16px] bg-white dark:bg-gray-1000 text-gray-700 dark:text-gray-500 rounded-full border border-gray-100 dark:border-gray-900 flex items-center"
       >
         <IconObjectMagnifyingGlass fillColor="transparent" />
-        <span className="hidden sm:inline">Search ⌘K</span>
+        <span className="hidden xl:inline">Search ⌘K</span>
       </button>
 
       {isOpen &&

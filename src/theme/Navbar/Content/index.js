@@ -42,8 +42,8 @@ function NavbarContentLayout({ left, center, right }) {
   return (
     <div className="navbar__inner">
       <div className="navbar__items navbar__items--left">{left}</div>
-      <div className="hidden navbar__items lg:flex">{center}</div>
-      <div className="navbar__items navbar__items--right mr-[4px] sm:mr-[32px] lg:mr-0">
+      <div className="hidden navbar__items min-[997px]:flex">{center}</div>
+      <div className="navbar__items navbar__items--right mr-[8px] sm:mr-[32px] min-[997px]:mr-0">
         {right}
       </div>
     </div>
@@ -76,13 +76,18 @@ export default function NavbarContent() {
         // TODO stop hardcoding items?
         // Ask the user to add the respective navbar items => more flexible
         <>
+          {/* Below sm the version dropdown is in the mobile menu. */}
+          <div className="hidden sm:flex">
+            <NavbarItems items={rightItems} />
+          </div>
           {!searchBarItem && (
             <NavbarSearch>
               <SearchBar />
             </NavbarSearch>
           )}
           <SupportAssistantButton />
-          <SocialIcons className="hidden sm:flex" />
+          {/* Below 1366px the other navbar items need this space. */}
+          <SocialIcons className="hidden min-[1366px]:flex" />
         </>
       }
     />
