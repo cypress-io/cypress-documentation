@@ -1941,6 +1941,13 @@ these hold:
 Every run also reconciles the bot's existing approval: a new commit, a grade
 other than **Low Risk**, or a protected path dismisses it.
 
+Two branch protection settings back this up. **Dismiss stale pull request
+approvals when new commits are pushed** clears a person's approval on a new
+push the same way the workflow clears its own. **Require review from Code
+Owners** makes `.github/` and `.cursor/` need a review from `@cypress-io/app`
+(see `.github/CODEOWNERS`), and the bot is never a code owner, so its approval
+can't satisfy that review.
+
 The workflow runs on `pull_request_target`, so GitHub runs it as it is on
 `main`. An edit to it takes effect only once merged, and can't be tested from
 its own pull request.
