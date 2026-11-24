@@ -21,10 +21,11 @@ export function copyTsToJs(
         while (index < node.children.length) {
           const child = node.children[index]!
           if (matchNode(child)) {
-            const result = transformNode(child, {
+            const blocks = transformNode(child, {
               prettierOptions,
               typescriptCompilerOptions,
             })
+            const result = rendersOwnTabs(node) ? blocks : [wrapInTabs(blocks)]
             node.children.splice(index, 1, ...result)
             index += result.length
           } else {
@@ -34,6 +35,25 @@ export function copyTsToJs(
       }
     })
   }
+}
+
+// Components that place the JS and TS blocks in tabs themselves. The
+// :::cypress-config-example and :::cypress-config-plugin-example directives
+// set this as their `hName`. Match by name: other parents carry an `hName`
+// too, such as an admonition, and blocks inside them still need tabs.
+const OWN_TABS_COMPONENTS = new Set(['CypressConfigFileTabs'])
+
+function rendersOwnTabs(node: Parent): boolean {
+  const hName = (node.data as { hName?: string } | undefined)?.hName
+  return hName !== undefined && OWN_TABS_COMPONENTS.has(hName)
+}
+
+export function wrapInTabs(blocks: Code[]): Parent {
+  return {
+    type: 'copyTsToJsTabs',
+    data: { hName: 'CypressLangTabs' },
+    children: blocks,
+  } as Parent
 }
 
 function isParent(node: Node): node is Parent {
@@ -48,6 +68,14 @@ function matchNode(node: Node): node is Code & Parent {
   )
 }
 
+// Rewrites a TypeScript filename in a `title="..."` to its JavaScript
+// equivalent, so the generated JS block doesn't show a .ts filename.
+export function toJsMeta(meta: string): string {
+  return meta
+    .replace('copyTsToJs', '')
+    .replace(/(title=(["'])[^"']*\.)(m|c)?ts(x?)(\2)/, '$1$3js$4$5')
+}
+
 function transformNode(node: Code, options: PluginOptions) : Code[]{
   const { tsCode, jsCode } = transformTsToJs(node.value, options)
 
@@ -55,7 +83,7 @@ function transformNode(node: Code, options: PluginOptions) : Code[]{
     {
       type: node.type,
       lang: 'js',
-      meta: node.meta?.replace('copyTsToJs', ''),
+      meta: node.meta ? toJsMeta(node.meta) : node.meta,
       value: jsCode,
     },
     {

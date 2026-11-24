@@ -6,6 +6,10 @@ import E2EOnlyBadge from "@site/src/components/e2e-only-badge";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 
 import React from 'react';
+import {
+    SURFACES,
+    conversionLinkAttributes,
+} from '@site/plugins/fullstory-conversion-links'
 
 interface ProductHeadingProps {
     product: 'app' | 'cloud' | 'accessibility' | 'ui-coverage'
@@ -29,6 +33,10 @@ const DocProductHeading: React.FC<ProductHeadingProps> = ({
         badgeContent = plan === 'team' ? 'Team Plan' : plan === 'business' ? 'Business Plan' : 'Enterprise Plan'
     }
 
+    const linkLabel = product === 'cloud' ? 'Cypress Cloud pricing' : productName
+
+    const href = `https://www.cypress.io/${linkPath}?utm_source=docs&utm_medium=product-heading-${product}&utm_content=${badgeContent}`
+
     return (
     <div className={s.productHeading} style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
         <Icon 
@@ -38,14 +46,17 @@ const DocProductHeading: React.FC<ProductHeadingProps> = ({
         <span className={s.productHeadingText}>
           {productName}
         </span>
-        <a 
-          href={`https://www.cypress.io/${linkPath}?utm_source=docs&utm_medium=product-heading-${product}&utm_content=${badgeContent}`}
-          target="_blank"
-          title="Learn more"
-          className={s.productHeadingLink}
-          >
-            { product !== 'app' &&  <Badge type="success">{badgeContent}</Badge>}
-        </a>
+        {product !== 'app' && (
+          <a
+            href={href}
+            {...conversionLinkAttributes(href, SURFACES.content)}
+            target="_blank"
+            aria-label={`${badgeContent}: ${linkLabel} on cypress.io (opens in a new tab)`}
+            className={s.productHeadingLink}
+            >
+              <Badge type="success">{badgeContent}</Badge>
+          </a>
+        )}
         <span className={s.productHeadingBadge}>{badge}</span>
     </div>
     )

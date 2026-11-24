@@ -19,10 +19,10 @@ sidebar_position: 220
   width="80%"
 />
 
-[Cypress Cloud](https://on.cypress.io/cloud) gives you access to tests you've
+[Cypress Cloud](https://on.cypress.io/cloud) displays the tests you've
 recorded - typically when running Cypress tests from your
-[CI provider](/app/continuous-integration/overview) - and provides you
-insight into what happened during your tests run.
+[CI provider](/app/continuous-integration/overview) - and shows
+what happened during your test runs.
 
 You can read more in the
 [introduction to Cypress Cloud](/cloud/get-started/introduction).
@@ -31,8 +31,8 @@ You can read more in the
 
 Cypress captures the following:
 
-When you run Cypress via `cypress run` passing the `--record` flag the following
-data is sent to the Cloud for every run:
+When you run Cypress via `cypress run` passing the `--record` flag, Cypress sends
+the following data to the Cloud for every run:
 
 - Standard output in the terminal
 - Test results
@@ -44,10 +44,10 @@ data is sent to the Cloud for every run:
 
 You have the option to
 [delete videos or screenshots](/app/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud)
-before being sent to the Cloud so those are not captured.
+before Cypress sends them to the Cloud, so Cypress Cloud doesn't capture them.
 
-When [Test Replay](#Test-Replay) capturing is enabled, the additional data outlined
-below will be sent to the Cloud. You can
+When [Test Replay](#Test-Replay) capturing is enabled, Cypress sends the additional data outlined
+below to the Cloud. You can
 [disable capturing](/cloud/features/test-replay#Opt-out-of-Test-Replay) this data.
 
 - The rendered DOM and CSS styles for the application under test
@@ -64,15 +64,15 @@ Cypress Cloud is **complementary** to your
 [CI provider](/app/continuous-integration/overview), and plays a
 completely different role.
 
-It doesn't replace or change anything related to CI. You will still run Cypress
+Cypress Cloud doesn't replace or change anything related to CI. You still run Cypress
 tests in your CI provider.
 
 The difference between [Cypress Cloud](/cloud/get-started/introduction) and your CI
 provider is that your CI provider has no idea what is going on inside of the
-Cypress process. It's programmed to know whether or not a process failed - based
+Cypress process. Your CI provider is programmed to know whether or not a process failed - based
 on whether it had an exit code greater than `0`.
 
-[Cypress Cloud](/cloud/get-started/introduction) provides you with the low level
+[Cypress Cloud](/cloud/get-started/introduction) shows the low level
 details of _what_ happened during your run. Using both your CI provider +
 Cypress together gives the insight required to debug your test runs.
 
@@ -87,16 +87,15 @@ the problem was.
 Which [pricing tier](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=cloud-faq) is best for you depends on
 the number of tests you record each month in your organization.
 
-Tests are recorded when [cypress run](/app/references/command-line#cypress-run)
-is called with the `--record` flag while supplying the record `--key`. This
+Cypress records tests when you call
+[cypress run](/app/references/command-line#cypress-run) with the `--record` flag while supplying the record `--key`. Recording
 means your [test run data](/cloud/features/recorded-runs#Latest-Runs) is being
 "recorded" to Cypress Cloud.
 
-We consider each time the `it()` function is called to be a single test. So you
-will generally have several tests recorded within each spec file and likely
-several spec files within a single run. Only the
-[passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Understanding-test-results)
-are counted. The pending and skipped tests are NOT counted.
+We consider each call to the `it()` function to be a single test. So you
+generally have several tests recorded within each spec file and likely
+several spec files within a single run. Cypress Cloud counts only the [passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Understanding-test-results).
+Cypress Cloud does NOT count pending and skipped tests.
 
 You can always see how many tests you've recorded from your organization's
 [Billing & Usage](/cloud/account-management/billing-and-usage) page
@@ -121,22 +120,22 @@ See our [Pricing Page](https://www.cypress.io/pricing?utm_source=docs.cypress.io
 
 ### <Icon name="angle-right" /> What is the difference between public and private projects?
 
-**A public project** means that anyone can see the recorded runs for it. It's
-similar to how public projects on GitHub, Travis, or CircleCI are handled.
-Anyone who knows your `projectId` will be able to see the recorded runs,
+**A public project** means that anyone can see the recorded runs for it. Public visibility is
+similar to how GitHub, Travis, or CircleCI handle public projects.
+Anyone who knows your `projectId` can see the recorded runs,
 screenshots, and videos for public projects.
 
 **A private project** means that only
 [users](/cloud/account-management/users) you explicitly invite to your
 [organization](/cloud/account-management/organizations) can see its
-recorded runs. Even if someone knows your `projectId`, they will not have access
+recorded runs. Even if someone knows your `projectId`, they do not have access
 to your runs unless you have invited them.
 
 ### <Icon name="angle-right" /> What happens once I reach the test results limit?
 
-Tests running with the `--record` flag will run as normal when the limit is
-reached, but parallelization will be disabled and new test results will be
-hidden from the dashboard until your plan is upgraded or a new usage cycle
+Tests running with the `--record` flag run as normal when the limit is
+reached, but Cypress Cloud disables parallelization and hides new test
+results from the dashboard until you upgrade your plan or a new usage cycle
 begins. The usage cycle resets at the start of each billing period, which is
 monthly on most plans, though some annual plans use an annual test results
 allowance.
@@ -153,10 +152,10 @@ by:
 
 ### <Icon name="angle-right" /> What happens if I downgrade my account?
 
-Downgrading your account will **not** result in loss of access to Cypress Cloud.
+Downgrading your account does **not** result in loss of access to Cypress Cloud.
 
-However, it will make your Cypress Cloud account subject to the limitations of
-your new plan. For example, downgrading to the _Starter_ plan will limit data
+However, downgrading makes your Cypress Cloud account subject to the limitations of
+your new plan. For example, downgrading to the _Starter_ plan limits data
 retention to 30 days, test results to 500 per billing period, and your
 organization to 10 [users](#What-counts-as-a-user).
 
@@ -203,13 +202,12 @@ fits your usage.
 
 ### <Icon name="angle-right" /> Can I choose not to use Cypress Cloud?
 
-Of course. Cypress Cloud is a separate service from the Cypress app and will
-always remain optional. We hope you'll find a tremendous amount of value in it,
+Of course. Cypress Cloud is a separate service from the Cypress app and is always optional. We hope you find a tremendous amount of value in it,
 but it is not coupled with being able to run your tests.
 
 You can always run your tests in CI using
 [cypress run](/app/references/command-line#cypress-run) without the `--record`
-flag which does not communicate with our external servers and will not record
+flag which does not communicate with our external servers and does not record
 any test results.
 
 ## Using Cypress Cloud
@@ -218,7 +216,7 @@ any test results.
 
 The `projectId` is a 6-character string that helps identify your project once
 you've [set up your tests to record](/cloud/features/recorded-runs#Latest-Runs).
-It's generated by Cypress and typically is found in your
+Cypress generates the `projectId`, and you typically find it in your
 [Cypress configuration](/app/references/configuration).
 
 :::cypress-config-example
@@ -238,7 +236,7 @@ section of the [Cypress Cloud](/cloud/get-started/introduction) docs.
 ### <Icon name="angle-right" /> What is a Record Key?
 
 A _Record Key_ is a GUID that's generated automatically by Cypress once you've
-[set up your tests to record](/cloud/features/recorded-runs#Latest-Runs). It helps
+[set up your tests to record](/cloud/features/recorded-runs#Latest-Runs). The Record Key helps
 identify your project and authenticate that your project is even _allowed_ to
 record tests.
 
@@ -259,7 +257,7 @@ section of the [Cypress Cloud](/cloud/get-started/introduction) docs.
 1. First [set up the project to record](/cloud/get-started/setup#Setup).
 2. Then [record your runs](/cloud/features/recorded-runs#Latest-Runs).
 
-After recording your tests, you will see them in
+After recording your tests, you see them in
 [Cypress Cloud](https://on.cypress.io/cloud) and in the Cypress App [Runs](/app/core-concepts/open-mode#Runs) tab.
 
 ### <Icon name="angle-right" /> Can I delete a run from Cypress Cloud?
@@ -285,7 +283,7 @@ very very expensive and would slow down the test runs significantly.
 
 Spec file durations are also more meaningful and consistent than timings of
 individual tests, we can order specs by the moving average of the previously
-recorded durations. This would be much less useful when load balancing quickly
+recorded durations. Ordering by duration would be much less useful when load balancing quickly
 finishes individual tests.
 
 Thus, to better load balance the specs, you would want more spec files with
@@ -314,7 +312,7 @@ cypress run --record --parallel --ci-build-id $CI_RUN_ID
 ```
 
 For reference, here are
-[the variables](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.js)
+[the CI provider variables](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.js)
 we extract from the popular CI providers, and for most of them, there is some
 variable that is set to the same value across multiple containers running in
 parallel. If there is NO common variable, try using the commit SHA string.
@@ -336,14 +334,14 @@ Yes, depending on where you are running tests:
   recorded build. Choose **Run only failed specs** to re-execute each spec that
   contained a failure, or **Run only failed tests** (Cypress 15.21.0 or later) to
   re-execute only the tests that did not pass.
-- **In the Cypress app**, the [Debug page](/app/core-concepts/open-mode#Debug) lets
-  you rerun only the failed tests from a recorded CI run on your current branch.
+- **In the Cypress app**, the [Debug page](/app/core-concepts/open-mode#Debug)
+  reruns only the failed tests from a recorded CI run on your current branch.
 - **During a single run**, [test retries](/app/guides/test-retries) automatically
   re-attempt failed individual tests before the run finishes.
 
 ### <Icon name="angle-right" /> How is Re-run optimization different from test retries?
 
-They solve different problems. [Test retries](/app/guides/test-retries)
+Re-run optimization and test retries solve different problems. [Test retries](/app/guides/test-retries)
 automatically retries a failed _individual test_ within a single run, in real time,
 to absorb flake before the run finishes. **Re-run optimization** changes what
 happens when you re-run an _entire CI build_ after it has completed, re-executing
@@ -352,8 +350,7 @@ retries reduce flake within a run, and Re-run optimization speeds up the reruns 
 
 ### <Icon name="angle-right" /> Does Re-run optimization carry forward my passing test results?
 
-No, not currently. A rerun-optimized run shows only the specs and tests that were re-executed. Work that
-passed in the anchor run is skipped and does not appear in the rerun's results.
+No, not currently. A rerun-optimized run shows only the specs and tests that were re-executed. Cypress Cloud skips work that passed in the anchor run, and that work does not appear in the rerun's results.
 
 ### <Icon name="angle-right" /> Why does my CI report show fewer tests after a rerun?
 
@@ -363,7 +360,7 @@ Adjust any CI guardrails that assert on fixed test counts.
 
 ### <Icon name="angle-right" /> Does Re-run optimization require recording to Cypress Cloud?
 
-Yes. Runs must be recorded to Cypress Cloud with the `--record` flag, and the
+Yes. You must record runs to Cypress Cloud with the `--record` flag, and the
 feature is available on Business or Enterprise plans, or during a free trial.
 
 ### <Icon name="angle-right" /> What happens if the rerun has no failed specs or tests?
@@ -376,7 +373,7 @@ the optimized rerun completes without running any specs.
 
 The Cypress App prints a notice in the CLI output naming the run it is retrying
 from. **Run only failed specs** mentions failed specs; **Run only failed tests**
-mentions tests that did not pass. The run is labeled with a **Re-run** tag in Cypress Cloud.
+mentions tests that did not pass. Cypress Cloud labels the run with a **Re-run** tag.
 
 ## Spec Prioritization
 
@@ -395,8 +392,8 @@ On its own, Spec Prioritization changes the _order_ specs run in, not the total
 duration, so it surfaces failures earlier without shortening the run. To turn
 that earlier feedback into shorter runs and lower CI costs, pair it with
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation): when
-the prioritized failures reappear at the start of a run, the run is cancelled
-right away, avoiding wasted compute on specs you already know will need another
+the prioritized failures reappear at the start of a run, Auto Cancellation
+cancels the run right away, avoiding wasted compute on specs you already know need another
 pass.
 
 ### <Icon name="angle-right" /> What plan do I need to use Spec Prioritization?
@@ -420,9 +417,9 @@ for the full steps.
 
 When Spec Prioritization fires, the run's detail tab displays a **"Prioritized
 failed specs from run #X"** label, where **#X** links back to the source run
-whose failures were moved to the front. The label only appears when Cypress Cloud
+whose failures Cypress Cloud moved to the front. The label only appears when Cypress Cloud
 actually reordered specs, so its presence confirms prioritization took effect and
-lets you trace which previous failures drove the order. If you don't see it,
+points to the previous failures that drove the order. If you don't see it,
 confirm the feature is toggled on and that the previous run recorded failures to
 prioritize.
 
@@ -433,9 +430,9 @@ prioritize.
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) is a
 Cypress Cloud [Smart Orchestration](/cloud/features/smart-orchestration/overview)
 feature that automatically cancels a recorded run once the number of failed
-tests reaches a threshold you configure. It stops Cypress from handing out new
+tests reaches a threshold you configure. Auto Cancellation stops Cypress from handing out new
 specs, marks the run as cancelled, and reports how much CI time was saved, so you
-don't pay for tests that run after a run has already failed. It is available on
+don't pay for tests that run after a run has already failed. Auto Cancellation is available on
 the Business and Enterprise plans.
 
 ### <Icon name="angle-right" /> How many test failures trigger an auto cancellation?
@@ -444,20 +441,20 @@ By default, a single failure cancels the run. You can set a higher threshold in
 your project's Smart Orchestration settings, or override it per run with the
 [`--auto-cancel-after-failures`](/app/references/command-line#auto-cancel-after-runs)
 CLI flag. Only genuinely failed tests count toward the threshold; flaky tests (which
-fail an attempt but then pass on retry) are not considered and never trigger an
+fail an attempt but then pass on retry) don't count and never trigger an
 auto cancellation.
 
 ### <Icon name="angle-right" /> Does Auto Cancellation stop tests that are already running?
 
-No. Specs that are already in progress when the threshold is reached finish
+No. Specs that are already in progress when the run reaches the threshold finish
 running so you still get their complete results. Cypress only stops handing out
 _new_ specs. In a parallelized run, this means machines can keep running the
 specs they had already started at the moment of cancellation, but none of them
-will pick up a new spec once the run is cancelled.
+picks up a new spec once the run is cancelled.
 
 ### <Icon name="angle-right" /> How do I disable Auto Cancellation for a single run?
 
-Pass `--auto-cancel-after-failures false` to `cypress run`. This overrides the
+Pass `--auto-cancel-after-failures false` to `cypress run`. The flag overrides the
 project setting for that run only, which is useful for important branches that
 need the full suite to run every time.
 
@@ -468,7 +465,7 @@ No. Auto Cancellation is a paid Smart Orchestration feature available on the
 
 ### <Icon name="angle-right" /> What is the difference between Auto Cancellation and manual cancellation?
 
-Auto Cancellation is triggered automatically when a run reaches the configured
+Auto Cancellation triggers automatically when a run reaches the configured
 failure threshold, and the UI labels it _"canceled due to auto-cancellation."_
 A manual cancellation happens when a user cancels the run from Cypress Cloud,
 which the UI labels _"manually canceled"_ and attributes to that user.
@@ -492,7 +489,7 @@ every failure the full suite would have produced.
 ### <Icon name="angle-right" /> What is a flaky test?
 
 A flaky test is one that both passes and fails across retry attempts without any
-change to the code. It fails once, runs again on the same code, and passes. See
+change to the code. A flaky test fails once, runs again on the same code, and passes. See
 [Flaky Test Management](/cloud/features/flaky-test-management) for how Cypress
 Cloud detects and tracks them.
 
@@ -507,8 +504,8 @@ flake rate.
 ### <Icon name="angle-right" /> What causes flaky tests?
 
 Flake usually comes from timing issues, race conditions, or differences between
-your local and CI environments. [Test Replay](/cloud/features/test-replay) lets
-you compare a passing and failing attempt on the same code to find the cause.
+your local and CI environments. Use [Test Replay](/cloud/features/test-replay)
+to compare a passing and failing attempt on the same code and find the cause.
 
 ### <Icon name="angle-right" /> How do I fix a flaky test?
 
@@ -528,7 +525,7 @@ flake rate maps to severity levels.
 ### <Icon name="angle-right" /> Do I need test retries enabled to detect flaky tests?
 
 Yes. [Test retries](/app/guides/test-retries#Configure-Test-Retries) are the
-fundamental mechanism that lets Cypress Cloud detect flaky tests, so enabling
+fundamental mechanism Cypress Cloud uses to detect flaky tests, so enabling
 them is required for any Flaky Test Management feature.
 
 ### <Icon name="angle-right" /> Which Cypress Cloud plan is required for Flaky Test Management?
@@ -539,6 +536,79 @@ the Data Extract API require an Enterprise plan, and
 [Cloud MCP](/cloud/integrations/cloud-mcp) is included on every Cypress Cloud
 plan.
 
+## Run Checks
+
+### <Icon name="angle-right" /> What are Run Checks?
+
+[Run Checks](/cloud/features/checks) are named pass/fail gates you define in App
+Quality configuration. Cypress Cloud evaluates each applicable check against a
+recorded run's results: failed tests, flaky tests, accessibility scores, failing
+accessibility elements, UI Coverage scores, and untested elements. A check
+passes only when every assertion in it passes.
+
+### <Icon name="angle-right" /> Do Run Checks fail my Cypress tests?
+
+No. Run Checks don't change how your tests run or how Cypress Cloud generates reports.
+Cypress Cloud evaluates them after the run's results (and any Cypress
+Accessibility or UI Coverage reports they read) are available. To fail a CI job
+or block a merge on check results, fetch them with `getCheckResults()` in CI.
+See [Using check results in CI](/cloud/features/checks#Using-check-results-in-CI).
+
+### <Icon name="angle-right" /> Do I need Cypress Accessibility or UI Coverage to use Run Checks?
+
+No. `run.failedTests.max` works on every project that records to Cypress Cloud.
+`run.flakyTests.max` requires [Flaky Test Management](/cloud/features/flaky-test-management);
+without it, that assertion is
+[unavailable](/cloud/features/checks#Assertion-statuses). Accessibility and UI
+Coverage assertions read those products' reports, so they are unavailable on
+runs where the product isn't enabled or processed.
+
+### <Icon name="angle-right" /> How do I block a pull request with Run Checks?
+
+Fetch the run's check results in CI with `getCheckResults()`, then fail the job
+or post a commit status when a check fails. During Early Access, Run Checks are
+not included in automated Slack notifications or GitHub pull request comments,
+and they don't push to GitHub status checks automatically. To report each
+applicable check as a GitHub commit status today, follow
+[Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github).
+
+### <Icon name="angle-right" /> Why is my Run Check `errored` or `not-applicable`?
+
+`not-applicable` means the check's `include` and `exclude` rules don't select
+this run, so Cypress Cloud didn't evaluate it. `errored` means no assertion
+failed, but at least one is `errored` or `unavailable`, so the check couldn't
+confirm a pass, for example an accessibility assertion on a run that has no
+Accessibility report. An `unavailable` assertion makes its check `errored`, not
+`passed`. Scope mixed-product checks with `include` and `exclude`, or split them
+into one check per product. See
+[Check statuses](/cloud/features/checks#Check-statuses).
+
+### <Icon name="angle-right" /> Can I define Run Checks inside a profile?
+
+No. The `checks` array is valid only at the root of App Quality configuration. To
+apply a check only to the runs a [profile](/accessibility/configuration/profiles)
+targets, scope the check with the same tag:
+`include: { "tags": ["aq-config-pr"] }`.
+
+### <Icon name="angle-right" /> When should I use Run Checks instead of the Results API?
+
+Use [Run Checks](/cloud/features/checks) for declarative thresholds Cypress Cloud
+can evaluate for you: a maximum failed-test or flaky-test count, a minimum
+accessibility or UI Coverage score, or a maximum failed-element or
+untested-element count. Use the
+[Accessibility](/accessibility/connect-and-extend/results-api) or
+[UI Coverage](/ui-coverage/results-api) Results API when you need custom policy
+logic those assertion types don't cover, such as allowlisting known failing
+rules or comparing against a stored baseline.
+
+### <Icon name="angle-right" /> Can Run Checks quarantine failing or flaky specs?
+
+No built-in quarantine mode exists. Specs still run and still affect the run's
+own pass/fail. You can approximate a quarantine workflow by excluding parked
+specs from a `run.failedTests.max` or `run.flakyTests.max` assertion, then
+gating CI on that check instead of on the run alone. See
+[Quarantine problematic specs with Run Checks](/cloud/guides/quarantine-problematic-specs).
+
 ## Cypress Cloud Account
 
 ### <Icon name="angle-right" /> What is a Cypress Cloud organization?
@@ -547,14 +617,14 @@ A Cypress Cloud organization is the top-level container that groups your
 [projects](/cloud/account-management/projects),
 [users](/cloud/account-management/users),
 [teams](/cloud/account-management/teams), billing and usage, and
-[integrations](/cloud/account-management/organizations#Integrations). It lets you manage access
-control and application quality across every project from one place instead of configuring each
+[integrations](/cloud/account-management/organizations#Integrations). The organization brings access
+control and application quality for every project into one place, so you don't configure each
 project individually.
 
 ### <Icon name="angle-right" /> How do I create an organization in Cypress Cloud?
 
 Open the organization switcher in [Cypress Cloud](https://on.cypress.io/cloud) and click
-**Create new organization**. A "Default Project" is created automatically, which you can rename and
+**Create new organization**. Cypress Cloud automatically creates a "Default Project" that you can rename and
 configure in [Project Settings](/cloud/account-management/projects).
 
 ### <Icon name="angle-right" /> Can I have more than one organization?
@@ -604,8 +674,8 @@ reach out to [support](mailto:support@cypress.io).
 
 You can delete your Cypress account from
 [your Cypress Cloud profile](https://cloud.cypress.io/profile). Deleting your
-account cannot be undone! By deleting your Cypress account, all associated data
-in your account will be permanently deleted.
+account cannot be undone! Deleting your Cypress account permanently deletes all
+associated data in your account.
 
 ### <Icon name="angle-right" /> How do I invite a user to Cypress Cloud?
 
@@ -614,7 +684,7 @@ invite users from the **Users & Teams** page by clicking **Invite User**, adding
 one or more email addresses, and selecting a [role](/cloud/account-management/users#User-roles).
 Invited users receive an email with a link to accept the invitation. You can also
 use **Copy invite link** to share your own message. Anyone who joins through that
-link is given the default **Member** role. See
+link gets the default **Member** role. See
 [Invite users](/cloud/account-management/users#Invite-users) for details.
 
 ### <Icon name="angle-right" /> What are the Cypress Cloud user roles?
@@ -641,8 +711,8 @@ users 'owner' access. See
 
 Yes. If a teammate already has access to Cypress and your project's source code,
 they can request to join your organization directly from the Cypress App, and an
-Owner or Admin can accept or deny the request. This lets you onboard teammates
-without inviting everyone up front. User requests are not available if
+Owner or Admin can accept or deny the request. With user requests, teammates join
+without you inviting everyone up front. User requests are not available if
 your organization is configured for SSO. See
 [User requests](/cloud/account-management/users#User-requests).
 
@@ -670,7 +740,7 @@ Government details replaces the existing configuration. See
 ### <Icon name="angle-right" /> What is a team in Cypress Cloud?
 
 A [team](/cloud/account-management/teams) is a reusable group of users that is granted
-access to a specific set of projects. Teams let you control project access once at the
+access to a specific set of projects. A team sets project access once, at the
 team level, instead of project by project, user by user, so each person sees only the
 projects relevant to their work.
 
@@ -679,7 +749,7 @@ projects relevant to their work.
 Organization [owner or admin](/cloud/account-management/users#User-roles) roles can create
 teams. Once a team exists, owners, admins, and the dedicated
 [team admin](/cloud/account-management/teams#Manage-teams) role can configure it by assigning
-projects and members. The team admin role lets day-to-day team members manage their own
+projects and members. The team admin role puts day-to-day team members in charge of their own
 projects without routing every request through organization-level admins.
 
 ### <Icon name="angle-right" /> Do teams affect access to public projects?
@@ -711,8 +781,8 @@ workflow.
 ### <Icon name="angle-right" /> Can I debug a CI failure without reproducing it locally?
 
 Yes. [Test Replay](/cloud/features/test-replay) captures the complete state of
-each test as it ran in CI and lets you replay it with full debugging capability.
-This is the primary reason teams use Cypress Cloud for debugging: it removes the
+each test as it ran in CI and replays it with full debugging capability.
+Test Replay is the primary reason teams use Cypress Cloud for debugging: it removes the
 need to recreate a CI environment locally.
 
 ### <Icon name="angle-right" /> How do I know if a test failure is a real bug or just flaky?
@@ -733,7 +803,7 @@ work automatically, with no changes to your test code.
 
 ### <Icon name="angle-right" /> What is Test Replay?
 
-[Test Replay](/cloud/features/test-replay) enables you and your team to troubleshoot and debug failed tests faster. After updating to Cypress `v13`, the new feature will automatically record all browser events and “replay” what your application under test looked like.
+[Test Replay](/cloud/features/test-replay) replays failed tests so you and your team can troubleshoot and debug them. From Cypress `v13`, Test Replay automatically records all browser events and “replays” what your application under test looked like.
 
 Wind back the clock to any point in an application's test execution and directly interact with tests as they happened in CI. Debug complex problems as if you were there when they first happened. You can:
 
@@ -749,13 +819,13 @@ Wind back the clock to any point in an application's test execution and directly
 
 ### <Icon name="angle-right" /> How is Cypress Test Replay different from other "replay" services?
 
-There is an important distinction between _session_ replay services (LogRocket, FullStory, DataDog, etc) and Cypress Test Replay. In session replay, user actions are captured as the application is used and delivered back in a replay-able format, usually video or stitched DOM snapshots. These are valuable tools for gathering product insight such as user behavior, per session.
+There is an important distinction between _session_ replay services (LogRocket, FullStory, DataDog, etc) and Cypress Test Replay. In session replay, the service captures user actions as people use the application and delivers them back in a replay-able format, usually video or stitched DOM snapshots. Session replay services are valuable tools for gathering product insight such as user behavior, per session.
 
-Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests will error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and use [time travel debugging](/app/core-concepts/open-mode#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. This is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
+Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and use [time travel debugging](/app/core-concepts/open-mode#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. Test Replay is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
 
 ### <Icon name="angle-right" /> How much does Test Replay cost?
 
-Nothing. It's free and included in all Cypress Cloud plans.
+Nothing. Test Replay is free and included in all Cypress Cloud plans.
 
 <CloudFreePlan />
 
@@ -763,11 +833,11 @@ Nothing. It's free and included in all Cypress Cloud plans.
 
 Test Replay uses [Chrome DevTools Protocol(CDP)](https://chromedevtools.github.io/devtools-protocol/), so currently supports Chromium-based browsers (Chrome, Edge, and the deprecated Electron browser) only.
 
-Test Replay would be disabled, with a message that it's only available on Chromium, for tests run in Firefox or WebKit (Safari). You can still record and capture test [artifacts](/cloud/features/recorded-runs#Artifacts) (screenshots, videos, and CI logs) via other browsers in separate [run groups](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs).
+Test Replay isn't available for tests run in Firefox or WebKit (Safari), and Cypress Cloud shows a message that Test Replay is only available on Chromium. You can still record and capture test [artifacts](/cloud/features/recorded-runs#Artifacts) (screenshots, videos, and CI logs) via other browsers in separate [run groups](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs).
 
 ### <Icon name="angle-right" /> Can I replay tests from historical Cypress Cloud runs?
 
-Test Replay is available for tests recorded using Cypress `v13` and up. Tests recorded prior to this will not have Test Replay enabled in Cypress Cloud. You will still have any artifacts collected during the pre `v13` test runs.
+Test Replay is available for tests recorded using Cypress `v13` and up. Tests recorded prior to `v13` do not have Test Replay enabled in Cypress Cloud. You still have any artifacts collected during the pre `v13` test runs.
 
 ### <Icon name="angle-right" /> Can I enable or disable Test Replay for specific, individual tests, or is it a global setting? Can I configure my settings so that Test Replay is only enabled for failing test retries?
 
@@ -777,9 +847,9 @@ At this time, users can only opt-out of Test Replay via [project-level settings]
 
 Yes! You can share Test Replays with any team members who have access to view your Cypress Cloud runs like QA, marketing, design, etc. Open the replay, copy the URL from the browser address bar and pass it along.
 
-### <Icon name="angle-right" /> Will Test Replay write any assets to the file system?
+### <Icon name="angle-right" /> Does Test Replay write any assets to the file system?
 
-Yes, but they are stored in a temporary directory and deleted after the run. There is nothing to `.gitignore`.
+Yes, but Test Replay stores the assets in a temporary directory and deletes them after the run. There is nothing to `.gitignore`.
 
 ### <Icon name="angle-right" /> Is the network tab feature available exclusively in Test Replay?
 
@@ -787,7 +857,7 @@ All of the data within Test Replay's Developer Tools in Cypress Cloud (including
 
 ### <Icon name="angle-right" /> Can I `console.log()` data in the console view of the Developer Tools panel?
 
-Yes. This displays console logs from within the application under test or your spec files. You may need to use `JSON.stringify(Object)` to display deeply nested data.
+Yes. The console view displays console logs from within the application under test or your spec files. You may need to use `JSON.stringify(Object)` to display deeply nested data.
 
 ### <Icon name="angle-right" /> Does Cypress Test Replay network redaction change what I can test?
 
@@ -795,11 +865,11 @@ No, your Cypress tests and assertions are not affected.
 
 ### <Icon name="angle-right" /> Does network redaction change what I can debug in Cypress Test Replay?
 
-For most tests, no. You keep request timing, status codes, and the structure of each request. If you will need to inspect the redacted value itself in Cypress Cloud, turn redaction off for that project before recording.
+For most tests, no. You keep request timing, status codes, and the structure of each request. If you need to inspect the redacted value itself in Cypress Cloud, turn redaction off for that project before recording.
 
 ### <Icon name="angle-right" /> Is network redaction in Cypress Test Replay on by default?
 
-Yes. It applies to every project in Cypress Cloud with Test Replay turned on, with no configuration required.
+Yes. Network redaction applies to every project in Cypress Cloud with Test Replay turned on, with no configuration required.
 
 ### <Icon name="angle-right" /> Can I redact additional values specific to my application in Cypress Test Replay?
 
@@ -811,14 +881,14 @@ Redaction isn't tied to a specific Cypress version.
 
 ### <Icon name="angle-right" /> What if I don't want Cypress Test Replay network traffic captured at all?
 
-Turn off Test Replay for that project in Cypress Cloud. This stops capture of the DOM, Command Log, network traffic, and browser console logs.
+Turn off Test Replay for that project in Cypress Cloud. Turning off Test Replay stops capture of the DOM, Command Log, network traffic, and browser console logs.
 
 ## Cloud CLI
 
 ### <Icon name="angle-right" /> What is the Cypress Cloud CLI?
 
-The [Cypress Cloud CLI](/cloud/integrations/cloud-cli) (`cy-cloud`) lets you
-query your Cypress Cloud data from the command line. You can check the status of
+The [Cypress Cloud CLI](/cloud/integrations/cloud-cli) (`cy-cloud`)
+queries your Cypress Cloud data from the command line. You can check the status of
 a run, read the error and stack trace for a failed test, save a failure
 screenshot, and pull the [Test Replay](/cloud/features/test-replay) timeline of
 commands, network requests, and console logs, all without opening a browser.
@@ -838,7 +908,7 @@ and Node.js `22.21.0` or later. See the
 Set the `CYPRESS_CLOUD_TOKEN` environment variable to a
 [personal access token](/cloud/integrations/cloud-cli#Personal-access-token),
 which you generate from your [Cypress Cloud profile](https://cloud.cypress.io/profile).
-This authenticates without an interactive `login` step and without writing
+The token authenticates without an interactive `login` step and without writing
 credentials to disk, and it takes precedence over any stored credentials. Note
 that `cy-cloud logout` clears stored credentials but does not unset that
 environment variable.
@@ -963,7 +1033,7 @@ page. For migrating from `cy.prompt` to regular Cypress code, see the
 ### <Icon name="angle-right" /> What is AI self-healing?
 
 [`cy.prompt`](/api/commands/prompt) self-heals a step when the element it needs
-has changed since the step last ran, so tests keep passing as the UI evolves. When possible, the step may self-heal from a cache of previously-successful selectors for the element referenced in that spec. If no good selector exists, `cy.prompt` will create a new one using AI to find the appropriate element. See
+has changed since the step last ran, so tests keep passing as the UI evolves. When possible, the step may self-heal from a cache of previously-successful selectors for the element referenced in that spec. If no good selector exists, `cy.prompt` creates a new one using AI to find the appropriate element. See
 [Self-healing](/app/guides/ai-test-generation#Self-healing) in the AI Test
 Generation guide.
 
@@ -988,7 +1058,7 @@ Cloud:
   rejected or require splitting. To stay within these limits, keep one action or
   assertion per step and split long flows into multiple `cy.prompt` calls.
 
-### <Icon name="angle-right" /> My organization shows that it is over the limit during the `cy.prompt` grace period, will I be charged anything for this?
+### <Icon name="angle-right" /> My organization shows that it is over the limit during the `cy.prompt` grace period, am I charged anything for this?
 
 No. There are no charges or limiting behavior related to any usage prior to the
 August 1, 2026 cutoff.
@@ -1006,25 +1076,25 @@ the plan has 2,000 built-in cy.prompt executions for the year, you would have
 
 ### <Icon name="angle-right" /> What happens when I exceed my allowed limit of cy.prompt executions?
 
-You will see warnings in the Cypress Cloud UI as you approach your limit, and
+Cypress Cloud shows warnings in the UI as you approach your limit, and
 after you cross it.
 
 On a paid plan:
 
-- Your tests and `cy.prompt` will run normally. You will not be automatically charged for prompt executions over your plan's limit.
+- Your tests and `cy.prompt` run normally. Cypress doesn't automatically charge you for prompt executions over your plan's limit.
 - If you regularly go over your limit, we ask that you update your plan to
   match your usage.
 
 On a free plan:
 
-- AI self-healing and new prompt creation will be turned off for the rest of
+- Cypress turns off AI self-healing and new prompt creation for the rest of
   your monthly billing cycle.
-- When your plan renews, these features will work again.
+- When your plan renews, these features work again.
 
 ### <Icon name="angle-right" /> What happens when AI is disabled for my organization?
 
-Existing prompt commands and steps will continue to execute, but operations that
-require AI to function will fail. This includes most self-healing behavior and
+Existing prompt commands and steps continue to execute, but operations that
+require AI to function fail. The failing operations include most self-healing behavior and
 the creation of new prompt commands.
 
 Organization admins and owners can enable or disable AI capabilities from
@@ -1032,7 +1102,7 @@ Organization admins and owners can enable or disable AI capabilities from
 
 ### <Icon name="angle-right" /> When does my usage reset?
 
-Usage is tracked similar to test results and resets on the same schedule with the
+Cypress tracks usage similar to test results, and usage resets on the same schedule with the
 start of the billing period for your existing plan. See
 [When does my billing period reset?](#When-does-my-billing-period-reset) and your
 organization's

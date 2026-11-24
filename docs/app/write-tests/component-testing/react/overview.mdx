@@ -39,7 +39,7 @@ Open Cypress:
   caption="Choose Component Testing"
 />
 
-The Cypress Launchpad will guide you through configuring your project.
+The Cypress Launchpad guides you through configuring your project.
 
 :::info
 
@@ -54,14 +54,10 @@ For usage and examples, visit the
 ## Framework Configuration
 
 Cypress Component Testing works out of the box with [Vite](https://vitejs.dev/), [Next.js](https://nextjs.org/), and a custom
-[Webpack](https://webpack.js.org/) config. Cypress will automatically detect one
-of these frameworks during setup and configure them properly.
+[Webpack](https://webpack.js.org/) config. Cypress automatically detects one
+of these frameworks during setup and configures them properly.
 
-For a full explanation of how the dev server and bundler work — including
-automatic config detection and override options — see
-[Component Testing Configuration — Dev Server and Bundler](/app/component-testing/component-framework-configuration#Dev-Server-and-Bundler).
-
-The examples below are for quick reference.
+<CtDevServerConfigLink />
 
 ### React with Vite
 
@@ -157,7 +153,7 @@ import webpackConfig from './webpack.config'
 
 :::
 
-If you don't provide a webpack config, Cypress will try to infer it. If Cypress
+If you don't provide a webpack config, Cypress tries to infer it. If Cypress
 cannot do so, or you want to make modifications to your config, you can specify
 it via the `webpackConfig` option.
 
@@ -194,7 +190,7 @@ There are some specific caveats to consider when testing Next.js
 A page component could have additional logic in its `getServerSideProps` or
 `getStaticProps` methods. These methods only run on the server, so they are not
 available to run inside a component test. Trying to test a page in a component
-test would result in the props being passed into the page to be undefined.
+test would leave the props passed into the page undefined.
 
 While you could pass in props directly to the page component in a component
 test, that would leave these server-side methods untested. However, an

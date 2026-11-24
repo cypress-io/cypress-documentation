@@ -1,6 +1,6 @@
 ---
 title: 'Angular examples'
-description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, and customize `cy.mount()` for Angular.
+description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, and customize `cy.mount()` for Angular and the Angular Router.
 sidebar_label: Angular examples
 sidebar_position: 20
 slug: /app/component-testing/angular/examples
@@ -38,7 +38,7 @@ cy.mount(StepperComponent, {
 ## Testing Event Handlers
 
 Pass a Cypress [spy](/app/guides/stubs-spies-and-clocks#Spies) to an event
-prop and validate it was called:
+prop and validate that the component called it:
 
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
@@ -59,7 +59,13 @@ for your component to mount successfully, you can set them in the options
 (similar to setting them up in `ngModule` in a app):
 
 :::info
-Note: `imports`, `declarations`, and `providers` options do not work with `standalone` components as they are set within the test `ngModule`. This is the default behavior in Angular 19.
+Cypress adds a standalone component to the test module's `imports`, so
+`providers` work with standalone components, including the providers of any
+module passed in `imports`. A standalone component's template uses only what
+its own `imports` array lists. Components, directives, and pipes from
+`declarations`, or exported by a module in `imports`, aren't available to that
+template, and Angular throws an error if the standalone component itself is in
+`declarations`.
 :::
 
 ```ts
@@ -79,7 +85,7 @@ repeat this boilerplate for each test.
 
 Not only are [Standalone Components](https://angular.io/guide/standalone-components) supported, they are the simplest components to write tests for.
 Standalone Components provide the Angular compiler with everything it needs to compile through its [`@Component()`](https://angular.io/api/core/Component) decorator.
-This means that in most cases a Standalone Component can be mounted without ever providing any `imports`, `decorators`, or `providers`. Mounting then becomes as simple as:
+This self-sufficiency means that in most cases you can mount a Standalone Component without ever providing any `imports`, `decorators`, or `providers`. Mounting then becomes as simple as:
 
 ```ts
 cy.mount(MyStandaloneComponent)
@@ -117,7 +123,7 @@ cy.get('@onClickSpy').should('have.been.called');
 
 There might be times when you might want to access the component instance
 directly in your tests. To do so, use `.then()`, which enables us to work with
-the subject that was yielded from the `cy.mount()` command. In this case, mount
+the subject that the `cy.mount()` command yielded. In this case, mount
 yields an object that contains the rendered component and the fixture.
 
 In the below example, we use the component to spy directly on the `change` event
@@ -164,8 +170,8 @@ cy.mount(StepperComponent, { componentProperties: { count: 100 } })
 ## Using createOutputSpy()
 
 To make spying on event emitters easier, there is a utility function called
-`createOutputSpy()` which can be used to automatically create an `EventEmitter`
-and setup the spy on it's `.emit()` method. It can be used like the following:
+`createOutputSpy()` which automatically creates an `EventEmitter`
+and sets up the spy on its `.emit()` method. You can use `createOutputSpy()` like the following:
 
 ```ts
 import { createOutputSpy } from 'cypress/angular'
@@ -191,7 +197,7 @@ With Cypress 14, signal support is directly included in the `cypress/angular` te
 
 :::
 
-For the below examples, we'll be working with a very simple component called `TestComponent`, which looks something like shown below:
+The below examples work with a very simple component called `TestComponent`, which looks something like shown below:
 
 ```typescript
 // app/components/test-component.component.ts
@@ -258,7 +264,7 @@ cy.mount(TestComponent, {
 
 :::
 
-This works for any signal. Shown below is an example of testing a `model()` signal with a generic type `number` as seen in our `TestComponent`:
+Wrapping a generic value works for any signal. Shown below is an example of testing a `model()` signal with a generic type `number` as seen in our `TestComponent`:
 
 ```ts
 cy.mount(TestComponent, {
@@ -275,7 +281,7 @@ cy.get('[data-cy="test-component-count-display"]').should('have.text', '3')
 
 Inferred generic types work very well for most test cases. However, they don't allow us to update the prop in the component after the prop is passed in. For this use case, we need to use a writable `signal()`.
 
-This allows us to test our one-way data binding for our `input()` signals.
+A writable `signal()` allows us to test our one-way data binding for our `input()` signals.
 
 ```typescript
 const myTitlePropAsSignal = signal('Test Component')
@@ -327,8 +333,8 @@ cy.then(() => {
 
 Cypress doesn't propagate changes via spy from `input()` signals.
 
-For writable signals, such as `model()`s or `signal()`s, Cypress **will** propagate changes if an output spy is created with the prop's name suffixed with `Change`. In the example below,
-`countChange` will spy on changes to the `count` signal.
+For writable signals, such as `model()`s or `signal()`s, Cypress **does** propagate changes if you create an output spy with the prop's name suffixed with `Change`. In the example below,
+`countChange` spies on changes to the `count` signal.
 
 ```typescript
 cy.mount(TestComponent, {
@@ -416,8 +422,8 @@ in your individual tests, we recommend doing them all within a custom
 helps keep your spec code clean.
 
 Below is a sample that registers several default component declarations while
-still allowing additional ones to be passed in via the config param. The same
-pattern can also be applied to providers and module imports.
+still letting you pass in additional ones via the config param. You can also
+apply the same pattern to providers and module imports.
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
@@ -486,3 +492,192 @@ Cypress.Commands.add('mount', customMount)
 This custom mount command skips manually passing in the
 `ButtonComponent` and `CardComponent` as declarations into each `cy.mount()`
 call.
+
+### Mount components that use the Angular Router
+
+If a component injects `ActivatedRoute` or `Router`, or its template uses a
+directive such as `routerLink`, add the
+[Angular Router](https://angular.dev/guide/routing) to the test with
+[`provideRouter()`](https://angular.dev/api/router/provideRouter). Inside
+`cy.mount()`, the Router reads its URL from the in-memory location that
+Angular's testing module provides, not from the browser's address bar. Calling
+`window.history.pushState()` changes what `cy.url()` reports but not the route
+the component sees. The Router also skips the initial navigation an app runs at
+startup, so the test tells the Router which URL to load.
+
+Below is a sample mount command that provides the Router and navigates to an
+`initialUrl` from the options, much like `initialEntries` for React Router's
+`MemoryRouter`:
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/component.js"
+import { provideRouter, Router } from '@angular/router'
+import { mount } from 'cypress/angular'
+
+function customMount(component, config = {}) {
+  const {
+    routes = [],
+    initialUrl = '/',
+    providers = [],
+    ...mountConfig
+  } = config
+
+  return mount(component, {
+    ...mountConfig,
+    // Providers from the test come last so they take precedence,
+    // such as a stub for ActivatedRoute
+    providers: [provideRouter(routes), ...providers],
+  }).then((response) => {
+    const router = response.fixture.debugElement.injector.get(Router)
+
+    return cy
+      .wrap(router.navigateByUrl(initialUrl), { log: false })
+      .then(() => response)
+  })
+}
+
+Cypress.Commands.add('mount', customMount)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress/support/component.ts"
+import { Type } from '@angular/core'
+import { provideRouter, Router, Routes } from '@angular/router'
+import { mount, MountConfig, MountResponse } from 'cypress/angular'
+
+type RouterMountConfig<T> = MountConfig<T> & {
+  routes?: Routes
+  initialUrl?: string
+}
+
+function customMount<T>(
+  component: string | Type<T>,
+  config: RouterMountConfig<T> = {}
+) {
+  const {
+    routes = [],
+    initialUrl = '/',
+    providers = [],
+    ...mountConfig
+  } = config
+
+  return mount<T>(component, {
+    ...mountConfig,
+    // Providers from the test come last so they take precedence,
+    // such as a stub for ActivatedRoute
+    providers: [provideRouter(routes), ...providers],
+  }).then((response) => {
+    const router = response.fixture.debugElement.injector.get(Router)
+
+    return cy
+      .wrap(router.navigateByUrl(initialUrl), { log: false })
+      .then(() => response)
+  })
+}
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Angular components that use the router
+       * @param component Angular component or template string to mount
+       * @param config Options passed to Angular TestBed, plus `routes` and `initialUrl`
+       */
+      mount<T>(
+        component: string | Type<T>,
+        config?: RouterMountConfig<T>
+      ): Cypress.Chainable<MountResponse<T>>
+    }
+  }
+}
+
+Cypress.Commands.add('mount', customMount)
+```
+
+</TabItem>
+</Tabs>
+
+`router.navigateByUrl()` returns a promise, so the command wraps it with
+[`cy.wrap()`](/api/commands/wrap) to have Cypress wait for the navigation to
+finish before the test continues. Pass the app's `routes` when `initialUrl`
+points to a path other than `/`, since the Router rejects a URL that matches no
+route.
+
+The component below reads a `name` query parameter from `ActivatedRoute`:
+
+```ts title="src/app/greeting/greeting.ts"
+import { Component, inject } from '@angular/core'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { ActivatedRoute } from '@angular/router'
+import { map } from 'rxjs'
+
+@Component({
+  selector: 'app-greeting',
+  template: `<p data-cy="greeting">Hello, {{ name() ?? 'guest' }}</p>`,
+})
+export class Greeting {
+  private readonly route = inject(ActivatedRoute)
+
+  readonly name = toSignal(
+    this.route.queryParamMap.pipe(map((params) => params.get('name')))
+  )
+}
+```
+
+To set up a scenario, pass the URL to load as `initialUrl`. The tests below
+check the greeting with and without a query string:
+
+```ts title="src/app/greeting/greeting.cy.ts"
+import { Greeting } from './greeting'
+
+it('greets a guest when the URL has no name', () => {
+  // No need to pass an initialUrl, since the default URL is '/'
+  cy.mount(Greeting)
+
+  cy.get('[data-cy=greeting]').should('have.text', 'Hello, guest')
+})
+
+it('greets the name from the query string', () => {
+  cy.mount(Greeting, { initialUrl: '/?name=Jane' })
+
+  cy.get('[data-cy=greeting]').should('have.text', 'Hello, Jane')
+})
+```
+
+The Router updates `queryParamMap` after the component renders, and `cy.mount()`
+runs Angular without zone.js. Read route values into a signal, as `toSignal()`
+does here, so the template updates when the navigation finishes. A plain class
+property assigned inside `subscribe()` doesn't schedule change detection, so the
+template keeps showing the value from before the navigation.
+
+#### Stub ActivatedRoute instead of the Angular Router
+
+When a component only reads from `ActivatedRoute`, provide a stub in place of
+the real Router. The test then controls exactly what the route emits, and the
+stub works with standalone components:
+
+```ts title="src/app/greeting/greeting.cy.ts"
+import { ActivatedRoute, convertToParamMap } from '@angular/router'
+import { of } from 'rxjs'
+import { Greeting } from './greeting'
+
+it('greets the name from a stubbed route', () => {
+  cy.mount(Greeting, {
+    providers: [
+      {
+        provide: ActivatedRoute,
+        useValue: { queryParamMap: of(convertToParamMap({ name: 'Jane' })) },
+      },
+    ],
+  })
+
+  cy.get('[data-cy=greeting]').should('have.text', 'Hello, Jane')
+})
+```
+
+With the custom mount command above, the stub replaces the `ActivatedRoute`
+that `provideRouter()` supplies, because providers from the test come last.

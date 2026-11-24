@@ -10,6 +10,9 @@
 
 .productHeadingLink {
   border-bottom: none !important;
+}
+
+.productHeadingLink:focus:not(:focus-visible) {
   outline: none;
 }
 

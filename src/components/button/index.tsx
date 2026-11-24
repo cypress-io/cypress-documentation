@@ -5,6 +5,10 @@ import {
 import Icon from '@cypress-design/react-icon'
 
 import React from 'react';
+import {
+    SURFACES,
+    conversionLinkAttributes,
+} from '@site/plugins/fullstory-conversion-links'
 
 // Define the types for the props
 interface BtnProps {
@@ -38,6 +42,7 @@ const Btn: React.FC<BtnProps> = ({
         className={className}
         target={target}
         disabled={disabled}
+        {...conversionLinkAttributes(href, SURFACES.content)}
     >
         {icon && 
             <Icon 

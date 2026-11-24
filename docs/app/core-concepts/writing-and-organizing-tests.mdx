@@ -13,7 +13,7 @@ slug: /app/core-concepts/writing-and-organizing-tests
 Cypress favors **convention over configuration**. When you add a new project,
 Cypress scaffolds a suggested folder structure so you can start writing tests
 immediately, without deciding where everything should live or wiring up a build
-step. Everything below can be reconfigured, but the defaults are designed to get
+step. You can reconfigure everything below, but the defaults are designed to get
 out of your way.
 
 By default Cypress creates:
@@ -92,14 +92,14 @@ list of options.
 Cypress may create
 [asset files](#Generated-assets) in a
 [`downloadsFolder`](#Downloads), a
-[`screenshotsFolder`](#Screenshots) or a
+[`screenshotsFolder`](#Screenshots), or a
 [`videosFolder`](#Videos) to store any downloads,
-screenshots or videos created during the testing of your application.
+screenshots, or videos created during the testing of your application.
 Because these are generated artifacts rather than source, many users add these
 folders to their
 [.gitignore](https://git-scm.com/docs/gitignore) file (see [below](#Generated-assets) for an example).
 Additionally, if you are storing sensitive variables in your
-[Cypress configuration](/app/references/configuration) these should also be ignored when you check into source control.
+[Cypress configuration](/app/references/configuration) you should also ignore those files when you check into source control.
 
 :::
 
@@ -108,8 +108,8 @@ Additionally, if you are storing sensitive variables in your
 Spec files are where your tests live. For end-to-end testing they're located in
 `cypress/e2e` by default, while component testing specs typically live next to
 the components they test anywhere in your project. Either way, you can
-[configure](/app/references/configuration#e2e) a different location. To make
-adoption easy, Cypress lets you write specs in whichever flavor of JavaScript
+[configure](/app/references/configuration#e2e) a different location. Cypress
+accepts specs in whichever flavor of JavaScript
 your team already uses:
 
 - `.js`
@@ -139,19 +139,19 @@ describe('modules', () => {
 
 The [default preprocessor](#The-default-preprocessor) bundles these imports for
 you, so this works with no extra setup. That bundle runs in the browser, which
-means a module that depends on Node.js APIs like `fs` won't load in a spec. Run
+means a module that depends on Node.js APIs like `fs` doesn't load in a spec. Run
 that code in [`cy.task()`](/api/commands/task) instead.
 
 ### How Cypress finds your specs
 
-Cypress doesn't treat every file in your test folder as a spec. It only loads
+Cypress doesn't treat every file in your test folder as a spec. Cypress only loads
 files that match the [`specPattern`](/app/references/configuration#e2e) glob,
 which by default requires the `.cy.` infix in the filename:
 
 - **E2E:** `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}`
 - **Component:** `**/*.cy.{js,jsx,ts,tsx}`
 
-This convention lets you keep helper files and specs side by side without
+With this convention, helper files and specs sit side by side without
 Cypress trying to run your helpers as tests. The trade-off is that a file named
 `cypress/e2e/login.js` is **not** discovered, while `cypress/e2e/login.cy.js`
 is. If a test you've written isn't showing up, the filename almost always
@@ -178,12 +178,12 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 Two other options refine that set:
 
 - [`excludeSpecPattern`](/app/references/configuration#e2e) removes files from
-  the set. Any file matching `specPattern` but also matching
-  `excludeSpecPattern` is ignored, which is handy for hiding sample specs or a
+  the set. Cypress ignores any file matching `specPattern` but also matching
+  `excludeSpecPattern`, which is handy for hiding sample specs or a
   group of work-in-progress files.
 - The [`--spec`](/app/references/command-line#cypress-run-spec-lt-spec-gt)
   command line flag (and the `spec` Module API option) limits a single run to a
-  subset of specs. It can only narrow what already matches `specPattern`, never
+  subset of specs. The flag can only narrow what already matches `specPattern`, never
   add files outside it.
 
 In short: `specPattern` is the master list, `excludeSpecPattern` subtracts from
@@ -213,19 +213,19 @@ deciding where to draw the line:
 
 Split a spec when:
 
-- It runs longer than a few minutes. See
+- The spec runs longer than a few minutes. See
   [spec file duration](/app/guides/test-performance#Spec-file-duration) for
   target ranges.
-- It covers areas that have little to do with each other, so a failure in one
+- The spec covers areas that have little to do with each other, so a failure in one
   says nothing about the others.
-- Its sections need different setup, such as a different seeded user, fixture,
+- The spec's sections need different setup, such as a different seeded user, fixture,
   or [test configuration](#Test-Configuration) like `viewportWidth` or
   `browser`.
 - Several teams edit it constantly and collide in it.
 
 Keep tests in the same spec when:
 
-- They share the same `beforeEach`, and splitting them would repeat expensive
+- The tests share the same `beforeEach`, and splitting them would repeat expensive
   setup.
 - Each one finishes in seconds, where per-spec overhead would outweigh the
   tests themselves.
@@ -244,10 +244,10 @@ quickly a failing test tells your team where to look. See
 
 ## Support file
 
-The support file is your hook into every spec. It runs **before** every single
+The support file is your hook into every spec. The support file runs **before** every single
 spec file, which makes it the natural home for setup and behavior you want
-available everywhere, without importing it into each spec yourself. That's why
-it's the recommended place for
+available everywhere, without importing it into each spec yourself. Running before every spec makes
+the support file the recommended place for
 [custom commands](/api/cypress-api/custom-commands) and global overrides.
 
 To control what loads first, set the
@@ -264,7 +264,7 @@ support file first and then the spec file.
 
 ### supportFile per testing type
 
-`supportFile` is configured separately for each testing type. Set it under the
+You configure `supportFile` separately for each testing type. Set it under the
 `e2e` key for end-to-end testing and under the `component` key for component
 testing in your Cypress configuration. For example, to override the default
 support file locations:
@@ -292,8 +292,8 @@ organized as it grows.
 :::caution
 
 Keep your support file lean. Cypress bundles the support file and everything it
-imports, then loads that bundle **before every single spec file**, so the cost
-of anything you import there is paid on every spec run. Avoid importing large
+imports, then loads that bundle **before every single spec file**, so every spec
+run pays the cost of anything you import there. Avoid importing large
 modules or anything that isn't needed for testing (especially Node.js-only code
 like database drivers or `fs`, which can't run in the browser). Import heavy or
 spec-specific code directly in the spec files that need it instead.
@@ -319,20 +319,115 @@ beforeEach(() => {
   alt="Global hooks for tests"
 />
 
+#### Run Cypress global setup and teardown once per run
+
+A `before()` or `after()` hook in the support file runs once per spec file, not
+once per run, because Cypress loads the support file again for every spec. For
+setup and teardown that run once for the whole run, choose by what the work
+needs:
+
+- For Node.js code only, such as a database script or an API client, use
+  [`before:run`](/api/node-events/before-run-api) and
+  [`after:run`](/api/node-events/after-run-api), which run once at the start
+  and end of `cypress run`.
+- For Cypress commands, such as `cy.request()` or a custom command, in a
+  `cypress run` on one machine, count the specs in Node and gate the
+  support-file hooks, as shown below.
+- For a parallel run, or cleanup that has to happen even if Cypress stops early,
+  use CI steps before and after the Cypress jobs. In a
+  [parallel run](/cloud/features/smart-orchestration/parallelization), every
+  Node event fires on each machine, so the gated hooks run the setup on every
+  machine and usually never run the teardown.
+
+To gate the support-file hooks, track the run in `setupNodeEvents`, whose Node
+process stays alive for the whole run. Count the specs with `before:run` and
+[`after:spec`](/api/node-events/after-spec-api), and expose the state to the
+browser through [`cy.task()`](/api/commands/task):
+
+:::cypress-config-plugin-example
+
+```ts
+let setupDone = false
+let totalSpecs = 0
+let finishedSpecs = 0
+
+on('before:run', (details) => {
+  totalSpecs = details.specs?.length ?? 0
+})
+
+on('after:spec', () => {
+  finishedSpecs += 1
+})
+
+on('task', {
+  shouldRunSetup() {
+    return !setupDone
+  },
+  markSetupDone() {
+    setupDone = true
+    return null
+  },
+  isLastSpec() {
+    return finishedSpecs === totalSpecs - 1
+  },
+})
+```
+
+:::
+
+The support file asks those tasks whether to act. The relative URLs resolve
+against your [`baseUrl`](/app/references/configuration#e2e):
+
+```ts copyTsToJs title="cypress/support/e2e.ts"
+before(() => {
+  cy.task('shouldRunSetup').then((shouldRun) => {
+    if (shouldRun) {
+      cy.request('POST', '/api/test-users')
+      cy.task('markSetupDone')
+    }
+  })
+})
+
+after(() => {
+  cy.task('isLastSpec').then((isLast) => {
+    if (isLast) {
+      cy.request('DELETE', '/api/test-users')
+    }
+  })
+})
+```
+
+The setup runs in the first spec that runs its hooks. `markSetupDone` runs only
+after the setup request succeeds, so a failed setup runs again in the next
+spec; make the setup request safe to repeat. The teardown runs in the last
+spec, even when earlier tests fail, and a run filtered with `--spec` counts
+only the specs it runs.
+
+The teardown depends on the last spec running its `after()` hook, so it
+doesn't run when:
+
+- The last spec has no tests, fails to load, or crashes the browser.
+- The run stops before its last spec, such as a run cancelled by
+  [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation).
+- The specs run in `cypress open`. There, `before:run` and `after:spec` fire
+  only with the
+  [`experimentalInteractiveRunEvents`](/app/references/experiments#Configuration)
+  flag, and `details.specs` is undefined even with it.
+
 ## Cypress fixtures for repeatable test data
 
 Fixtures are external pieces of static data your tests can load on demand.
 Think of them as the canned data your tests run against. Keeping this data in
 its own file (rather than inline in the test) makes specs easier to read and
-lets you reuse the same data across many tests. Fixture files live in
+the same data reusable across many tests. Fixture files live in
 `cypress/fixtures` by default, but can be
 [configured](/app/references/configuration#Folders--Files) to another
 directory.
 
 Cypress recognizes a range of fixture file types and parses or encodes each
 based on its extension: `.json`, `.js`, `.html`, `.txt`, `.csv`,
-`.png`, `.jpg`, `.jpeg`, `.gif`, `.tif`, `.tiff`, and `.zip`. Any other
-extension is read as `utf8` unless you pass a different encoding. See
+`.png`, `.jpg`, `.jpeg`, `.gif`, `.tif`, `.tiff`, and `.zip`. Cypress reads any
+other extension as `utf8` unless you pass a different encoding. See
 [`cy.fixture()`](/api/commands/fixture) for the full encoding details.
 
 There are a few ways to use a fixture:
@@ -366,10 +461,10 @@ browser.
 #### Load known test data with `cy.fixture()`
 
 Fixtures are data you control and check in alongside your tests: the API
-response you stub, the user you log in as, the image you upload. They don't
-change while the tests run, and `cy.fixture()` is built around that. It caches
-each fixture after the first read, so a fixture shared by many tests isn't read from
-disk every time. Paths start at the `fixturesFolder` and the extension is
+response you stub, the user you log in as, the image you upload. Fixtures don't
+change while the tests run, and `cy.fixture()` is built around that. `cy.fixture()` caches
+each fixture after the first read, so Cypress doesn't read a fixture shared by many tests
+from disk every time. Paths start at the `fixturesFolder` and the extension is
 optional. Images arrive as `base64` strings, ready to use in a `data:` URI.
 
 ```javascript
@@ -390,7 +485,7 @@ CSV, and Excel examples.
 When the file is something your test waits on or checks, such as a report your
 app exports or a file a task writes, the fixture cache works against you.
 `cy.readFile()` reads the file on every call and keeps reading it until your
-assertions pass, so it can wait for a file to appear or finish changing. It can
+assertions pass, so it can wait for a file to appear or finish changing. `cy.readFile()` can
 also confirm a file was removed with `.should('not.exist')`.
 
 ```javascript
@@ -415,15 +510,15 @@ cy.task('countCsvRows', 'cypress/fixtures/large.csv').should('eq', 50000)
 
 Your tests run in the browser, but some things, like touching the file system,
 talking to a database, or controlling how specs are bundled, can only happen in
-Node.js. Cypress lets you run that Node.js-side code through the
+Node.js. Cypress runs that Node.js-side code through the
 [`setupNodeEvents`](/app/references/configuration#setupNodeEvents) function in
 your [Cypress configuration](/app/references/configuration), defined per testing
-type under the `e2e` or `component` options. It runs in the background Node.js
-process before the project is loaded, before the browser launches, and during
+type under the `e2e` or `component` options. The `setupNodeEvents` function runs in the background Node.js
+process before Cypress loads the project, before the browser launches, and during
 your test run, and your tests reach it through the
 [cy.task()](/api/commands/task) command.
 
-This is where you tap into [Node events](/api/node-events/overview) to do things
+`setupNodeEvents` is where you tap into [Node events](/api/node-events/overview) to do things
 like control how spec files are bundled with
 [preprocessors](/api/node-events/preprocessors-api), find and launch browsers
 via the [browser launch API](/api/node-events/browser-launch-api), and run other
@@ -434,7 +529,7 @@ tasks that need access to the operating system. Read our
 
 When a run produces artifacts (files your app downloaded, screenshots, or
 videos), Cypress saves them to dedicated folders so you can inspect what
-happened after the fact. Because these are regenerated on every run, you'll
+happened after the fact. Because Cypress regenerates these artifacts on every run, you
 usually want to keep them out of source control. For example, using the default
 folder locations:
 
@@ -447,8 +542,8 @@ cypress/videos/
 
 ### Downloads
 
-Any files downloaded while testing an application's file download feature will
-be stored in the [`downloadsFolder`](/app/references/configuration#Downloads)
+Cypress stores any files downloaded while testing an application's file download feature
+in the [`downloadsFolder`](/app/references/configuration#Downloads)
 which is set to `cypress/downloads` by default.
 
 ```text
@@ -459,10 +554,7 @@ which is set to `cypress/downloads` by default.
 
 ### Screenshots
 
-If screenshots were taken via the [cy.screenshot()](/api/commands/screenshot)
-command or automatically when a test fails, the screenshots are stored in the
-[`screenshotsFolder`](/app/references/configuration#Screenshots) which is set
-to `cypress/screenshots` by default.
+Cypress stores screenshots in the [`screenshotsFolder`](/app/references/configuration#Screenshots), which is set to `cypress/screenshots` by default. The folder holds both screenshots taken with [cy.screenshot()](/api/commands/screenshot) and screenshots Cypress takes automatically when a test fails.
 
 ```text
 /cypress
@@ -476,7 +568,7 @@ To learn more about screenshots and settings available, see
 
 ### Videos
 
-Any videos recorded of the run are stored in the
+Cypress stores any videos recorded of the run in the
 [`videosFolder`](/app/references/configuration#Videos) which is set to
 `cypress/videos` by default.
 
@@ -488,16 +580,16 @@ Any videos recorded of the run are stored in the
 
 ### How asset file paths are generated
 
-Screenshots and videos are saved inside their respective folders
-(`cypress/screenshots`, `cypress/videos`), and Cypress mirrors each spec's
+Cypress saves screenshots and videos inside their respective folders
+(`cypress/screenshots`, `cypress/videos`) and mirrors each spec's
 folder structure underneath so every asset lines up with the spec that produced
 it.
 
 To keep those paths from getting needlessly deep, Cypress first removes the
 **common ancestor**: the longest folder path shared by _every_ spec in the run
 (the specs matched by `specPattern`, or by the `--spec` flag / `spec` Module API
-option when you've narrowed the run). Only the part of each spec's path that is
-unique is kept.
+option when you've narrowed the run). Cypress keeps only the part of each spec's path
+that is unique.
 
 One consequence is that the same spec can produce assets at different paths
 depending on which other specs ran alongside it, because adding or removing
@@ -522,8 +614,8 @@ against), so only the filename remains:
 **Example 2: two component specs in the run**
 
 Component specs usually sit right next to the components they test. Here the two
-specs only share `src/components/`, so the differing tail of each path
-(`Button/`, `inputs/Input/`) is preserved:
+specs only share `src/components/`, so Cypress preserves the differing tail of
+each path (`Button/`, `inputs/Input/`):
 
 - Spec files found
   - `src/components/Button/Button.cy.tsx`
@@ -568,10 +660,10 @@ administering assets yourself, you can
 
 Replay the test as it executed during the recorded run with full debug capability using [<Logo src="/img/cloud/features/test-replay/replay-icon.svg" alt="Replay Icon" /> Cypress Test Replay](/cloud/features/test-replay).
 
-Screenshots and videos are attached to their respective test results and kept
-for the length of your
+Cypress Cloud attaches screenshots and videos to their respective test results
+and keeps them for the length of your
 [data retention](/cloud/account-management/billing-and-usage#Plan-overview)
-period, and can be shared or browsed through our web interface. To learn more about videos and settings available, see
+period, and you can share or browse them through our web interface. To learn more about videos and settings available, see
 [Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots).
 
 ## Writing tests
@@ -581,7 +673,7 @@ and [Chai](/app/references/bundled-libraries#Chai), two libraries the
 JavaScript community has relied on for years. Building on them rather than
 inventing a new test language means the syntax is already familiar and
 battle-tested: Cypress supports both Chai's `BDD` and `TDD` assertion styles,
-and your tests will mostly follow those conventions.
+and your tests mostly follow those conventions.
 
 :::info
 
@@ -597,7 +689,7 @@ record.
 
 The test interface, borrowed from
 [Mocha](/app/references/bundled-libraries#Mocha), provides `describe()`,
-`context()`, `it()` and `specify()`. You use `describe()`/`context()` to group
+`context()`, `it()`, and `specify()`. You use `describe()`/`context()` to group
 related tests and `it()`/`specify()` to define an individual test, which keeps
 your specs readable and your test output organized.
 
@@ -651,8 +743,7 @@ it('asserts in TDD style with assert', () => {
 ```
 
 The [.should()](/api/commands/should) command and its alias
-[.and()](/api/commands/and) can also be used to chain assertions off
-of Cypress commands.
+[.and()](/api/commands/and) also chain assertions off of Cypress commands.
 [Read more about assertions.](/app/core-concepts/introduction-to-cypress#Assertions)
 
 ```js
@@ -662,7 +753,7 @@ cy.get('[data-testid="profile-name"]').should('have.value', 'Jane Lane')
 ### Hooks
 
 Hooks (also borrowed from
-[Mocha](/app/references/bundled-libraries#Mocha)) let you run setup and teardown
+[Mocha](/app/references/bundled-libraries#Mocha)) run setup and teardown
 code around your tests instead of repeating it inside each one. Use them to
 establish the conditions a group of tests needs before they run, or to tidy up
 afterward.
@@ -723,11 +814,11 @@ describe('Hooks', () => {
 ### Focusing and skipping tests
 
 While developing, you rarely want to run the entire suite on every save.
-Cypress lets you focus on or skip specific tests so your feedback loop stays
+Focus on or skip specific tests to keep your feedback loop
 fast.
 
 To run a specified suite or test, append `.only` to the function. All nested
-suites will also be executed. This gives you the ability to run one test at a
+suites also run. `.only` runs one test at a
 time and is the recommended way to write a test suite.
 
 ```javascript
@@ -750,14 +841,79 @@ describe('Account settings', () => {
 })
 ```
 
-To skip a specified suite or test, append `.skip()` to the function. All nested
-suites will also be skipped.
+To skip a specified suite or test, append `.skip()` to the function. Cypress also
+skips all nested suites.
 
 ```javascript
 it.skip('uploads a new avatar', () => {
   cy.get('[data-testid="avatar"]').selectFile('cypress/fixtures/avatar.png')
 })
 ```
+
+#### Skip dependent Cypress tests after a failure
+
+Tests work best when each one runs on its own (see
+[Test Isolation](#Test-Isolation)). Some flows still get split across several
+tests that build on each other, such as a checkout where one test fills the cart
+and the next one opens it. When an early test in that chain fails, every test
+after it fails too, and the extra errors bury the one that matters.
+
+A pair of hooks stops the chain at the first failure. The `afterEach` hook
+records a failure, and the `beforeEach` hook calls Mocha's
+[`this.skip()`](https://mochajs.org/#inclusive-tests) for every test after it.
+Cypress reports the skipped tests as [pending](#Pending), and tests in other
+`describe` blocks still run:
+
+```javascript title="cypress/e2e/checkout.cy.js"
+describe('Checkout', { testIsolation: false }, () => {
+  let previousTestFailed = false
+
+  beforeEach(function () {
+    if (previousTestFailed) {
+      this.skip()
+    }
+  })
+
+  afterEach(function () {
+    const test = this.currentTest
+    const isLastAttempt = test.currentRetry() >= test.retries()
+
+    if (test.state === 'failed' && isLastAttempt) {
+      previousTestFailed = true
+    }
+  })
+
+  it('adds an item to the cart', () => {
+    cy.visit('/products')
+    cy.get('[data-testid="add-to-cart"]').first().click()
+    cy.get('[data-testid="cart-count"]').should('have.text', '1')
+  })
+
+  it('shows the item in the cart', () => {
+    cy.get('[data-testid="cart-link"]').click()
+    cy.get('[data-testid="cart-item"]').should('have.length', 1)
+  })
+})
+```
+
+Keep these details in mind:
+
+- The hooks use `function () {}` callbacks, not arrow functions, so `this` is
+  bound to the test context.
+- The `isLastAttempt` check matters when [test retries](/app/guides/test-retries)
+  are on. Without it, a failed first attempt marks the block as failed, and
+  Cypress skips the retry that would have passed. The experimental
+  `detect-flake-but-always-fail` strategy fails any test with a failed attempt.
+  When that test's final attempt passes, `this.currentTest.state` reads
+  `'passed'`, so the tests after it still run.
+- `testIsolation: false` keeps the page between tests in the block, which is
+  what lets the second test pick up where the first one left off.
+
+To stop every remaining test in the spec file instead of one block, call
+[`Cypress.stop()`](/api/cypress-api/stop) from the `afterEach` hook. To cancel
+a whole recorded run across machines after a set number of failures, use
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) in
+Cypress Cloud.
 
 ### Test Isolation
 
@@ -784,7 +940,7 @@ The behavior of running tests in a clean browser context is called
 `testIsolation`.
 
 Test isolation is **enabled by default** (`testIsolation: true`) and applies
-only to end-to-end testing. It is a global configuration and can be overridden
+only to end-to-end testing. Test isolation is a global configuration, and you can override it
 for end-to-end testing at the `describe` level with the
 [`testIsolation`](/app/references/configuration#e2e) option.
 
@@ -817,7 +973,7 @@ specify(name, config, fn)
 
 :::caution
 
-**Note:** Some configuration values are readonly and cannot be changed via test
+**Note:** Some configuration values are readonly, so you can't change them via test
 configuration. Be sure to review the list of
 [test configuration options](/app/references/configuration#Test-Configuration).
 
@@ -830,7 +986,7 @@ specific browser, you can override the `browser` configuration within the suite
 configuration. The `browser` option accepts the same arguments as
 [Cypress.isBrowser()](/api/cypress-api/isbrowser).
 
-The following suite of tests will be skipped if running tests in Chrome
+Cypress skips the following suite of tests if running tests in Chrome
 browsers.
 
 ```js
@@ -850,8 +1006,8 @@ describe('When NOT in Chrome', { browser: '!chrome' }, () => {
 })
 ```
 
-The following suite of tests will only execute when running in the Firefox
-browser. Additionally, it will overwrite the viewport resolution.
+The following suite of tests only executes when running in the Firefox
+browser. Additionally, the suite overwrites the viewport resolution.
 
 ```js
 describe(
@@ -897,7 +1053,7 @@ accessible in the browser context.
 
 ### Dynamically generating tests
 
-Because tests are just JavaScript, you can generate them programmatically. This
+Because tests are just JavaScript, you can generate them programmatically. Generating tests
 keeps your specs DRY when you need to run the same assertions across a list of
 inputs: change the data and the tests follow, with no copy-paste.
 
@@ -916,7 +1072,7 @@ describe('if your app uses jQuery', () => {
 })
 ```
 
-The code above will produce a suite with 4 tests:
+The code above produces a suite with 4 tests:
 
 ```text
 > if your app uses jQuery
@@ -934,7 +1090,7 @@ test per row. The important constraint is that the `describe()`/`it()` structure
 is built **synchronously when the spec loads**. Cypress commands like
 [`cy.fixture()`](/api/commands/fixture) and [`cy.task()`](/api/commands/task)
 run _inside_ a test and resolve asynchronously, so they can supply data
-**within** a test but cannot be used to create the `it()` blocks themselves. The
+**within** a test but you can't use them to create the `it()` blocks themselves. The
 data has to be available at load time.
 
 For **JSON** data, a static `import`/`require` is all you need, since the bundler
@@ -1035,11 +1191,11 @@ latest edits, with no manual re-run.
 
 **Spec files**
 
-Cypress watches your entire project root for spec files. Any file that matches
-your [`specPattern`](/app/references/configuration#e2e), wherever it lives in
-the project, is detected. When a change is made, the active spec file, the
-support file, and any files they `import` (or `require`) are recompiled through
-the [preprocessor](/api/node-events/preprocessors-api) and the browser reloads.
+Cypress watches your entire project root for spec files. Cypress detects any file
+that matches your [`specPattern`](/app/references/configuration#e2e), wherever
+it lives in the project. When you make a change, Cypress recompiles the active
+spec file, the support file, and any files they `import` (or `require`) through
+the [preprocessor](/api/node-events/preprocessors-api), and the browser reloads.
 
 #### What isn't watched?
 
@@ -1050,10 +1206,42 @@ the following:
 - `node_modules`
 - `cypress/fixtures/`
 
-Your application code is intentionally left out: if you're developing with a
+Cypress intentionally leaves out your application code: if you're developing with a
 modern JS-based stack, you likely already have some form of hot module
 replacement watching your application code (HTML, CSS, JS, etc.) and reloading
 it in response to changes, so Cypress doesn't duplicate that work.
+
+#### Rerun specs when application files change
+
+Hot module replacement reloads your app, but it doesn't rerun your spec. To
+rerun a spec whenever a file outside the spec graph changes, such as your
+application code or a fixture, pair a file watcher with
+[`cypress tap run`](/app/tooling/cypress-tap#cypress-tap-run). The
+`cypress tap run` command starts or reruns a spec in a running
+`cypress open` session, so the watcher starts a fresh run each time a watched
+file changes.
+
+Start Cypress with `cypress open`, then select your testing type and a
+Chromium-based browser, since `cypress tap` drives Chromium-based browsers only.
+Then install a file watcher. This example uses
+[`chokidar-cli`](https://www.npmjs.com/package/chokidar-cli):
+
+<PackageManagerTabs install="chokidar-cli" dev />
+
+In a second terminal, from the same project directory, watch the files you care
+about and run `cypress tap run` with the spec to rerun on each change:
+
+<PackageManagerTabs
+  run={`chokidar "src/**/*" "cypress/fixtures/**/*" -c "cypress tap run cypress/e2e/login.cy.ts"`}
+/>
+
+Each time a file under `src/` or `cypress/fixtures/` changes, the open Cypress
+session reruns `cypress/e2e/login.cy.ts`. Saving a watched file during a run
+stops that run and starts the spec again from the first command. Any watcher
+that runs a shell command works the same way, including `nodemon`, `watchexec`,
+or a script in your build tool. To declare the watched files in your Cypress config instead, use
+the community plugin
+[`cypress-watch-and-reload`](https://github.com/bahmutov/cypress-watch-and-reload).
 
 #### Disable file watching
 
@@ -1072,8 +1260,8 @@ configuration property to `false` to disable file watching:
 
 :::info
 
-This only applies to [cypress open](/app/references/command-line#cypress-open).
-**Nothing** is watched during
+File watching only applies to [cypress open](/app/references/command-line#cypress-open).
+Cypress watches **nothing** during
 [cypress run](/app/references/command-line#cypress-run), so the
 `watchForFileChanges` property has no effect there.
 
@@ -1083,8 +1271,8 @@ This only applies to [cypress open](/app/references/command-line#cypress-open).
 
 The component responsible for the file-watching behavior in Cypress is the
 [`@cypress/webpack-batteries-included-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-batteries-included-preprocessor).
-This is the default preprocessor packaged with Cypress and is registered
-automatically when you don't provide your own `file:preprocessor` event. It
+This preprocessor is the default one packaged with Cypress, and Cypress
+registers it automatically when you don't provide your own `file:preprocessor` event. The preprocessor
 builds on the lower-level
 [`webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
 and bundles the loaders and configuration needed to give you TypeScript and
@@ -1096,7 +1284,7 @@ preprocessor explicitly: it exposes options that control behavior such as _what_
 is watched and the delay before emitting an "update" event after a change.
 
 Cypress also ships other [file-watching preprocessors](/app/plugins/plugins-list) -
-you'll have to configure these explicitly if you want to use them.
+you have to configure these explicitly if you want to use them.
 
 - [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
 
@@ -1104,7 +1292,7 @@ you'll have to configure these explicitly if you want to use them.
 
 Once a spec finishes, knowing how to read its results is what turns a run into
 actionable feedback. Every test ends in one of four statuses: **passed**,
-**failed**, **pending**, or **skipped**. These statuses are inherited from
+**failed**, **pending**, or **skipped**. Cypress inherits these statuses from
 Mocha, the test runner Cypress is built on.
 
 ### Passed
@@ -1124,7 +1312,7 @@ some failed attempts, but ultimately the entire test finishes successfully.
 ### Failed
 
 A failed hook or test means an assertion didn't pass or a command errored.
-That's the test doing its job: catching the problem in your suite before it
+A failure is the test doing its job: catching the problem in your suite before it
 reaches a user.
 
 <DocsImage
@@ -1132,21 +1320,25 @@ reaches a user.
   alt="Cypress with a single failed test"
 />
 
-After a test fails, the [Test Replay](/cloud/features/test-replay) or screenshots and videos with Cypress Cloud can help find the problem so it
-can be fixed.
+After a test fails, the [Test Replay](/cloud/features/test-replay) or screenshots and videos with Cypress Cloud can help find the problem so you
+can fix it.
 
 ### Pending
 
-A **pending** test is one that Cypress intentionally doesn't run because you
-told it not to. A test ends up pending in three ways:
+A **pending** test is one that Cypress intentionally doesn't run, either because
+you told it not to or because your test code skipped it at runtime. A test ends
+up pending in four ways:
 
-- **It has no body**: a placeholder for a test you haven't written yet, such
+- **The test has no body**: a placeholder for a test you haven't written yet, such
   as `it('is not written yet')`.
-- **It's explicitly skipped**: using `it.skip()` or the `xit()` alias.
-- **It's excluded from the current browser**: a test configured with the
+- **The test is explicitly skipped**: using `it.skip()` or the `xit()` alias.
+- **The test is excluded from the current browser**: a test configured with the
   `browser` option to run only in a browser you aren't currently using.
+- **The test skips itself at runtime**: a call to `this.skip()` in the test or
+  in a `beforeEach` hook, as in
+  [skipping dependent tests after a failure](#Skip-dependent-Cypress-tests-after-a-failure).
 
-Each of the four tests below is pending (the browser-specific one is pending
+The four tests below show the first three ways. Each one is pending (the browser-specific one is pending
 whenever the run isn't using Chrome):
 
 ```js
@@ -1178,7 +1370,7 @@ describe('TodoMVC', () => {
   alt="Cypress with four pending test"
 />
 
-In each case you've knowingly told Cypress to hold off, so it reports the test
+In each case your test code told Cypress to hold off, so it reports the test
 as pending rather than passed or failed.
 
 ### Skipped
@@ -1195,7 +1387,7 @@ beforeEach(() => {
 })
 ```
 
-The hook fails before the first test can run, so that test is marked
+The hook fails before the first test can run, so Cypress marks that test
 **failed**. Because the same hook would fail identically for every other test
 in the block, Cypress doesn't re-run it; it marks the remaining tests as
 **skipped** instead.
@@ -1213,7 +1405,7 @@ Collapsing the command log shows the empty box next to the skipped test
   alt="Cypress showing one skipped test"
 />
 
-In short, a test is skipped when a `before`, `beforeEach`, or `afterEach` hook
+In short, Cypress skips a test when a `before`, `beforeEach`, or `afterEach` hook
 fails and prevents the tests that depend on it from running.
 
 ## See also

@@ -22,8 +22,8 @@ conditions that could result in unreliable tests include:
 - Network issues
 
 With test retries, Cypress is able to retry failed tests to help [detect test
-flakiness](/cloud/features/flaky-test-management#Flake-Detection) and continuous integration (CI) build failures. By doing so, this will
-save your team valuable time and resources so you can focus on what matters most
+flakiness](/cloud/features/flaky-test-management#Flake-Detection) and continuous integration (CI) build failures. Retrying failed tests
+saves your team valuable time and resources so you can focus on what matters most
 to you.
 
 ## How It Works
@@ -34,7 +34,7 @@ The [experimental test retries](/app/references/experiments#Experimental-Test-Re
 
 :::
 
-By default, tests will not retry when they fail. You'll need to
+By default, tests do not retry when they fail. You need to
 [enable test retries in your configuration](#Configure-Test-Retries) to use this
 feature.
 
@@ -48,39 +48,39 @@ feature.
 
 :::
 
-Once test retries are enabled, tests can be configured to have X number of retry
-attempts. For example, if test retries have been configured with `2` retry
-attempts, Cypress will retry tests up to 2 additional times (for a total of 3
-attempts) before potentially being marked as a failed test.
+Once test retries are enabled, you can configure tests to have X number of retry
+attempts. For example, if you configure test retries with `2` retry attempts,
+Cypress retries tests up to 2 additional times (for a total of 3 attempts)
+before potentially marking a test as failed.
 
-When each test is run again, the following
-[hooks](/app/core-concepts/writing-and-organizing-tests#Hooks) will be re-run
+When Cypress runs each test again, the following
+[hooks](/app/core-concepts/writing-and-organizing-tests#Hooks) re-run
 also:
 
 - `beforeEach`
 - `afterEach`
 
-However, failures in `before` and `after` hooks will not trigger a retry.
+However, failures in `before` and `after` hooks do not trigger a retry.
 
 ### The following is a detailed step-by-step example of how test retries works:
 
 Assuming we have configured test retries with **2** retry attempts (for a total of
 3 attempts), here is how the tests might run:
 
-1. A test runs for the first time. If the test <Icon name="check-circle" color="green" /> passes, Cypress will move forward
+1. A test runs for the first time. If the test <Icon name="check-circle" color="green" /> passes, Cypress moves forward
    with any remaining tests as usual.
 
-2. If the test <Icon name="times" color="red" /> fails, Cypress will tell you
-   that the first attempt failed and will attempt to run the test a second time.
+2. If the test <Icon name="times" color="red" /> fails, Cypress tells you
+   that the first attempt failed and attempts to run the test a second time.
 
 3. If the test <Icon name="check-circle" color="green" /> passes after the
-   second attempt, Cypress will continue with any remaining tests.
+   second attempt, Cypress continues with any remaining tests.
 
 4. If the test <Icon name="times" color="red" /> fails a second time, Cypress
-   will make the final third attempt to re-run the test.
+   makes the final third attempt to re-run the test.
 
 5. If the test <Icon name="times" color="red" /> fails a third time, Cypress
-   will mark the test as failed and then move on to run any remaining tests.
+   marks the test as failed and then moves on to run any remaining tests.
 
 <DocsImage
   src="/img/app/test-retries/attempt-3-fail.png"
@@ -95,8 +95,8 @@ failed test when run via [cypress run](/app/references/command-line#cypress-run)
   alt="CLI error message with test retries printed"
 />
 
-During [cypress open](/app/references/command-line#cypress-open) you'll be able
-to see the number of attempts made in the
+During [cypress open](/app/references/command-line#cypress-open) you can
+see the number of attempts made in the
 [Command Log](/app/core-concepts/open-mode#Command-Log) and expand each
 attempt for review and debugging if desired.
 
@@ -104,7 +104,7 @@ attempt for review and debugging if desired.
 
 ### Global Configuration
 
-Typically you will want to define different retry attempts for `cypress run`
+Typically you want to define different retry attempts for `cypress run`
 versus `cypress open`. You can configure this in the
 [Cypress configuration](/app/references/configuration#Global)
 by passing the `retries` option an object with the following options:
@@ -212,7 +212,7 @@ You can find more information about custom configurations here:
 
 ## Screenshots
 
-When a test retries, Cypress will continue to take screenshots for each failed
+When a test retries, Cypress continues to take screenshots for each failed
 attempt or [cy.screenshot()](/api/commands/screenshot) and suffix each new
 screenshot with `(attempt n)`, corresponding to the current retry attempt
 number.
@@ -238,21 +238,26 @@ describe('User Login', () => {
 // screenshot filename from cy.screenshot() on 1st attempt
 'user-login-errors.png'
 // screenshot filename on 1st failed attempt
-'user-login-errors (failed).png'
+'User Login -- displays login errors (failed).png'
 // screenshot filename from cy.screenshot() on 2nd attempt
 'user-login-errors (attempt 2).png'
 // screenshot filename on 2nd failed attempt
-'user-login-errors (failed) (attempt 2).png'
+'User Login -- displays login errors (failed) (attempt 2).png'
 // screenshot filename from cy.screenshot() on 3rd attempt
 'user-login-errors (attempt 3).png'
 // screenshot filename on 3rd failed attempt
-'user-login-errors (failed) (attempt 3).png'
+'User Login -- displays login errors (failed) (attempt 3).png'
 ```
+
+A failure screenshot takes its name from the suite and test titles, not from
+the name passed to `cy.screenshot()`. When the failure happens in a hook, the
+name also includes the hook's title. See
+[Failure screenshot names when a hook fails](/api/commands/screenshot#Failure-screenshot-names-when-a-hook-fails).
 
 ## Videos
 
 You can use Cypress's [`after:spec`](/api/node-events/after-spec-api) event listener
-that fires after each spec file is run to delete the recorded video for specs
+that fires after each spec file runs to delete the recorded video for specs
 that had no retry attempts or failures. Deleting passing and non-retried videos
 after the run can save resource space on the machine as well as skip the time
 used to process, compress, and upload the video to
@@ -291,20 +296,20 @@ on('after:spec', (spec, results) => {
 
 ## Cypress Cloud
 
-If you are using [Cypress Cloud](/cloud/get-started/introduction), information
-related to test retries is displayed on the Test Results tab for a run.
-Selecting the Flaky filter will show tests that retried and then passed during
+If you are using [Cypress Cloud](/cloud/get-started/introduction), the Test
+Results tab for a run displays information related to test retries.
+Selecting the Flaky filter shows tests that retried and then passed during
 the run.
 
-These tests are also indicated with a "Flaky" badge on the Latest Runs page and
-Test Results tab on the Run Details page.
+A "Flaky" badge also marks these tests on the Latest Runs page and Test Results
+tab on the Run Details page.
 
 <DocsVideo
   src="/img/app/test-retries/flaky-test-filter.mp4"
   title="Flaky test filter"
 />
 
-Clicking on a Test Result will open the Test Case History screen. This
+Clicking on a Test Result opens the Test Case History screen. The screen
 demonstrates the number of failed attempts, the screenshots and/or videos of
 failed attempts, and the error for failed attempts.
 
@@ -327,13 +332,13 @@ highlighted in the Test Flake Management Guide.
 
 ## Frequently Asked Questions (FAQs)
 
-### Will retried tests be counted as more than one test result in my billing?
+### Are retried tests counted as more than one test result in my billing?
 
-No. Tests recorded during `cypress run` with the `--record` flag will be counted
-the same with or without test retries.
+No. Cypress Cloud counts tests recorded during `cypress run` with the `--record`
+flag the same with or without test retries.
 
 We consider each time the `it()` function is called to be a single test for
-billing purposes. The test retrying will not count as extra test results in your
+billing purposes. The test retrying does not count as extra test results in your
 billing.
 
 You can always see how many tests you've recorded from your organization's
@@ -357,7 +362,7 @@ it('does something differently on retry', { retries: 3 }, () => {
 })
 ```
 
-The above `attempt` variable will have values 0 through 3 (the first default
+The above `attempt` variable has values 0 through 3 (the first default
 test execution plus three allowed retries). The `retries` constant in this case
 is always 3.
 

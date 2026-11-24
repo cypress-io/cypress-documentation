@@ -70,3 +70,6 @@ reader sees).
 - [`support/e2e.ts`](./support/e2e.ts) stubs the Osano consent script for every
   spec except `osano.cy.ts`, so a new spec never has to dismiss the banner, and
   a spec that needs the real one has to opt out there.
+- It also pins the browser's `prefers-color-scheme` to light, since the docs
+  follow the system setting and most specs expect light mode. A spec that
+  tests color mode opts out there too, as `color_mode.cy.ts` does.

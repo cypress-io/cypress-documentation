@@ -10,7 +10,7 @@ sidebar_position: 20
 # Project Analytics & Insights
 
 Cypress Cloud provides Analytics to offer insight into metrics like runs over
-time, run duration and visibility into tests suite size over time.
+time, run duration, and visibility into tests suite size over time.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-overview.png"
@@ -36,7 +36,7 @@ local machine.
   alt="Cloud Analytics Runs Over Time Filters Screenshot"
 />
 
-Results may be filtered by:
+You can filter results by:
 
 - Branch
 - Time Range
@@ -49,13 +49,13 @@ Results may be filtered by:
   alt="Cloud Analytics Runs Over Time Graph Screenshot"
 />
 
-The total runs over time are displayed for passed, failed, running, timed out,
+Cypress Cloud displays the total runs over time for passed, failed, running, timed out,
 and errored tests, respective of the filters selected.
 
-The results may be downloaded as a comma-separated values (CSV) file for further
+You can download the results as a comma-separated values (CSV) file for further
 analysis.
 
-This can be done via the download icon to the right of the filters.
+Download the CSV with the download icon to the right of the filters.
 
 ### Key Performance Indicators
 
@@ -72,7 +72,7 @@ respective of the filters selected.
   alt="Cloud Analytics Runs Over Time Table Screenshot"
 />
 
-A table of results grouped by date for the time range filter is displayed with
+Cypress Cloud displays a table of results grouped by date for the time range filter with
 passed, failed, running, timed out, and errored columns.
 
 ## Run duration
@@ -94,7 +94,7 @@ away from its typical duration.
   alt="Cloud Analytics Run Duration Filters Screenshot"
 />
 
-Results may be filtered by:
+You can filter results by:
 
 - Branch
 - Tag
@@ -108,11 +108,11 @@ Results may be filtered by:
   alt="Cloud Analytics Run Duration Graph Screenshot"
 />
 
-The average run duration over time is displayed respective of the filters
+Cypress Cloud displays the average run duration over time respective of the filters
 selected.
 
-The results may be downloaded as a comma-separated values (CSV) file for further
-analysis. This can be done via the download icon to the right of the filters.
+You can download the results as a comma-separated values (CSV) file for further
+analysis. Download the CSV with the download icon to the right of the filters.
 
 ### Key Performance Indicators
 
@@ -121,15 +121,15 @@ analysis. This can be done via the download icon to the right of the filters.
   alt="Cloud Analytics Run Duration KPI Screenshot"
 />
 
-Average parallelization, average run duration and time saved from
-parallelization are computed respective of the filters selected.
+Cypress Cloud computes average parallelization, average run duration, and time
+saved from parallelization respective of the filters selected.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-run-duration-table.png"
   alt="Cloud Analytics Run Duration Table Screenshot"
 />
 
-A table of results grouped by date for the time range filter is displayed with
+Cypress Cloud displays a table of results grouped by date for the time range filter with
 average runtime, concurrency, and time saved from parallelization columns.
 
 ## Test suite size
@@ -139,9 +139,9 @@ average runtime, concurrency, and time saved from parallelization columns.
   alt="Cloud Analytics Test Suite Size Screenshot"
 />
 
-This report shows how your test suite is growing over time. It calculates the
+This report shows how your test suite is growing over time. The report calculates the
 average number of test cases executed per run for each day in the given time
-period. It excludes runs that errored or timed out since they don't accurately
+period. The report excludes runs that errored or timed out since they don't accurately
 represent the size of your test suite.
 
 ### Filters
@@ -151,7 +151,7 @@ represent the size of your test suite.
   alt="Cloud Analytics Test Suite Size Filters Screenshot"
 />
 
-Results may be filtered by:
+You can filter results by:
 
 - Branch
 - Tag
@@ -165,11 +165,11 @@ Results may be filtered by:
   alt="Cloud Analytics Test Suite Size Graph Screenshot"
 />
 
-The average test suite size over time is displayed respective of the filters
+Cypress Cloud displays the average test suite size over time respective of the filters
 selected.
 
-The results may be downloaded as a comma-separated values (CSV) file for further
-analysis. This can be done via the download icon to the right of the filters.
+You can download the results as a comma-separated values (CSV) file for further
+analysis. Download the CSV with the download icon to the right of the filters.
 
 ### Key Performance Indicators
 
@@ -178,7 +178,7 @@ analysis. This can be done via the download icon to the right of the filters.
   alt="Cloud Analytics Test Suite Size KPI Screenshot"
 />
 
-Unique tests and number of spec files are computed respective of the filters
+Cypress Cloud computes unique tests and number of spec files respective of the filters
 selected.
 
 <DocsImage
@@ -186,7 +186,7 @@ selected.
   alt="Cloud Analytics Test Suite Size Table Screenshot"
 />
 
-A table of results grouped by date for the time range filter is displayed with
+Cypress Cloud displays a table of results grouped by date for the time range filter with
 unique tests and spec files.
 
 ## Top failures
@@ -205,15 +205,15 @@ This report shows the top failures in your test suite.
   alt="Cloud Analytics Top Failures Filters Screenshot"
 />
 
-Results can be seen through custom grouping by using the "View By" dropdown. It
-can be grouped by:
+You can see results through custom grouping by using the "View By" dropdown. You
+can group results by:
 
 - Test Case
 - Spec File
 - Tag
 - Branch
 
-Results may also be filtered by:
+You can also filter results by:
 
 - Branch
 - Tag
@@ -232,13 +232,13 @@ Results may also be filtered by:
   alt="Cloud Analytics Top Failures Graph Screenshot"
 />
 
-The number of tests by failure rate is displayed respective of the filters
+Cypress Cloud displays the number of tests by failure rate respective of the filters
 selected.
 
-The results may be downloaded as a comma-separated values (CSV) file for further
+You can download the results as a comma-separated values (CSV) file for further
 analysis.
 
-This can be done via the download icon to the right of the filters.
+Download the CSV with the download icon to the right of the filters.
 
 ### Key Performance Indicators
 
@@ -257,8 +257,18 @@ The main key performance indicators tracked are:
   alt="Cloud Analytics Top Failures Table Screenshot"
 />
 
-A table of results grouped by failure rate is displayed with spec files and
+Cypress Cloud displays a table of results grouped by failure rate with spec files and
 total runs.
+
+### Test details
+
+Selecting a test in the table opens a drill-in panel with context for triaging
+that failure, including error history and links to recorded runs. When
+[Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled for your organization, the
+panel also includes a collapsible **Test intent** section: the same
+[Test Intent Summary](/cloud/features/cypress-ai-features#Test-Intent-Summaries)
+as in the test details sidebar. Cypress generates it on first open from the
+test's latest failure within your current branch and time range filters.
 
 ## Slowest tests
 
@@ -276,15 +286,15 @@ This report shows the slowest tests in a test suite.
   alt="Cloud Analytics Slowest Tests Filters Screenshot"
 />
 
-Results can be seen through custom grouping by using the "View By" dropdown. It
-can be grouped by:
+You can see results through custom grouping by using the "View By" dropdown. You
+can group results by:
 
 - Test Case
 - Spec File
 - Tag
 - Branch
 
-Results may also be filtered by:
+You can also filter results by:
 
 - Branch
 - Tag
@@ -304,10 +314,10 @@ Results may also be filtered by:
   alt="Cloud Analytics Slowest Tests Graph Screenshot"
 />
 
-The slowest tests are displayed by duration of time.
+Cypress Cloud displays the slowest tests by duration of time.
 
-The results may be downloaded as a comma-separated values (CSV) file for further
-analysis. This can be done via the download icon to the right of the filters.
+You can download the results as a comma-separated values (CSV) file for further
+analysis. Download the CSV with the download icon to the right of the filters.
 
 ### Key Performance Indicators
 
@@ -337,3 +347,92 @@ suite.
   src="/img/cloud/features/analytics/dashboard-analytics-common-errors.png"
   alt="Cloud Analytics Slowest Tests Table Screenshot"
 />
+
+## Flaky tests
+
+:::tip
+
+**Cypress Cloud Feature:** Flaky test analytics are available to organizations with a
+[Team Cypress Cloud plan](https://cypress.io/pricing).
+
+:::
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests.png"
+  alt="Flaky tests analytics in Cypress Cloud with a chart of flaky test cases per day, severity KPIs, and a filterable table of flaky tests"
+/>
+
+This report shows flaky tests in your suite so you can track reliability trends
+and prioritize fixes by severity. For how Cypress detects flake, alerts your
+team, and integrates with CI, see
+[Flaky Test Management](/cloud/features/flaky-test-management).
+
+### Filters and Views
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests-filters.png"
+  alt="Flaky tests analytics View By and Filter By controls for branch, tag, time range, run group, spec file, browser, Cypress version, and operating system"
+/>
+
+You can see results through custom grouping by using the **View By** dropdown.
+You can group results by:
+
+- Test Case
+- Spec File
+- Tag
+- Branch
+
+You can also filter results by:
+
+- Branch
+- Tag
+- Time Range
+- Run Group
+- Spec File
+- Browser
+- Cypress Version
+- Operating System
+
+### Results
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests-graph.png"
+  alt="Flaky tests analytics chart of flaky test cases detected per day"
+/>
+
+Cypress Cloud displays the number of flaky test cases detected per day respective of the
+filters selected.
+
+You can download the results as a comma-separated values (CSV) file for further
+analysis. Download the CSV with the download icon to the right of the filters.
+
+### Key Performance Indicators
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests-kpi.png"
+  alt="Flaky tests analytics KPIs for overall flakiness and flaky test cases by high, medium, and low severity"
+/>
+
+The main key performance indicators tracked are:
+
+- Overall flakiness (test cases)
+- Number of flaky test cases by severity (high, medium, and low)
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests-table.png"
+  alt="Flaky tests analytics table listing test cases with last flaky time, flaky rate, and severity"
+/>
+
+Cypress Cloud displays a table of flaky test cases with last flaky time, flaky rate, and
+severity. See [Flake severity](/cloud/features/flaky-test-management#Flake-severity)
+for how Cypress calculates severity from flake rate.
+
+### Test details
+
+Selecting a flaky test in the table opens a drill-in panel with context for
+triaging that test, including flaky run history and error trends. When
+[Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled for your organization, the
+panel also includes a collapsible **Test intent** section: the same
+[Test Intent Summary](/cloud/features/cypress-ai-features#Test-Intent-Summaries)
+as in the test details sidebar. Cypress generates it on first open from the
+test's latest flaky result within your current branch and time range filters.

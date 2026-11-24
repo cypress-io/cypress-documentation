@@ -14,11 +14,24 @@ the next step is keeping new gaps from creeping back in. This guide turns your U
 Coverage report into a **merge gate**, so a pull request that adds an untested
 button, form, or page can't merge without a deliberate decision.
 
-UI Coverage reports are generated server-side in Cypress Cloud from
+Cypress Cloud generates UI Coverage reports server-side from
 [Test Replay](/cloud/features/test-replay) data, so they add no overhead to your
 test runs, and nothing in your Cypress pipeline fails on its own when coverage
 drops. Enforcement is entirely opt-in: you choose a policy and apply it in your
-CI job with the [Results API](/ui-coverage/results-api). With it you can:
+CI job with the [Results API](/ui-coverage/results-api).
+
+:::tip
+
+For declarative thresholds such as a minimum coverage score or a maximum
+untested-element count, define [Run Checks](/cloud/features/checks) in App
+Quality configuration and
+[report them as GitHub statuses](/ui-coverage/guides/report-run-checks-github).
+Use the Results API approach below when you need custom policy logic the
+built-in assertion types don't cover, such as a baseline comparison.
+
+:::
+
+With the Results API you can:
 
 - **Fail a build or block a pull request** when overall coverage falls below a
   threshold, or when a critical view regresses.
@@ -40,7 +53,7 @@ the policy. Two models cover most teams, and you can combine them.
 A fixed threshold is simple but blunt: if your app sits at 62% coverage, a
 threshold of 80% blocks _every_ pull request until you've paid down all the
 existing debt. A **baseline** compares each run against a known-good state and
-fails only on _newly_ introduced gaps, which lets you hold the line today and
+fails only on _newly_ introduced gaps, so you can hold the line today and
 improve incrementally. Most teams with an established suite start here.
 
 ## Before you begin
@@ -107,9 +120,9 @@ on untested navigation links, and ratcheting the floor up as coverage improves.
 ## Block only on new gaps with a baseline {#comparing-against-a-baseline}
 
 A threshold treats all untested elements the same, whether they've been untested
-for a year or arrived in the pull request under review. Comparing a run against a
-stored **baseline** lets you ignore existing gaps and fail only when a change
-introduces _new_ untested elements. This is what makes UI Coverage enforceable on
+for a year or arrived in the pull request under review. A check that compares a run against a
+stored **baseline** ignores existing gaps and fails only when a change
+introduces _new_ untested elements. Baseline comparison is what makes UI Coverage enforceable on
 a real codebase: you stop the debt from growing today, and pay it down on your own
 schedule without blocking every merge.
 
@@ -123,12 +136,12 @@ coverage improved.
 The **untested element and link counts per view** provide a more direct signal for "did this
 change add gaps?" If a view's untested count rises above its baseline,
 or a brand-new view arrives carrying untested elements, the change introduced
-gaps, regardless of what the percentage did. That's the number the script below
+gaps, regardless of what the percentage did. The per-view untested count is the number the script below
 compares.
 
 ### Baseline structure
 
-The baseline is a small JSON file you commit alongside your code. It records, for
+The baseline is a small JSON file you commit alongside your code. The baseline records, for
 a known-good run, how many untested items each view
 had:
 
@@ -160,7 +173,7 @@ base branch, then capture its per-view untested counts one of two ways.
 CI. Run it once with no committed baseline and it writes the current run's numbers
 to `ui-coverage-baseline.next.json` without failing the build. Review that file,
 then commit it as `ui-coverage-baseline.json` so every later run compares against
-it. A CI runner is discarded after the job, so to capture that first candidate
+it. Your CI provider discards a CI runner after the job, so to capture that first candidate
 either run the script locally by replaying a recent run's CI context (see
 [Required CI environment variables](/ui-coverage/results-api#Required-CI-environment-variables)),
 or upload `ui-coverage-baseline.next.json` as a build artifact from the CI run.
@@ -302,7 +315,7 @@ MCP with UI Coverage.
 
 A view has **new untested elements** when its combined untested count
 (`untestedElementsCount` plus `untestedLinksCount`) is higher than the baseline,
-or when a view absent from the baseline appears with untested elements. This is a
+or when a view absent from the baseline appears with untested elements. New untested elements are a
 coverage regression: the change added interactive elements or link destinations no
 test reaches. The script fails the build so the pull request can't merge until
 you cover them or exclude them.
@@ -310,15 +323,15 @@ you cover them or exclude them.
 #### Resolved gaps
 
 A view has **resolved gaps** when its combined untested count is lower than the
-baseline. This is an improvement: a change added coverage. The script reports
+baseline. A lower count is an improvement: a change added coverage. The script reports
 these but doesn't fail the build, so progress is visible without blocking anyone.
 
 #### View-level comparison
 
-Untested elements are compared per [view](/ui-coverage/core-concepts/views) (a URL
+The script compares untested elements per [view](/ui-coverage/core-concepts/views) (a URL
 pattern for end-to-end tests, or a spec file for component tests), so the failure
 message points at the exact page or component where the new gap appeared, rather
-than a single project-wide number. Views are matched by `displayName`, so renaming
+than a single project-wide number. The script matches views by `displayName`, so renaming
 a route or changing how views are grouped changes the key: an unchanged page can
 then look like a new view and trip the gate. Re-promote the baseline after changes
 like that.
@@ -371,7 +384,7 @@ for the equivalent step in GitLab, Jenkins, Azure, CircleCI, and other providers
 ## Use Profiles for PR-specific configuration
 
 A pull request check should be fast and focused, while your nightly regression
-run tracks everything. [Profiles](/ui-coverage/configuration/profiles) let you
+run tracks everything. [Profiles](/ui-coverage/configuration/profiles)
 apply different app quality configuration
 to different runs based on their [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt),
 so both can share one Cypress Cloud project.
@@ -465,6 +478,10 @@ for manual investigation during code review.
 
 ## See also
 
+- [Run Checks](/cloud/features/checks): declarative coverage thresholds evaluated
+  in Cypress Cloud.
+- [Report Run Checks as GitHub pull request statuses](/ui-coverage/guides/report-run-checks-github):
+  post each check as a required commit status.
 - [Results API](/ui-coverage/results-api): the full `getUICoverageResults`
   reference and more enforcement examples.
 - [Monitor changes](/ui-coverage/guides/monitor-changes): track coverage trends
@@ -475,6 +492,6 @@ for manual investigation during code review.
   to runs using run tags.
 - [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps) and
   [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps): find the
-  gaps a policy will block, and close them.
+  gaps a policy blocks, and close them.
 - [UI Coverage FAQ](/ui-coverage/faq#Results-API-and-CI): quick answers to common
   Results API, baseline, and CI questions.

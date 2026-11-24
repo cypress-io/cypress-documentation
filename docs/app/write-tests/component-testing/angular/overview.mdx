@@ -40,7 +40,7 @@ Open Cypress:
   caption="Choose Component Testing"
 />
 
-The Cypress App will guide you through configuring your project.
+The Cypress App guides you through configuring your project.
 
 :::info
 
@@ -55,14 +55,9 @@ For usage and examples, visit the
 ## Framework Configuration
 
 Cypress Component Testing works out of the box with `@angular/cli` projects.
-Cypress will automatically detect your project is Angular during setup and
-configure it properly.
+Cypress automatically detects your project is Angular during setup and configures it properly.
 
-For a full explanation of how the dev server and bundler work — including
-automatic config detection and override options — see
-[Component Testing Configuration — Dev Server and Bundler](/app/component-testing/component-framework-configuration#Dev-Server-and-Bundler).
-
-The examples below are for quick reference.
+<CtDevServerConfigLink />
 
 ### Angular CLI Configuration
 
@@ -135,7 +130,7 @@ Cypress builds your component specs with the Angular build pipeline. When you do
 (including `assets`, `styles`, and `stylePreprocessorOptions`) from the default
 application project in your `angular.json`. When you **do** provide your own
 [`projectConfig`](#Options-API), it _replaces_ the configuration Cypress detects
-from `angular.json`, so any build options your styles rely on must be repeated
+from `angular.json`, so you must repeat any build options your styles rely on
 in your `buildOptions`. The two issues below are usually a result of this.
 
 ### Sass `@use` / `@import` can't find a stylesheet
@@ -149,7 +144,7 @@ testing like:
 @use 'mixins'
 ```
 
-This happens when a custom `projectConfig` omits those include paths. Add the
+This error happens when a custom `projectConfig` omits those include paths. Add the
 same `stylePreprocessorOptions` to your `buildOptions` so the Sass compiler can
 resolve the imports:
 
@@ -185,8 +180,8 @@ resolve the imports:
 
 With Tailwind CSS v4, you may find that your own styles load correctly but
 Tailwind utility classes such as `bg-red-500` have no effect. The class is
-present on the element in the DevTools inspector, but no rule is generated for
-it. This is because Tailwind v4 generates utilities through its own build
+present on the element in the DevTools inspector, but Tailwind generates no rule
+for it. The rule is missing because Tailwind v4 generates utilities through its own build
 plugin, which is not part of the Angular build pipeline Cypress uses to compile
 your `styles`.
 

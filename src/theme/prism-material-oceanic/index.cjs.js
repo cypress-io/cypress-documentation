@@ -5,7 +5,7 @@
 var theme = {
   plain: {
     color: "#c3cee3",
-    backgroundColor: "#282A36"
+    backgroundColor: "#161827"
   },
   styles: [{
     types: ["namespace"],

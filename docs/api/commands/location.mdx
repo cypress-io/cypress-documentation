@@ -121,8 +121,8 @@ cy.location('pathname', { timeout: 10000 }).should('eq', '/dashboard')
 
 #### Match a pathname that contains a generated ID
 
-When your application creates a record and navigates to it, the ID in the URL
-isn't known ahead of time. Match the pathname against a regular expression
+When your application creates a record and navigates to it, you don't know the
+ID in the URL ahead of time. Match the pathname against a regular expression
 instead.
 
 ```javascript
@@ -244,7 +244,7 @@ cy.origin('http://auth.example.com', () => {
 
 `cy.location()` reads the current URL of the application under test from the
 browser and yields a plain object with the properties listed under
-[Yields](#Yields). It has none of the `window.location` methods, such as
+[Yields](#Yields). The yielded object has none of the `window.location` methods, such as
 `assign()` or `reload()`. Read `href` when you need the full URL as a string.
 
 Changing a property on the real `window.location` object navigates the browser

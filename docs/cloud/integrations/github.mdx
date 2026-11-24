@@ -31,10 +31,10 @@ GitHub admin to enable repository access.
 :::caution
 
 GitHub Integration depends on your CI environment reliably providing a commit
-SHA (typically via an environment variable). This is not a problem for most
+SHA (typically via an environment variable). Providing a commit SHA is not a problem for most
 users, but if you are facing GitHub integration issues with your CI setup,
-make sure the git information is being sent properly by following
-[these guidelines](/app/continuous-integration/overview#Git-information).
+make sure your CI sends the git information properly by following the
+[Git information guidelines](/app/continuous-integration/overview#Git-information).
 If you still face issues after this,
 [contact us](mailto:hello@cypress.io).
 
@@ -135,7 +135,7 @@ This installation method does not apply to GitHub Enterprise.
 
 Once you've started the GitHub App installation process
 [via a Cypress organization's settings](#Install-via-organization-integration-settings)
-or [a project's settings](#Install-via-project-settings), you will be directed
+or [a project's settings](#Install-via-project-settings), Cypress Cloud directs you
 to GitHub.com to complete the installation:
 
 1. Select the desired GitHub organization or account to integrate with your
@@ -152,7 +152,7 @@ to GitHub.com to complete the installation:
 
 :::info
 
-All current and _future_ repositories will be included with this installation if
+The installation includes all current and _future_ repositories if
 you choose **All repositories**.
 
 :::
@@ -230,7 +230,7 @@ them into Cypress Cloud, and complete the activation process.
 />
 
 5. Skip to the bottom of the form and click the **Create GitHub App** button.
-   Your new GitHub App is now created, and you'll be taken to the settings page.
+   Your new GitHub App is now created, and GitHub takes you to the settings page.
 
 6. Returning to Cypress Cloud GitHub Enterprise Integration configuration
    screen, populate the following values from your new GitHub App.
@@ -266,7 +266,7 @@ them into Cypress Cloud, and complete the activation process.
   alt="Generate private key"
 />
 
-7. In Cypress Cloud, click the **Next Step** button, and you will be taken to
+7. In Cypress Cloud, click the **Next Step** button, and Cypress Cloud takes you to
    the GitHub Enterprise app authorization page. Click the **Authorize \[your
    app name\]** button.
 
@@ -290,8 +290,8 @@ them into Cypress Cloud, and complete the activation process.
 
 :::info
 
-All current and _future_ repositories will be included with this
-installation if you choose **All repositories**.
+The installation includes all current and _future_ repositories
+if you choose **All repositories**.
 
 :::
 
@@ -301,7 +301,7 @@ installation if you choose **All repositories**.
   width={535}
 />
 
-10. Finally, you will be returned to Cypress Cloud. Congratulations, you have
+10. Finally, GitHub returns you to Cypress Cloud. Congratulations, you have
     installed Cypress Cloud GitHub Enterprise integration! You are now ready to
     configure a GitHub Integration for a project.
 
@@ -348,8 +348,8 @@ organization's Integrations page:
   alt="Associate GitHub repo with Cypress project"
 />
 
-Once a GitHub repository is associated with a Cypress project, the GitHub
-integration will be immediately enabled:
+Once you associate a GitHub repository with a Cypress project, Cypress Cloud
+immediately enables the GitHub integration:
 
 <DocsImage
   src="/img/cloud/integrations/github/project-settings-selected-repo.jpg"
@@ -368,7 +368,7 @@ organizations **Integrations** page:
 ## Status checks
 
 If status checks are enabled within a project's GitHub integration settings,
-Cypress Cloud will report Cypress test statuses to GitHub for related commits.
+Cypress Cloud reports Cypress test statuses to GitHub for related commits.
 [Status checks](https://help.github.com/en/articles/about-status-checks) help
 prevent merging a commit or pull request into the rest of your codebase until
 all your Cypress tests have passed.
@@ -389,10 +389,15 @@ The Cypress GitHub App reports commit status checks in two distinct styles:
     alt="Status checks per spec"
   />
 
-Each status check will report the number of test failures or passes, and the
-associated **Details** link will direct you to the test run's page within
+Each status check reports the number of test failures or passes, and the
+associated **Details** link directs you to the test run's page within
 Cypress Cloud to help you dig deeper into the problem via error messages, stack
-traces, screenshots, and video recordings:
+traces, screenshots, and video recordings.
+
+To report [Run Checks](/cloud/features/checks) (failed-test, flake, accessibility,
+and UI Coverage thresholds you define in App Quality) as separate commit
+statuses, see
+[Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github).
 
 <DocsImage
   src="/img/cloud/integrations/github/cloud-details-specs-tab.jpg"
@@ -403,8 +408,8 @@ traces, screenshots, and video recordings:
 
 ### Disable status checks
 
-GitHub status checks are optional and can be disabled within a project's GitHub
-integration settings:
+GitHub status checks are optional, and you can disable them within a project's
+GitHub integration settings:
 
 <DocsImage
   src="/img/cloud/integrations/github/status-check-settings.jpg"
@@ -438,7 +443,7 @@ requests via comments that include:
   - A summary of the tests that failed or are flaky
   - A link back to the associated failed or flaky test within Cypress Cloud
 
-An example of a Cypress pull-request comment can be seen below:
+Below is an example of a Cypress pull-request comment:
 
 <DocsImage
   src="/img/cloud/integrations/github/pr-comment-fail.jpg"
@@ -448,8 +453,8 @@ An example of a Cypress pull-request comment can be seen below:
 
 ### Disable PR comments
 
-PR comments are optional and can be disabled if not needed within a project's
-GitHub Integration settings:
+PR comments are optional, and you can disable them within a project's GitHub
+Integration settings if you don't need them:
 
 <DocsImage
   src="/img/cloud/integrations/github/pr-comments-settings.jpg"
@@ -473,5 +478,6 @@ See
 
 ## See also
 
+- [Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github) - post App Quality Run Checks as commit statuses, including accessibility and UI Coverage gates
 - [Cypress GitHub Action + Examples](https://github.com/cypress-io/github-action)
 - [Example project that uses both Cypress GitHub Action and Cypress GitHub Integration](https://github.com/cypress-io/gh-action-and-gh-integration)

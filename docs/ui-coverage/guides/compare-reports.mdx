@@ -10,7 +10,7 @@ sidebar_position: 70
 # Compare reports
 
 A single UI Coverage report tells you which parts of your UI are untested
-_today_. It can't tell you whether your latest change made that better or worse.
+_today_. A single report can't tell you whether your latest change made that better or worse.
 Comparing two reports answers the question that matters in a pull request:
 **did this change leave any part of the UI newly untested?**
 
@@ -64,8 +64,8 @@ You can get there by clicking the branch name associated with a run, or in
 chosen from a dropdown labeled **Base** and **Changed**.
 
 Branch Review compares any two runs recorded to Cypress Cloud, so no source
-control integration is required: the Git branch and commit for each run are
-captured automatically when it records, and you can select the two runs to
+control integration is required: Cypress automatically captures the Git branch
+and commit for each run when the run records, and you can select the two runs to
 compare manually.
 
 :::tip
@@ -106,11 +106,11 @@ runs. Branch Review shows the delta as a badge: a positive value when the score
 rose and a negative one when it fell, comparing the changed run's score against
 the base run's.
 
-This gives you a sense of whether the overall ratio of tested to untested elements has changed.
-It is a useful high-level signal, but it does not describe _what_ changed in the set of tested or untested items.
+The score delta gives you a sense of whether the overall ratio of tested to untested elements has changed.
+The delta is a useful high-level signal, but it does not describe _what_ changed in the set of tested or untested items.
 
 Even if the score has not changed, review any new untested elements.
-They may represent missing coverage on new features.
+New untested elements may represent missing coverage on new features.
 
 For example, if a code change adds 2 buttons and you only test one of them, that would introduce
 one new tested element and one new untested element at the same time, keeping the ratio, and the score, flat.
@@ -118,8 +118,8 @@ one new tested element and one new untested element at the same time, keeping th
 ### Step 3: Review new untested elements and links
 
 Two sections surface coverage that **regressed**: parts of the UI that are
-untested in the changed run but weren't a gap in the base run. These are the
-sections to watch on a pull request.
+untested in the changed run but weren't a gap in the base run. These two sections are the
+ones to watch on a pull request.
 
 :::tip
 
@@ -140,8 +140,8 @@ sections to watch on a pull request.
 
 The **Untested elements** section separates the interactive elements into:
 
-- **New untested elements**: elements that are untested in the changed run and were either tested in the base run or didn't exist there. This is the bucket a pull request review focuses on.
-- **Resolved untested elements**: elements that were untested in the base run and are now tested. This is your proof that a gap was closed.
+- **New untested elements**: elements that are untested in the changed run and were either tested in the base run or didn't exist there. New untested elements are the bucket a pull request review focuses on.
+- **Resolved untested elements**: elements that were untested in the base run and are now tested. Resolved untested elements are your proof that a gap was closed.
 - **Existing untested elements**: a link to the elements that are untested in both runs, so you can jump to the full report when you want the complete picture rather than only the diff.
 
 A **new untested element** appears for one of three reasons, and all are worth
@@ -170,7 +170,7 @@ unopened doors in your application: pages a user can reach through your UI that
 no test visits. Like elements, they're split into:
 
 - **New untested links**: a page that is reachable but untested in the changed run and wasn't an untested link in the base run.
-- **Resolved untested links**: pages that were untested links in the base run and are now visited by a test.
+- **Resolved untested links**: pages that were untested links in the base run and that a test now visits.
 - **Existing untested links**: a link to the untested links present in both runs.
 
 A new untested link is often the first sign that a change added a whole flow your
@@ -188,7 +188,7 @@ untested elements to work through.
 The **Added** section summarizes everything that is new in the changed run and
 wasn't present in the base run. Unlike the untested sections, it includes both
 tested and untested items, so it's the clearest view of how the application
-itself changed between the two runs, and whether your tests kept pace. It's
+itself changed between the two runs, and whether your tests kept pace. The **Added** section is
 grouped into:
 
 - **Added links**: new links the change introduced, showing where new navigation paths appear in your app.
@@ -207,8 +207,8 @@ way to compare two builds of your application independent of the coverage score.
 
 Clicking any new or resolved item opens a detail view of that item, where you see
 every example of that element or link on a full-page, inspectable DOM snapshot,
-with tested elements highlighted green and untested elements red. Items with the
-same status on both runs are removed here, so you focus only on what changed.
+with tested elements highlighted green and untested elements red. The detail view
+leaves out items with the same status on both runs, so you focus only on what changed.
 
 The detail view shows the changed run's snapshots, consistent with the changed
 run being the focal point of the comparison. Because the snapshot is a real DOM,
@@ -221,7 +221,7 @@ do.
 
 On most projects, comparing reports works well out of the box. But dynamic values
 in URLs or element attributes can make unchanged parts of your app _look_ like
-they changed, adding noise to the diff. Because UI Coverage is configured from
+they changed, adding noise to the diff. Because you configure UI Coverage from
 the **App Quality** tab of your project settings in Cypress Cloud, you can fix
 this without touching your tests, then regenerate a past run from its
 **Properties** tab to see the effect immediately.
@@ -233,8 +233,8 @@ this without touching your tests, then regenerate a past run from its
 
 **Stabilize views** so a page matches across runs. UI Coverage groups URLs that
 differ only by numeric IDs or UUIDs automatically (`/orders/123` and `/orders/456`
-become `/orders/*`), but other dynamic segments, such as slugs, are not grouped by
-default and can show up as "new" views between runs. Group them with a
+become `/orders/*`), but UI Coverage doesn't group other dynamic segments, such as
+slugs, by default, and they can show up as "new" views between runs. Group them with a
 [`views`](/ui-coverage/configuration/views) pattern:
 
 ```json title="App Quality Config"
@@ -250,8 +250,8 @@ default and can show up as "new" views between runs. Group them with a
 This groups `/products/blue-widget` and `/products/red-widget` into a single
 `/products/:slug` view that's recognized the same way in both runs.
 
-**Stabilize elements** so the same control isn't matched as two different
-elements between builds. If an element's identifier carries a per-build hash, the
+**Stabilize elements** so UI Coverage doesn't match the same control as two
+different elements between builds. If an element's identifier carries a per-build hash, the
 same element can appear as _resolved_ in the base run and _new untested_ in the
 changed run even though nothing really changed. UI Coverage already ignores the
 most common unstable identifiers, such as hashed CSS classes; for anything it

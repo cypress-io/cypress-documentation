@@ -17,7 +17,7 @@ Refer to the [Cypress Cloud Terms of Use](https://cypress.io/terms-of-use) and o
 
 ## Types of Data
 
-When you run Cypress via `cypress run` and pass the `--record` flag, the following data is stored in Cypress Cloud for every run:
+When you run Cypress via `cypress run` and pass the `--record` flag, Cypress Cloud stores the following data for every run:
 
 - Standard output in the terminal
 - Test results
@@ -27,7 +27,7 @@ When you run Cypress via `cypress run` and pass the `--record` flag, the followi
 - Videos
 - OS environment variables related to CI and git information
 
-When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additional data outlined below will be sent to Cypress Cloud. [See our guide on disabling Test Replay.](/cloud/features/test-replay#Opt-out-of-Test-Replay)
+When [Test Replay](/cloud/features/test-replay) capturing is enabled, Cypress sends the additional data outlined below to Cypress Cloud. [See our guide on disabling Test Replay.](/cloud/features/test-replay#Opt-out-of-Test-Replay)
 
 - The rendered DOM and CSS styles for the application under test
 - Cypress commands and events represented in the Command Log
@@ -36,21 +36,21 @@ When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additi
 
 Cypress Cloud does not capture anything related to the code of your application under test or the code within any repositories that are associated with your project.
 
-When [Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled, test content may be shared with session-bound AI model to enhance your test management experience. Your data is not used to train AI models and will not be shared between customers.
+When [Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled, Cypress Cloud may share test content with a session-bound AI model to enhance your test management experience. Cypress does not use your data to train AI models or share it between customers.
 
-You, the customer, own and are responsible for your test content. We trust that customers will make decisions about the appropriateness of data to use in testing and will avoid use of PII, PHI, or other types of protected information. Cypress makes commercially reasonable efforts to protect confidentiality of information that is provided to Cypress Cloud.
+You, the customer, own and are responsible for your test content. We trust that customers make decisions about the appropriateness of data to use in testing and avoid use of PII, PHI, or other types of protected information. Cypress makes commercially reasonable efforts to protect confidentiality of information that you provide to Cypress Cloud.
 
 ## Data Controls
 
-We understand that controlling what data is sent to Cypress Cloud is important to our users. Cypress provides a number of ways to control what data is sent to Cypress Cloud.
+We understand that controlling what data Cypress sends to Cypress Cloud is important to our users. Cypress provides a number of ways to control what data Cypress sends to Cypress Cloud.
 
-If you'd like more granular control over what data is sent to Cypress Cloud, [contact us](https://www.cypress.io/contact/) to discuss your needs.
+If you'd like more granular control over what data Cypress sends to Cypress Cloud, [contact us](https://www.cypress.io/contact/) to discuss your needs.
 
 ### Project access controls
 
 Cypress Cloud offers controls around the visibility of a project. You can set a project to be public or private. [See project access control settings.](/cloud/account-management/projects#Public-vs-Private)
 
-Setting a project to private means that only the users explicitly invited to the organization will have visibility into the project, its runs, and any data captured by Cypress.
+Setting a project to private means that only the users explicitly invited to the organization have visibility into the project, its runs, and any data captured by Cypress.
 
 ### Test Replay controls
 
@@ -67,7 +67,7 @@ Cypress redacts known-sensitive values from captured network requests and respon
 - Access tokens passed as URL parameters, including `access_token`, `id_token`, `code`, and `token`
 - Values that match a JWT or SAML-response pattern, wherever they appear
 
-Redacted values appear as `(redacted)` in the Test Replay network log. Everything else is captured as usual, including request timing, status codes, and the structure of each request, so you keep the context you need to debug a request without exposing the values.
+Redacted values appear as `(redacted)` in the Test Replay network log. Cypress captures everything else as usual, including request timing, status codes, and the structure of each request, so you keep the context you need to debug a request without exposing the values.
 
 Here's how a redacted value looks, next to an un-redacted one:
 
@@ -79,13 +79,13 @@ Here's how a redacted value looks, next to an un-redacted one:
 
 :::info
 
-**Note**: When this setting is active, API response bodies that can't be evaluated for redaction are **fully dropped** before storing the Test Replay data. For example, response bodies larger than 512 KB, or ones Cypress can't decode to plain text, aren't captured at all. They show as "unavailable" in the network log.
+**Note**: When this setting is active, Cypress **fully drops** API response bodies that it can't evaluate for redaction before storing the Test Replay data. For example, Cypress doesn't capture response bodies larger than 512 KB, or ones it can't decode to plain text, at all. Dropped response bodies show as "unavailable" in the network log.
 
 :::
 
 ##### Where redaction happens
 
-Redaction runs in the Cypress app while your tests record, before Test Replay data is uploaded.
+Redaction runs in the Cypress app while your tests record, before Cypress uploads Test Replay data.
 
 ##### Who can see Test Replay data
 
@@ -143,7 +143,7 @@ Users without the Owner or Admin role see a locked setting and cannot change it.
 
 #### Disable Test Replay
 
-You can disable capturing data in Test Replay per project by following [this guide](/cloud/features/test-replay#Opt-out-of-Test-Replay). This means Test Replay will not be available for viewing or debugging in the project. This will prevent Cypress Cloud from capturing the following data:
+You can disable capturing data in Test Replay per project by following [Opt out of Test Replay](/cloud/features/test-replay#Opt-out-of-Test-Replay). Disabling capture means Test Replay is not available for viewing or debugging in the project. Disabling capture also prevents Cypress Cloud from capturing the following data:
 
 - The rendered DOM and CSS styles for the application under test
 - Cypress commands and events represented in the Command Log
@@ -154,20 +154,20 @@ You can disable capturing data in Test Replay per project by following [this gui
 
 #### Blackout elements in screenshots
 
-Cypress offers an option to black out (mask) an array of elements from screenshots. [See screenshot API docs.](/api/commands/screenshot#Arguments) This blacks out specific elements on screenshots so that they will not be visible in the locally saved screenshots or to any users that have access to the run in Cypress Cloud.
+The [`blackout`](/api/commands/screenshot#Black-out-dynamic-or-sensitive-content-in-screenshots) option of `cy.screenshot()` covers every element that matches a selector with a black box when Cypress takes the screenshot, so those elements aren't visible in that screenshot, wherever you store or share it.
 
-Add a control to your [support file](/app/references/configuration#Testing-Type-Specific-Options) to set the default blackout options for all screenshots.
+To black out elements in every screenshot, set a default in your [support file](/app/references/configuration#Testing-Type-Specific-Options):
 
 ```js
 before(() => {
   Cypress.Screenshot.defaults({
-    // blackout all elements with 'mask-cy' attribute
-    blackout: ['mask-cy'],
+    // black out every element with the mask-cy attribute
+    blackout: ['[mask-cy]'],
   })
 })
 ```
 
-Add a control for a specific screenshot to blackout specific elements.
+To black out elements in a single screenshot, pass `blackout` to that `cy.screenshot()`:
 
 ```js
 it('admin page loads', () => {
@@ -178,11 +178,17 @@ it('admin page loads', () => {
 })
 ```
 
+:::caution
+
+`blackout` doesn't apply to the screenshots Cypress takes automatically when a test fails, so sensitive elements stay visible in them. To hide sensitive elements in every screenshot, failure screenshots included, hide them in the default `onBeforeScreenshot` and `onAfterScreenshot` callbacks, as shown in [Keep sensitive data out of screenshots, including failures](/api/commands/screenshot#Keep-sensitive-data-out-of-screenshots-including-failures). Or turn off failure screenshots by setting [`screenshotOnRunFailure`](/app/references/configuration#Screenshots) to `false`.
+
+:::
+
 #### Remove Cypress Command Log from screenshots
 
-Cypress offers an option to hide the Cypress Command Log from screenshots so that no information from that area will be captured in screenshots. See the [`cy.screenshot()`](/api/commands/screenshot#Arguments) command for more information.
+The [`capture`](/api/commands/screenshot#Capture-the-viewport-the-full-page-or-the-whole-Cypress-runner) option of `cy.screenshot()` decides whether a screenshot includes the Cypress Command Log. With `viewport` or `fullPage`, Cypress captures only the application under test, so nothing from the Command Log appears in the image.
 
-Add a control to your [support file](/app/references/configuration#Testing-Type-Specific-Options) to set the default capture options for all screenshots.
+To capture only the application under test with every `cy.screenshot()`, set a default in your [support file](/app/references/configuration#Testing-Type-Specific-Options):
 
 ```js
 before(() => {
@@ -192,7 +198,7 @@ before(() => {
 })
 ```
 
-Add a control for a specific screenshot to only capture the application under test.
+To capture only the application under test in a single screenshot, pass `capture` to that `cy.screenshot()`:
 
 ```js
 it('sign in page', () => {
@@ -202,6 +208,12 @@ it('sign in page', () => {
   })
 })
 ```
+
+:::caution
+
+The screenshots Cypress takes automatically when a test fails always use `capture: 'runner'`, whatever default you set, so they include the Command Log. To keep the Command Log out of failure screenshots, hide the Runner UI. Cypress hides it by default when you record a run with Test Replay enabled, and [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui) hides it in any `cypress run`. Or turn off failure screenshots by setting [`screenshotOnRunFailure`](/app/references/configuration#Screenshots) to `false`. To keep specific values out of the Command Log itself, see [Mask data in the Cypress Command Log](#Mask-data-in-the-Cypress-Command-Log).
+
+:::
 
 ### Video controls
 
@@ -213,13 +225,13 @@ You can delete videos that are recorded when you are passing `video: true` by fo
 
 #### Turn off Cypress Command Log rendering
 
-You can disable showing the entirety of the Cypress Command Log as well as the Application under Test (AUT) controls in your tests to prevent all test content from being shown and recorded in any screenshot or video by passing `--no-runner-ui` via the CLI while running Cypress tests. See [Cypress Command Line options](/app/references/command-line#Options). This means that the AUT will be the only thing that is rendered while running tests, so the only thing that is captured in screenshots and videos.
+You can disable showing the entirety of the Cypress Command Log as well as the Application under Test (AUT) controls in your tests to prevent all test content from being shown and recorded in any screenshot or video by passing `--no-runner-ui` via the CLI while running Cypress tests. See [Cypress Command Line options](/app/references/command-line#Options). Passing `--no-runner-ui` means that the AUT is the only thing that is rendered while running tests, so the only thing that is captured in screenshots and videos.
 
-When `--no-runner-ui` is set, data from the Cypress Command Log will still be sent to Cypress Cloud to be generated and displayed in Test Replay if it is enabled. See [Disable Test Replay](/cloud/features/test-replay#Opt-out-of-Test-Replay) for more information.
+When `--no-runner-ui` is set, Cypress still sends data from the Cypress Command Log to Cypress Cloud to be generated and displayed in Test Replay if it is enabled. See [Disable Test Replay](/cloud/features/test-replay#Opt-out-of-Test-Replay) for more information.
 
 #### Mask data in the Cypress Command Log
 
-There are multiple ways to mask data in the Cypress Command Log. When these strategies are used, data within test definitions will still be sent to Cypress Cloud.
+There are multiple ways to mask data in the Cypress Command Log. When you use these strategies, Cypress still sends data within test definitions to Cypress Cloud.
 
 ##### `log: false` for Cypress commands
 
@@ -247,7 +259,7 @@ Users can mask passwords in the Cypress Command Log by using a custom command. [
 
 ### Network requests controls
 
-Cypress allows users to block requests from specified hosts. [See our blockHosts configuration guide.](/app/references/configuration#blockHosts)
+Cypress blocks requests from the hosts you specify. [See our blockHosts configuration guide.](/app/references/configuration#blockHosts)
 
 <DocsImage
   src="/img/app/references/blocked-host.png"
@@ -267,7 +279,7 @@ Organization admins and owners can enable and disable the AI capabilities for th
 
 :::note Automatic redaction of sensitive fields
 
-When Cypress AI test-authoring tools read your app's DOM, values from sensitive field types are automatically excluded before any data is sent to the AI model. This applies to password fields (`input[type=password]`), credit card fields using standard autocomplete attributes, and hidden inputs (`input[type=hidden]`). The surrounding DOM structure is still used; only the field values are excluded.
+When Cypress AI test-authoring tools read your app's DOM, Cypress automatically excludes values from sensitive field types before sending any data to the AI model. The redaction applies to password fields (`input[type=password]`), credit card fields using standard autocomplete attributes, and hidden inputs (`input[type=hidden]`). The tools still use the surrounding DOM structure and exclude only the field values.
 
 For details, see [`cy.prompt` sensitive data handling](/app/guides/ai-test-generation#Sensitive-data-handling) and [Studio AI sensitive data handling](/app/guides/cypress-studio#Sensitive-data-handling).
 

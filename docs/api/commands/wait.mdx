@@ -120,7 +120,7 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 :::info
 
-`response.body` is only parsed into an `object` when the response includes a
+Cypress parses `response.body` into an `object` only when the response includes a
 `Content-Type: application/json` header. Responses that omit this header, such
 as a `304 Not Modified` or `301` redirect, yield `response.body` as a `string`.
 See
@@ -156,8 +156,8 @@ or [`cy.pause()`](/api/commands/pause) when debugging your test code.
 
 ### Alias
 
-For a detailed explanation of aliasing,
-[read more about waiting on routes here](/app/guides/network-requests#Waiting).
+For a detailed explanation of aliasing, see
+[Waiting in the Network Requests guide](/app/guides/network-requests#Waiting).
 
 #### Wait for a specific request to respond
 
@@ -207,11 +207,69 @@ cy.wait('@getBooks')
 cy.get('#book-results').should('have.length', 1)
 ```
 
+#### Wait for a request with a specific payload
+
+`cy.wait()` yields the next matching request, whatever its body holds. An
+assertion that fails on that request doesn't make `cy.wait()` move on to a
+later one, because `cy.wait()` is not a query (see
+[Retry-ability](#Retry-ability)). The difference matters when your app sends an
+unknown number of similar requests, such as a debounced autosave, and the test
+cares about one of them.
+
+To wait for the request that carries a specific value, alias only that request.
+Set `req.alias` in a route handler when the body matches, as in
+[Aliasing individual requests](/api/commands/intercept#Aliasing-individual-requests),
+and wait on that alias:
+
+```js title="cypress/e2e/notes.cy.js"
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.variables?.input?.notes === 'final') {
+    req.alias = 'saveFinalNotes'
+  }
+})
+
+cy.get('[data-cy=notes]').type('final')
+
+// waits for the request whose body has notes: 'final'
+cy.wait('@saveFinalNotes').its('response.statusCode').should('eq', 200)
+```
+
+The handler adds its alias alongside any alias another route gives the same
+request, so a shared intercept that aliases every request by its GraphQL
+operation name keeps working. The conditional route has to see the request
+before any route that sends a response, so define it after a stubbing route, or
+set `middleware: true` when it has to come first, such as in a `beforeEach()`
+hook. See
+[Add more than one alias to an intercepted request](/api/commands/intercept#Add-more-than-one-alias-to-an-intercepted-request).
+
+To assert on the requests sent so far instead, use
+[`cy.get()`](/api/commands/get#Get-all-aliased-intercepts) with the `.all`
+suffix. `cy.get()` is a query, so the assertion retries until one of the
+interceptions matches:
+
+```js title="cypress/e2e/notes.cy.js"
+cy.intercept('POST', '/graphql').as('graphql')
+
+cy.get('[data-cy=notes]').type('final')
+
+cy.get('@graphql.all').should((interceptions) => {
+  const notes = interceptions.map(
+    (interception) => interception.request.body.variables?.input?.notes
+  )
+
+  expect(notes).to.include('final')
+})
+```
+
+`cy.get('@graphql.all')` includes each interception as soon as its request
+goes out, so a matching request's `response` can still be `undefined`. When the
+test needs the response, wait on a per-request alias.
+
 ### Aliases
 
-#### You can pass an array of aliases that will be waited on before resolving.
+#### You can pass an array of aliases that are waited on before resolving.
 
-When passing an array of aliases to `cy.wait()`, Cypress will wait for all
+When passing an array of aliases to `cy.wait()`, Cypress waits for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 :::visit-mount-example
@@ -321,14 +379,13 @@ cy.wait('@getAccount')
 When used with an alias, `cy.wait()` goes through two separate "waiting"
 periods.
 
-The first period waits for a matching request to leave the browser. This
-duration is configured by the
-[`requestTimeout`](/app/references/configuration#Timeouts) option - which has
-a default of `5000` ms.
+The first period waits for a matching request to leave the browser. The
+[`requestTimeout`](/app/references/configuration#Timeouts) option configures
+this duration and has a default of `5000` ms.
 
-This means that when you begin waiting for an aliased request, Cypress will wait
-up to 5 seconds for a matching request to be created. If no matching request is
-found, you will get an error message that looks like this:
+This default means that when you begin waiting for an aliased request, Cypress waits
+up to 5 seconds for your application to make a matching request. If Cypress finds
+no matching request, you get an error message that looks like this:
 
 <DocsImage
   src="/img/api/wait/error-for-no-matching-route-when-waiting-in-test.png"
@@ -336,12 +393,12 @@ found, you will get an error message that looks like this:
 />
 
 Once Cypress detects that a matching request has begun its request, it then
-switches over to the 2nd waiting period. This duration is configured by the
-[`responseTimeout`](/app/references/configuration#Timeouts) option - which
-has a default of `30000` ms.
+switches over to the 2nd waiting period. The
+[`responseTimeout`](/app/references/configuration#Timeouts) option configures
+this duration and has a default of `30000` ms.
 
-This means Cypress will now wait up to 30 seconds for the external server to
-respond to this request. If no response is detected, you will get an error
+This default means Cypress now waits up to 30 seconds for the external server to
+respond to this request. If Cypress detects no response, you get an error
 message that looks like this:
 
 <DocsImage
@@ -349,13 +406,13 @@ message that looks like this:
   alt="Timeout error for request wait"
 />
 
-This gives you the best of both worlds - a fast error feedback loop when
+The two timeouts give you the best of both worlds - a fast error feedback loop when
 requests never go out and a much longer duration for the actual external
 response.
 
 #### Using an Array of Aliases
 
-When passing an array of aliases to `cy.wait()`, Cypress will wait for all
+When passing an array of aliases to `cy.wait()`, Cypress waits for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ## Rules
@@ -369,7 +426,7 @@ requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 <HeaderAssertions />
 
-- Assertions chained _directly_ to `cy.wait()` run once and will not
+- Assertions chained _directly_ to `cy.wait()` run once and do not
   [retry](/app/core-concepts/retry-ability).
 - Assertions chained after a query such as [`.its()`](/api/commands/its) or
   [`.invoke()`](/api/commands/invoke) _do_ retry, because
@@ -390,7 +447,7 @@ cy.get('form').submit()
 cy.wait('@userPut').its('request.url').should('include', 'users')
 ```
 
-The `cy.wait()` will display in the Command Log as:
+The `cy.wait()` displays in the Command Log as:
 
 <!-- Code to reproduce screenshot:
 it('assets/img/api/wait/command-log-when-waiting-for-aliased-route.png', () => {

@@ -12,9 +12,9 @@ componentSpecific: false
 
 Trigger native key events in your application to simulate keyboard interactions.
 
-A `keydown` and `keyup` event will be dispatched directly to the browser window.
+`cy.press()` dispatches a `keydown` and `keyup` event directly to the browser window.
 
-Unlike `cy.type()`, which is best for typing multiple character keys, `cy.press()` will dispatch real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
+Unlike `cy.type()`, which is best for typing multiple character keys, `cy.press()` dispatches real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
 
 ## Syntax
 
@@ -61,30 +61,11 @@ The key to press. Values for non single character keys are available on [`Cypres
 
 #### Supported Keys
 
-| Reference                         | Value                                                                |
-| --------------------------------- | -------------------------------------------------------------------- |
-| Letters                           | `"a"` through `"z"`, `"A"` through `"Z"`                             |
-| Numbers                           | `"0"`, `"1"`, `"2"`, `"3"`, `"4"`, `"5"`, `"6"`, `"7"`, `"8"`, `"9"` |
-| Special Characters                | `"!"`, `"@"`, `"#"`, `'+'`, `"€"`, `"é"`, etc.                       |
-| `Cypress.Keyboard.Keys.UP`        | `"ArrowUp"`                                                          |
-| `Cypress.Keyboard.Keys.DOWN`      | `"ArrowDown"`                                                        |
-| `Cypress.Keyboard.Keys.LEFT`      | `"ArrowLeft"`                                                        |
-| `Cypress.Keyboard.Keys.RIGHT`     | `"ArrowRight"`                                                       |
-| `Cypress.Keyboard.Keys.ESC`       | `"Escape"`                                                           |
-| `Cypress.Keyboard.Keys.END`       | `"End"`                                                              |
-| `Cypress.Keyboard.Keys.HOME`      | `"Home"`                                                             |
-| `Cypress.Keyboard.Keys.PAGEDOWN`  | `"PageDown"`                                                         |
-| `Cypress.Keyboard.Keys.PAGEUP`    | `"PageUp"`                                                           |
-| `Cypress.Keyboard.Keys.ENTER`     | `"Enter"`                                                            |
-| `Cypress.Keyboard.Keys.TAB`       | `"Tab"`                                                              |
-| `Cypress.Keyboard.Keys.BACKSPACE` | `"Backspace"`                                                        |
-| `Cypress.Keyboard.Keys.DELETE`    | `"Delete"`                                                           |
-| `Cypress.Keyboard.Keys.INSERT`    | `"Insert"`                                                           |
-| `Cypress.Keyboard.Keys.SPACE`     | `"Space"`                                                            |
+<KeyboardKeysTable />
 
 :::info
 
-F1-F12 keys are not supported. These keys are used for browser shortcuts, and can prevent the test suite from executing properly after they are pressed.
+F1-F12 keys are not supported. Browsers use these keys for shortcuts, and pressing them can prevent the test suite from executing properly.
 
 :::
 
@@ -135,7 +116,7 @@ cy.press('a')
 
 ### Type a multi-codepoint UTF-8 character
 
-Multi-codepoint UTF-8 characters are also supported and do not need to be entered as individual codepoints. For example, `é` can be either one single codepoint or two separate codepoints when the accent is pressed as a subsequent modifier key. You do not need to press each codepoint separately; type the entire character as a string.
+Multi-codepoint UTF-8 characters are also supported, and you don't need to enter them as individual codepoints. For example, `é` can be either one single codepoint or two separate codepoints when the accent is pressed as a subsequent modifier key. You do not need to press each codepoint separately; type the entire character as a string.
 
 ```javascript
 // works
@@ -178,7 +159,7 @@ cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
 
 ### Transient activation
 
-By dispatching native keyboard events to the browser, this command will cause the browser to enter [Transient activation](https://developer.mozilla.org/en-US/docs/Glossary/Transient_activation) state.
+By dispatching native keyboard events to the browser, this command causes the browser to enter [Transient activation](https://developer.mozilla.org/en-US/docs/Glossary/Transient_activation) state.
 
 If your application prevents the default behavior of the `beforeunload` event, this may cause issues when navigating away from the current page.
 

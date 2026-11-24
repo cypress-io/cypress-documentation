@@ -1,0 +1,135 @@
+---
+title: 'Quarantine problematic specs with Run Checks'
+description: 'Use Cypress Cloud Run Checks to gate CI on the specs that still matter while known failing or flaky specs stay in the suite, without treating quarantine as a built-in Cloud feature.'
+sidebar_label: Quarantine Problematic Specs
+sidebar_position: 40
+sidebar_custom_props: { 'new_label': true }
+---
+
+<ProductHeading product="cloud" />
+
+# Quarantine problematic specs with Run Checks
+
+Some teams keep known-bad or flaky specs in the suite so they stay visible, while
+CI still gates on everything else. Cypress Cloud does **not** offer a built-in
+quarantine mode that marks specs as ignored for the run, or that flips the run's
+own pass/fail when a test is quarantined. What you can do instead is define a
+[Run Check](/cloud/features/checks) that counts only the specs you still want to
+gate on, then treat that check's outcome as the signal for merge or deploy.
+
+## Run Checks quarantine limits
+
+With this approach:
+
+- Specs you park or quarantine still run and still appear in the Cypress Cloud
+  run, including failures and flakes.
+- The run itself can still show as failed when those specs fail. Run Checks
+  never rewrite the run's test pass/fail.
+- A `run.failedTests.max` or `run.flakyTests.max` assertion can ignore those
+  specs through `include` / `exclude`, so the check can pass while the parked
+  specs keep failing.
+
+That separation is the point of the pattern. The check answers "are the specs
+we care about still within policy?" The run history still shows the parked
+specs so you don't lose track of them.
+
+If you need Cypress to skip quarantined tests at runtime, that belongs in your
+test code or CI (for example, filtering which specs `cypress run` executes).
+Run Checks only evaluate results after the run records.
+
+## Exclude parked specs from a Run Checks gate
+
+Move problematic specs under a path your team recognizes, such as
+`cypress/e2e/_parked/`, and keep them in the recorded run. Then define a check
+that fails only when non-parked specs fail:
+
+```json title="App Quality Config"
+{
+  "checks": [
+    {
+      "name": "No new failures (parked specs excluded)",
+      "comment": "Gate CI on the active suite; parked specs still run and remain visible",
+      "assertions": [
+        {
+          "type": "run.failedTests.max",
+          "value": 0,
+          "exclude": { "specs": ["e2e/_parked/"] },
+          "comment": "Ignore failures under the parked path"
+        }
+      ]
+    }
+  ]
+}
+```
+
+In the runs list, that check shows the custom `name` and summarizes the exclude
+rule as a spec scope such as "All specs excluding e2e/\_parked/". The threshold
+pill is the assertion `value` (`max 0`). Product labels like Test Results and
+metric labels like Failed tests come from the assertion type, not from free text
+you enter.
+
+<DocsImage
+  src="/img/cloud/features/checks/runs-list-check-results-config-values.png"
+  alt="Annotated Run Checks popover highlighting which UI strings come from App Quality config: each check name, each threshold pill value, the exclude.specs scope All specs excluding e2e/_parked/, and the include.specs scope e2e/checkout/"
+/>
+
+## Scope a Run Checks flake gate to critical specs
+
+The same idea works in reverse with `include`: hold a critical path to a flake
+budget while the rest of the suite stays unconstrained by that check.
+
+```json title="App Quality Config"
+{
+  "checks": [
+    {
+      "name": "Checkout stays flake-free",
+      "assertions": [
+        {
+          "type": "run.flakyTests.max",
+          "value": 0,
+          "include": { "specs": ["e2e/checkout/"] }
+        }
+      ]
+    }
+  ]
+}
+```
+
+`run.flakyTests.max` requires
+[Flaky Test Management](/cloud/features/flaky-test-management). Without it, the
+assertion is [unavailable](/cloud/features/checks#Assertion-statuses) and the
+check becomes `errored` rather than `passed`.
+
+## Gate CI on Run Checks, not only on the run
+
+Because parked failures can still fail the Cypress run step, wire CI to the
+check results when this pattern is your merge policy:
+
+1. Record the run as usual (`cypress run --record`).
+2. Allow the Cypress step to continue when tests fail if you still need check
+   evaluation afterward (`continue-on-error` or the equivalent in your CI).
+3. Fetch results with `getCheckResults()` and fail the job when an applicable
+   check fails.
+
+See [Using check results in CI](/cloud/features/checks#Using-check-results-in-CI)
+and
+[Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github)
+for the fetch-and-report flow. Required GitHub status checks should target the
+statuses you post from `getCheckResults()`, not only the default Cypress test
+statuses, when the check is what you intend to enforce.
+
+## Treat parked Run Checks specs as temporary
+
+Parked specs that never leave the exclude list become a silent backlog. Use the
+check `name` and `comment` fields to say why the exception exists, review the
+parked path on a schedule, and remove specs from it as you fix them. Narrow
+`exclude` / `include` patterns so a typo doesn't drop half the suite from the
+gate.
+
+## See also
+
+- [Run Checks](/cloud/features/checks) - assertion types, statuses, and
+  `include` / `exclude` syntax
+- [Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github)
+- [Flaky Test Management](/cloud/features/flaky-test-management)
+- [Cypress Cloud FAQ: Run Checks](/cloud/faq#Run-Checks)

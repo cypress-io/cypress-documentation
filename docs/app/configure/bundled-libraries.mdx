@@ -15,10 +15,10 @@ Cypress ships with a set of proven open source testing libraries built in:
 [Chai](https://www.chaijs.com/) powers your assertions, and
 [Sinon](https://sinonjs.org/) provides spies and stubs, alongside utility
 libraries like [Lodash](https://lodash.com/) and [jQuery](https://jquery.com/).
-You don't install, import, or configure any of them. They're bundled inside
-Cypress and ready to use in every test.
+You don't install, import, or configure any of them. Cypress bundles the libraries, and
+they're ready to use in every test.
 
-If you've written JavaScript tests before, these tools will feel familiar, and
+If you've written JavaScript tests before, these tools feel familiar, and
 what you already know about them carries over directly to Cypress.
 
 ## What's included
@@ -40,8 +40,8 @@ what you already know about them carries over directly to Cypress.
 :::info
 
 Cypress always uses its own bundled versions of these libraries. Installing a
-different version of Mocha, Chai, or Sinon in your project won't change the
-version Cypress runs, and no version needs to be installed for Cypress to work.
+different version of Mocha, Chai, or Sinon in your project doesn't change the
+version Cypress runs, and you don't need to install any version for Cypress to work.
 
 :::
 
@@ -175,7 +175,7 @@ See the full
 
 ## Utility libraries
 
-Cypress also bundles these libraries on the `Cypress` object. They're available
+Cypress also bundles these libraries on the `Cypress` object. These libraries are available
 anywhere in your tests, with no imports required:
 
 - [`Cypress._`](/api/utilities/_): [Lodash](https://lodash.com/), for working

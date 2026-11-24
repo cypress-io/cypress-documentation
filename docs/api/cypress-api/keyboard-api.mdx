@@ -10,7 +10,7 @@ sidebar_position: 150
 # Cypress.Keyboard
 
 The Keyboard API exposes the available `Keys` for use with [`cy.press()`](/api/commands/press) and sets the default values for how the
-[.type()](/api/commands/type) command is executed.
+[.type()](/api/commands/type) command executes.
 
 ## Syntax
 
@@ -27,26 +27,7 @@ The key available for `cy.press()`.
 
 The following keys are supported:
 
-| Reference                         | Value                                                                |
-| --------------------------------- | -------------------------------------------------------------------- |
-| Letters                           | `"a"` through `"z"`, `"A"` through `"Z"`                             |
-| Numbers                           | `"0"`, `"1"`, `"2"`, `"3"`, `"4"`, `"5"`, `"6"`, `"7"`, `"8"`, `"9"` |
-| Special Characters                | `"!"`, `"@"`, `"#"`, `'+'`, `"€"`, `"é"`, etc.                       |
-| `Cypress.Keyboard.Keys.UP`        | `"ArrowUp"`                                                          |
-| `Cypress.Keyboard.Keys.DOWN`      | `"ArrowDown"`                                                        |
-| `Cypress.Keyboard.Keys.LEFT`      | `"ArrowLeft"`                                                        |
-| `Cypress.Keyboard.Keys.RIGHT`     | `"ArrowRight"`                                                       |
-| `Cypress.Keyboard.Keys.ESC`       | `"Escape"`                                                           |
-| `Cypress.Keyboard.Keys.END`       | `"End"`                                                              |
-| `Cypress.Keyboard.Keys.HOME`      | `"Home"`                                                             |
-| `Cypress.Keyboard.Keys.PAGEDOWN`  | `"PageDown"`                                                         |
-| `Cypress.Keyboard.Keys.PAGEUP`    | `"PageUp"`                                                           |
-| `Cypress.Keyboard.Keys.ENTER`     | `"Enter"`                                                            |
-| `Cypress.Keyboard.Keys.TAB`       | `"Tab"`                                                              |
-| `Cypress.Keyboard.Keys.BACKSPACE` | `"Backspace"`                                                        |
-| `Cypress.Keyboard.Keys.DELETE`    | `"Delete"`                                                           |
-| `Cypress.Keyboard.Keys.INSERT`    | `"Insert"`                                                           |
-| `Cypress.Keyboard.Keys.SPACE`     | `"Space"`                                                            |
+<KeyboardKeysTable />
 
 ### defaults Arguments
 
@@ -58,7 +39,7 @@ An object containing the following:
 | ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `keystrokeDelay` | `null`  | The delay, in milliseconds, between keystrokes while typing with [.type()](/api/commands/type). Must be a non-negative number. |
 
-`keystrokeDelay` can also be set in the [Cypress configuration](/app/references/configuration#Keyboard). The resolved value is read from the configuration first, then from `Cypress.Keyboard.defaults()`, and falls back to `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
+You can also set `keystrokeDelay` in the [Cypress configuration](/app/references/configuration#Keyboard). Cypress reads the resolved value from the configuration first, then from `Cypress.Keyboard.defaults()`, and falls back to `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
 
 ## Examples
 
@@ -85,7 +66,7 @@ Cypress.Keyboard.defaults({
 
 ### Set the keystroke delay in test configuration
 
-The keystroke delay can also be set via
+You can also set the keystroke delay via
 [test configuration](/app/core-concepts/writing-and-organizing-tests#Test-Configuration),
 which can be useful when setting it for a single test or a subset of tests.
 

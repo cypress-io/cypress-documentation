@@ -9,7 +9,7 @@ slug: /api/commands/and
 
 # and
 
-Create an assertion. Assertions are automatically retried as part of the
+Create an assertion. Cypress automatically retries assertions as part of the
 previous command until they pass or time out.
 
 :::info
@@ -77,15 +77,13 @@ A method to be called on the chainer.
 <Icon name="angle-right" /> **callbackFn _(Function)_**
 
 Pass a function that can have any number of explicit assertions within it.
-Whatever was passed to the function is what is yielded.
+Whatever was passed to the function is what `.and()` yields.
 
 <HeaderYields />
 
 - In most cases, `.and()` yields the same subject it was given.
-- `.and()` is an assertion, and it is _safe_ to chain further commands that use
-  the subject. Queries chained after it do retry from the subject it locks in
-  rather than from the top of the chain, which matters when the DOM re-renders.
-  See [Retry boundaries](#Retry-boundaries).
+- It is _safe_ to chain further commands that rely on the subject after `.and()`. This behavior is different from action commands such as [`.click()`](/api/commands/click), where chaining further commands is unsafe.
+- Queries chained after `.and()` do not retry from the start of the chain. If the DOM re-renders, they retry from the subject `.and()` yielded. See [Retry boundaries](#Retry-boundaries).
 
 ```javascript
 cy.get('nav') // yields <nav>
@@ -147,8 +145,8 @@ cy.get('#header a')
 
 ### Function
 
-Passing a function to `.and()` enables you to assert on the yielded subject.
-This gives you the opportunity to _massage_ what you'd like to assert.
+A function passed to `.and()` receives the yielded subject to assert on.
+Inside the function, you can _massage_ what you'd like to assert.
 
 Be sure _not_ to include any code that has side effects in your callback
 function. Cypress retries the callback until no assertions within it throw.
@@ -224,7 +222,7 @@ cy.get('p')
 
 :::info
 
-Using a callback function [will not change the subject](#Subjects)
+Using a callback function [does not change the subject](#Subjects)
 
 :::
 
@@ -234,8 +232,7 @@ Using a callback function [will not change the subject](#Subjects)
 
 #### Similarities to Chai
 
-If you've worked in [Chai](http://chaijs.com/) before, you will recognize that
-`.and()` matches the same fluent assertion syntax.
+If you've worked in [Chai](http://chaijs.com/) before, `.and()` matches the same fluent assertion syntax you already know.
 
 Take this _explicit_ assertion for example:
 
@@ -250,10 +247,10 @@ expect({ foo: 'bar' }).to.have.property('foo').and.eq('bar')
 #### How do I know which assertions change the subject and which keep it the same?
 
 The chainers that come from [Chai](/app/references/bundled-libraries#Chai) or
-[Chai-jQuery](/app/references/bundled-libraries#Chai-jQuery) will always
+[Chai-jQuery](/app/references/bundled-libraries#Chai-jQuery) always
 document what they return.
 
-#### Using a callback function will not change what is yielded
+#### Using a callback function does not change what is yielded
 
 Whenever you use a callback function, its return value is always ignored.
 Cypress always forces the command to yield the value from the previous cy
@@ -322,7 +319,7 @@ cy.get('.list')
   .and('not.be.disabled')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/and/cypress-and-command-log.png"

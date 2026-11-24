@@ -13,7 +13,7 @@ e2eSpecific: true
 
 Browsers adhere to a strict
 [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
-This means that browsers restrict access between `<iframes>` when their origin
+The policy means that browsers restrict access between `<iframes>` when their origin
 policies don't match.
 
 Because Cypress works from within the browser, Cypress must be able to directly
@@ -32,10 +32,10 @@ able to do this.
 - Changes the hosted URL to match that of the application under test.
 - Uses the browser's internal APIs for network level traffic.
 
-When Cypress first loads, the internal Cypress web application is hosted on a
+When Cypress first loads, Cypress hosts its internal web application on a
 random port: something like `http://localhost:64874/__/`.
 
-After the first [`cy.visit()`](/api/commands/visit) command is issued in a test,
+After your test issues the first [`cy.visit()`](/api/commands/visit) command,
 Cypress changes its URL to match the origin of your remote application, thereby
 solving the first major hurdle of same-origin policy. Your application's code
 executes the same as it does outside of Cypress, and everything works as
@@ -45,8 +45,8 @@ expected.
 
 <strong>How is HTTPS supported?</strong>
 
-Your application's certificate is used and validated as usual. Because the
-Cypress app itself is served over `http` on `localhost`, the browser reports
+Your application's certificate is used and validated as usual. Because Cypress
+serves the Cypress app itself over `http` on `localhost`, the browser reports
 that page as not secure — that indicator describes the Cypress app, not the
 application under test loading inside it.
 
@@ -63,7 +63,7 @@ Note, that Cypress optionally accepts CA / client certificate
 information for use with HTTPS sites. See
 [configuring client certificates](/app/references/client-certificates). If
 the remote server requests a client certificate for a configured URL, Cypress
-will supply it.
+supplies it.
 
 :::
 
@@ -75,7 +75,7 @@ need to be aware of.
 
 - [Different origins per test require cy.origin()](#Different-origins-per-test-require-cyorigin)
 - [Cross-origin iframes are not supported](#Cross-origin-iframes)
-- [Navigating from HTTPS to HTTP will error](#Insecure-Content)
+- [Navigating from HTTPS to HTTP errors](#Insecure-Content)
 - [Cypress requires that the URLs navigated to have the same port](#Same-port-per-test)
 
 ### Different origins per test require `cy.origin()`
@@ -85,16 +85,16 @@ exception of `cy.origin`, Cypress requires that the URLs navigated to have the
 same [origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) for the
 entirety of a single test.
 
-If you attempt to visit two different origins, the `cy.origin` command must
-be used to wrap Cypress commands of the second visited domain. Otherwise,
-Cypress commands will timeout after the navigation and will eventually error.
-This is because the commands that were expected to run on the second domain are
-actually being run on the first domain.
+If you attempt to visit two different origins, you must use the `cy.origin` command
+to wrap Cypress commands of the second visited domain. Otherwise,
+Cypress commands time out after the navigation and eventually error.
+The error happens because the commands that you expected to run on the second domain
+actually run on the first domain.
 
 Without `cy.origin()`, you can visit different origins in _different_ tests,
 but not in the _same_ test.
 
-#### Examples of test cases that will error without the use of `cy.origin`
+#### Examples of test cases that error without the use of `cy.origin`
 
 1. [`.click()`](/api/commands/click) an `<a>` with an `href` to a different
    origin with subsequent Cypress commands being run.
@@ -105,8 +105,8 @@ but not in the _same_ test.
    `window.location.href = '...'`, which navigates to a different origin
    where additional Cypress commands are run.
 
-In each of these situations, Cypress will lose the ability to automate your
-application and will error via command timeout unless the `cy.origin` command is
+In each of these situations, Cypress loses the ability to automate your
+application and errors via command timeout unless the `cy.origin` command is
 used.
 
 Read on to learn about
@@ -136,7 +136,6 @@ But the following have different origins compared to `https://www.cypress.io`:
 
 - `http://www.cypress.io` (different `scheme`)
 - `https://docs.cypress.io` (different `hostname` due to the subdomain)
-- `https://www.auth0.com` (different `hostname`)
 - `https://www.cypress.io:81` (different `port`)
 
 :::danger
@@ -152,7 +151,9 @@ to interact with the page without the use of the
 
 <Icon name="check-circle" color="green" /> You **can**
 [visit](/api/commands/visit) two or more origins in **different** tests without
-needing [`cy.origin()`](/api/commands/origin). :::
+needing [`cy.origin()`](/api/commands/origin).
+
+:::
 
 For practical purposes, this means the following:
 
@@ -194,15 +195,15 @@ it('navigates', () => {
 
 // split visiting different origin in another test
 it('navigates to new origin', () => {
-  cy.visit('https://cypress-dx.com')
+  cy.visit('https://docs.cypress.io')
   cy.get('selector') // yup all good
 })
 ```
 
 ### Cross-origin iframes
 
-If your site embeds an `<iframe>` that is a cross-origin frame, Cypress won't
-be able to automate or communicate with this `<iframe>`.
+If your site embeds an `<iframe>` that is a cross-origin frame, Cypress can't
+automate or communicate with this `<iframe>`.
 
 #### Examples of uses for cross-origin iframes
 
@@ -211,20 +212,20 @@ be able to automate or communicate with this `<iframe>`.
 - Displaying an embedded login form from Auth0.
 - Showing comments from Disqus.
 
-If you'd like support for this
-(check our [open issue](https://github.com/cypress-io/cypress/issues/136)), or
-you can
+If you want Cypress to automate cross-origin iframes, follow the
+[open iframe support issue](https://github.com/cypress-io/cypress/issues/136).
+To access them in Chrome-based browsers,
 [disable web security](/app/guides/cross-origin-testing#Disabling-Web-Security).
 
-**Same-origin** iframes are not affected by this restriction and can be
-queried natively. See
+This restriction doesn't affect **same-origin** iframes, and Cypress can
+query them natively. See
 [How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
 in the FAQ.
 
 ### Insecure Content
 
 Because of the way Cypress is designed, if you're testing an HTTPS site,
-Cypress will error anytime you attempt to navigate back to an HTTP site. This
+Cypress errors anytime you attempt to navigate back to an HTTP site. This
 behavior helps highlight a _pretty serious security problem_ with your
 application.
 
@@ -244,7 +245,7 @@ your application code.
 </html>
 ```
 
-Cypress will immediately fail with the following test code:
+Cypress immediately fails with the following test code:
 
 ```javascript title="test.cy.js"
 cy.visit('https://example.cypress.io')
@@ -253,8 +254,8 @@ cy.get('a').click() // will fail
 
 Browsers refuse to display insecure content on a secure page. Because Cypress
 initially changed its URL to match `https://example.cypress.io` when the browser
-followed the `href` to `http://example.cypress.io/page2`, the browser will
-refuse to display the contents.
+followed the `href` to `http://example.cypress.io/page2`, the browser
+refuses to display the contents.
 
 Now you may be thinking, _This sounds like a problem with Cypress because when I
 work with my application outside of Cypress it works just fine._
@@ -262,13 +263,13 @@ work with my application outside of Cypress it works just fine._
 However, the truth is, Cypress is exposing a _security vulnerability_ in your
 application, and you _want_ it to fail in Cypress.
 
-`cookies` that don't have their `secure` flag set to `true` will be sent as
-clear text to the insecure URL. This leaves your application vulnerable to
+The browser sends `cookies` that don't have their `secure` flag set to `true` as
+clear text to the insecure URL. Sending cookies in clear text leaves your application vulnerable to
 session hijacking.
 
 This security vulnerability exists **even if** your web server forces a
-`301 redirect` back to the HTTPS site. The original HTTP request was still made
-once, exposing insecure session information.
+`301 redirect` back to the HTTPS site. The browser still made the original HTTP
+request once, exposing insecure session information.
 
 #### The solution
 
@@ -283,7 +284,7 @@ work around this, you can bypass this restriction in Cypress by
 ### Same port per test
 
 Cypress requires that the URLs navigated to have the same port (if specified)
-for the entirety of a single test. This matches the behavior of the browser's
+for the entirety of a single test. The port requirement matches the behavior of the browser's
 normal
 [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
@@ -330,7 +331,7 @@ cy.origin('https://example.cypress.io', () => {
 ```
 
 If you're not in control of this origin, we recommend you test that the `href`
-property is correct instead of performing the navigation. This will help lead to
+property is correct instead of performing the navigation. Testing the `href` helps lead to
 more deterministic tests.
 
 ```javascript
@@ -339,24 +340,24 @@ cy.visit('http://localhost:8080')
 cy.get('a').should('have.attr', 'href', 'https://example.cypress.io') // no page load!
 ```
 
-If for any reason the two above methods cannot be used,
+If for any reason you can't use the two above methods,
 [`cy.request()`](/api/commands/request) may be an option to verify content as
 `cy.request()` is _NOT bound to CORS or same-origin policy_.
 
 ```javascript
 cy.visit('http://localhost:8080')
-cy.get('a').then(($a) => {
-  // pull off the fully qualified href from the <a>
-  const url = $a.prop('href')
-
-  // make a cy.request to it
-  cy.request(url).its('body').should('include', '</html>')
-})
+// read the fully qualified href from the <a>
+cy.get('a')
+  .invoke('prop', 'href')
+  .then((url) => {
+    // make a cy.request to it
+    cy.request(url).its('body').should('include', '</html>')
+  })
 ```
 
 ### Form Submission Redirects
 
-When you submit a regular HTML form, the browser will follow the HTTP(s)
+When you submit a regular HTML form, the browser follows the HTTP(s)
 request.
 
 ```html title="index.html"
@@ -374,7 +375,7 @@ cy.get('form').submit() // submit the form!
 ```
 
 If your back end server handling the `/submit` route does a `30x` redirect to a
-different origin, you'll need to use the `cy.origin` command if running
+different origin, you need to use the `cy.origin` command if running
 additional Cypress commands after submitting the form.
 
 ```javascript title="routes.js"
@@ -418,8 +419,7 @@ cy.get('#user-name-welcome').should('equal', 'Welcome, User1!')
 ```
 
 If for any reason you can't use `cy.origin`, programmatic authentication
-is still an option. In this situation you may `POST` to a different server and
-are redirected elsewhere (typically with the session token in the URL). If
+is still an option. In this situation you may `POST` to a different server that redirects you elsewhere (typically with the session token in the URL). If
 that's the case, you can still test this behavior with
 [`cy.request()`](/api/commands/request).
 
@@ -480,8 +480,8 @@ Sometimes, when using `cy.origin` and especially with websites that are not
 under your immediate test control, cross-origin errors may still tend to creep
 up. We don't recommend visiting or interacting with sites you
 [do not control](/app/core-concepts/best-practices#Visiting-External-Sites).
-However, if this is necessary, most of these issues can usually be remedied by
-applying` the
+However, if this is necessary, you can usually remedy most of these issues by
+applying the
 [modify obstructive third-party code](/app/references/experiments#Configuration)
 experimental flag or by
 [disabling web security](/app/guides/cross-origin-testing#Disabling-Web-Security).
@@ -503,7 +503,7 @@ think you're experiencing a bug,
 <strong>Chrome only</strong>
 
 Disabling web security is only supported in Chrome-based browsers. Settings in
-`chromeWebSecurity` will have no effect in other browsers. We will log a warning
+`chromeWebSecurity` have no effect in other browsers. Cypress logs a warning
 in this case.
 
 <DocsImage
@@ -511,7 +511,7 @@ in this case.
   alt="chromeWebSecurity warning in stdout"
 />
 
-If you rely on disabling web security, you will not be able to run tests on
+If you rely on disabling web security, you can't run tests on
 browsers that do not support this feature.
 
 :::
@@ -552,12 +552,12 @@ flag, but additionally applies it to third-party `.js` and `.html` that is being
 either loaded or navigated to inside your application. In addition to this, this
 flag also does the following:
 
-- Adjusts the User Agent in Electron to appear more chrome-like. This option can
-  be overridden with the [userAgent](/app/references/configuration#Browser)
+- Adjusts the User Agent in Electron to appear more chrome-like. You can
+  override this option with the [userAgent](/app/references/configuration#Browser)
   config option.
 - Removes
   [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
-  from modified third-party scripts as they will not execute otherwise. To also
+  from modified third-party scripts as they do not execute otherwise. To also
   remove SRI from first-party resources (and from `integrity` set via a runtime
   DOM property assignment), use the
   [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes)
@@ -581,7 +581,7 @@ Want to enable `experimentalModifyObstructiveThirdPartyCode`? Let's do it!
 
 There are other ways of testing the interaction between two origins. The
 browser has a natural security barrier called `origin policy` this means that
-state like `localStorage`, `cookies`, `service workers` and many other APIs are
+state like `localStorage`, `cookies`, `service workers`, and many other APIs are
 not shared between them anyways. Cypress does offer APIs around `localStorage`,
 `sessionStorage`, and `cookies` that are not limited to this restriction.
 
@@ -589,7 +589,7 @@ As a best practice, you should not visit or interact with any website not under
 your control.
 
 If your organization uses Single Sign On (SSO) or OAuth then you might choose to
-test a 3rd party service other than your origin, which can be tested with
+test a 3rd party service other than your origin, which you can test with
 [`cy.origin()`](/api/commands/origin).
 
 We've written several other guides specifically about handling this situation.

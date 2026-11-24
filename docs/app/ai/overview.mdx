@@ -61,13 +61,15 @@ Coverage and Cypress Accessibility results, into your editor.
 
 - **[Cypress skills for AI agents](/app/tooling/ai-skills)** teach your coding
   agent to write, review, and explain tests the way an experienced Cypress
-  engineer would. Install them once per project.
+  engineer would. Install the skills once per project.
 - **[`cypress tap`](/app/tooling/cypress-tap)** attaches your agent to a running
   open mode session from the terminal, so it can run a spec and then read the
-  Command Log, the error, and the DOM as the Cypress app shows them. That closes
+  Command Log, the error, and the DOM as the Cypress app shows them. Reading that context closes
   the loop: the agent can verify its own fix instead of reporting pass or fail.
   The [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) packages this
-  workflow so your agent drives it correctly.
+  workflow so your agent drives it correctly. To run the same loop in a cloud
+  agent such as Claude Code on the web, see
+  [Run Cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes).
 - **[Cloud MCP](/cloud/integrations/cloud-mcp)** connects your agent to Cypress
   Cloud so it can read real run results, failures, and
   [Test Replay](/cloud/features/test-replay) data while you work, rather than
@@ -82,7 +84,7 @@ Coverage and Cypress Accessibility results, into your editor.
 ## Analyze and debug with AI
 
 - **[Cypress AI](/cloud/features/cypress-ai-features)** explains failures and
-  summarizes test intent across recorded runs in Cypress Cloud.
+  summarizes test intent in recorded runs and analytics in Cypress Cloud.
 - **[Work with AI agents in Cypress Accessibility](/accessibility/work-with-ai-agents)**
   and **[Work with AI agents in UI Coverage](/ui-coverage/work-with-ai-agents)**
   cover tuning those reports so an agent can act on them, then prompting it to
@@ -131,6 +133,7 @@ in the organization. See
 - [Cypress Studio](/app/guides/cypress-studio)
 - [Cypress skills for AI agents](/app/tooling/ai-skills)
 - [`cypress tap`](/app/tooling/cypress-tap)
+- [Run Cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes)
 - [Cloud MCP](/cloud/integrations/cloud-mcp)
 - [Cloud CLI](/cloud/integrations/cloud-cli)
 - [Cypress AI](/cloud/features/cypress-ai-features) - availability, usage limits,

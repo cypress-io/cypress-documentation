@@ -6,16 +6,34 @@ const { default: remarkDirective } = require('remark-directive')
 
 const fs = require('fs')
 const {
+  codeNoWrap,
   copyTsToJs,
   cypressConfigPluginExample,
   cypressConfigExample,
   visitMountExample,
 } = require('./plugins/cypressRemarkPlugins/dist')
 const prettierConfig = JSON.parse(fs.readFileSync('./.prettierrc', 'utf-8'))
+const {
+  SURFACES,
+  conversionLinkAttributes,
+} = require('./plugins/fullstory-conversion-links')
+const rehypeFullStoryConversionLinks = require('./plugins/fullstory-conversion-links-rehype')
+
+// Adds Fullstory conversion link attributes to the links that lead toward a
+// conversion or Cypress Cloud. Every other link passes through unchanged.
+function withConversionLabels(items, surface) {
+  return items.map((item) => ({
+    ...item,
+    ...conversionLinkAttributes(item.href || item.to, surface),
+  }))
+}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  clientModules: ['./src/clientModules/prismSkill.js'],
+  clientModules: [
+    './src/clientModules/prismSkill.js',
+    './src/clientModules/fullstoryEvents.ts',
+  ],
   title: 'Cypress Documentation',
   tagline:
     'Fast, easy and reliable testing for anything that runs in a browser.',
@@ -68,6 +86,7 @@ const config = {
           ],
           remarkPlugins: [
             remarkDirective,
+            codeNoWrap,
             cypressConfigExample,
             cypressConfigPluginExample,
             visitMountExample,
@@ -81,6 +100,7 @@ const config = {
               },
             ],
           ],
+          rehypePlugins: [rehypeFullStoryConversionLinks],
           showLastUpdateTime: true,
         },
         blog: false,
@@ -125,6 +145,7 @@ const config = {
     require.resolve('./plugins/llm'),
     require.resolve('./plugins/faq-structured-data'),
     require.resolve('./plugins/og-image-cards'),
+    require.resolve('./plugins/redirect-variants'),
     // ....
     function docusaurusTailwindcssPlugin(context, options) {
       return {
@@ -142,6 +163,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
       image: 'img/social-card.png',
+      colorMode: {
+        // Match the reader's operating system light or dark setting until they
+        // pick a mode with the toggle. Their saved choice wins from then on.
+        respectPrefersColorScheme: true,
+      },
       metadata: [
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Cypress Documentation' },
@@ -157,7 +183,7 @@ const config = {
           src: '/img/logo/cypress-logo-light.svg',
           srcDark: '/img/logo/cypress-logo-dark.svg',
         },
-        items: [
+        items: withConversionLabels([
           {
             to: '/app/get-started/why-cypress',
             label: 'App',
@@ -187,15 +213,21 @@ const config = {
             to: 'https://learn.cypress.io?utm_medium=nav&utm_source=docs.cypress.io&utm_content=Learn',
             label: 'Learn',
           },
-        ],
+        ], SURFACES.navbar),
       },
       // optional, can be commented out
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cypressconf-2026',
+        id: 'cloud-webhooks-nov-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `🌟 Join teams building and shipping quality applications with confidence at CypressConf 2026, October 20-22. <a href="https://cypress.registration.goldcast.io/events/670deb6c-06ee-4ce8-858b-8a4db3a62eb1?utm_medium=announcement-bar&utm_source=docs.cypress.io&utm_campaign=cypressconf2026">Register today</a>`,
+        // The content is raw HTML. src/clientModules/fullstoryEvents.ts labels
+        // its links "Docs Announcement - Link" with this id, unless a link
+        // already has a label: one to pricing, a trial, sales, a product page,
+        // or Cloud needs the attributes from
+        // conversionLinkAttributes(href, SURFACES.announcement) written into
+        // the <a>.
+        content: `🔗 Need test results somewhere new? Cypress webhooks send run results to Jira, PagerDuty, Zapier, or your own service the moment a run finishes. <a href="https://docs.cypress.io/cloud/integrations/webhooks?utm_source=docs.cypress.io&utm_medium=announcement-bar">Learn More</a>`,
         isCloseable: true,
       },
       footer: {
@@ -203,7 +235,7 @@ const config = {
         links: [
            {
             title: 'Solutions',
-            items: [
+            items: withConversionLabels([
               {
                 label: 'Cypress App',
                 href: 'https://www.cypress.io/features?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Cypress App',
@@ -220,11 +252,11 @@ const config = {
                 label: 'Cypress Accessibility',
                 href: 'https://www.cypress.io/accessibility?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Cypress Accessibility',
               },
-            ],
+            ], SURFACES.footer),
           },
           {
             title: 'Learn',
-            items: [
+            items: withConversionLabels([
               {
                 label: 'Real World App',
                 href: 'https://github.com/cypress-io/cypress-realworld-app',
@@ -237,11 +269,11 @@ const config = {
                 label: 'Cypress.io YouTube',
                 href: 'https://www.youtube.com/channel/UC-EOsTo2l2x39e4JmSaWNRQ',
               },
-            ],
+            ], SURFACES.footer),
           },
           {
             title: 'Community',
-            items: [
+            items: withConversionLabels([
               {
                 label: 'Discord',
                 href: 'https://on.cypress.io/discord',
@@ -254,11 +286,11 @@ const config = {
                 label: 'GitHub Discussions',
                 href: 'https://github.com/cypress-io/cypress/discussions',
               },
-            ],
+            ], SURFACES.footer),
           },
           {
             title: 'Company',
-            items: [
+            items: withConversionLabels([
               {
                 label: 'About',
                 href: 'https://www.cypress.io/about-us?utm_medium=footer&utm_source=docs.cypress.io&utm_content=About',
@@ -275,7 +307,13 @@ const config = {
                 label: 'Support',
                 href: 'https://www.cypress.io/support?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Support',
               },
-            ],
+              {
+                // Reopens the Osano consent drawer. The click handler is in
+                // plugins/osano.js, which also labels Osano's own buttons for
+                // FullStory with the same "Cookie Consent - " prefix.
+                html: '<button type="button" class="footer__link-item osano-preferences-link" data-fs-element="Cookie Consent - Open Preferences">Cookie Preferences</button>',
+              },
+            ], SURFACES.footer),
           },
         ],
         copyright: `© ${new Date().getFullYear()} Cypress.io. All rights reserved.`,

@@ -44,13 +44,13 @@ An array of steps to execute.
 
 Pass in an options object to `cy.prompt()`.
 
-| Option         | Default | Description                                                                                                                                                       |
-| -------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `placeholders` | `{}`    | Dynamic or sensitive values that enable caching and are excluded from AI calls. See [placeholders](/app/guides/ai-test-generation#Placeholders) for more details. |
+| Option         | Default | Description                                                                                                                                                                |
+| -------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `placeholders` | `{}`    | Dynamic or sensitive values that enable caching and that Cypress excludes from AI calls. See [placeholders](/app/guides/ai-test-generation#Placeholders) for more details. |
 
 <HeaderYields />
 
-`cy.prompt()` yields the value yielded by the last Cypress command executed in the prompt. In most cases, this will be an element, but it depends on the last command executed in the prompt.
+`cy.prompt()` yields the value yielded by the last Cypress command executed in the prompt. In most cases, the yielded value is an element, but it depends on the last command executed in the prompt.
 
 ```javascript
 cy.prompt([
@@ -214,7 +214,7 @@ Several of these examples use [placeholders](/app/guides/ai-test-generation#Plac
 
 ### Gherkin-style tests
 
-`cy.prompt` can execute Gherkin-style tests, making test automation accessible to a broader audience including product managers, QA engineers, and stakeholders who are familiar with behavior-driven development (BDD) patterns. This expands the pool of people who can write and maintain tests without requiring deep technical knowledge of Cypress APIs. This is also a great way to get started with test automation and get buy-in from stakeholders who are familiar with BDD patterns.
+`cy.prompt` can execute Gherkin-style tests, making test automation accessible to a broader audience including product managers, QA engineers, and stakeholders who are familiar with behavior-driven development (BDD) patterns. Gherkin support expands the pool of people who can write and maintain tests without requiring deep technical knowledge of Cypress APIs. Gherkin-style tests are also a great way to get started with test automation and get buy-in from stakeholders who are familiar with BDD patterns.
 
 #### Benefits for Cucumber users:
 
@@ -399,8 +399,8 @@ cy.prompt([
 ```
 
 :::info
-When `cy.prompt` resolves the credit card fields in this flow, field values are
-automatically excluded before any data is sent to the AI model. See
+When `cy.prompt` resolves the credit card fields in this flow, Cypress
+automatically excludes field values before sending any data to the AI model. See
 [Sensitive data handling](/app/guides/ai-test-generation#Sensitive-data-handling).
 :::
 
@@ -429,7 +429,7 @@ cy.prompt([
 
 ### Dynamic testing with loops
 
-If you need to test a loop of steps, you can use the `placeholders` option to pass in the dynamic values. This optimizes caching so that the prompt does not need to be called out to AI for each iteration of the loop.
+If you need to test a loop of steps, you can use the `placeholders` option to pass in the dynamic values. Passing `placeholders` optimizes caching so that Cypress does not need to send the prompt to AI for each iteration of the loop.
 
 ```javascript
 const matchingSearchTerms = ['cypress', 'testing', 'automation']
@@ -567,8 +567,8 @@ These apply to all `cy.prompt` usage unless noted otherwise.
 | Assertions       | 'not.exist' assertions from natural language are not supported. However, 'not.exist' assertions work when you provide an exact CSS selector (e.g., `'verify #error-message does not exist'`) or when you use [text-based targeting](/app/guides/ai-test-generation#Targeting-elements-by-text-content). [See issue](https://github.com/cypress-io/cypress/issues/33274) |
 | Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                                                                                                                                                                                             |
 | Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                                                                                                                                                                                                           |
-| Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                                                                                                                                                                                                  |
-| API Testing      | API requests (e.g., `cy.request()`) is not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                                                                                                                                                    |
+| Scrolling        | Scrolling the page or a container to a position (`cy.scrollTo()`) is not supported. [Scrolling an element into view](#Scroll) is supported. [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                                                                                             |
+| API Testing      | API requests (e.g., `cy.request()`) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                                                                                                                                                   |
 | DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800)                                                                                                                                                                             |
 
 For pricing, usage limits, and billing, see the

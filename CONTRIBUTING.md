@@ -114,7 +114,9 @@ Each entry supports the following fields:
 | `description` | yes      | Short summary of what the plugin does. Basic HTML is allowed.                                                              |
 | `link`        | yes      | URL to the plugin's source or documentation.                                                                               |
 | `keywords`    | no       | Array of tags used for search and filtering.                                                                               |
-| `badge`       | no       | One of `official` or `community` (defaults to `community`).                                                                |
+| `badge`       | no       | One of `official`, `vendor`, or `community` (defaults to `community`).                                                     |
+| `vendor`      | no       | With the `vendor` badge, the company that builds the plugin, shown as `Built by <vendor>` on its card.                     |
+| `author`      | no       | With the `community` badge, the name shown after "Community ·". Set it only when the default below isn't a readable name.  |
 | `npm`         | no       | The npm package name. Set this only when it differs from `name` (for example an official monorepo package or scoped name). |
 
 Signals shown on each card — latest version, last published date, and Cypress
@@ -123,6 +125,13 @@ compatibility — are generated automatically into
 `npm run enrich:plugins`. You do not need to edit that file by hand; it is
 refreshed from the npm registry. Setting an accurate `npm` field is what lets
 the script find these signals for your plugin.
+
+A community plugin's card credits the owner of the repository its `link` points
+to, or its npm scope when the link isn't a repository. Keep the `link` on the
+repository's current home. When a plugin's npm package names a different
+repository owner than its `link`, `npm run enrich:plugins` records the new home
+as `repoMovedTo` in the generated file, so a moved repository shows up in the
+nightly refresh pull request.
 
 We want to showcase plugins that work and have a good developer experience. This
 means that a good plugin generally has:
@@ -146,12 +155,23 @@ Each plugin submitted to the plugins list should have the following:
    - [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository) for the command [npm repo](https://docs.npmjs.com/cli/v11/commands/npm-repo)
    - [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs) for the command [npm bugs](https://docs.npmjs.com/cli/v11/commands/npm-bugs)
 
-Categories are displayed alphabetically, and plugins are sorted within each
-category by badge tier and then by most recently published first (so the entry
-order in `plugins.json` does not matter):
+Each category sets a `stage`, one of the `id`s in the `stages` list at the top
+of `plugins.json` (Set up, Write, Run, Check, and Report & ship). The page shows
+categories stage by stage, alphabetically within each stage, with the stage name
+above the category title. A category with a long `name` can set a `shortName`
+for the category dropdown. A category's anchor comes from its `name`, so when you
+rename a category or merge one into another, list the old anchor in the
+surviving category's `aliases` (for example `"aliases": ["email"]`) so existing
+links still land on it.
+
+By default, plugins are sorted within each category by badge tier and then by
+most recently published first, so the entry order in `plugins.json` does not
+matter. Readers can also sort by most recently updated or by name. The badge
+tiers, in order:
 
 - official (Cypress owned)
-- community (community owned)
+- vendor and community, sorted together (owned by the company behind the
+  product the plugin connects to, or by independent authors)
 - deprecated (npm registry missing, source repo archived or incompatible with v10+)
 
 The `deprecated` state is applied automatically by `npm run enrich:plugins` when
@@ -205,18 +225,15 @@ open a pull request (PR) from your repo to the
   PR. This will make it easier for the maintainers to make minor adjustments, to
   help with tests or any other changes we may need.
   ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
-- All PRs against `main` will automatically create a deploy preview URL with
-  Netlify. The deploy preview can be accessed via the PR's
-  `netlify-cypress-docs/deploy-preview` status check:
-
-![Netlify deploy preview status check](https://user-images.githubusercontent.com/11802078/113176533-36b79680-9212-11eb-8aec-898d0f5047df.png)
-
-- All branches will automatically create a branch deploy preview. The branch
-  deploy previews do not appear as a GitHub status check like deploy previews.
-  You can view your branch's deploy preview by visiting
-  `https://$BRANCH_NAME--cypress-docs.netlify.app` where `$BRANCH_NAME` is your
-  git branch name. For example, if my branch was named `my-branch`, my branch
-  preview will be available at `https://my-branch--cypress-docs.netlify.app`.
+- A PR opened from a branch in this repository gets a preview of the built
+  site, hosted on Cloudflare and updated on every push. Open it from the
+  **Details** link on the PR's `cloudflare/preview` status check, or visit
+  `https://pr-<number>-cypress-documentation.cypress-io.workers.dev`, where
+  `<number>` is the PR number.
+- A PR opened from a fork doesn't get a preview, because building one needs
+  credentials that GitHub doesn't share with forks. To check your changes, run
+  `npm run build` and then `npm run serve`, and open
+  [http://localhost:3000](http://localhost:3000).
 
 ### Contributor License Agreement
 

@@ -8,7 +8,12 @@ import React, {
 } from 'react'
 import { useLocation } from '@docusaurus/router'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
-import { IconGeneralSparkleDoubleSmall } from '@cypress-design/react-icon'
+import {
+  IconActionDeleteMedium,
+  IconGeneralSparkleDoubleSmall,
+} from '@cypress-design/react-icon'
+import type { WindiColor } from '@cypress-design/react-icon'
+import { trackFullStoryEvent } from '@site/src/utils/fullstory'
 
 // Messages exchanged with the www.cypress.io/ask/embed frame. Keep in sync with
 // src/components/CypressGPT/utilities/embedMessages.ts in cypress-io/cypress.io.
@@ -87,7 +92,9 @@ export function SupportAssistantProvider({
       setIsOpen(open)
       writeOpen(open)
       if (open) {
-        pendingFocus.current = moveFocus
+        // Never cleared here: a click that lands before hydration's effects flush is followed by the
+        // reopen on load, which must not cancel the reader's focus move.
+        if (moveFocus) pendingFocus.current = true
         setFrameSrc(
           (src) =>
             src ??
@@ -103,7 +110,16 @@ export function SupportAssistantProvider({
     [embedOrigin]
   )
 
-  const toggle = useCallback(() => setOpen(!isOpenRef.current), [setOpen])
+  // The button is the only caller, so this is always the reader's own open, never the reopen on load.
+  const toggle = useCallback(() => {
+    const open = !isOpenRef.current
+    if (open) {
+      trackFullStoryEvent('Support Assistant Opened', {
+        entryPoint: 'Docs Button',
+      })
+    }
+    setOpen(open)
+  }, [setOpen])
 
   const focusIfPending = useCallback(() => {
     if (!pendingFocus.current || !isReady.current || !isOpenRef.current) return
@@ -164,7 +180,9 @@ export function SupportAssistantProvider({
   useEffect(() => {
     if (!frameSrc) return
     const timer = window.setTimeout(() => {
-      if (!isReady.current) setHasFailed(true)
+      if (isReady.current) return
+      setHasFailed(true)
+      trackFullStoryEvent('Support Assistant Load Failed', {})
     }, LOAD_TIMEOUT_MS)
     return () => window.clearTimeout(timer)
   }, [frameSrc])
@@ -195,6 +213,18 @@ export function SupportAssistantProvider({
               data-cy="support-assistant-fallback"
               className="absolute inset-0 flex flex-col items-center justify-center gap-[16px] bg-white p-[24px] text-center text-gray-700"
             >
+              {/* The embed's own close control never loaded, so the fallback needs one of its own. */}
+              <button
+                type="button"
+                aria-label="Close Support Assistant"
+                data-cy="support-assistant-close"
+                onClick={() => setOpen(false)}
+                className="absolute right-[12px] top-[12px] flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-full border-0 bg-gray-50 p-0 text-gray-700 transition-colors hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-500"
+              >
+                <IconActionDeleteMedium
+                  strokeColor={'currentColor' as WindiColor}
+                />
+              </button>
               <p className="m-0">
                 The Support Assistant couldn't load on this page.
               </p>
@@ -226,7 +256,7 @@ export function SupportAssistantButton() {
       aria-controls={PANEL_ID}
       data-cy="support-assistant-button"
       onClick={assistant.toggle}
-      className="mr-[8px] flex h-[42px] w-[42px] cursor-pointer items-center justify-center gap-[8px] rounded-[18px] border-0 bg-gray-50 p-0 font-medium sm:h-[38px] sm:w-[38px] lg:h-auto lg:w-auto lg:rounded-full lg:px-[12px] lg:py-[8px] text-indigo-500 transition-colors hover:bg-indigo-50 dark:bg-gray-900 dark:text-indigo-300 dark:hover:bg-gray-800"
+      className="mr-[8px] flex h-[42px] w-[42px] cursor-pointer items-center justify-center gap-[8px] rounded-[18px] border-0 bg-gray-50 p-0 font-medium sm:h-[38px] sm:w-[38px] lg:h-auto lg:w-auto lg:rounded-full lg:px-[12px] lg:py-[8px] text-indigo-500 transition-colors hover:bg-indigo-50 dark:bg-gray-900 dark:text-indigo-300 dark:hover:bg-gray-800 dark:[&_.icon-dark]:stroke-indigo-300 dark:[&_.icon-light]:fill-indigo-500"
     >
       <IconGeneralSparkleDoubleSmall
         strokeColor="indigo-500"

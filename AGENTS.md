@@ -56,6 +56,7 @@ npm run typecheck     # tsc
 npm test              # cypress e2e (needs `npm run serve`, not the dev server)
 npm run test:plugins  # vitest unit tests for plugins/
 npm run api:source -- blur   # locate the Cypress source a /api page documents
+npm run lint:pronouns -- docs/app/ai/cypress-tap.mdx   # list sentences that open with a bare pronoun
 ```
 
 Install before you lint. With no `node_modules` present, `npm run lint:fix`
@@ -118,9 +119,8 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
   a `sidebar_position`, pages sort alphabetically; if sibling files don't define
   one, match them and skip it rather than introducing positions.
-- Moving/renaming/deleting a page **requires** a `301` in both `netlify.toml`
-  and `static/_redirects` (Netlify serves production while Cloudflare builds
-  previews), plus updating in-repo links to it.
+- Moving/renaming/deleting a page **requires** a `301` in `static/_redirects`,
+  plus updating in-repo links to it.
 
 **Authoring** — [components](./AGENTS_REFERENCE.md#mdx-components),
 [partials](./AGENTS_REFERENCE.md#partials),
@@ -149,6 +149,12 @@ Each rule is a hard convention. See the linked section for the how and why.
   a link. It's standard on API reference pages; add it to guides and other pages
   only when there are genuinely related pages worth surfacing. Don't pad it with
   tangential links or repeat links already prominent in the page body.
+- Alphabetize the rows of options tables and other reference tables by their
+  first column, `log` included. Keep a different order only when the order
+  itself carries meaning the reader needs, such as a `## History` table (newest
+  first), sequential steps, a scale from least to most severe, or a permissions
+  table ordered from the permissions every role has to those only the most
+  senior role has.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
   When an example pairs test code with the app code it runs against (markup,
   source, a fixture), title every block in the pair with its filename, such as
@@ -160,7 +166,58 @@ Each rule is a hard convention. See the linked section for the how and why.
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
 
-**Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples)
+**Code comments** — [details](./AGENTS_REFERENCE.md#code-comments)
+
+- In the site's own code (`src/`, `plugins/`, `scripts/`, `cypress/`, config
+  files), prefer no comment when the code is self-explanatory. When one is
+  needed, explain the _why_ the code can't say, once, about the code as it is
+  now: no change history, no "matches the old tool", and no benchmark numbers.
+
+**Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples),
+[domains](./AGENTS_REFERENCE.md#domains-in-code-examples),
+[preferences](./AGENTS_REFERENCE.md#code-example-preferences)
+
+- Write test code the way a user drives the app. These preferences cover test
+  code only: specs, custom commands, support files, and config. They never
+  apply to app code in an example, such as the markup or source a test runs
+  against. Each one also gives way when the example exists to show the thing it
+  steers away from, such as the `.trigger()` page explaining the default
+  `Event`:
+  - Drive the application under test through its UI or its API (`cy.request()`,
+    `cy.intercept()`) where you can.
+  - When a test does reach app code on `window`, such as a store or a function
+    the app exposes, chain to it with `.its()` and `.invoke()`
+    (`cy.window().its('store').invoke('getState')`). Don't call it directly on
+    `win` inside a `.then()` callback.
+  - Don't depend on `window.Cypress` in the test.
+  - Read the DOM with `.invoke()` and `.its()`, not with element callbacks.
+    jQuery methods work through `.invoke()`: `.invoke('outerWidth')`,
+    `.invoke('prop', 'scrollHeight')`.
+  - Prefer Cypress actions such as `.click()` and `.type()` to hand-built
+    events. When `.trigger()` has to pass event properties, pass the matching
+    `eventConstructor` (such as `'MouseEvent'`), since the default plain `Event`
+    attaches them as-is to an event that is the wrong type.
+  - Don't wait a fixed time with `cy.wait(ms)`. Wait for what the test needs:
+    an assertion on the UI, which retries, or `cy.wait('@alias')` on a request
+    from `cy.intercept()`. The one exception is a short pause between polls of
+    an endpoint that has nothing else to wait on, such as a job status.
+
+- Every host an example runs against is `cypress.io` or a subdomain, as if
+  Cypress only runs code it controls. When it should run as written, use a
+  [real Cypress site](./AGENTS_REFERENCE.md#real-cypress-sites-for-examples-that-run-as-written):
+  `example.cypress.io` for typing, clicking, and checking text, or
+  `www.cypress.io`, `docs.cypress.io`, `learn.cypress.io`,
+  `www.cypress.io/blog`, or `cloud.cypress.io` to demonstrate a concept (where
+  the page landed, that an element exists) rather than check text that can
+  change.
+  Otherwise use a stand-in such as `app.cypress.io` or `auth.cypress.io`. Never
+  `example.com`, a third-party site, or an invented domain. `localhost` is fine
+  for the reader's own server.
+
+  ```js
+  cy.visit('https://app.cypress.io') // ✅ not https://www.example.com
+  cy.origin('https://auth.cypress.io', () => {}) // ✅ not https://login.acme.com
+  ```
 
 - Run every code example you add or rewrite before committing it: typecheck and
   run it in the throwaway `.example-check/` harness, pasted in verbatim, with an
@@ -173,8 +230,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   service) gets reported as not run, with the reason. Being short is not a
   reason.
 - In Claude Code, the first `git commit` after examples change stops once with
-  a reminder listing them. Run them and report (or say in your report why one
-  doesn't need a run), then commit again. The judgment is yours.
+  a reminder listing them. Run them and report (or say why one doesn't need a
+  run), then commit again. The judgment is yours. A new or mostly rewritten page
+  stops it the same way for a [style review](./AGENTS_REFERENCE.md#reviewing-a-new-or-rewritten-page).
 
 **API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
 
@@ -194,7 +252,11 @@ Each rule is a hard convention. See the linked section for the how and why.
   engines surface them without the page around them. "Cypress Cloud MCP
   workflows to try", not "Workflows to try". Add the context that makes the
   heading this page's, keep it to roughly 40 to 60 characters, and use sentence
-  case. The fixed API page skeleton and `## See also` are exempt.
+  case. Name a task with an imperative verb ("Load global styles in component
+  tests", not "Loading…" or "How to load…"); headings that name a thing stay
+  nouns. The fixed API page skeleton, function-name headings on
+  [namespace API pages](./AGENTS_REFERENCE.md#namespace-api-pages), and
+  `## See also` are exempt.
 - Address the reader as **you**. Reserve "we" for Cypress speaking as a team
   ("we recommend"), never as a stand-in for the reader.
 - **Present tense, active voice.** "Cypress retries the assertion", not "Cypress
@@ -206,7 +268,14 @@ Each rule is a hard convention. See the linked section for the how and why.
   migration notes are the exception, since the reader needs the version to
   upgrade.
 - **Say what something does**, not what it lets the reader do. "`cy.session()`
-  caches and restores session state", not "allows you to cache…".
+  caches and restores session state", not "allows you to cache…". The same
+  goes for "lets you", "enables you to", "allows users to", "gives you the
+  ability to", "provides you with", and "makes it possible to".
+- **Name the subject in every sentence.** Repeat the noun instead of pointing
+  back to an earlier sentence with "it", "this", or "they" ("The agent runs
+  your specs", not "It runs your specs"), so each sentence stands on its own.
+  A pronoun for a noun in the same sentence is fine. To list the candidates,
+  run `npm run lint:pronouns -- <file>`.
 - Plain words over formal ones: not `leverage`, `utilize`, or `in order to`.
 - Cut filler. `please`, `note that`, and hedges that carry no information.
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
@@ -255,11 +324,24 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Tabs sync via a shared `groupId`. Fixed orders: package managers
   **npm → Yarn → pnpm → Bun**; frameworks **React → Angular → Vue → Svelte**; JS
   before TS.
+- A `<TabItem>` holds code blocks, code components, and admonitions, never
+  plain paragraphs or lists: the site styles tab panels as a dark code surface,
+  so plain prose inside one is unreadable in light mode and code blocks nested
+  in a list run flush to the edge. When the same kind of instructions repeats
+  for different tools or variations (an agent sandbox, a CI provider, an AI
+  client) and each needs its own prose or steps, put each variation in an
+  `<AccordionBlock>` instead ([details](./AGENTS_REFERENCE.md#keep-prose-out-of-tabs)).
+- Never nest one tab group inside another. Inside framework or other tabs, show
+  only the JavaScript version in a plain `js` block, never a `copyTsToJs` block,
+  which renders its own tabs.
 
 **Admonitions** — [details](./AGENTS_REFERENCE.md#admonition-blocks)
 
 - `:::info` (default), `:::tip`, `:::note`, `:::caution` (prefer over
-  `:::warning`), `:::danger`. Keep them short and infrequent.
+  `:::warning`), `:::danger`. Keep them short and infrequent. Never add a
+  custom title (`:::tip Do this`); site CSS hides every admonition heading. When
+  a visible heading is warranted, put a bold lead line in the body, then a blank
+  line, then the rest.
 
 **Linking** — [details](./AGENTS_REFERENCE.md#linking)
 

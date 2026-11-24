@@ -67,16 +67,16 @@ tree than the deepest one containing the text.
 
 Pass in an options object to change the default behavior of `.contains()`.
 
-| Option             | Default                                                                        | Description                                                                                                  |
-| ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `matchCase`        | `true`                                                                         | Check case sensitivity                                                                                       |
-| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                          |
-| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                     |
-| `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
+| Option             | Default                                                                        | Description                                                                                                                                                                                                                          |
+| ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `matchCase`        | `true`                                                                         | Check case sensitivity                                                                                                                                                                                                               |
+| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                  |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                                                                                                                                             |
+| `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse open shadow roots and include the elements inside them in the yielded results. The option never searches [closed or user-agent shadow roots](/api/commands/shadow#Closed-and-user-agent-shadow-roots-in-shadow). |
 
 <HeaderYields />
 
-- `.contains()` yields the new DOM element it found. It yields at most one
+- `.contains()` yields the new DOM element it found. `.contains()` yields at most one
   element, so asserting a `length` greater than `1` throws an error.
 - `.contains()` is a query, and it is _safe_ to chain further commands.
 
@@ -199,7 +199,7 @@ Technically the `<ul>` and first `<li>` in the example below both contain
 Normally Cypress would return the first `<li>` since that is the _deepest_
 element that contains "apples".
 
-To override the element that is yielded, pass `'ul'` as the selector.
+To override the element `.contains()` yields, pass `'ul'` as the selector.
 
 ```html
 <html>
@@ -241,7 +241,7 @@ cy.get('form') // yields <form>...</form>
 ```
 
 Without the explicit selector the subject would change to be the `<button>`.
-Using the explicit selector ensures that chained commands will have the `<form>`
+Using the explicit selector ensures that chained commands have the `<form>`
 as the subject.
 
 #### Act on the table row containing some text
@@ -408,7 +408,7 @@ being chained off an existing series.
 
 #### When starting a series of commands
 
-This queries the `<body>` element for the content, so elements in the
+`cy.contains()` queries the `<body>` element for the content, so elements in the
 `<head>`, such as `<title>`, never match. Inside a
 [`.within()`](/api/commands/within) callback, it queries the `.within()` subject
 instead.
@@ -440,7 +440,7 @@ cy.contains('Delete User').click().contains('Yes, Delete!').click()
 ```
 
 Because the second `.contains()` is chained off of a command that yielded the
-`<button>`, Cypress will look inside of the `<button>` for the new content.
+`<button>`, Cypress looks inside of the `<button>` for the new content.
 
 In other words, Cypress looks inside of the `<button>` containing "Delete User"
 for the content "Yes, Delete!", which is not what you intended.
@@ -476,7 +476,7 @@ Rendered result:
 
 To reflect this behavior, Cypress collapses each run of whitespace in an
 element's text to a single space before matching, except in a `<pre>` element,
-where it matches the text as written. The content you pass is not collapsed.
+where it matches the text as written. Cypress doesn't collapse the content you pass.
 
 ```js
 // test result for above code
@@ -508,7 +508,7 @@ in
 
 ### Single Element
 
-#### Only the _first_ matched element will be returned
+#### Only the _first_ matched element is returned
 
 ```html
 <ul id="header">
@@ -523,7 +523,7 @@ in
 </div>
 ```
 
-The below example will return the `<li>` in the `#header` since that is the
+The below example returns the `<li>` in the `#header` since that is the
 _first_ element that contains the text "Jane Lane".
 
 ```javascript
@@ -541,8 +541,8 @@ cy.get('#main').contains('Jane Lane')
 
 ### Default `<input type="submit">` labels
 
-When the `value` attribute is omitted from an `<input type="submit">`, the
-default label is used and can be locale-dependent. See
+When you omit the `value` attribute from an `<input type="submit">`, the
+browser uses a default label, which can be locale-dependent. See
 [omitting the value attribute on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit#omitting_the_value_attribute).
 
 `cy.contains()` matches an `<input type="submit">` by its `value` attribute.
@@ -646,10 +646,10 @@ cy.contains('Age').find('input').type('29')
 
 <HeaderAssertions />
 
-- `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.contains()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.contains()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -666,7 +666,7 @@ cy.contains('Age').find('input').type('29')
 cy.get('h1').contains('New User')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/contains/find-el-that-contains-text.png"

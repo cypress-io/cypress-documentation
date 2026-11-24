@@ -93,13 +93,25 @@ cy.get('head meta[name="description"]').should('have.attr', 'content')
 
 ### Trigger a document-level event
 
-Global keyboard shortcuts and "close on Escape" handlers often listen on
-`document` rather than on an element. [`.trigger()`](/api/commands/trigger)
-accepts the document as its subject:
+Global keyboard shortcuts often listen on `document` rather than on an element.
+[`.trigger()`](/api/commands/trigger) accepts the document as its subject. Pass
+`eventConstructor: 'KeyboardEvent'` so the handler receives a keyboard event:
+
+```javascript
+cy.document().trigger('keydown', {
+  eventConstructor: 'KeyboardEvent',
+  key: 'k',
+  ctrlKey: true,
+})
+cy.get('[data-cy="command-palette"]').should('be.visible')
+```
+
+To press a single key without modifiers, such as Escape to close a modal, use
+[`cy.press()`](/api/commands/press) instead:
 
 ```javascript
 cy.get('[data-cy="modal"]').should('be.visible')
-cy.document().trigger('keydown', { key: 'Escape' })
+cy.press(Cypress.Keyboard.Keys.ESC)
 cy.get('[data-cy="modal"]').should('not.exist')
 ```
 
@@ -169,7 +181,7 @@ cy.origin('https://other-origin.example.com', () => {
 cy.document()
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <DocsImage
   src="/img/api/document/get-document-of-application-in-command-log.png"

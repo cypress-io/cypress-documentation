@@ -21,7 +21,7 @@ Spec Prioritization shrinks that wait by putting the specs most likely to fail,
 the ones that _just_ failed, at the front of the line.
 
 <Icon name="check-circle" color="green" /> **Benefits:** Running previously
-failed specs first will:
+failed specs first helps you:
 
 1. **Surface failures sooner.** Get the verdict on your fix in the first few
    minutes of a run instead of the last.
@@ -96,14 +96,14 @@ overview page to see how much time we predict these features would save you.
 
 ### Run Properties tab
 
-The quickest way to check is the **Properties** tab of a run. Its Smart
+The quickest way to check is the **Properties** tab of a run. The tab's Smart
 Orchestration section lists each feature with its status for that run, so a
 **Spec Prioritization** value of **Applied** confirms Cypress Cloud reordered the
 specs.
 
 You can also trace _which_ run drove the order: when Spec Prioritization fires,
 the run displays a **"Prioritized failed specs from run #X"** label, where **#X**
-links back to the source run whose failures were moved to the front of the line.
+links back to the source run whose failures Cypress Cloud moved to the front of the line.
 Following that link shows exactly which previous failures Cypress Cloud was
 reacting to.
 
@@ -120,8 +120,8 @@ actually recorded test failures for Cypress Cloud to prioritize (as opposed to t
 ### Specs tab
 
 To see prioritization at the individual spec level, open the
-[Specs tab](/cloud/features/recorded-runs#Specs-tab). Sorting by **Timeline** might help you find the spec that was moved up. Each spec that was moved up
-is marked with the Smart Orchestration icon, and hovering it shows
+[Specs tab](/cloud/features/recorded-runs#Specs-tab). Sorting by **Timeline** might help you find the spec that was moved up. Cypress Cloud marks each spec that was moved up
+with the Smart Orchestration icon, and hovering it shows
 a **"Prioritized by failed specs"** tooltip.
 
 <DocsImage

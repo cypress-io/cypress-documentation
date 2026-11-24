@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const fs = require('fs')
 const path = require('path')
 
@@ -5,10 +6,14 @@ const path = require('path')
  * Generates a unique 1200x630 social-share ("Open Graph") card for every built
  * page and rewrites that page's og:image / twitter:image to point at it.
  *
- * The card mirrors the docs branding: the Cypress logo + wordmark in the top
- * left, a product eyebrow, the page title, and the page description — so links
- * shared in Slack, X, etc. unfurl with a rich, page-specific preview instead of
- * a single generic image.
+ * The card mirrors the docs branding: the Cypress logo + wordmark, a product
+ * eyebrow, the page title, and the page description — so links shared in
+ * Slack, X, etc. unfurl with a rich, page-specific preview instead of a single
+ * generic image.
+ *
+ * Slack's compact unfurl crops the card to a centered HEIGHT x HEIGHT square,
+ * so every word and the logo sit in a centered SAFE_WIDTH column inside that
+ * square. Only the teal background and the hills reach the edges.
  *
  * Runs in `postBuild` only (production builds). `npm start` keeps using the
  * static fallback card from `themeConfig.image`.
@@ -20,8 +25,8 @@ const HEIGHT = 630
 // Slack/X/LinkedIn may display them larger than 1200 device pixels. The layout
 // math below stays in 1200x630 logical units; an SVG viewBox scales it up.
 const SCALE = 2
-const PAD = 80
-const MAX_WIDTH = WIDTH - PAD * 2
+const SAFE_WIDTH = 560
+const PAD = (WIDTH - SAFE_WIDTH) / 2 // left edge of the text column
 
 // Brand palette.
 const BG = '#004143' // teal background
@@ -83,8 +88,13 @@ function getMeta(html, key, attr) {
  * glyph width as a fraction of the font size (bold sans ~0.56, regular ~0.52).
  */
 function wrap(text, fontSize, factor, maxLines) {
-  const maxChars = Math.floor(MAX_WIDTH / (fontSize * factor))
-  const words = text.split(/\s+/).filter(Boolean)
+  const maxChars = Math.floor(SAFE_WIDTH / (fontSize * factor))
+  // A single token wider than the column (a long URL or identifier) is cut
+  // rather than left to overflow the card.
+  const words = text
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => (w.length > maxChars ? w.slice(0, maxChars - 1) + '…' : w))
   const lines = []
   let line = ''
   for (const word of words) {
@@ -99,9 +109,11 @@ function wrap(text, fontSize, factor, maxLines) {
   }
   if (lines.length < maxLines && line) lines.push(line)
 
-  // Truncate with an ellipsis if the text overflowed the allowed line count.
-  const consumed = lines.join(' ').length
-  if (consumed < text.replace(/\s+/g, ' ').length && lines.length) {
+  // Truncate with an ellipsis only if words were left over past the line
+  // limit. Counting words, not characters, keeps a token shortened above from
+  // reading as overflow.
+  const placed = lines.length ? lines.join(' ').split(' ').length : 0
+  if (placed < words.length && lines.length) {
     let last = lines[lines.length - 1]
     while (last.length > 3 && last.length + 1 > maxChars) last = last.slice(0, -1)
     lines[lines.length - 1] = last.replace(/[\s.,;:]*$/, '') + '…'
@@ -109,26 +121,45 @@ function wrap(text, fontSize, factor, maxLines) {
   return lines
 }
 
-/** Pick the largest title size that fits in <=2 lines, else shrink to 3 lines. */
+// Smallest title size; below it the title would read smaller than the
+// description, so a title that still doesn't fit is ellipsized instead.
+const MIN_TITLE_SIZE = 30
+
+/**
+ * Pick the largest title size that fits in <=2 lines, else shrink to 3 lines.
+ * A size only counts as fitting when its longest word also fits the column,
+ * so a long API name like `Cypress.Commands.overwriteQuery` shrinks instead of
+ * overflowing the column.
+ */
 function fitTitle(title) {
-  for (const size of [76, 66, 58]) {
-    const lines = wrap(title, size, 0.56, 2)
-    if (lines.join(' ').length >= title.replace(/\s+/g, ' ').length) {
+  const fullLength = title.replace(/\s+/g, ' ').trim().length
+  const longestWord = Math.max(...title.split(/\s+/).map((w) => w.length))
+  const wordFits = (size) => longestWord * size * 0.56 <= SAFE_WIDTH
+  const fits = (lines) => lines.join(' ').length >= fullLength
+  for (const [size, maxLines] of [
+    [56, 2],
+    [48, 2],
+    [42, 2],
+    [38, 3],
+    [34, 3],
+    [MIN_TITLE_SIZE, 3],
+  ]) {
+    if (!wordFits(size) && size !== MIN_TITLE_SIZE) continue
+    const lines = wrap(title, size, 0.56, maxLines)
+    if (fits(lines) || size === MIN_TITLE_SIZE) {
       return { size, lineHeight: Math.round(size * 1.15), lines }
     }
   }
-  const size = 54
-  return { size, lineHeight: Math.round(size * 1.15), lines: wrap(title, size, 0.56, 3) }
 }
 
 function buildSvg({ logoBase64, eyebrow, title, description }) {
   const fit = fitTitle(title)
-  const descSize = 27
-  const descLineHeight = 38
-  const eyebrowToTitle = 86 // eyebrow baseline -> first title baseline
-  const titleToDesc = 56 // last title baseline -> first desc baseline
+  const descSize = 22
+  const descLineHeight = 30
+  const eyebrowToTitle = 72 // eyebrow baseline -> first title baseline
+  const titleToDesc = 48 // last title baseline -> first desc baseline
 
-  const descLines = description ? wrap(description, descSize, 0.52, 2) : []
+  const descLines = description ? wrap(description, descSize, 0.52, 4) : []
 
   // Vertically center the eyebrow+title+description block in the band between
   // the brand row and the hills. We work in baselines, padding for the eyebrow
@@ -173,9 +204,9 @@ function buildSvg({ logoBase64, eyebrow, title, description }) {
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${WIDTH * SCALE}" height="${HEIGHT * SCALE}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
   <rect width="${WIDTH}" height="${HEIGHT}" fill="${BG}"/>
   ${hills}
-  <image x="${PAD}" y="56" width="56" height="56" xlink:href="data:image/png;base64,${logoBase64}"/>
-  <text x="${PAD + 76}" y="96" font-family="${FONT}" font-size="34" font-weight="700" fill="${WHITE}">Cypress Documentation</text>
-  <text font-family="${FONT}" font-size="30" font-weight="600" fill="${JADE}"><tspan x="${PAD}" y="${eyebrowY}">${escapeXml(eyebrow)}</tspan></text>
+  <image x="${PAD}" y="56" width="48" height="48" xlink:href="data:image/png;base64,${logoBase64}"/>
+  <text x="${PAD + 64}" y="90" font-family="${FONT}" font-size="28" font-weight="700" fill="${WHITE}">Cypress Documentation</text>
+  <text font-family="${FONT}" font-size="26" font-weight="600" fill="${JADE}"><tspan x="${PAD}" y="${eyebrowY}">${escapeXml(eyebrow)}</tspan></text>
   <text font-family="${FONT}" font-size="${fit.size}" font-weight="700" fill="${WHITE}">${titleTspans}</text>
   <text font-family="${FONT}" font-size="${descSize}" font-weight="400" fill="${WHITE}">${descTspans}</text>
 </svg>`
@@ -202,7 +233,7 @@ async function loadLogoBase64(siteDir) {
   const logoSvg = fs.readFileSync(
     path.join(siteDir, 'static/img/logo/cypress-logomark-white.svg')
   )
-  // The logomark is drawn at 56 logical px; at 2x that's 112 device px, so
+  // The logomark is drawn at 48 logical px; at 2x that's 96 device px, so
   // rasterize larger (224) for a crisp downscale.
   _logoBase64 = (
     await sharp(logoSvg, { density: 512 })
@@ -277,7 +308,10 @@ module.exports = async function ogImageCardsPlugin(context) {
         const outFile = path.join(ogDir, `${slug}.png`)
         fs.writeFileSync(outFile, png)
 
-        const cardUrl = `${baseUrl}img/og/${slug}.png`
+        // The version query changes whenever the card does, so Slack and X
+        // fetch the new image instead of serving their cached copy of the URL.
+        const version = crypto.createHash('sha1').update(png).digest('hex').slice(0, 8)
+        const cardUrl = `${baseUrl}img/og/${slug}.png?v=${version}`
         // Repoint og:image / twitter:image (currently the static fallback card).
         html = html.replace(
           new RegExp(
@@ -310,6 +344,8 @@ module.exports = async function ogImageCardsPlugin(context) {
 module.exports.buildSvg = buildSvg
 module.exports.wrap = wrap
 module.exports.fitTitle = fitTitle
+module.exports.SAFE_WIDTH = SAFE_WIDTH
+module.exports.MIN_TITLE_SIZE = MIN_TITLE_SIZE
 module.exports.renderCardPng = renderCardPng
 module.exports.cardTitle = cardTitle
 module.exports.eyebrowForSegments = eyebrowForSegments

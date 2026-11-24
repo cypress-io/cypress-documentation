@@ -13,19 +13,20 @@ Cypress Accessibility results don't have to stay in Cypress Cloud. This section 
 
 ## Ways to get your data
 
-| Method                                                                | Best for                                                                                           | Interface                                      |
-| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| [Download report](/accessibility/connect-and-extend/download-reports) | A one-off, manual export of a single run's violations for offline analysis, sharing, or AI agents. | `.csv` or `.json` file                         |
-| [Webhooks](/accessibility/connect-and-extend/webhooks)                | Push Cypress Accessibility results to your own endpoint when the report finishes processing.       | `run.accessibility.completed`                  |
-| [Results API](/accessibility/connect-and-extend/results-api)          | Automated pass/fail checks in CI that assert on results and block pull requests.                   | Node module (`@cypress/extract-cloud-results`) |
-| [Cypress Cloud MCP](/cloud/integrations/cloud-mcp)                    | Live, interactive querying by AI agents while you work in your editor.                             | MCP tools                                      |
-| [Data Extract API](/cloud/integrations/data-extract-api)              | Bulk analytics and trends across projects and over time, pulled into BI or a data warehouse.       | API and Enterprise Reporting downloads         |
+| Method                                                                   | Best for                                                                                                                | Interface                                      |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| [Download report](/accessibility/connect-and-extend/download-reports)    | A one-off, manual export of a single run's violations for offline analysis, sharing, or AI agents.                      | `.csv` or `.json` file                         |
+| [Cloud CLI](/cloud/integrations/cloud-cli#Accessibility-and-App-Quality) | Scripts and terminal-based AI agents that page through a run's report, failing elements, and App Quality configuration. | `cy-cloud` commands with JSON output           |
+| [Webhooks](/accessibility/connect-and-extend/webhooks)                   | Push Cypress Accessibility results to your own endpoint when the report finishes processing.                            | `run.accessibility.completed`                  |
+| [Results API](/accessibility/connect-and-extend/results-api)             | Automated pass/fail checks in CI that assert on results and block pull requests.                                        | Node module (`@cypress/extract-cloud-results`) |
+| [Cypress Cloud MCP](/cloud/integrations/cloud-mcp)                       | Live, interactive querying by AI agents while you work in your editor.                                                  | MCP tools                                      |
+| [Data Extract API](/cloud/integrations/data-extract-api)                 | Bulk analytics and trends across projects and over time, pulled into BI or a data warehouse.                            | API and Enterprise Reporting downloads         |
 
 ## Which should I use?
 
 - For a single run's results, use the [Download report](/accessibility/connect-and-extend/download-reports) button. The file works offline with any tool or AI agent.
 - To enforce a standard in CI, use the [Results API](/accessibility/connect-and-extend/results-api) to assert on a run's results and [block pull requests](/accessibility/guides/block-pull-requests) that don't meet it.
-- To work with an AI agent, use a [downloaded report](/accessibility/work-with-ai-agents#Work-with-a-downloaded-report) for the full dataset or [Cypress Cloud MCP](/accessibility/work-with-ai-agents#Cypress-Cloud-MCP) to query results live. See [Work with AI agents](/accessibility/work-with-ai-agents).
+- To work with an AI agent, use the [Cloud CLI](/accessibility/work-with-ai-agents#Cypress-Cloud-CLI) when the agent runs shell commands, [Cypress Cloud MCP](/accessibility/work-with-ai-agents#Cypress-Cloud-MCP) to query results live from an MCP client, or a [downloaded report](/accessibility/work-with-ai-agents#Work-with-a-downloaded-report) for a fixed copy of the full dataset. See [Work with AI agents](/accessibility/work-with-ai-agents).
 - To push results when a report finishes, use [Webhooks](/accessibility/connect-and-extend/webhooks). The `run.accessibility.completed` event can start other workflows in this list.
 - To get results into your issue tracker, have an agent read the latest report for a branch, check what is already filed, and open only the missing tickets. See [File issues in your issue tracker](/accessibility/work-with-ai-agents#File-issues-in-your-issue-tracker).
 - To track trends across runs and projects, use the [Data Extract API](/cloud/integrations/data-extract-api) and [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting).

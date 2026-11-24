@@ -201,7 +201,7 @@ cy.hash().should((hash) => {
 
 <HeaderAssertions />
 
-- `cy.hash()` will automatically [retry](/app/core-concepts/retry-ability)
+- `cy.hash()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
 <HeaderTimeouts />
@@ -216,7 +216,7 @@ cy.hash().should((hash) => {
 cy.hash().should('eq', '#users/new')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/hash/test-url-hash-for-users-page.png"

@@ -12,11 +12,11 @@ sidebar_custom_props: { 'ai_icon': true }
 
 Cypress Cloud's Model Context Protocol (MCP) server connects your AI coding assistants directly to Cypress Cloud, giving them a window into your application's health and stability.
 
-By eliminating the context gap between CI and your editor, you remove the manual triage that makes testing a bottleneck. Cloud MCP gives your AI agent real-time access to your test results. It allows agents to query run statuses, identify flaky tests, and retrieve failure details—including Test Replay links—directly within your agentic workflow.
+By eliminating the context gap between CI and your editor, you remove the manual triage that makes testing a bottleneck. Cloud MCP gives your AI agent real-time access to your test results. Cloud MCP allows agents to query run statuses, identify flaky tests, and retrieve failure details—including Test Replay links—directly within your agentic workflow.
 
 :::note
 
-Cloud MCP reached general availability on May 20, 2026. It is included on every Cypress Cloud plan at no additional cost.
+Cloud MCP reached general availability on May 20, 2026. Cloud MCP is included on every Cypress Cloud plan at no additional cost.
 
 :::
 
@@ -34,9 +34,9 @@ Think of MCP as the "USB port" for AI. Just as a USB port allows any peripheral 
 
 To use the Cloud MCP:
 
-1. **Enable integration:** An admin will need to enable the integration for your organization
+1. **Enable integration:** An admin needs to enable the integration for your organization
 2. **Authenticate:** Each user authenticates with Cypress Cloud — via OAuth (recommended) or a personal access token
-3. **Configure AI:** Each user will need to add the remote MCP configuration to their preferred AI client
+3. **Configure AI:** Each user needs to add the remote MCP configuration to their preferred AI client
 
 ### Enable for Organization
 
@@ -55,15 +55,15 @@ There are two options for authenticating the Cloud MCP server with your Cloud ac
 
 #### OAuth (Recommended)
 
-OAuth is the recommended authentication method for Cloud MCP. It uses a browser-based sign-in flow, so no manual token generation or rotation is needed — your AI client manages the session automatically.
+OAuth is the recommended authentication method for Cloud MCP. OAuth uses a browser-based sign-in flow, so no manual token generation or rotation is needed — your AI client manages the session automatically.
 
-When you configure your AI client with the Cloud MCP server URL (`https://mcp.cypress.io/mcp`) and your client supports OAuth, it will:
+When you configure your AI client with the Cloud MCP server URL (`https://mcp.cypress.io/mcp`) and your client supports OAuth, the client:
 
-1. Detect that the server requires authentication via OAuth discovery.
-2. Open a browser window and redirect you to the Cypress Cloud sign-in page.
+1. Detects that the server requires authentication via OAuth discovery.
+2. Opens a browser window and redirects you to the Cypress Cloud sign-in page.
 3. After you sign in, the client stores the session securely and reconnects automatically for 30 days.
 
-OAuth sessions are scoped to your Cypress Cloud user account and respect your existing role and permissions in each MCP-enabled organization. No token expiry management is required on your part.
+OAuth sessions are scoped to your Cypress Cloud user account and respect your existing role and permissions in each MCP-enabled organization. You don't need to manage token expiry.
 
 Your active OAuth sessions are visible on your **[Manage Profile](https://cloud.cypress.io/profile)** page. You can revoke any session from there at any time.
 
@@ -78,7 +78,7 @@ A personal access token (PAT) can used to securely connect with Cypress Cloud th
 3. Select **[Manage Profile](https://cloud.cypress.io/profile)**.
 4. Under **MCP personal access token**, click **Generate token**.
 5. Select an expiration for the token and click **Continue**.
-6. Your token is generated. Copy it immediately — it is only shown once.
+6. Cypress Cloud generates your token. Copy it immediately — Cypress Cloud shows it only once.
 
 The token access is scoped to your role and permissions in each MCP-enabled organization. Use your PAT in place of OAuth when your AI client does not support browser-based authentication flows.
 
@@ -87,11 +87,72 @@ The token access is scoped to your role and permissions in each MCP-enabled orga
   alt="Enable user's MPC personal access token"
 />
 
+### Install Cloud MCP from a marketplace listing
+
+Cypress publishes Cloud MCP to the marketplaces built into popular AI clients. Installing from a listing adds the server to your client with OAuth already configured, so you skip editing a config file. Your organization still needs the [integration enabled](#Enable-for-Organization).
+
+| Where Cypress is listed                                                                                        | What it installs                                                                     | Works with                                                       |
+| -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| [Claude connector directory](https://claude.ai/directory/cypress-cloud)                                        | The Cypress Cloud connector: Cloud MCP only                                          | Claude on the web, desktop, and mobile                           |
+| [Claude plugin directory](https://claude.com/plugins/cypress)                                                  | The `cypress` plugin: Cloud MCP plus the [Cypress AI Skills](/app/tooling/ai-skills) | Claude Code and Claude Cowork                                    |
+| [Cursor Directory](https://cursor.directory/plugins/cypress)                                                   | The `cypress` plugin: Cloud MCP plus the Cypress AI Skills                           | Cursor                                                           |
+| [MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=io.cypress.mcp/cypress-cloud)        | The `io.cypress.mcp/cypress-cloud` server entry                                      | Clients and directories that read from the official MCP Registry |
+| [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Cypress-io.vscode-cypress-cloud-mcp) | The Cypress Cloud MCP extension (`Cypress-io.vscode-cypress-cloud-mcp`)              | GitHub Copilot and other agents in VS Code                       |
+
+#### Choose the Claude connector or the Claude plugin for Cloud MCP
+
+Cypress has two Claude listings. Both connect Claude to the same Cloud MCP server, so they return the same Cypress Cloud data. The two listings differ in what else they install and where you use them:
+
+- **The connector** adds Cloud MCP to your Claude account. Use it to ask Claude about your runs, failures, and flaky tests in Claude chat. There is nothing to install or update locally: Cypress hosts the server, and new tools appear the next time Claude connects.
+- **The plugin** adds Cloud MCP and the Cypress AI Skills to Claude Code or Claude Cowork. The skills teach Claude how to write, explain, and debug Cypress tests, so use the plugin when Claude works in your test code as well as reading your Cloud data.
+
+Install one or the other for a given Claude app, not both, so Claude sees one Cypress Cloud server instead of two.
+
+#### Add the Cypress Cloud connector to Claude
+
+1. Sign in to Claude and open the [Cypress Cloud listing](https://claude.ai/directory/cypress-cloud) in the connector directory. In Claude Desktop, you can also find it under **Customize** > **Connectors**.
+2. Add the connector.
+3. Sign in to Cypress Cloud in the browser window that opens.
+
+#### Install the Cypress plugin in Claude Code or Cowork
+
+- **Claude Cowork:** open the [Cypress listing](https://claude.com/plugins/cypress) in the Claude plugin directory and install it.
+- **Claude Code:** add the community marketplace, then install the plugin:
+
+  ```bash
+  claude plugin marketplace add anthropics/claude-plugins-community
+  claude plugin install cypress@claude-community
+  ```
+
+To sign in from Claude Code, run `/mcp`, select the Cypress Cloud server, and complete the Cypress Cloud sign-in in your browser.
+
+#### Install the Cypress plugin from the Cursor Directory
+
+The [Cypress listing](https://cursor.directory/plugins/cypress) in the Cursor Directory carries the same `cypress` plugin, with Cloud MCP and the Cypress AI Skills.
+
+1. Open the [Cypress listing](https://cursor.directory/plugins/cypress) and select the **MCP Servers** tab.
+2. Select **Add to Cursor**. Cursor opens and adds the `cypress-cloud` server.
+3. Confirm the install in Cursor. Cursor opens a browser window to sign in to Cypress Cloud on first use.
+
+To add the skills as well, copy them from the listing's **Skills** tab, or install them with the [Cypress AI Skills](/app/tooling/ai-skills) instructions.
+
+#### Install the Cypress Cloud MCP extension for VS Code
+
+1. In VS Code, open the **Extensions** view and search for `Cypress Cloud MCP`, or install it from the [VS Code Marketplace listing](https://marketplace.visualstudio.com/items?itemName=Cypress-io.vscode-cypress-cloud-mcp).
+2. Select **Connect** in the welcome message, or run **Cypress Cloud MCP: Connect** from the Command Palette.
+3. Select **Cypress Cloud** from the MCP server list and start it.
+4. Confirm the trust and sign-in prompts, then sign in to Cypress Cloud in your browser.
+5. Open Chat and select agent mode.
+
+The extension connects only to `https://mcp.cypress.io/mcp`, and VS Code manages the OAuth session.
+
 ### Configure AI Assistant
+
+If your client has no marketplace listing, or you want to authenticate with a personal access token, configure the connection yourself.
 
 Configure your agent or AI client to connect to Cloud MCP. Cloud MCP is a remote server hosted by Cypress, so your client must support **tools** and **remote server** (HTTP) connections.
 
-The remote URL is: `https://mcp.cypress.io/mcp`. Clients that support OAuth will handle authentication automatically via a browser sign-in. For clients that do not support OAuth, set the authorization header with `Bearer YOUR_MCP_TOKEN` using your personal access token.
+The remote URL is: `https://mcp.cypress.io/mcp`. Clients that support OAuth handle authentication automatically via a browser sign-in. For clients that do not support OAuth, set the authorization header with `Bearer YOUR_MCP_TOKEN` using your personal access token.
 
 <AccordionBlock title="Antigravity" icon={<Icon name="hexagon-nodes" />}>
 
@@ -110,7 +171,7 @@ The remote URL is: `https://mcp.cypress.io/mcp`. Clients that support OAuth will
      }
    }
    ```
-5. Save `mcp_config.json` and click Refresh. Antigravity will prompt you to sign in to Cypress Cloud via your browser.
+5. Save `mcp_config.json` and click Refresh. Antigravity prompts you to sign in to Cypress Cloud via your browser.
 
 **Personal Access Token (Alternative)**
 
@@ -136,6 +197,8 @@ See [Antigravity's documentation](https://antigravity.google/docs/mcp) for more 
 </AccordionBlock>
 
 <AccordionBlock title="Claude Desktop" icon={<Icon name="claude" />}>
+
+To connect without a custom connector, add the [Cypress Cloud connector](#Add-the-Cypress-Cloud-connector-to-Claude) from the Claude connector directory.
 
 **OAuth (Recommended)**
 
@@ -194,7 +257,7 @@ Note: `mcp-remote` requires Node.js v22+ in the path to run successfully.
 
 2. Start claude session `claude`
 3. Prompt `mcp cypress`
-4. Claude Code will open a browser window to sign in to Cypress Cloud
+4. Claude Code opens a browser window to sign in to Cypress Cloud
 
 **Personal Access Token (Alternative)**
 
@@ -221,6 +284,8 @@ See [Claude Code's documentation](https://code.claude.com/docs/en/mcp) for more 
 
 <AccordionBlock title="Cursor" icon={<Icon name="hexagon-nodes" />}>
 
+To install without editing a config file, use the [Cursor Directory listing](#Install-the-Cypress-plugin-from-the-Cursor-Directory).
+
 **OAuth (Recommended)**
 
 1. Open Cursor
@@ -237,7 +302,7 @@ See [Claude Code's documentation](https://code.claude.com/docs/en/mcp) for more 
      }
    }
    ```
-6. Save the file and restart Cursor. Cursor will open a browser window to sign in to Cypress Cloud on first use.
+6. Save the file and restart Cursor. Cursor opens a browser window to sign in to Cypress Cloud on first use.
 
 **Personal Access Token (Alternative)**
 
@@ -264,6 +329,8 @@ See [Cursor's documentation](https://cursor.com/docs/mcp) for more details.
 
 <AccordionBlock title="GitHub Copilot in VS Code" icon={<Icon name="github" />}>
 
+To install without editing a config file, use the [VS Code extension](#Install-the-Cypress-Cloud-MCP-extension-for-VS-Code).
+
 You can install the Cloud MCP server in your user profile or a specific workspace. See [VS Code's MCP installation options](https://code.visualstudio.com/docs/copilot/customization/mcp-servers).
 
 **OAuth (Recommended)**
@@ -279,7 +346,7 @@ You can install the Cloud MCP server in your user profile or a specific workspac
      }
    }
    ```
-2. VS Code will handle authentication via a browser-based Cypress Cloud sign-in when the server is first used.
+2. VS Code handles authentication via a browser-based Cypress Cloud sign-in when you first use the server.
 
 **Personal Access Token (Alternative)**
 
@@ -305,7 +372,7 @@ You can install the Cloud MCP server in your user profile or a specific workspac
      ]
    }
    ```
-2. VS Code will prompt for your PAT via the `CYPRESS_MCP_TOKEN` input when connecting.
+2. VS Code prompts for your PAT via the `CYPRESS_MCP_TOKEN` input when connecting.
 
 See [VS Code's documentation](https://code.visualstudio.com/docs/copilot/customization/mcp-servers) for more details.
 
@@ -340,7 +407,7 @@ See [GitHub Copilot's documentation](https://docs.github.com/en/copilot/how-tos/
 
 <AccordionBlock title="OpenAI Codex CLI" icon={<Icon name="openai" />}>
 
-Codex stores MCP configuration in `~/.codex/config.toml`, which is shared between the CLI and Codex IDE extension.
+Codex stores MCP configuration in `~/.codex/config.toml`, which the CLI and Codex IDE extension share.
 
 **OAuth (Recommended)**
 
@@ -388,9 +455,9 @@ If you use an AI client not listed here, refer to its documentation for configur
 
 Once connected, your AI agent can autonomously use the following tools. You don't call these manually; the agent selects them based on your prompt.
 
-Each time the Cloud MCP connection is established, any new tools become immediately available.
+Each time your AI client establishes the Cloud MCP connection, any new tools become immediately available.
 
-Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These are only available if your organization has subscriptions for the plans and products that would provide the underlying data.
+Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These plan- and product-specific tools are only available if your organization has subscriptions for the plans and products that would provide the underlying data.
 
 | Tool                                      | Capability                                                                                                                                                                                                                                                                                                                                                                 | Example usage                                                           |
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
@@ -487,7 +554,7 @@ To get the most out of Cloud MCP, follow these four principles:
 
 </CopyPrompt>
 
-The agent finds the run with `cypress_get_runs`, then adds up each spec's duration from `cypress_get_specs` to get the time your suite takes back to back. It works from the spec durations rather than the run's own duration because a run that is already parallelized reports its parallel time. For example, a 15-spec run whose specs add up to about 5.1 minutes finished in about 2.3 minutes across its machines. The slowest spec sets a floor on how short each machine can get, which is why adding machines past a certain point stops paying off. See [Parallelization](/cloud/features/smart-orchestration/parallelization) for how Cypress Cloud balances specs across machines.
+The agent finds the run with `cypress_get_runs`, then adds up each spec's duration from `cypress_get_specs` to get the time your suite takes back to back. The agent works from the spec durations rather than the run's own duration because a run that is already parallelized reports its parallel time. For example, a 15-spec run whose specs add up to about 5.1 minutes finished in about 2.3 minutes across its machines. The slowest spec sets a floor on how short each machine can get, which is why adding machines past a certain point stops paying off. See [Parallelization](/cloud/features/smart-orchestration/parallelization) for how Cypress Cloud balances specs across machines.
 
 <CopyPrompt
   title="Audit skipped and pending tests in a run"
@@ -527,12 +594,12 @@ For more patterns, example prompts, and governance ideas when using UI Coverage 
 
 ### Cloud MCP vs the Cloud CLI
 
-Cloud MCP and the [Cloud CLI](/cloud/integrations/cloud-cli) both give programmatic access to your Cypress Cloud data. They solve related problems in different ways:
+Cloud MCP and the [Cloud CLI](/cloud/integrations/cloud-cli) both give programmatic access to your Cypress Cloud data. The two tools solve related problems in different ways:
 
 - **Cloud MCP** is a remote server your AI client connects to. The agent selects Cypress tools automatically based on your prompt, which makes it the best fit for conversational, in-editor debugging.
-- **The Cloud CLI** (`cy-cloud`) is a command-line tool for humans, scripts, and agents that run shell commands. It returns JSON and provides direct access to Test Replay data, which makes it the best fit for deeper triage from the terminal, automation, custom tooling, and agents that run shell commands.
+- **The Cloud CLI** (`cy-cloud`) is a command-line tool for humans, scripts, and agents that run shell commands. The Cloud CLI returns JSON and provides direct access to Test Replay data, which makes it the best fit for deeper triage from the terminal, automation, custom tooling, and agents that run shell commands.
 
-Many teams use both. If your assistant speaks MCP, connect it to Cloud MCP. If it works through a terminal, or you are scripting, reach for the Cloud CLI. Use both when running agents in your terminal.
+Many teams use both. If your assistant speaks MCP, connect it to Cloud MCP. If your assistant works through a terminal, or you are scripting, reach for the Cloud CLI. Use both when running agents in your terminal.
 
 Both are available on every Cypress Cloud plan at no additional cost. See the [Cloud CLI documentation](/cloud/integrations/cloud-cli) for its setup and command reference.
 
@@ -542,7 +609,7 @@ Both are available on every Cypress Cloud plan at no additional cost. See the [C
 
 - Verify the organization has the Cloud MCP integration enabled in Cypress Cloud.
 - Ensure your Git branch name in CI matches the branch name you're telling the agent.
-- A failed CI job doesn't mean no run was recorded. A red CI conclusion only reflects the job's exit code. As long as Cypress recorded the run, it's in Cypress Cloud and the agent can query it, so point the agent at the run by branch, commit, run number, or Run URL instead of assuming a failed job left nothing to find.
+- A failed CI job doesn't mean Cypress recorded no run. A red CI conclusion only reflects the job's exit code. As long as Cypress recorded the run, it's in Cypress Cloud and the agent can query it, so point the agent at the run by branch, commit, run number, or Run URL instead of assuming a failed job left nothing to find.
 - If you pair Cloud MCP with a CI or GitHub MCP that reads job logs, the recorded Run URL prints near the _end_ of the Cypress CLI output. Have the agent read the tail of the log so it doesn't miss the link.
 
 **Connection errors:**
@@ -556,7 +623,7 @@ Both are available on every Cypress Cloud plan at no additional cost. See the [C
 If you previously configured Cloud MCP with a PAT and want to switch to OAuth:
 
 1. Remove the `Authorization` header (or token environment variable) from your AI client's MCP config.
-2. Save the config and reconnect. Your client will detect that no token is present and trigger the OAuth browser sign-in flow automatically.
+2. Save the config and reconnect. Your client detects that no token is present and triggers the OAuth browser sign-in flow automatically.
 
 ### Pricing & Availability
 
@@ -581,16 +648,16 @@ Cloud MCP is an API for AI agents. When your AI assistant needs information abou
 **What Cypress can and cannot see:**
 
 - **Cypress cannot see your AI conversation:** Cypress has no access to your AI assistant's context window, chat history, or anything it generates. The only thing Cypress receives are the inputs to a tool call — for example, `getRuns(projectId: 100, runNumber: 45, limit: 10)`.
-- **Cypress does not train on your data:** Test results, stack traces, and replay links returned through Cloud MCP are used only to fulfill the request. Your data is never used to train or improve any LLM.
+- **Cypress does not train on your data:** Cypress uses test results, stack traces, and replay links returned through Cloud MCP only to fulfill the request. Cypress never uses your data to train or improve any LLM.
 - **You control the connection:** Cloud MCP is opt-in. Enabling it means your AI assistant can request Cypress data and enabling the integration does not give Cypress any visibility into your AI's context, conversation, or outputs.
 
 **How access is controlled:**
 
-- **Read-only:** Cloud MCP is designed for data retrieval and debugging. It cannot modify your test code or delete runs.
-- **User-scoped:** Your AI assistant can only access the projects and data your Cypress Cloud user has permission to see. It operates within the same access boundaries as you do.
+- **Read-only:** Cloud MCP is designed for data retrieval and debugging. Cloud MCP cannot modify your test code or delete runs.
+- **User-scoped:** Your AI assistant can only access the projects and data your Cypress Cloud user has permission to see. Your AI assistant operates within the same access boundaries as you do.
 - **Locally managed:** You control when the server is active by managing the configuration in your local AI client.
 
-Cloud MCP implements the standard MCP authorization specification with OAuth 2.0 and uses streamable HTTP transport. It falls under our [AI security practices →](https://on.cypress.io/ai-security?utm_source=docs.cypress.io&utm_medium=cloud-mcp)
+Cloud MCP implements the standard MCP authorization specification with OAuth 2.0 and uses streamable HTTP transport. Cloud MCP falls under our [AI security practices →](https://on.cypress.io/ai-security?utm_source=docs.cypress.io&utm_medium=cloud-mcp)
 
 ### Remove the integration
 
@@ -609,7 +676,7 @@ You can share feedback directly through your agent:
   prompt={`Send Cypress the following feedback: [Your message here]`}
 />
 
-Alternatively, use [this feedback form](https://share.hsforms.com/2NWNpyi5KSZmG4x0geIXgBg3a4za) to share any feedback, use cases, or issues encountered with your prompts and queries.
+Alternatively, use [this feedback form](https://on.cypress.io/mcp-feedback) to share any feedback, use cases, or issues encountered with your prompts and queries.
 
 ## See also
 

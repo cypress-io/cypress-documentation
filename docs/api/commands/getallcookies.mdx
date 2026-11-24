@@ -42,18 +42,10 @@ Pass in an options object to change the default behavior of
 `cy.getAllCookies()` yields an array of cookie objects. Each cookie object has
 the following properties:
 
-- `domain`: _(String)_
-- `expiry`: _(Number)_ _(if specified)_
-- `hostOnly`: _(Boolean)_ _(if specified)_
-- `httpOnly`: _(Boolean)_
-- `name`: _(String)_
-- `path`: _(String)_
-- `sameSite`: _(String)_ _(if specified)_
-- `secure`: _(Boolean)_
-- `value`: _(String)_
+<CookieProperties />
 
-`cy.getAllCookies()` is a query, and it is _safe_ to chain further commands. It
-will automatically [retry](/app/core-concepts/retry-ability) until all chained
+`cy.getAllCookies()` is a query, and it is _safe_ to chain further commands. The
+query automatically [retries](/app/core-concepts/retry-ability) until all chained
 assertions have passed, or until it times out, re-reading the cookies from all
 domains on each retry so the yielded array stays up to date.
 
@@ -63,7 +55,7 @@ Because `cy.getAllCookies()` is a query, it re-reads the cookies on every retry,
 and assertions you chain with [`.should()`](/api/commands/should) drive those
 retries until they pass or the command times out. A
 [`.then()`](/api/commands/then) callback, by contrast, runs only once after the
-command settles and is not retried — so prefer chaining
+command settles, and Cypress doesn't retry it — so prefer chaining
 [`.should()`](/api/commands/should) assertions over asserting inside `.then()`
 when you need Cypress to wait for the cookies to be set.
 
@@ -109,8 +101,8 @@ cy.getAllCookies()
 
 <HeaderAssertions />
 
-- `cy.getAllCookies()` will automatically
-  [retry](/app/core-concepts/retry-ability) until all chained assertions have
+- `cy.getAllCookies()` automatically
+  [retries](/app/core-concepts/retry-ability) until all chained assertions have
   passed.
 
 <HeaderTimeouts />

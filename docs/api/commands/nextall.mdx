@@ -111,10 +111,10 @@ cy.get('li').nextAll('.selected')
 
 <HeaderAssertions />
 
-- `.nextAll()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.nextAll()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.nextAll()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.nextAll()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -131,7 +131,7 @@ cy.get('li').nextAll('.selected')
 cy.get('.left-nav').find('li.active').nextAll()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/nextall/next-all-traversal-command-for-the-dom.png"

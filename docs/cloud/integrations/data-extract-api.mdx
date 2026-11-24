@@ -9,14 +9,14 @@ sidebar_position: 70
 
 # Data Extract API
 
-Enterprise Reporting data can be downloaded from Cloud using the Cypress Cloud API. The data is returned in file
-formats that drop into your BI reporting platform, as well as a JSON file that can be
-programmatically parsed. This API returns your test data at a variety of levels, including
+You can download Enterprise Reporting data from Cloud using the Cypress Cloud API. The API returns the data in file
+formats that drop into your BI reporting platform, as well as a JSON file that you can
+parse programmatically. This API returns your test data at a variety of levels, including
 all the way down to the individual test result data which includes status, error messages, runs tags and groups,
 Test Replay links, and much more.
 
-All of the data that is viewable in [Enterprise Reporting ](/cloud/features/analytics/enterprise-reporting)
-can be retrieved using this API.
+You can retrieve all of the data that is viewable in
+[Enterprise Reporting ](/cloud/features/analytics/enterprise-reporting) using this API.
 
 :::tip
 
@@ -28,55 +28,70 @@ can be retrieved using this API.
 
 ## Overview of the API
 
-The reporting data is accessed using an API key that can be accessed from Cloud.
-Visit Integrations → Enterprise API in Cypress Cloud and copy the API key that has been created for your
-organization. There is nothing to enable. If you are subscribed to the Enterprise Cypress Cloud plan
-the ability to access your test data via API is already enabled.
+You access the reporting data with an organization API key. Your Cypress Cloud plan must include the Data Extract API.
+If it doesn't, **Request trial** from the **Data Extract API** section of the Integrations page.
+
+A couple of things to note:
+
+- Data shown in Enterprise Reporting is not real-time. For aggregated data it is available as of midnight UTC of the current day.
+  I.e. - data is populated through "end of day yesterday". However, individual result data is near real-time and is available
+  30 minutes after the run has completed. The sections below specify the endpoints that return near real-time data.
+- Historical data is available as specified by your data retention limit in Cypress Cloud.
+
+## Generate a key
+
+Each organization has one Data Extract API key at a time. Organization owners and admins manage it
+from the **Data Extract API** section of the Integrations page in Cypress Cloud.
 
 <DocsImage
   src="/img/cloud/features/analytics/enterprise-reporting-jwt.png"
-  alt="Cloud Enterprise Reporting API download data"
+  alt="Cloud Data Extract API key configuration"
 />
 
-<br />A couple of things to note:
+If your organization has no key yet, select **Generate API key**. Cypress Cloud shows the key once.
+Copy it and store it somewhere safe, because you can't view it again after you close the dialog.
+Afterward, the Integrations page shows only the start of the key and the date it was issued.
 
-- Data shown in Enterprise Reporting is not real-time. For aggregated data it is available as of midnight UTC of the current day.
-  I.e. - data will be populated through "end of day yesterday". However, individual result data is near real-time and is available
-  30 minutes after the run has completed. Endpoints that return near real-time data are specified below.
-- Historical data is available as specified by your data retention limit in Cypress Cloud.
+## Regenerate a key
+
+Select **Regenerate** to replace the current key. The current key stops working immediately, and Cypress Cloud asks you to
+confirm first. Update every script, BI connection, or scheduled job that uses the old key with the new one.
+
+An organization can't have more than one active key, so you can't keep the old key running while you
+switch over to a new one.
 
 ## API endpoint details
 
-The following API endpoint will be used. Substitute your assigned API key
+Use the following API endpoint. Substitute your assigned API key
 where indicated by the `YOUR-API-KEY` placeholder text. The `report_id` specifies
-the type of data that will be retrieved.
+the type of data to retrieve.
 
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=REPORT-TYPE&export_format=csv
 
 The following query parameters are available for use:
 
-- start_date. **Required** and should be passed in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format.
+- start_date. **Required**. Pass it in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format.
 
   For example, to request a start date of January 1, 2025, use: `?start_date=2025-01-01`. To request a
   start date of 12:30p UTC on that day, use: `?start_date=2025-01-01T12%3A30%3A00`
 
-- end_date. Optional and should be passed in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format. If no end date is
-  specified the query will default to today.
+- end_date. Optional. Pass it in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format. If you don't specify an end
+  date, the query defaults to today.
 
   For example, to request an end date of start of day March 1, 2025, use: `?end_date=2025-03-01`. To request an
   end date of 12:30p UTC on that day, use: `?end_date=2025-03-01T12%3A30%3A00`
 
-- projects. Optional, and accepts the name of your Cypress project. The project name should be URL encoded. You can
+- projects. Optional, and accepts the name of your Cypress project. URL encode the project name. You can
   pass as many projects parameters as needed.
 
   For example, to request that the data be filtered for projects _Project e2e_ and _Phoenix_, use: `&projects=Project%20e2e&projects=Phoenix`
 
-- branch. Optional, and accepts the name of your commit branch. The branch name should be URL encoded. You can pass as many branch
+- branch. Optional, and accepts the name of your commit branch. URL encode the branch name. You can pass as many branch
   parameters as needed.
 
   For example, to request that the data be filtered for branches _develop_ and _commitBranch1_, use: `&branch=develop&branch=commitBranch1`
 
-- export_format. Specify the type of data format that will be returned in the response file. Valid options include: `csv`, `json`, `xlsx`.
+- export_format. Specify the type of data format returned in the response file. Valid options include: `csv`, `json`, `xlsx`.
 
   For example, to request that the data be returned in JSON format, use: `&export_format=json`
 
@@ -85,7 +100,7 @@ The following query parameters are available for use:
 ### Project list
 
 Retrieves a list of all projects in Cypress Cloud that have had tests recorded since the start_date.
-The ID returned is used in the URL for project level analytics in Cypress Cloud and can be helpful to generate direct
+Cypress Cloud uses the returned ID in the URL for project level analytics, and the ID can be helpful to generate direct
 links to Cypress Cloud project analytics for a given project.
 
 The report_id is: `project-list`
@@ -101,7 +116,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Tests per project
 
 This data helps you understand which projects in your organization are using the
-most or least tests. Data is returned in a simple summary per project.
+most or least tests. The report returns data in a simple summary per project.
 
 The report_id is: `usage-per-project-summary`
 
@@ -152,7 +167,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Cypress test suite size
 
 This data helps you to understand and manage the growth of your test suite size across
-all projects in your organization. It calculates the average number of test cases executed per run
+all projects in your organization. The report calculates the average number of test cases executed per run
 and excludes runs that errored or timed out since they don't accurately represent the size of your
 test suite.
 
@@ -171,9 +186,9 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Cypress test suite over time
 
 This data helps you to understand and manage the growth of your test suite size across
-all projects in your organization. It calculates the average number of test cases executed per run
+all projects in your organization. The report calculates the average number of test cases executed per run
 and excludes runs that errored or timed out since they don't accurately represent the size of your
-test suite. This data is reported over time.
+test suite. The report shows this data over time.
 
 The report_id is: `test-suite-size-over-time`
 
@@ -191,8 +206,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Project test count and status
 
 This data provides consolidated run status at the project level.
-Data is accumulated from the status of each individual test result. This data is
-reported over time.
+The report accumulates data from the status of each individual test result. The report shows this
+data over time.
 
 The report_id is: `status-per-test-daily`
 
@@ -212,7 +227,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Status by run
 
 This data helps you understand the success and failure rates at the run level. If any part of the
-run fails then the entire run is failed.
+run fails, then the entire run fails.
 
 The report_id is: `status-per-build-summary`
 
@@ -227,7 +242,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Status by run over time
 
 This data helps you understand the success and failure rates at the run level. If any part of the
-run fails then the entire run is failed. The data is reported over time.
+run fails, then the entire run fails. The report shows the data over time.
 
 The report_id is: `status-per-build-over-time`
 
@@ -244,7 +259,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Status by spec
 
 This data helps you understand the success and failure rates at the spec level. If any part of the
-spec fails then the entire spec is failed.
+spec fails, then the entire spec fails.
 
 The report_id is: `status-per-spec-summary`
 
@@ -259,7 +274,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Status by spec over time
 
 This data helps you understand the success and failure rates at the spec level. If any part of the
-spec fails then the entire spec is failed. The data is reported over time.
+spec fails, then the entire spec fails. The report shows the data over time.
 
 The report_id is: `status-per-spec-over-time`
 
@@ -290,7 +305,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Status by test run over time
 
 This data helps you understand the success and failure rates at the individual test level.
-The data is reported over time.
+The report shows the data over time.
 
 The report_id is: `status-per-test-over-time`
 
@@ -308,8 +323,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Cypress run versions
 
-This data helps you monitor and track which versions of the Cypress app are being
-used in your organization.
+This data helps you monitor and track which versions of the Cypress app your
+organization uses.
 
 The report_id is: `cypress-build-versions-summary`
 
@@ -323,8 +338,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Cypress run versions over time
 
-This data helps you monitor and track which versions of the Cypress app are being
-used in your organization. This data is reported over time.
+This data helps you monitor and track which versions of the Cypress app your
+organization uses. The report shows this data over time.
 
 The report_id is: `cypress-build-versions-over-time`
 
@@ -339,8 +354,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Cypress run versions per project over time
 
-This data helps you monitor and track which versions of the Cypress app are being used in your organization.
-The versions are reported at the project level. This data is reported over time.
+This data helps you monitor and track which versions of the Cypress app your organization uses.
+The report shows the versions at the project level. The report shows this data over time.
 
 The report_id is: `cypress-build-versions-per-project-over-time`
 
@@ -356,7 +371,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Browsers tested
 
-This data helps you monitor and track which web browsers are being tested in your organization.
+This data helps you monitor and track which web browsers your organization runs tests in.
 
 The report_id is: `browsers-tested`
 
@@ -370,7 +385,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Browser versions tested
 
-This data helps you monitor and track which web browsers and specific versions are being tested in your organization.
+This data helps you monitor and track which web browsers and specific versions your organization runs tests in.
 
 The report_id is: `browser-versions`
 
@@ -385,8 +400,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Browser versions tested over time
 
-This data helps you monitor and track which web browsers and specific versions are being tested in your organization.
-This data is reported over time.
+This data helps you monitor and track which web browsers and specific versions your organization runs tests in.
+The report shows this data over time.
 
 The report_id is: `browser-versions-over-time`
 
@@ -403,8 +418,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Browser versions tested per project over time
 
-This data about browser versions goes a step deeper and helps you monitor and track which web browsers and specific versions are
-being tested within your specific _projects_. This data is reported over time.
+This data about browser versions goes a step deeper and helps you monitor and track which web browsers and specific versions
+your specific _projects_ run tests in. The report shows this data over time.
 
 The report_id is: `browser-versions-per-project-over-time`
 
@@ -427,8 +442,8 @@ All data for these APIs is available near real-time, 30 minutes after the run ha
 ### Individual spec results
 
 This data covers all spec results regardless of spec result status. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 Data is available near real-time, 30 minutes after the run has completed.
 
@@ -462,8 +477,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Individual failed test results
 
 This report extracts all test result details for failed tests. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 Data is available near real-time, 30 minutes after the run has completed.
 
@@ -485,7 +500,7 @@ Data returned includes:
 - error_message (string array)
 - test_replay_url
 - spec (path and filename)
-- test_name (the test name matches what is shown in Cypress Cloud and a '///' delimiter is used between fragments of the test name)
+- test_name (the test name matches what Cypress Cloud shows, with a '///' delimiter between fragments of the test name)
 
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=failed-test-details&export_format=csv&start_date=2025-03-01
@@ -493,8 +508,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Individual test results
 
 This report extracts all test result details regardless of test result status. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 Data is available near real-time, 30 minutes after the run has completed.
 
@@ -517,7 +532,7 @@ Data returned includes:
 - error_message (string array)
 - test_replay_url
 - spec (path and filename)
-- test_name (the test name matches what is shown in Cypress Cloud and a '///' delimiter is used between fragments of the test name)
+- test_name (the test name matches what Cypress Cloud shows, with a '///' delimiter between fragments of the test name)
 
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-details&export_format=csv&start_date=2025-03-01
@@ -526,7 +541,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Average run duration over time
 
-This report returns the average, median, min, and max durations of passing runs. This data is reported over time.
+This report returns the average, median, min, and max durations of passing runs. The report shows this data over time.
 
 The report_id is: `average-passing-build-duration`
 
@@ -546,9 +561,9 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Average spec duration over time
 
-This report returns the average, median, min, and max durations of specs. This data is reported over time. The maximum
+This report returns the average, median, min, and max durations of specs. The report shows this data over time. The maximum
 number of records returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your
-volume of records will exceed 500k for a single request.
+volume of records exceeds 500k for a single request.
 
 The report_id is: `average-passing-spec-duration`
 
@@ -589,9 +604,9 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Flaky rate per project
 
 This report shows the flaky _rate_ occurring in your projects, not just the _count_ of flaky tests.
-Sometimes a high flake count is seen simply because the test runs very frequently, but the % of flake could be lower than in
-other tests that run less often. The flaky rate per project is calculated for the time period requested. Flaky rate is shown
-as a whole number. For example: 1 flaky test over 4 runs has a flaky rate of 25.
+Sometimes a test has a high flake count simply because it runs very frequently, but the % of flake could be lower than in
+other tests that run less often. The report calculates the flaky rate per project for the requested time period and shows
+it as a whole number. For example: 1 flaky test over 4 runs has a flaky rate of 25.
 
 The report_id is: `flake-rate-per-project`
 
@@ -608,9 +623,9 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Flaky rate per project over time
 
 This report shows the flaky _rate_ occurring in your projects, not just the _count_ of flaky tests.
-Sometimes a high flake count is seen simply because the test runs very frequently, but the % of flake could be lower than in
-other tests that run less often. The flaky rate per project is calculated for the time period requested. Flaky rate is shown
-as a whole number. For example: 1 flaky test over 4 runs has a flaky rate of 25.
+Sometimes a test has a high flake count simply because it runs very frequently, but the % of flake could be lower than in
+other tests that run less often. The report calculates the flaky rate per project for the requested time period and shows
+it as a whole number. For example: 1 flaky test over 4 runs has a flaky rate of 25.
 
 The report_id is: `flake-rate-per-project-over-time`
 
@@ -629,8 +644,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Flaky test details
 
 This report extracts all test result details of flaky tests. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 Data is available near real-time, 30 minutes after the run has completed.
 
@@ -658,7 +673,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Top flaky tests per project
 
 This report identifies which tests have the highest flaky count and provides a URL to an example of a recent
-occurrence of this flake. Enables teams to jump directly to Cypress Cloud for troubleshooting using test replay.
+occurrence of this flake. The URL takes teams directly to Cypress Cloud for troubleshooting using test replay.
 
 The report_id is: `top-flaky-per-project`
 
@@ -677,8 +692,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Top failures per project
 
 This report identifies which tests have the highest number of failures and provides a URL to an example of a recent
-occurrence of this failure. Enables teams to jump directly to Cypress Cloud and understand the full context surrounding the failure.
-Fail rate is shown as a whole number. For example: 1 failed test over 4 runs has a fail rate of 25.
+occurrence of this failure. The URL takes teams directly to Cypress Cloud and the full context surrounding the failure.
+The report shows fail rate as a whole number. For example: 1 failed test over 4 runs has a fail rate of 25.
 
 The report_id is: `top-failures-per-project`
 
@@ -698,8 +713,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Top errors per project
 
 This report identifies which tests have the highest number of errors and provides a URL to an example of a recent
-occurrence of this error. Data is grouped by the error type and the error message. Enables teams to jump directly to
-Cypress Cloud and understand the full context surrounding the failure.
+occurrence of this error. The report groups data by the error type and the error message. The URL takes teams directly to
+Cypress Cloud and the full context surrounding the failure.
 
 The report_id is: `top-errors-per-project`
 
@@ -722,7 +737,7 @@ Learn more about [Cypress UI Coverage](/ui-coverage/get-started/introduction).
 ### UI Coverage per project
 
 This data helps you understand which projects in your organization have the
-highest or lowest UI Coverage %. Data is returned in a simple summary per project.
+highest or lowest UI Coverage %. The report returns data in a simple summary per project.
 
 The report_id is: `ui-coverage-per-project-summary`
 
@@ -754,8 +769,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### UI Coverage details
 
 This report extracts the UI Coverage % for each run along with other attributes of the run. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 The report_id is: `ui-coverage-details`
 
@@ -782,7 +797,7 @@ Learn more about
 ### Accessibility score per project
 
 This data helps you understand which projects in your organization have the
-highest or lowest Accessibility scores. Data is returned in a simple summary per project.
+highest or lowest Accessibility scores. The report returns data in a simple summary per project.
 
 The report_id is: `accessibility-per-project-summary`
 
@@ -815,7 +830,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 This report extracts Cypress Accessibility scores for each run along with other attributes of the run. The
 maximum number of records returned is 500,000. Make multiple requests with different start_date and end_date parameter
-values if your volume of records will exceed 500k for a single request.
+values if your volume of records exceeds 500k for a single request.
 
 The report_id is: `accessibility-details`
 

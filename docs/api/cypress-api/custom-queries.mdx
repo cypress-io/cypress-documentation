@@ -14,17 +14,17 @@ queries. The built in Cypress queries use the very same API that's explained
 below.
 
 Queries are a type of command, used for _querying_ the state of your
-application. They are different from other commands in that they follow three
+application. Queries are different from other commands in that they follow three
 important rules:
 
-1. Queries are _synchronous._ They do not return or await promises.
+1. Queries are _synchronous._ Queries do not return or await promises.
 2. Queries are _retriable._ Once you return the inner function, Cypress takes
    control, handling retries on your behalf.
-3. Queries are _idempotent._ Once you return the inner function, Cypress will
-   invoke it repeatedly. Invoking the inner function multiple times must not
+3. Queries are _idempotent._ Once you return the inner function, Cypress
+   invokes it repeatedly. Invoking the inner function multiple times must not
    change the state of your application.
 
-With these rules, queries are simple to write and extremely powerful. They are
+With these rules, queries are simple to write and extremely powerful. Queries are
 the building blocks on which Cypress' API is built. To learn more about the
 differences between commands and queries, see our
 [guide on Retry-ability](/app/core-concepts/retry-ability#Only-queries-are-retried).
@@ -35,7 +35,7 @@ If you want to chain together existing Cypress commands as a shortcut, you
 probably want to write a [custom command](/api/cypress-api/custom-commands)
 instead.
 
-You'll also want to write a command instead of a query if your method needs to
+Write a command instead of a query if your method needs to
 be asynchronous, or if it can be called only once.
 
 :::
@@ -43,8 +43,9 @@ be asynchronous, or if it can be called only once.
 :::info
 
 We recommend defining queries in your `cypress/support/commands.js` file, since
-it is loaded before any test files are evaluated via an import statement in the
-[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
+an import statement in the
+[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file)
+loads it before Cypress evaluates any test files.
 
 :::
 
@@ -106,9 +107,9 @@ The name of the query you're adding.
 
 Pass a function that receives the arguments passed to the query.
 
-This outer function is invoked once. It should return a function that takes a
-subject and returns a new subject; this inner function might be called multiple
-times.
+Cypress invokes this outer function once. The outer function should return a function that takes a
+subject and returns a new subject; Cypress might call this inner function
+multiple times.
 
 :::info
 
@@ -121,11 +122,11 @@ should always use `function () {}` and not be an arrow function (`() => {}`).
 
 ### `.focused()`
 
-The callback function can be thought of as two separate parts. The _outer
-function_, which is invoked once, where you perform setup and state management,
-and the _query function_, which might be called repeatedly.
+You can think of the callback function as two separate parts. The _outer
+function_, which Cypress invokes once, where you perform setup and state
+management, and the _query function_, which Cypress might call repeatedly.
 
-Let's look at an example. This is actual Cypress code — how `.focused()` is
+Let's look at an example. The example below is actual Cypress code — how `.focused()` is
 implemented internally, with some small adjustments to make it work from a
 support file. Use the TypeScript tab for a version that type-checks under strict
 TypeScript, or see [Types for Custom Queries](/app/tooling/typescript-support#Types-for-Custom-Queries)
@@ -231,7 +232,7 @@ Cypress.Commands.addQuery(
 
 #### The outer function
 
-The outer function is called once each time test uses the query. It performs
+Cypress calls the outer function once each time a test uses the query. The outer function performs
 setup and state management:
 
 ```javascript
@@ -250,8 +251,8 @@ Let's look at this piece by piece.
 function focused2(options = {}) { ... }
 ```
 
-Cypress passes the outer function whatever arguments the user calls it with; no
-processing or validation is done on the user's arguments. In our case,
+Cypress passes the outer function whatever arguments the user calls it with, and
+does no processing or validation on the user's arguments. In our case,
 `.focused2()` accepts one optional argument, `options`.
 
 If you wanted to validate the incoming arguments, you might add something like:
@@ -263,8 +264,8 @@ if (options === null || !_.isPlainObject(options)) {
 }
 ```
 
-This is a general pattern: when something goes wrong, queries throw an
-error. Cypress will handle displaying the error in the Command Log.
+Throwing is a general pattern: when something goes wrong, queries throw an
+error. Cypress handles displaying the error in the Command Log.
 
 ```javascript
 const log =
@@ -280,17 +281,17 @@ information.
 
 This line is setup code, so it lives in the outer function - we only want it to
 run once, creating the log message when Cypress first begins executing this
-query. We hold onto a reference to `Log` instance. We'll update it later with
-additional details when the inner function executes.
+query. We hold onto a reference to `Log` instance. The inner function updates
+the log with additional details when it executes.
 
 ```javascript
 this.set('timeout', options.timeout)
 ```
 
 When defining `focused2()`, we used `function`,
-rather than an arrow function. This gives us access to `this`, where we can set
+rather than an arrow function. Using `function` gives us access to `this`, where we can set
 the `timeout`. If you don't call `this.set('timeout')`, or call it with `null`
-or `undefined`, your query will use the
+or `undefined`, your query uses the
 [default timeout](/app/core-concepts/introduction-to-cypress#Timeouts).
 
 ```
@@ -301,11 +302,11 @@ or `undefined`, your query will use the
 
 The outer function's return value is the inner function.
 
-The inner function is called any number of times. It's first invoked repeatedly
-until it passes or the query times out; it can then be invoked again later to
+Cypress calls the inner function any number of times. Cypress first invokes the inner function repeatedly
+until it passes or the query times out; Cypress can then invoke it again later to
 determine the subject of future commands, or when the user retrieves an alias.
 
-The inner function is called with one argument: the previous subject. Cypress
+Cypress calls the inner function with one argument: the previous subject. Cypress
 performs no validation on this - it could be any type, including `null` or
 `undefined`.
 
@@ -318,8 +319,8 @@ Cypress' builtin [`Cypress.ensure`](/api/cypress-api/ensure) functions, as
 or you can perform your own validation and throw an error:
 `if (!_.isString(subject)) { throw new Error('MyCustomCommand only accepts strings as a subject!') }`
 
-If the inner function throws an error, Cypress will retry it after a short delay
-until it either passes or the query times out. This is the core of Cypress'
+If the inner function throws an error, Cypress retries it after a short delay
+until it either passes or the query times out. This retry loop is the core of Cypress'
 retry-ability, and the guarantees it provides that your tests interact with the
 page as a user would.
 
@@ -356,7 +357,7 @@ Piece by piece again:
 let $el = cy.getFocused()
 ```
 
-This is the 'business end' of `.focused2()` - finding the element on the page
+This line is the 'business end' of `.focused2()` - finding the element on the page
 that's currently focused.
 
 ```javascript
@@ -392,13 +393,13 @@ assertions that the subject should exist.
 
 ### Overwriting Existing Queries
 
-You can also modify the behavior of existing Cypress queries. This is useful to
+You can also modify the behavior of existing Cypress queries. Overwriting a query is useful to
 extend the functionality of builtin commands.
 
 :::caution
 
 `Cypress.Commands.overwriteQuery` can only overwrite queries, not other
-commands. If you want to modify the behavior of a non-query command, you'll need
+commands. If you want to modify the behavior of a non-query command, you need
 to use [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands) instead.
 
 :::
@@ -460,13 +461,13 @@ Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
 
 The `originalFn` is the function originally passed to
 `Cypress.Commands.addQuery` - it is a **function that returns a function.** This
-gives you access to both the outer arguments (before you call `originalFn`) and
+structure gives you access to both the outer arguments (before you call `originalFn`) and
 the inner function (the return value of `originalFn`), giving you a great deal
 of control over how the query executes.
 
 #### Adding alias support to `.contains()`
 
-In this example, `cy.contains()` is extended to support querying for aliased
+In this example, you extend `cy.contains()` to support querying for aliased
 subjects, like `cy.contains('@foo')`.
 
 <Tabs>
@@ -543,33 +544,14 @@ As noted in the examples above, Cypress performs very little validation around
 queries - it is the responsibility of each implementation to ensure that its
 arguments and subject are of the correct type.
 
-[`Cypress.ensure`](/api/cypress-api/ensure) provides several builtin methods
-which can be helpful in this regard:
+[`Cypress.ensure`](/api/cypress-api/ensure) provides the same subject checks
+Cypress's built-in queries use, such as `Cypress.ensure.isType()` for the subject
+types a query accepts. A failed check throws a Cypress error that names your
+query, and Cypress retries it like any other error in the inner function. See
+[the full list of `Cypress.ensure` functions](/api/cypress-api/ensure#Functions).
 
-- `Cypress.ensure.isType(subject, types, commandName, cy)`: Accepts an array
-  with any of the strings `optional`, `element`, `document`, or `window`. This
-  is how [`prevSubject` validation](/api/cypress-api/custom-commands#Validations)
-  is implemented for commands.
-- `Cypress.ensure.isElement(subject, commandName, cy)`: Ensure that the passed
-  in `subject` is one or more DOM elements.
-- `Cypress.ensure.isWindow(subject, commandName, cy)`: Ensure that the passed in
-  `subject` is a `window`.
-- `Cypress.ensure.isDocument(subject, commandName, cy)`: Ensure that the passed
-  in `subject` is a `document`.
-- `Cypress.ensure.isAttached(subject, commandName, cy)`: Ensure that DOM
-  element(s) are attached to the page.
-- `Cypress.ensure.isNotDisabled(subject, commandName)`: Ensure that form
-  elements aren't disabled.
-- `Cypress.ensure.isVisible(subject, commandName)`: Ensure that a DOM element is
-  visible on the page.
-
-There's nothing special about these functions - they validate their
-argument and throw an error if the check fails. You can throw errors of any type
-at any time inside your queries - Cypress will catch and handle it
-appropriately.
-
-See [`Cypress.ensure`](/api/cypress-api/ensure) for the full list of available
-methods.
+You can also throw errors of any type inside your queries. Cypress catches and
+retries them the same way.
 
 ## Notes
 
@@ -579,7 +561,7 @@ methods.
 
 Custom queries work well when you're needing to describe behavior that's
 desirable across **all of your tests**. Examples would be `cy.findBreadcrumbs()`
-or `cy.getLoginForm()`. These are specific to your application and can be used
+or `cy.getLoginForm()`. These queries are specific to your application and you can use them
 everywhere.
 
 However, this pattern can be used and abused. Let's not forget - writing Cypress
@@ -589,7 +571,7 @@ repeatable behavior than it is to implement a custom query.
 #### 2. Don't overcomplicate things
 
 Every custom query you write is generally an abstraction for locating elements
-on the page. That means you and your team members exert much more mental effort
+on the page. That abstraction means you and your team members exert much more mental effort
 to understand what your custom command does.
 
 There's no reason to add this level of complexity when the builtin queries are
@@ -600,7 +582,7 @@ Don't do things like:
 - <Icon name="exclamation-triangle" color="red" /> `cy.getButton()`
 - <Icon name="exclamation-triangle" color="red" /> `.getFirstTableRow()`
 
-Both of these are wrapping `cy.get(selector)`. It's completely unnecessary. Call
+Both of these queries are wrapping `cy.get(selector)`. Wrapping `cy.get()` this way is completely unnecessary. Call
 `.get('button')` or `.get('tr:first')` instead.
 
 Testing in Cypress is all about **readability** and **simplicity**. You don't

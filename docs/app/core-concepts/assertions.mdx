@@ -29,8 +29,8 @@ guide.
 
 <Icon name="github" url="https://github.com/chaijs/chai" />
 
-These chainers are available for BDD assertions (`expect`/`should`). Aliases
-listed can be used interchangeably with their original chainer. You can see the
+These chainers are available for BDD assertions (`expect`/`should`). You can
+use the listed aliases interchangeably with their original chainer. You can see the
 entire list of available [BDD Chai assertions](http://chaijs.com/api/bdd/).
 
 | Chainer                                                                                   | Example                                                                                                                                                                                                                |
@@ -79,8 +79,8 @@ entire list of available [BDD Chai assertions](http://chaijs.com/api/bdd/).
 | increase(_function_) <br /><small>**Aliases:** increases</small>                          | `.should('increase', obj, 'val')`<br />`expect(fn).to.increase(obj, 'val')`                                                                                                                                            |
 | decrease(_function_) <br /><small>**Aliases:** decreases</small>                          | `.should('decrease', obj, 'val')`<br />`expect(fn).to.decrease(obj, 'val')`                                                                                                                                            |
 
-These getters are also available for BDD assertions. They don't actually do
-anything, but they enable you to write clear, English sentences.
+These getters are also available for BDD assertions. The getters don't actually do
+anything, but they make assertions read as clear, English sentences.
 
 | Chainable getters                                                                           |
 | ------------------------------------------------------------------------------------------- |
@@ -92,7 +92,7 @@ anything, but they enable you to write clear, English sentences.
 
 These chainers are available when asserting about a DOM object.
 
-You will commonly use these chainers after using DOM commands like:
+You commonly use these chainers after using DOM commands like:
 [`cy.get()`](/api/commands/get), [`cy.contains()`](/api/commands/contains), etc.
 
 {/* textlint-disable */}
@@ -127,7 +127,7 @@ You will commonly use these chainers after using DOM commands like:
 
 <Icon name="github" url="https://github.com/domenic/sinon-chai" />
 
-These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and
+Use these chainers on assertions with [`cy.stub()`](/api/commands/stub) and
 [`cy.spy()`](/api/commands/spy).
 
 | Sinon.JS property/method | Assertion                                                                                                                 |
@@ -159,10 +159,10 @@ These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and
 ## Adding New Assertions
 
 Because we are using `chai`, that means you can extend it however you'd like.
-Cypress will "just work" with new assertions added to `chai`. You can:
+Cypress works with new assertions added to `chai`. You can:
 
-- Write your own `chai` assertions as
-  [documented here](https://chaijs.com/guide/helpers/).
+- Write your own `chai` assertions as described in the
+  [Chai helpers guide](https://chaijs.com/guide/helpers/).
 - npm install any existing `chai` library and import into your test file or
   [support file](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
@@ -264,6 +264,10 @@ For detailed information about how Cypress determines element visibility, includ
 // retry until loading spinner no longer exists
 cy.get('[data-testid="loading"]').should('not.exist')
 ```
+
+A `.should('not.exist')` assertion passes the first time Cypress finds no
+matching element. To check that an element never showed up at all, see
+[Verify that an element never appears on the page](#Verify-that-an-element-never-appears-on-the-page).
 
 ### State
 
@@ -369,11 +373,81 @@ cy.get('[data-testid="new-todo"]').type('Write tests{enter}')
 cy.get('[data-testid="todos"]').should('not.have.length', 2)
 ```
 
+### Verify that an element never appears on the page
+
+Sometimes the thing you want to prove is that an element never rendered, such
+as an error banner that shouldn't show up while a page loads. A
+`.should('not.exist')` assertion can't prove that by itself. Cypress retries the
+assertion until it passes, so the assertion passes the moment the element is
+absent, including before the element renders or after it renders and goes away.
+A longer `timeout` doesn't help either: extra time only gives the assertion more
+chances to pass.
+
+So how do you know the element has had its chance to render? Tie the check to the work that would
+render the element. Wait for the request with
+[`cy.wait()`](/api/commands/wait#Alias), then wait for UI that renders once the
+app handles the response, and only then assert that the element doesn't exist:
+
+```javascript title="dashboard.cy.js"
+cy.intercept('GET', '/api/notifications').as('getNotifications')
+cy.visit('/dashboard')
+cy.wait('@getNotifications')
+// Wait for the UI that renders once the response is handled
+cy.get('[data-testid="notification-list"]').should('be.visible')
+cy.get('[data-testid="error-banner"]').should('not.exist')
+```
+
+This check confirms the element is absent once the page settles. An element
+that renders and disappears before the last assertion still slips past it.
+
+To catch an element that appears even briefly, record every element the app
+adds to the page. A
+[`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+registered in the `onBeforeLoad` option of [`cy.visit()`](/api/commands/visit)
+starts watching before any of the app's code runs. The observer flags the
+banner the moment the app adds it, and the test asserts on that flag once the
+page settles:
+
+```javascript title="dashboard.cy.js"
+const selector = '[data-testid="error-banner"]'
+const banner = { appeared: false }
+
+cy.intercept('GET', '/api/notifications').as('getNotifications')
+cy.visit('/dashboard', {
+  onBeforeLoad(win) {
+    const observer = new win.MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (
+            node instanceof win.Element &&
+            (node.matches(selector) || node.querySelector(selector))
+          ) {
+            banner.appeared = true
+          }
+        })
+      })
+    })
+
+    observer.observe(win.document, { childList: true, subtree: true })
+  },
+})
+
+cy.wait('@getNotifications')
+cy.get('[data-testid="notification-list"]').should('be.visible')
+cy.wrap(banner).its('appeared').should('be.false')
+```
+
+The observer covers the time from page load until the last assertion runs.
+When the banner renders and disappears during that time, the test fails with
+`expected true to be false`. The observer watches for elements the app adds, so
+an element that is already on the page and only shown or hidden with CSS or the
+`hidden` attribute doesn't set the flag.
+
 ## Should callback
 
 If built-in assertions are not enough, you can write your own assertion function
-and pass it as a callback to the `.should()` command. Cypress will automatically
-[retry](/app/core-concepts/retry-ability) the callback function until it
+and pass it as a callback to the `.should()` command. Cypress automatically
+[retries](/app/core-concepts/retry-ability) the callback function until it
 passes or the command times out. See the
 [`.should()`](/api/commands/should#Function) documentation.
 
@@ -414,9 +488,9 @@ cy.get('[data-testid="assertions-link"]')
   .and('include', 'cypress.io')
 ```
 
-All chained assertions will use the same reference to the original
+All chained assertions use the same reference to the original
 subject. For example, if you wanted to test a loading element that first appears
-and then disappears, the following WILL NOT WORK because the same element cannot
+and then disappears, the following DOES NOT WORK because the same element cannot
 be visible and invisible at the same time:
 
 ```js

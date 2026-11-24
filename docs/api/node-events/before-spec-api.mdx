@@ -8,8 +8,8 @@ sidebar_label: 'before:spec'
 
 # Before Spec Event
 
-The `before:spec` event fires before a spec file is run. When running cypress
-via `cypress open`, the event will fire when the browser launches.
+The `before:spec` event fires before Cypress runs a spec file. When running cypress
+via `cypress open`, the event fires when the browser launches.
 
 ## Syntax
 
@@ -37,16 +37,12 @@ on('before:spec', (spec) => {
 
 Details of the spec file, including the following properties:
 
-| Property   | Description                                                                                |
-| ---------- | ------------------------------------------------------------------------------------------ |
-| `name`     | The base name of the spec file (e.g. `login.cy.js`)                                        |
-| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login.cy.js`)   |
-| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login.cy.js`) |
+<SpecObjectProperties />
 
 ## Usage
 
-You can return a promise from the `before:spec` event handler and it will be
-awaited before Cypress proceeds running the spec.
+You can return a promise from the `before:spec` event handler and Cypress
+awaits it before proceeding to run the spec.
 
 ### Log the relative spec path to stdout before the spec is run
 

@@ -11,19 +11,18 @@ sidebar_custom_props: { 'new_label': true }
 # Webhooks Integration
 
 Webhooks let Cypress Cloud send a real-time HTTP request to an endpoint you own
-whenever a selected event occurs, for example when a run finishes.
+whenever a selected event occurs, for example when a test run finishes, or when Cypress Accessibility or UI Coverage reports have finished processing.
 
 ## Why Cypress Cloud Webhooks
 
-A webhook lets you build **custom automations**: update a dashboard, open a
-ticket, gate a deployment, or forward results into any internal system.
+A webhook triggers **custom automations**: update a dashboard, open a
+ticket, gate a deployment, or forward results into any internal system. For
+example, you can use a `run.completed` event to:
 
-Following the increased pace of AI-driven development, custom workflows have become more important than ever. You may use the initial "run completed" webhook in multiple ways:
-
-- Triage runs programmatically for certain characteristics that require attention, then dive deeper using tools like Cypress Cloud [CLI](/cloud/integrations/cloud-cli) or [MCP](/cloud/integrations/cloud-mcp) to retrieve specific failures or other details.
-- Automatically feed results into your own custom real-time reporting.
-- Create Jira issues based on failed runs.
-- Deliver customized Slack notifications, or notifications in any platform, based on criteria that are not customizable in Cypress Cloud.
+- Triage runs programmatically for certain characteristics that require attention, then dive deeper using tools like Cypress Cloud [CLI](/cloud/integrations/cloud-cli) or [MCP](/cloud/integrations/cloud-mcp) to retrieve specific failures or other details
+- Automatically feed results into your own custom real-time reporting
+- Create Jira issues based on failed runs
+- Deliver customized Slack notifications, or notifications in any platform, based on criteria that are not customizable in Cypress Cloud
 
 While Cypress Cloud already has many built-in methods of notifications related to run statuses (for example, [Desktop notifications](/app/core-concepts/open-mode#Cloud-run-notifications) and
 [Slack](/cloud/integrations/slack) messages), webhooks deliver a **raw JSON payload** to your
@@ -33,16 +32,17 @@ own service.
 
 **You need two things to get started:**
 
-- **The ability to manage webhooks for the project.** You must be an **Owner**, **Admin**, or **Team Admin** of your Cypress Cloud organization
-  organization. See [User roles](/cloud/account-management/users#User-roles) for
-  details. Anyone who can view the project can _view_ webhooks, but only those
-  roles can create, edit, enable, disable, delete, test, or redeliver them.
+- **The ability to manage webhooks for the project.** You must be an **Owner**,
+  **Org Admin**, or **Team Admin**. See
+  [User roles](/cloud/account-management/users#User-roles) for details. Anyone
+  who can view the project can _view_ webhooks, but only those roles can create,
+  edit, enable, disable, delete, test, or redeliver them.
 - **A publicly-reachable endpoint** that accepts `POST` requests. **HTTPS is
-  recommended.** Cypress Cloud will not deliver to private, loopback, or internal
-  network addresses (see [Security](#Security)). HTTP URLs are accepted, but
-  be aware HTTP payloads travel unencrypted.
+  recommended.** Cypress Cloud does not deliver to private, loopback, or internal
+  network addresses (see [Security](#Security)). Cypress Cloud accepts HTTP URLs,
+  but be aware HTTP payloads travel unencrypted.
 
-Webhooks are configured **per project**. You can create up to **5 webhooks per
+You configure webhooks **per project**. You can create up to **5 webhooks per
 project**.
 
 ## Send to a no-code destination
@@ -52,8 +52,8 @@ service you write, but it can just as easily be a URL provided by a tool you
 already use. If you would rather not run a server, point the **Payload URL** at a
 no-code or low-code platform, or at a SaaS tool's native inbound-webhook trigger.
 
-- **No-code and low-code platforms** accept an incoming webhook, let you map the
-  payload fields visually, and connect the result to hundreds of downstream apps:
+- **No-code and low-code platforms** accept an incoming webhook, provide a visual editor for
+  mapping the payload fields, and connect the result to hundreds of downstream apps:
   [Zapier](https://zapier.com), [Make](https://www.make.com),
   [IFTTT](https://ifttt.com), and [n8n](https://n8n.io) are common choices.
 - **Native inbound-webhook triggers** in the tool you want to reach can receive
@@ -79,7 +79,7 @@ signatures, reduce the risk another way:
 - **Keep the Payload URL secret.** Treat it like a credential. Anyone who has it
   can send requests to it, so do not share it or commit it to a repository.
 - **Rely on the destination's own authentication.** Many tools include a hard-to-guess
-  token in the generated URL, or let you require an auth header or shared token
+  token in the generated URL, or can require an auth header or shared token
   on the inbound request. Use those controls when they are available.
 
 A secret Payload URL is weaker than a verified signature, because it proves only
@@ -110,22 +110,22 @@ was not altered. Prefer signature verification when the destination supports it.
 
 In the **Add webhook** dialog, configure the following:
 
-- **Payload URL** _(required)_: The URL Cypress Cloud will send a `POST` request
+- **Payload URL** _(required)_: The URL Cypress Cloud sends a `POST` request
   to, for example `https://example.com/receive-webhook`.
 - **Secret** _(optional, recommended)_: A signing secret used to verify that a
   request genuinely came from Cypress Cloud. Provide your own value (at least 16
   characters) or click **Generate secret** to create a random one. **Copy and
-  store the secret somewhere safe. It is shown only once and cannot be viewed
-  again**. If you lose it, you can rotate it later by editing the webhook. See
+  store the secret somewhere safe. Cypress Cloud shows the secret only once, and you
+  cannot view it again**. If you lose it, you can rotate it later by editing the webhook. See
   [Verify webhook signatures](#Verify-webhook-signatures).
 - **Custom Authorization header** _(optional)_: A header name and value sent
   on every request, independent of the secret above, for an endpoint that
-  requires its own `Authorization` header. The value is stored securely and
-  cannot be viewed again after saving.
-- **Events that will trigger webhook**: Select which events should be delivered
+  requires its own `Authorization` header. Cypress Cloud stores the value securely,
+  and you cannot view it again after saving.
+- **Events that will trigger webhook**: Select which events Cypress Cloud delivers
   to this endpoint. At least one event is required.
 - **Enable this webhook**: Whether the webhook is active. Enabled by default;
-  disabled webhooks not called when.
+  disabled webhooks receive no deliveries.
 
 <DocsImage
   src="/img/cloud/integrations/webhooks/add-webhook-modal.png"
@@ -133,7 +133,7 @@ In the **Add webhook** dialog, configure the following:
   width={600}
 />
 
-Click **Add webhook** to save. Cypress Cloud will begin delivering the selected
+Click **Add webhook** to save. Cypress Cloud begins delivering the selected
 events to your endpoint.
 
 ## Send a test event
@@ -154,8 +154,8 @@ subscribed to, so you can preview its payload before turning it on.
 
 A test send uses realistic but fabricated data, not your project's actual
 latest run. See [Payload](#Payload) for each event type's example request
-body. Test events are delivered once and are **not** retried, regardless of
-the outcome. The resulting delivery appears in the webhook's delivery history
+body. Cypress Cloud delivers test events once and does **not** retry them, regardless
+of the outcome. The resulting delivery appears in the webhook's delivery history
 like any other.
 
 ## Manage webhooks
@@ -169,16 +169,20 @@ manage it:
 - **Enable or disable**: Toggle the switch on the row. A disabled webhook keeps
   its configuration but receives no deliveries.
 - **Edit**: Open the Options menu and select **Edit** to change the URL, events,
-  or secret.
+  secret, or custom Authorization header.
   - **Generate new secret**: Leaving the **Secret** field blank keeps the
     existing secret. To rotate it, enter a new value (at least 16 characters) or
     click **Generate new secret**. Copy the new secret and store it somewhere
-    safe. It is shown only once. After you save, the previous secret no longer
+    safe. Cypress Cloud shows the new secret only once. After you save, the previous secret no longer
     verifies requests, so update your endpoint to use the new value.
+  - **Custom Authorization header**: Leaving the fields blank keeps the existing
+    header. Enter a new name and value to set or rotate it. Cypress Cloud shows
+    the value only once, and you cannot view it again. You can also clear the header so
+    later deliveries no longer include it.
 - **Recent deliveries**: Open the Options menu and select **Recent deliveries** to
   review delivery history. See [Delivery history and retries](#Delivery-history-and-retries).
-- **Delete**: Open the Options menu and select **Delete**. This permanently
-  removes the webhook **and its delivery history**. This cannot be undone.
+- **Delete**: Open the Options menu and select **Delete**. Deleting permanently
+  removes the webhook **and its delivery history**. You cannot undo deletion.
 
 <DocsImage
   src="/img/cloud/integrations/webhooks/webhook-row.png"
@@ -202,6 +206,7 @@ Select one or more of the following events when creating or editing a webhook:
 | `run.completed`               | Sent when a Cypress Cloud run finished and resolves to one of the following states: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`. |
 | `run.accessibility.completed` | Sent when a run's Accessibility report finishes processing.                                                                                    |
 | `run.uiCoverage.completed`    | Sent when a run's UI Coverage report finishes processing.                                                                                      |
+| `run.allSettled`              | Sent when the run and any Accessibility or UI Coverage reports for it have settled, with details for each.                                     |
 
 See [Payload](#Payload) for each event type's fields and an example request body.
 
@@ -235,6 +240,31 @@ delivery as **at-least-once** and make your handler idempotent by keying on
 
 :::
 
+:::caution
+
+The [signature](#Verify-webhook-signatures) covers only `X-Cypress-Timestamp`
+and the request body. The other `X-Cypress-*` headers, including
+`X-Cypress-Event`, `X-Cypress-Event-Id`, and `X-Cypress-Idempotency-Key`, are
+not signed, so anyone who has seen a delivery can send it again with new values
+in them and the signature still verifies.
+
+- To ignore a delivery sent a second time, remember each `X-Cypress-Signature`
+  you accept until its timestamp falls outside your tolerance window, and answer
+  a repeated one with `200` without processing it again. Keep deduplicating on
+  `X-Cypress-Event-Id` as well: a retry from Cypress Cloud carries a new
+  timestamp, and so a new signature. The two do different jobs: the signature
+  catches a captured request sent again with new unsigned headers, and
+  `X-Cypress-Event-Id` catches Cypress Cloud's own retries. `X-Cypress-Event-Id`
+  is idempotency for at-least-once delivery, not a security boundary.
+- Don't decide which event a request carries from `X-Cypress-Event` alone. The
+  body does not always tell events apart either: a `run.allSettled` body for a
+  run without Accessibility or UI Coverage has the same fields as a
+  `run.completed` body. If your handler treats events differently, give each
+  event its own webhook, with its own Payload URL and signing secret. A request
+  that verifies with that secret can only be that webhook's event.
+
+:::
+
 <details>
 <summary><code>run.completed</code> payload</summary>
 
@@ -246,7 +276,7 @@ following fields:
 | `runNumber`         | `number`           | The run's number in Cypress Cloud.                                                                             |
 | `runUrl`            | `string`           | Link to the run in Cypress Cloud.                                                                              |
 | `projectId`         | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run.                              |
-| `projectName`       | `string`           | The project name, which can be chosen in your Cypress Cloud settings.                                          |
+| `projectName`       | `string`           | The project name, which you can choose in your Cypress Cloud settings.                                         |
 | `status`            | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.                                         |
 | `statusReason`      | `string`           | Human-readable explanation of the status.                                                                      |
 | `createdAt`         | `string`           | ISO 8601 timestamp when the run started.                                                                       |
@@ -328,7 +358,7 @@ Sent when a run's Accessibility report finishes processing.
 | `runNumber`    | `number`           | The run's number in Cypress Cloud.                                                |
 | `runUrl`       | `string`           | Link to the run in Cypress Cloud.                                                 |
 | `projectId`    | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run. |
-| `projectName`  | `string`           | The project name, which can be chosen in your Cypress Cloud settings.             |
+| `projectName`  | `string`           | The project name, which you can choose in your Cypress Cloud settings.            |
 | `status`       | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.            |
 | `createdAt`    | `string`           | ISO 8601 timestamp when the run started.                                          |
 | `completedAt`  | `string` \| `null` | ISO 8601 timestamp when the run finished.                                         |
@@ -337,17 +367,17 @@ Sent when a run's Accessibility report finishes processing.
 
 `accessibility` object:
 
-| Field                     | Type               | Description                                                                                                  |
-| ------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `status`                  | `string`           | Accessibility processing status: `processing`, `processing_failed`, `processed`, or `processed_with_errors`. |
-| `reportUrl`               | `string`           | Link to the Accessibility report in Cypress Cloud.                                                           |
-| `isPartialReport`         | `boolean`          | `true` if the report is missing data for some specs.                                                         |
-| `isReprocessedReport`     | `boolean`          | `true` once the report has been regenerated at least once.                                                   |
-| `score`                   | `number` \| `null` | Accessibility score. `null` when there's no readable report (for example a processing failure).              |
-| `violationCount`          | `number` \| `null` | Total number of violations.                                                                                  |
-| `violationCountsByImpact` | `object` \| `null` | Violation counts broken down by impact: `critical`, `serious`, `moderate`, `minor`.                          |
-| `elementCountsByStatus`   | `object` \| `null` | Element counts broken down by status: `fail`, `incomplete`, `ignore`.                                        |
-| `axeVersion`              | `string` \| `null` | The axe-core version used to generate the report.                                                            |
+| Field                     | Type               | Description                                                                                     |
+| ------------------------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `status`                  | `string`           | Accessibility processing status: `processed`, `processed_with_errors`, or `processing_failed`.  |
+| `reportUrl`               | `string`           | Link to the Accessibility report in Cypress Cloud.                                              |
+| `isPartialReport`         | `boolean`          | `true` if the report is missing data for some specs.                                            |
+| `isReprocessedReport`     | `boolean`          | `true` once the report has been regenerated at least once.                                      |
+| `score`                   | `number` \| `null` | Accessibility score. `null` when there's no readable report (for example a processing failure). |
+| `violationCount`          | `number` \| `null` | Total number of violations.                                                                     |
+| `violationCountsByImpact` | `object` \| `null` | Violation counts broken down by impact: `critical`, `serious`, `moderate`, `minor`.             |
+| `elementCountsByStatus`   | `object` \| `null` | Element counts broken down by status: `fail`, `incomplete`, `ignore`.                           |
+| `axeVersion`              | `string` \| `null` | The axe-core version used to generate the report.                                               |
 
 :::caution
 
@@ -406,7 +436,7 @@ Sent when a run's UI Coverage report finishes processing.
 | `runNumber`    | `number`           | The run's number in Cypress Cloud.                                                |
 | `runUrl`       | `string`           | Link to the run in Cypress Cloud.                                                 |
 | `projectId`    | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run. |
-| `projectName`  | `string`           | The project name, which can be chosen in your Cypress Cloud settings.             |
+| `projectName`  | `string`           | The project name, which you can choose in your Cypress Cloud settings.            |
 | `status`       | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.            |
 | `createdAt`    | `string`           | ISO 8601 timestamp when the run started.                                          |
 | `completedAt`  | `string` \| `null` | ISO 8601 timestamp when the run finished.                                         |
@@ -415,18 +445,18 @@ Sent when a run's UI Coverage report finishes processing.
 
 `uiCoverage` object:
 
-| Field                   | Type               | Description                                                                                                |
-| ----------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
-| `status`                | `string`           | UI Coverage processing status: `processing`, `processing_failed`, `processed`, or `processed_with_errors`. |
-| `reportUrl`             | `string`           | Link to the UI Coverage report in Cypress Cloud.                                                           |
-| `isPartialReport`       | `boolean`          | `true` if the report is missing data for some specs.                                                       |
-| `isReprocessedReport`   | `boolean`          | `true` once the report has been regenerated at least once.                                                 |
-| `coverage`              | `number` \| `null` | UI Coverage score. `null` when there's no readable report (for example a processing failure).              |
-| `testedElementsCount`   | `number` \| `null` | Number of interactive elements exercised by the run.                                                       |
-| `untestedElementsCount` | `number` \| `null` | Number of interactive elements not exercised by the run.                                                   |
-| `testedLinksCount`      | `number` \| `null` | Number of links exercised by the run.                                                                      |
-| `untestedLinksCount`    | `number` \| `null` | Number of links not exercised by the run.                                                                  |
-| `viewCount`             | `number` \| `null` | Number of distinct views (pages) covered.                                                                  |
+| Field                   | Type               | Description                                                                                   |
+| ----------------------- | ------------------ | --------------------------------------------------------------------------------------------- |
+| `status`                | `string`           | UI Coverage processing status: `processed`, `processed_with_errors`, or `processing_failed`.  |
+| `reportUrl`             | `string`           | Link to the UI Coverage report in Cypress Cloud.                                              |
+| `isPartialReport`       | `boolean`          | `true` if the report is missing data for some specs.                                          |
+| `isReprocessedReport`   | `boolean`          | `true` once the report has been regenerated at least once.                                    |
+| `coverage`              | `number` \| `null` | UI Coverage score. `null` when there's no readable report (for example a processing failure). |
+| `testedElementsCount`   | `number` \| `null` | Number of interactive elements exercised by the run.                                          |
+| `untestedElementsCount` | `number` \| `null` | Number of interactive elements not exercised by the run.                                      |
+| `testedLinksCount`      | `number` \| `null` | Number of links exercised by the run.                                                         |
+| `untestedLinksCount`    | `number` \| `null` | Number of links not exercised by the run.                                                     |
+| `viewCount`             | `number` \| `null` | Number of distinct views (pages) covered.                                                     |
 
 :::caution
 
@@ -449,6 +479,116 @@ passed run whose UI Coverage report `processing_failed`).
   "completedAt": "2026-01-01T00:01:36.000Z",
   "commitSha": "c5b1b1b6f5e2f6e2a1e6b1b1b6f5e2f6e2a1e6b1",
   "commitBranch": "main",
+  "uiCoverage": {
+    "status": "processed",
+    "reportUrl": "https://cloud.cypress.io/projects/abc123/runs/42/ui-coverage",
+    "isPartialReport": false,
+    "isReprocessedReport": false,
+    "coverage": 78,
+    "testedElementsCount": 156,
+    "untestedElementsCount": 44,
+    "testedLinksCount": 32,
+    "untestedLinksCount": 8,
+    "viewCount": 12
+  }
+}
+```
+</details>
+
+</details>
+
+<details>
+<summary><code>run.allSettled</code> payload</summary>
+
+Sent when everything expected for the run has settled: `run.completed`, plus any
+Accessibility or UI Coverage report that the run produces. Subscribe to this
+event if you want a single delivery per run instead of matching
+`run.completed`, `run.accessibility.completed`, and `run.uiCoverage.completed`
+independently. `run.allSettled` also covers future post-run reporting without requiring you
+to subscribe to each product event as it appears.
+
+If the run does not use Accessibility or UI Coverage, `run.allSettled` still
+fires once the run completes, with only the `run.completed` fields.
+
+The payload contains every `run.completed` field, plus two optional objects:
+
+| Field           | Type     | Description                                                                                                                                                                          |
+| --------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `accessibility` | `object` | Same fields as the `accessibility` object in `run.accessibility.completed`. Present only when the run produced an Accessibility report and your plan includes Cypress Accessibility. |
+| `uiCoverage`    | `object` | Same fields as the `uiCoverage` object in `run.uiCoverage.completed`. Present only when the run produced a UI Coverage report and your plan includes UI Coverage.                    |
+
+When an object does not apply, Cypress Cloud leaves it out of the payload rather
+than setting it to `null`.
+
+**Errors.** On this event only, a section's `status` can also be
+`fetch_failed`. That value means Cypress Cloud could not read the report after
+retrying for about 15 minutes. The section's metrics are `null`, and
+`reportUrl` still links to the report, so you can tell a failed fetch apart
+from a product the run did not use. Product-specific events
+(`run.accessibility.completed` and `run.uiCoverage.completed`) never use
+`fetch_failed`; their `status` values stay
+`processed`, `processed_with_errors`, or `processing_failed`.
+
+**Reprocessing.** If an Accessibility or UI Coverage report is regenerated,
+Cypress Cloud sends a new `run.accessibility.completed` or
+`run.uiCoverage.completed` event for that report, and a new `run.allSettled`
+event once everything for that attempt has settled. Each has a new
+`X-Cypress-Event-Id`, and `isReprocessedReport` is `true` in the regenerated
+section.
+
+<details>
+<summary>Example <code>run.allSettled</code> request body</summary>
+```json
+{
+  "runNumber": 42,
+  "runUrl": "https://cloud.cypress.io/projects/abc123/runs/42",
+  "projectId": "abc123",
+  "projectName": "Example Project",
+  "status": "failed",
+  "statusReason": "Run failed",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "completedAt": "2026-01-01T00:01:36.000Z",
+  "totalDuration": 96000,
+  "totalTests": 100,
+  "totalPassed": 97,
+  "totalFailed": 1,
+  "totalPending": 1,
+  "totalSkipped": 1,
+  "flakyTestCount": 2,
+  "totalSpecs": 4,
+  "commitSha": "c5b1b1b6f5e2f6e2a1e6b1b1b6f5e2f6e2a1e6b1",
+  "commitBranch": "main",
+  "commitMessage": "fix: something",
+  "commitAuthorName": "Ada Lovelace",
+  "commitAuthorEmail": "ada@example.com",
+  "commitUrl": "https://github.com/example/repo/commit/c5b1b1b6f5e2f6e2a1e6b1b1b6f5e2f6e2a1e6b1",
+  "ciProvider": "circleci",
+  "ciBuildId": "circleci-workflow-777",
+  "ciUrl": "https://circleci.com/gh/example/repo/555",
+  "ciPullRequestId": null,
+  "ciPullRequestUrl": null,
+  "tags": ["nightly"],
+  "groups": ["chrome"],
+  "accessibility": {
+    "status": "processed",
+    "reportUrl": "https://cloud.cypress.io/projects/abc123/runs/42/accessibility",
+    "isPartialReport": false,
+    "isReprocessedReport": false,
+    "score": 92,
+    "violationCount": 6,
+    "violationCountsByImpact": {
+      "critical": 0,
+      "serious": 2,
+      "moderate": 3,
+      "minor": 1
+    },
+    "elementCountsByStatus": {
+      "fail": 6,
+      "incomplete": 2,
+      "ignore": 4
+    },
+    "axeVersion": "4.10.0"
+  },
   "uiCoverage": {
     "status": "processed",
     "reportUrl": "https://cloud.cypress.io/projects/abc123/runs/42/ui-coverage",
@@ -490,7 +630,7 @@ The signing secret provides three things:
 A signing secret does **not** encrypt the payload. Use HTTPS when the payload
 must stay confidential. Over HTTP, anyone on the network path can still read
 the request body and headers. The HMAC still proves the request came from
-Cypress Cloud and was not modified, because the secret itself is never sent.
+Cypress Cloud and was not modified, because Cypress Cloud never sends the secret itself.
 
 :::
 
@@ -504,24 +644,28 @@ X-Cypress-Signature: sha256=<hex-encoded HMAC>
 
 The signature is an **HMAC-SHA256**, keyed with your signing secret, of the
 string `` `${timestamp}.${rawBody}` `` (the value of the `X-Cypress-Timestamp`
-header, a literal `.`, then the **exact raw bytes of the request body**). The
-result is hex-encoded and prefixed with `sha256=`.
+header, a literal `.`, then the **exact raw request body** as Cypress Cloud
+sent it). The result is hex-encoded and prefixed with `sha256=`.
 
 To verify a request:
 
 1. Read the `X-Cypress-Signature` and `X-Cypress-Timestamp` headers and the
    **raw** request body (before any JSON parsing; parsing and re-serializing can
-   change the bytes and break verification).
-2. Optionally reject the request if the timestamp is too old (for example, more
-   than five minutes) to guard against replay attacks.
+   change the body and break verification).
+2. Reject the request if the timestamp is too old (for example, more than five
+   minutes) to guard against replay attacks. Step 5 depends on this window:
+   without it, the record of accepted signatures has no natural bound.
 3. Recompute `HMAC-SHA256(secret, "${timestamp}.${rawBody}")`, hex-encode it, and
    prefix `sha256=`.
 4. Compare it to `X-Cypress-Signature` using a **constant-time** comparison.
+5. Ignore a signature you have already accepted within the tolerance window.
+   Cypress Cloud doesn't sign the headers other than the timestamp and the signature (see
+   [Request headers](#Request-headers)).
 
 :::note
 
-If a webhook has no signing secret, Cypress Cloud still delivers events, but the
-`X-Cypress-Signature` header is omitted. Configure a secret to enable
+If a webhook has no signing secret, Cypress Cloud still delivers events, but
+omits the `X-Cypress-Signature` header. Configure a secret to enable
 verification.
 
 :::
@@ -529,8 +673,13 @@ verification.
 ### Verify a signature in your handler
 
 The following example handlers add a route to an existing Express or Flask app.
-They read the raw body, reject stale timestamps, recompute the HMAC, and compare
-it in constant time.
+The handlers read the raw body, reject stale timestamps, recompute the HMAC, compare it
+in constant time, and ignore a signature they have already accepted. The handlers do
+not show deduplication on `X-Cypress-Event-Id` (or `X-Cypress-Idempotency-Key`),
+which a real handler still needs for retries. The example keeps the record of accepted
+signatures in memory, in one process: with several worker processes (for example,
+`gunicorn --workers`) or more than one instance, keep it in a store they share,
+and with a threaded server, check and record a signature under one lock.
 
 <details>
 <summary>Node.js and Python examples</summary>
@@ -542,6 +691,10 @@ it in constant time.
 const crypto = require('crypto')
 
 const SIGNING_SECRET = process.env.CYPRESS_WEBHOOK_SECRET
+const TOLERANCE_SECONDS = 300
+
+// Signatures accepted within the tolerance window, with their timestamps.
+const acceptedSignatures = new Map()
 
 // Register this route before express.json() or any other body parser.
 // Those parsers consume the body and would break signature verification.
@@ -558,7 +711,13 @@ app.post(
     }
 
     // Reject stale requests to protect against replay attacks (5 minute window).
-    if (Math.abs(Date.now() / 1000 - Number(timestamp)) > 300) {
+    // Check the format first: Number() turns anything else into NaN, and NaN
+    // passes the comparison. A timestamp in seconds has at most 10 digits.
+    const now = Date.now() / 1000
+    if (
+      !/^\d{1,10}$/.test(timestamp) ||
+      Math.abs(now - Number(timestamp)) > TOLERANCE_SECONDS
+    ) {
       return res.status(400).send('Timestamp outside of tolerance')
     }
 
@@ -576,6 +735,18 @@ app.post(
     if (!valid) {
       return res.status(401).send('Invalid signature')
     }
+
+    // The X-Cypress-Event-Id header is not signed, so a delivery sent again
+    // with a new ID still verifies. Its signature is the same, though.
+    for (const [seen, seenTimestamp] of acceptedSignatures) {
+      if (now - seenTimestamp > TOLERANCE_SECONDS) {
+        acceptedSignatures.delete(seen)
+      }
+    }
+    if (acceptedSignatures.has(signature)) {
+      return res.status(200).send('Already received')
+    }
+    acceptedSignatures.set(signature, Number(timestamp))
 
     const event = JSON.parse(rawBody.toString('utf8'))
     // ...handle the event...
@@ -597,6 +768,10 @@ import time
 from flask import abort, request
 
 SIGNING_SECRET = os.environ["CYPRESS_WEBHOOK_SECRET"].encode()
+TOLERANCE_SECONDS = 300
+
+# Signatures accepted within the tolerance window, with their timestamps.
+accepted_signatures = {}
 
 
 @app.post("/receive-webhook")
@@ -611,7 +786,15 @@ def receive_webhook():
         abort(400, "Missing signature headers")
 
     # Reject stale requests to protect against replay attacks (5 minute window).
-    if abs(time.time() - int(timestamp)) > 300:
+    # Check the format first: int() raises on anything else, and on a very
+    # long digit string, which Flask would answer with a 500. A timestamp in
+    # seconds has at most 10 digits.
+    now = time.time()
+    if (
+        not timestamp.isdecimal()
+        or len(timestamp) > 10
+        or abs(now - int(timestamp)) > TOLERANCE_SECONDS
+    ):
         abort(400, "Timestamp outside of tolerance")
 
     signed = f"{timestamp}.".encode() + raw_body
@@ -620,6 +803,15 @@ def receive_webhook():
 
     if not hmac.compare_digest(signature, expected):
         abort(401, "Invalid signature")
+
+    # The X-Cypress-Event-Id header is not signed, so a delivery sent again
+    # with a new ID still verifies. Its signature is the same, though.
+    for seen, seen_timestamp in list(accepted_signatures.items()):
+        if now - seen_timestamp > TOLERANCE_SECONDS:
+            del accepted_signatures[seen]
+    if signature in accepted_signatures:
+        return "Already received", 200
+    accepted_signatures[signature] = int(timestamp)
 
     # event = json.loads(raw_body)
     # ...handle the event...
@@ -651,7 +843,7 @@ Delivery statuses:
 - **Delivered**: The endpoint returned a success response.
 - **Pending**: The delivery is queued or in progress.
 - **Retrying**: An attempt failed and another is scheduled.
-- **Failed. No more retries.**: The delivery failed and will not be retried.
+- **Failed. No more retries.**: The delivery failed, and Cypress Cloud makes no further retries.
   Automatic retries are exhausted, the failure is not retryable (for example a
   `3xx` or a `4xx` other than `408` or `429`), or the delivery was a
   [test send](#Send-a-test-event).
@@ -664,8 +856,8 @@ Delivery statuses:
 
 :::note
 
-For your protection, sensitive request headers (such as `Authorization` and
-`Cookie`) are redacted in the stored delivery history.
+For your protection, Cypress Cloud redacts sensitive request headers (such as
+`Authorization` and `Cookie`) in the stored delivery history.
 
 :::
 
@@ -674,13 +866,14 @@ For your protection, sensitive request headers (such as `Authorization` and
 If a delivery fails, Cypress Cloud retries it until it succeeds or reaches **10
 total attempts** (the first attempt plus up to 9 retries), using an exponential
 backoff schedule with jitter. Cypress Cloud retries on network/transport errors
-and on HTTP `408`, `429`, and `5xx` responses. Other completed responses (`3xx`
-and other `4xx`) and blocked destinations are treated as permanent failures and
-are **not** retried. [Test sends](#Send-a-test-event) are never retried.
+and on HTTP `408`, `429`, and `5xx` responses. Cypress Cloud treats other completed
+responses (`3xx` and other `4xx`) and blocked destinations as permanent failures
+and does **not** retry them. Cypress Cloud never retries
+[test sends](#Send-a-test-event).
 
-Each attempt is listed under that delivery in **Recent deliveries**. Expand the
-delivery to see **Attempt 1**, **Attempt 2**, and so on. Automatic retries are
-tagged **Retry**; a redelivery you trigger is tagged **Manual retry**.
+**Recent deliveries** lists each attempt under that delivery. Expand the
+delivery to see **Attempt 1**, **Attempt 2**, and so on. Cypress Cloud tags
+automatic retries **Retry** and a redelivery you trigger **Manual retry**.
 
 To resend a failed or exhausted delivery yourself, expand it in the **Recent
 deliveries** dialog and choose **Redeliver**. A redelivery reuses the original
@@ -693,28 +886,28 @@ We recommend that you always use an `https://` Payload URL so payloads are encry
 
 In addition, Cypress Cloud applies several protections to webhook delivery:
 
-- **Endpoint restrictions**: Destination URLs are resolved and validated before
-  each delivery. Requests to private, loopback, and link-local addresses are
-  blocked to prevent server-side request forgery (SSRF).
+- **Endpoint restrictions**: Cypress Cloud resolves and validates destination
+  URLs before each delivery, and blocks requests to private, loopback, and
+  link-local addresses to prevent server-side request forgery (SSRF).
 - **No redirects**: Cypress Cloud does not follow HTTP redirects; the Payload URL
   must respond directly.
-- **Timeouts and limits**: Each attempt times out after 10 seconds, and only the
-  first 8&nbsp;KB of your response body is read and stored.
-- **Secret storage**: Signing secrets are encrypted at rest and are never
-  returned by the Cypress Cloud API. A secret is shown only once, when you set
-  it.
+- **Timeouts and limits**: Each attempt times out after 10 seconds, and Cypress
+  Cloud reads and stores only the first 8&nbsp;KB of your response body.
+- **Secret storage**: Cypress Cloud encrypts signing secrets at rest, and the
+  Cypress Cloud API never returns them. Cypress Cloud shows a secret only once,
+  when you set it.
 
 ## Troubleshooting
 
 ### Run completed webhook fires too late
 
-The `run.completed` webhook is delivered when Cypress Cloud marks the run as
+Cypress Cloud delivers the `run.completed` webhook when it marks the run as
 complete. If you record in parallel or with multiple groups, Cypress Cloud waits
 for the [Run Completion Delay](/cloud/account-management/projects#Run-Completion-Delay)
 (60 seconds by default) after the last known group finishes, in case more groups
-still join. That wait is what delays the webhook, because if all tests haven't been recorded yet, the final state of the run is not known.
+still join. That wait is what delays the webhook, because until Cypress Cloud has recorded all tests, it doesn't know the final state of the run.
 
 To complete the run as soon as your expected groups have finished, call the
 [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API).
-Cypress Cloud then skips the remaining delay, and the webhook is delivered when
+Cypress Cloud then skips the remaining delay, and delivers the webhook when
 in-progress groups finish.

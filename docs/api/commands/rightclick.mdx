@@ -52,15 +52,11 @@ cy.window().rightclick() // Errors, 'window' does not yield DOM element
 
 <Icon name="angle-right" /> **position _(String)_**
 
-The position where the right click should be issued. The `center` position is
+The position where `.rightclick()` issues the right click. The `center` position is
 the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-<DocsImage
-  src="/img/api/coordinates-diagram.svg"
-  alt="Diagram of the nine positions on an element's border box: topLeft, top, and topRight along the top edge; left, center, and right across the middle; and bottomLeft, bottom, and bottomRight along the bottom edge. Edge and corner positions sit just inside the outer edge of the border box, on the border when the element has one, and never in the margin. center is the default."
-  noBorder
-/>
+<ActionPositionDiagram />
 
 <Icon name="angle-right" /> **x _(Number)_**
 
@@ -137,7 +133,7 @@ cy.get('[data-cy=context-menu]').should('not.exist')
 `.rightclick()` never opens the browser's own context menu, so a test can pass
 even when your app forgets to call `preventDefault()` and real users see two
 menus. To check, add a `contextmenu` listener on the window after the page
-loads. It runs after your app's own handlers, so the event it receives shows
+loads. The listener runs after your app's own handlers, so the event it receives shows
 whether one of them called `preventDefault()`.
 
 ```javascript
@@ -167,7 +163,7 @@ cy.get('[data-cy=file-row]').first().rightclick('topRight')
 
 #### Specify explicit coordinates relative to the top left corner
 
-The right click below is issued inside of the element (15px from the left and
+Cypress issues the right click below inside of the element (15px from the left and
 40px from the top).
 
 ```javascript
@@ -313,8 +309,10 @@ events in order:
 4. `pointerup`
 5. `mouseup`
 
-Each event carries `button: 2` and `buttons: 2`. `.rightclick()` does not fire a
-`click` event.
+Each event carries `button: 2`. `pointerdown`, `mousedown`, and `contextmenu`
+carry `buttons: 2`, and `pointerup` and `mouseup` carry `buttons: 0`, because
+the right button has been released, as in a real right click. `.rightclick()`
+does not fire a `click` event.
 
 ### Focus
 
@@ -353,8 +351,8 @@ Both commands wait for the element to reach an
 
 - `.rightclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.rightclick()` itself is not retried. It fires once when the element is
-  actionable. Assertions chained after `.rightclick()` are retried until they
+- Cypress doesn't retry `.rightclick()` itself. `.rightclick()` fires once when the element is
+  actionable. Cypress retries assertions chained after `.rightclick()` until they
   pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
@@ -395,6 +393,7 @@ described in [Events fired by a right click](#Events-fired-by-a-right-click).
 
 | Version                                      | Changes                                                                                                            |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| [16.2.1](/app/references/changelog#16-2-1)   | `pointerup` and `mouseup` carry `buttons: 0`                                                                       |
 | [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments |
 | [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                      |
 | [5.0.0](/app/references/changelog#5-0-0)     | Added options `altKey`, `ctrlKey`, `metaKey`, and `shiftKey`                                                       |

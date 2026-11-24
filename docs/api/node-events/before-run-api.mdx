@@ -9,11 +9,11 @@ sidebar_label: 'before:run'
 # Before Run Event
 
 The `before:run` event fires before a run starts. When running cypress via
-`cypress open`, the event will fire when opening a project.
+`cypress open`, the event fires when opening a project.
 
-The event will fire each time `cypress run` executes. As a result, if running
+The event fires each time `cypress run` executes. As a result, if running
 your specs in [parallel](/cloud/features/smart-orchestration/parallelization), the
-event will fire once for each machine on which the tests are run.
+event fires once for each machine that runs the tests.
 
 ## Syntax
 
@@ -40,14 +40,14 @@ on('before:run', (details) => {
 <Icon name="angle-right" /> **details _(Object)_**
 
 Details of the run, including the project config, system information, and the
-version of Cypress. More details are included when running via `cypress run`.
+version of Cypress. The object includes more details when you run via `cypress run`.
 
 ## Usage
 
-You can return a promise from the `before:run` event handler and it will be
-awaited before Cypress proceeds running your specs.
+You can return a promise from the `before:run` event handler and Cypress
+awaits it before proceeding to run your specs.
 
-### Log the browser and the number of specs that will be run
+### Log the browser and the number of specs to run
 
 :::cypress-config-plugin-example
 
@@ -117,6 +117,13 @@ on('before:run', (details) => {
 ```
 
 :::
+
+### Manage the Run Completion Delay
+
+When the recording begins, `details.runUrl` lets you call the
+[Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API)
+before any spec starts. Pass `expectedGroupCount` so the call is safe from every machine. See the
+[`before:run` example](/cloud/features/smart-orchestration/parallelization#before-run-example).
 
 ## See also
 

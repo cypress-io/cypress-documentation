@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="160" viewBox="0 0 720 160" role="img" aria-labelledby="t d">
+<title id="t">How cy.task() runs code in Node.js</title>
+<desc id="d">Your test in the browser calls cy.task() with an event name and an argument. The argument is serialized the way JSON.stringify() would serialize it and sent to your task handler, which runs in Node.js. The handler's return value is serialized the same way and yielded to your test.</desc>
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#5A5F7A"/>
+  </marker>
+</defs>
+<style>
+  /* Colors are @cypress-design/css tokens: gray, indigo, and jade. */
+  .card { fill: #F3F4FA; stroke: #E1E3ED; }
+  .box { fill: #FFFFFF; stroke: #747994; stroke-width: 1.25; }
+  .hl { fill: #E4FBF2; stroke: #00814D; stroke-width: 1.5; }
+  .line { fill: none; stroke: #5A5F7A; stroke-width: 1.5; }
+  .title { font: 600 15px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #1B1E2E; }
+  .sub { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #5A5F7A; }
+  .sub-hl { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #005F39; }
+  .lbl { font: 600 12.5px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; fill: #3A46CC; }
+</style>
+<rect class="card" x="0.5" y="0.5" width="719" height="159" rx="12"/>
+
+<!-- Actors -->
+<rect class="hl" x="20" y="40" width="200" height="76" rx="8"/>
+<text class="title" x="120" y="73" text-anchor="middle">Your task handler</text>
+<text class="sub-hl" x="120" y="95" text-anchor="middle">runs in Node.js</text>
+
+<rect class="box" x="500" y="40" width="200" height="76" rx="8"/>
+<text class="title" x="600" y="73" text-anchor="middle">Your test</text>
+<text class="sub" x="600" y="95" text-anchor="middle">runs in the browser</text>
+
+<!-- Round trip -->
+<path class="line" d="M 498 64 H 226" marker-end="url(#arr)"/>
+<text class="lbl" x="360" y="30" text-anchor="middle">cy.task('event', arg)</text>
+<text class="sub" x="360" y="84" text-anchor="middle">serialized like JSON.stringify()</text>
+<path class="line" d="M 222 98 H 494" marker-end="url(#arr)"/>
+<text class="lbl" x="360" y="136" text-anchor="middle">yields the return value</text>
+</svg>

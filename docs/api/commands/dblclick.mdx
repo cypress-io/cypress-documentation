@@ -50,11 +50,7 @@ The position where Cypress issues the double-click. The `center` position is the
 default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-<DocsImage
-  src="/img/api/coordinates-diagram.svg"
-  alt="Diagram of the nine positions on an element's border box: topLeft, top, and topRight along the top edge; left, center, and right across the middle; and bottomLeft, bottom, and bottomRight along the bottom edge. Edge and corner positions sit just inside the outer edge of the border box, on the border when the element has one, and never in the margin. center is the default."
-  noBorder
-/>
+<ActionPositionDiagram />
 
 <Icon name="angle-right" /> **x _(Number)_**
 
@@ -246,14 +242,9 @@ which can hold keys down across multiple commands. See
 
 :::
 
-The following keys can be combined with `.dblclick()` through the `options`.
+You can combine the following keys with `.dblclick()` through the `options`.
 
-| Option     | Notes                                                                                         |
-| ---------- | --------------------------------------------------------------------------------------------- |
-| `altKey`   | Activates the alt key (option key for Mac). Aliases: `optionKey`.                             |
-| `ctrlKey`  | Activates the control key. Aliases: `controlKey`.                                             |
-| `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`. |
-| `shiftKey` | Activates the shift key.                                                                      |
+<ClickModifierKeys />
 
 ##### Alt + double-click the first list item
 
@@ -307,15 +298,15 @@ cy.get('[data-cy=title]').type('{selectall}')
 <HeaderRequirements />
 
 - `.dblclick()` requires being chained off a command that yields DOM element(s).
-- `.dblclick()` cannot be called on a `<select>` element. Use
+- You can't call `.dblclick()` on a `<select>` element. Use
   [`.select()`](/api/commands/select) to change its value.
 
 <HeaderAssertions />
 
 - `.dblclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.dblclick()` itself is not retried. It fires once when the element is
-  actionable. Assertions chained after `.dblclick()` are retried until they
+- Cypress doesn't retry `.dblclick()` itself. `.dblclick()` fires once when the element is
+  actionable. Cypress retries assertions chained after `.dblclick()` until they
   pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 

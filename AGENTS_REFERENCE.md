@@ -84,23 +84,20 @@ Three files at the site root index all of that, and none is hand-maintained:
   don't set a `sidebar_position`, leave it off your new page too and let it sort
   alphabetically rather than introducing positions into a folder that doesn't use
   them. Only add `sidebar_position` where the folder already relies on it.
-- **Moving, renaming, or deleting a page requires a redirect.** Add a `301` entry
-  to `netlify.toml` (it already holds ~200) so existing bookmarks and inbound
-  links keep working:
-  ```toml
-  [[redirects]]
-    from = "/old/path"
-    to = "/new/path"
-    status = 301
-    force = true
-  ```
-  Add the same rule, at the same position, to `static/_redirects`, which
-  Cloudflare reads. Netlify serves production while hosting moves to
-  Cloudflare, so the two lists must match. Both hosts use the first rule that
-  matches a path:
+- **Moving, renaming, or deleting a page requires a redirect.** Add a `301` line
+  to `static/_redirects` so existing bookmarks and
+  inbound links keep working:
   ```text title="static/_redirects"
   /old/path /new/path 301
   ```
+  Write each source once, without `.html` or a trailing slash: at build time
+  `plugins/redirect-variants.js` adds both spellings of every exact rule, since
+  Cloudflare matches a source exactly and old bookmarks use either one.
+  Cloudflare applies an exact-path rule before any wildcard (`*`) rule, so add
+  exact paths above the wildcards at the end of the file. Avoid a new wildcard
+  that overlaps an existing one: Cloudflare doesn't reliably pick the first of
+  two overlapping wildcards (the comment above `/app/cloud/*` explains the one
+  case we have), so check any new wildcard on the pull request's preview.
   Then update any in-repo links to the old path, since `onBrokenLinks: throw`
   will otherwise fail the build.
 
@@ -113,6 +110,10 @@ Prefer the provided MDX components over raw HTML:
 - `<DocsVideo src="..." title="..." />` — supports local files, YouTube, Vimeo.
 - `<Icon name="..." />` — the Font Awesome icon must be imported under the
   `fontawesome` key in `src/theme/MDXComponents.js`.
+- `<AccordionBlock title="..." icon={<Icon name="..." />}>` — a collapsible
+  section, collapsed unless you pass `open`. Use one per tool or variation when
+  each needs its own prose (see
+  [use accordions for prose that varies by tool](#use-accordions-for-prose-that-varies-by-tool)).
 
 Images go in `static/img/...` and are referenced via `/img/...`.
 
@@ -146,8 +147,26 @@ Writing, naming, registering, and retiring one is covered in
 
 To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 (name, description, repo link, keywords). Entries are grouped in this order:
-`official` (Cypress-owned) → `community` (community-owned) → `deprecated`
-(unmaintained / incompatible with v10+).
+`official` (Cypress-owned) → `vendor` and `community` together → `deprecated`
+(unmaintained / incompatible with v10+). Use `vendor`, plus a `vendor` field
+naming the company, only when the company behind the product a plugin connects
+to builds it. Company-run open source that sells nothing stays `community`.
+
+A community card credits the owner of the repository in `link`, then the npm
+scope, and shows no name rather than guess. Set `author` only when that owner
+isn't a readable name (`IBMa` → `IBM`) or the link isn't a repository. A
+`repoMovedTo` value in `plugins-generated.json` means the package's npm
+metadata names a different owner: update `link` to the repository's new home.
+
+Each category sets a `stage` from the `stages` list at the top of the file, and
+the page groups categories by stage, then alphabetically. A new category needs a
+`stage` (and a `shortName` if its `name` is long); without one it falls to the
+end of the page. Keep category names in sentence case. Their anchors come from
+the lowercased name, so existing `#custom-commands`-style links keep working.
+Renaming or merging a category changes its anchor, so add the old one to the
+surviving category's `aliases`. The build doesn't check these anchors, since the
+component renders them; `plugins_list.cy.ts` checks every `plugins-list#…` link
+in `docs/`.
 
 ## Writing style
 
@@ -189,19 +208,24 @@ Guidance, not arithmetic:
   contents list into a column of near-identical entries.
 - **Lead with the distinctive term**, so the heading survives truncation in a
   search result and scans quickly in the sidebar.
-- **A question is one good shape, not the required one.** Answer engines do well
-  with `How to build a release report of Cypress runs`, and it is the natural
-  form in FAQ and troubleshooting sections. Forcing `How to` onto a section that
-  answers no question is worse than leaving it short.
+- **Name a task with an imperative verb**: `Load global styles in component
+tests`, not `Loading global styles in component tests` or `How to load global
+styles`. Keep sibling headings in the same form, so the contents list reads as
+  a set of steps. Headings that name a thing rather than a task stay nouns: the
+  API page skeleton, `## See also`, pointer sections such as `Additional mount
+command examples`, and troubleshooting headings that quote an error or name a
+  symptom. A question a reader actually asks, as in an FAQ, stays a question.
 - **Sentence case**, with the fixed API page skeleton (`## Command Log`,
-  `## Syntax`) and product names keeping their own capitalization.
+  `## Syntax`), function names on
+  [namespace API pages](#namespace-api-pages) (`### isVisible()`), and product
+  names keeping their own capitalization.
 
 This applies to headings you are writing. Renaming an existing heading costs two
 published URLs, and neither is redirectable:
 
-- **Its anchor.** A URL fragment never reaches the server, so `netlify.toml`
-  cannot redirect it the way it redirects a moved page. Inbound deep links land
-  on the page and fail to scroll.
+- **Its anchor.** A URL fragment never reaches the server, so
+  `static/_redirects` cannot redirect it the way it redirects a moved page.
+  Inbound deep links land on the page and fail to scroll.
 - **Its section `.md` file.** The LLM export publishes every `##` section at
   `<page-route>/<h2-slug>.md`, so renaming an H2 moves that file and the old URL
   404s. Agents and tools that fetched it lose the link.
@@ -224,6 +248,48 @@ same change. `## See also` always stays as it is.
   almost always hides a simpler sentence.
   - Yes: "`cy.session()` caches and restores session state between tests."
   - No: "`cy.session()` allows you to cache and restore session state."
+  - The same pattern hides behind other phrasings: "lets you", "enables you
+    to", "allows users (or teams, developers) to", "gives you the ability
+    to", "offers the ability to", "comes with the ability to", "provides you
+    with", and "makes it possible to". Rewrite each the same way.
+    - Yes: "The ElementSelector API defines how Cypress selects elements."
+    - No: "The ElementSelector API lets you define how Cypress selects
+      elements."
+    - Yes: "A team sets project access once, at the team level."
+    - No: "Teams let you control project access once at the team level."
+  - When the sentence is an instruction, use the imperative: "Use Node event
+    hooks to tap into the internal behavior of Cypress", not "Node event hooks
+    enable you to tap into…".
+  - When the reader really is the one acting, "you can" is fine: "Cypress
+    captures a snapshot for every command, so you can time travel to previous
+    states while you debug."
+  - Leave the phrasing where it isn't about the reader: test titles and other
+    text in code blocks, quoted UI labels (the **Enable Teams** button), and
+    "allows for" with a non-reader subject ("Separating installation allows
+    for reuse of various build steps"). A plainer verb such as "supports" or
+    "provides" often still reads better there.
+- **Name the subject in every sentence.** Readers skim, search results quote a
+  single sentence, and answer engines lift one out of the page, so a sentence
+  that opens with a pronoun for something named earlier loses its meaning out
+  of context. Repeat the noun instead of reaching back with "it", "this",
+  "that", or "they" on their own.
+  - Yes: "Run Cypress in your AI agent's sandbox, so the agent tests its own
+    changes before it hands them back. The agent runs your specs with
+    `cypress tap`."
+  - No: "Run Cypress in your AI agent's sandbox, and the agent tests its own
+    changes. It runs your specs with `cypress tap`."
+  - No: "Cypress caches the binary. This speeds up later installs."
+
+  A pronoun that refers to a noun in the same sentence is fine ("Cypress retries
+  the assertion until it passes"), and so is "this" or "that" followed by its
+  noun ("This command…").
+
+  `npm run lint:pronouns -- <file>` lists the sentences that open with one of
+  these pronouns. The script is a heuristic and always exits 0. The script
+  skips the common no-referent "it" ("It is possible to…") and a "this" that
+  leads its noun, but it can't tell what a pronoun points at, so read each
+  sentence it lists.
+
 - **Keep body text current.** The docs describe the product as it works today,
   so a reader on the current release never has to work out whether a sentence
   still applies. Leave out the Cypress release that added or changed a feature.
@@ -323,6 +389,115 @@ same change. `## See also` always stays as it is.
   button in a sample table). This keeps invented example labels visually distinct
   from the real UI the tutorial navigates.
 
+## Reviewing a new or rewritten page
+
+Lint and Bugbot catch the mechanical writing rules. The judgment rules need a
+reader, and a whole new page is where they slip most. In Claude Code, the first
+`git commit` after a page under `docs/` is added, or has more than about 40% of
+its prose lines rewritten, stops once and lists it. Review each listed page with
+these steps, report in the thread, then commit again. If a page doesn't need a
+review (it moved, or Prettier only rewrapped it), say so and why.
+
+This section is the procedure, not the rules. Read the linked rule before
+judging each question, so [`AGENTS.md`](./AGENTS.md#rules) and
+[Writing style](#writing-style) stay the one source of truth.
+
+### Step 1: clear the mechanical rules first
+
+If `package.json` defines `lint:prose`, run `npm run lint:prose` and fix what it
+reports. If it doesn't, check the page by hand against the hard rules in
+[`.cursor/BUGBOT.md` section 4](./.cursor/BUGBOT.md), treating every line of a
+new page, and every rewritten line of a changed page, as added prose. List these
+fixes under their own heading in the report.
+
+### Step 2: read the whole page once before changing anything
+
+Repetition, the lead, and `See also` are questions about the whole page, so they
+can't be answered section by section. Note what kind of page it is: an `/api`
+page keeps its fixed skeleton ([`docs/api/AGENTS.md`](./docs/api/AGENTS.md)).
+
+### Step 3: ask each question
+
+1. **Does the page lead with the feature's value?** [Lead with the
+   value](#lead-with-the-value). A version or prerequisite admonition in the
+   first screen pushes the value down.
+2. **Does each heading stand on its own, at roughly 40 to 60 characters?**
+   [Headings](#headings). Weigh the renaming cost only for a heading published
+   at this page's path at `HEAD`. A new page has none, even when it starts as a
+   copy of another.
+3. **Is any explanation repeated?** Look across the body, tables,
+   troubleshooting, and limitations. Keep the full explanation in the body
+   section that owns it. Troubleshooting keeps a short symptom and fix that links
+   there, and so do tables and limitations.
+4. **Are behaviors framed positively and reader-first?** The framing rule in
+   [`AGENTS.md`](./AGENTS.md#rules). Watch for "you will need to" chains that
+   describe the burden instead of the step.
+5. **Does it say what something does, not what it lets or allows?** [Person and
+   tense](#person-and-tense), which also covers "you", present tense, active
+   voice, and keeping body text current.
+6. **Does every sentence name its subject?** [Person and
+   tense](#person-and-tense). The commit reminder lists the new and rewritten
+   sentences that open with "it", "this", "that", "they", and their forms; run
+   `npm run lint:pronouns -- <page>` to list them yourself. Fix each one that
+   points back to an earlier sentence, list item, or heading. Leave a "this" or
+   "that" that leads its noun ("This command…"), a pronoun for a noun in the
+   same sentence, an "it" with no referent ("It is possible to…"), and quoted
+   UI strings and prompts. The list is a heuristic, so also read for the
+   sentences it can't see, such as one after "e.g." or inside a `<CopyPrompt>`.
+7. **Are minimizing words and hedges gone?** [Word choice](#word-choice). "May",
+   "can", and "it is recommended" often hedge a fact the page could state.
+8. **Does a reusable agent recipe sit in a code block or prose?**
+   [`<CopyPrompt>` vs a code block](#ai-prompts-copyprompt-vs-a-code-block).
+9. **Is there prose or a list inside a `<TabItem>`?** [Keep prose out of
+   tabs](#keep-prose-out-of-tabs).
+10. **Is `## See also` warranted, and not padded?** The `See also` rule in
+    [`AGENTS.md`](./AGENTS.md#rules).
+
+The ten are the minimum. Read the rest of the `AGENTS.md` **Writing style** and
+**Authoring** rules against the page once more.
+
+### Step 4: edit the page
+
+- **Keep the facts.** Reword and restructure, but don't change a claim. When a
+  fix needs a fact you can't confirm from the page, the
+  [source](#api-source-of-truth), or the author, flag it instead.
+- **Move code examples, don't change them.** A changed one falls under
+  [verifying code examples](#verifying-code-examples).
+- **Update every link to an anchor you rename**, on the page and across the repo.
+- **Fix links the build reports as broken even when the review didn't cause
+  them**, if the new target is clear, and list them separately in the report.
+
+### Step 5: verify the edited page
+
+1. Run `npm run lint:fix`, then `npm run build`.
+2. If you added a `<CopyPrompt>`, run `npm run test:copy-prompt-titles`.
+3. If you added or changed tabs, accordions, or a `<CopyPrompt>`, render the page
+   in both modes. Run `npm run serve`, then capture it with Playwright at
+   `colorScheme: 'light'` and `'dark'`. The site follows the reader's system
+   setting.
+
+### Step 6: report the review in the thread
+
+Group the changes by rule, with a link to each rule, then list what you flagged
+without changing and the verification results:
+
+```md
+## Style review: `docs/app/ai/example.mdx`
+
+**Headings** ([rule](AGENTS_REFERENCE.md#headings))
+
+- `## Requirements` → `## Agent sandbox requirements for Cypress`
+
+**Repetition**
+
+- Agent detection was explained in three places. Kept it in "How Cypress
+  detects an AI agent" and cut the others to a sentence and a link.
+
+**Flagged, not changed**
+
+- "About 2 GB of memory" has no source on the page.
+```
+
 ## Code blocks
 
 - Always tag a fenced block with its language (`ts`, `js`, `jsx`, `shell`,
@@ -355,10 +530,255 @@ same change. `## See also` always stays as it is.
   app code beside it, and `## Syntax` and `### Usage` blocks, which show call
   shapes rather than files.
 
+- `text` and `txt` blocks wrap long lines instead of scrolling sideways, which
+  suits error messages, logs, and prose-like output. Output that lines up in
+  columns with spaces (side-by-side lists, right-aligned CLI counters) breaks
+  when it wraps, so opt that block out with `nowrap` in the fence meta:
+  ` ```text nowrap `. It combines with a title:
+  ` ```text title="out.txt" nowrap `.
+
 - For Cypress config snippets use the
   [`:::cypress-config-example`](#cypress-config-examples) directive, and for
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
+
+## Code example preferences
+
+A reader copies an example as the way Cypress tests are written. So write
+examples the way a user drives the app: through its UI, its network, and the
+browser's own APIs, with Cypress commands doing the reading and the clicking.
+Tests written that way keep passing when the app's internals change, and every
+step shows up in the Command Log.
+
+These preferences cover test code only: specs, custom commands, support files,
+and config. They never apply to app code in an example, such as the HTML,
+component, or `app.js` a test runs against. App code is there to give the test
+something to act on, so write it however the example reads most clearly.
+
+Within test code, each preference also gives way when the example exists to
+show the thing it steers away from. The `.trigger()` page explains what the
+default `Event` does, and the `cy.window()` page shows why its two windows
+differ. Those examples stay as they are. Everywhere else, follow these:
+
+- **Drive the app through its UI or its API where you can.** Click, type, and
+  visit to reach a state, or set it up with `cy.request()` and
+  `cy.intercept()`.
+- **Chain to app code on `window`; don't call it in a callback.** When a test
+  does need app code the app exposes on `window`, such as a store or a factory
+  function, reach it with `cy.window().its()` and call it with `.invoke()`.
+  The chain retries until the property exists and logs each step, while
+  `cy.window().then((win) => win.store.dispatch(...))` runs once, fails if the
+  app hasn't set the property yet, and logs nothing.
+- **Don't depend on `window.Cypress` in the test.** A test that branches on it
+  or reaches the app through it ties itself to the runner's internals rather
+  than to what the app does.
+- **Read the DOM with `.invoke()` and `.its()`.** They retry with the assertion
+  that follows and log what they read, while a `.then()` callback runs once and
+  logs nothing. jQuery methods work through `.invoke()`, and DOM properties
+  through `.invoke('prop', name)`.
+- **Prefer Cypress actions to hand-built events.** `.click()`, `.type()`,
+  `.check()`, `.select()`, and `cy.press()` fire the events a user's input
+  does, in order, after the actionability checks. Reach for `.trigger()` only
+  when no action fits, and when it passes event properties, pass the matching
+  `eventConstructor`. The default plain `Event` attaches those properties as-is,
+  so a handler that checks the event's type, or reads a property the browser
+  calculates, gets something no real input produces.
+- **Wait for the app, not the clock.** `cy.wait(ms)` guesses how long the app
+  takes: too short and the test flakes, too long and every run pays for it.
+  Wait for the state the next step needs instead. An assertion on the UI
+  retries until it passes, and `cy.wait('@alias')` waits for a request routed
+  through `cy.intercept()`. `cy.visit()` and `cy.request()` already wait for
+  their responses. Pass `timeout` when the state takes longer than
+  `defaultCommandTimeout`. The one exception is a short pause between polls of
+  an endpoint that has nothing else to wait on, such as a background job's
+  status, so the loop doesn't hammer the server.
+
+**❌ Calls the app in a callback, waits a fixed time, reads the DOM in a
+callback, and hand-builds an event:**
+
+```js
+cy.window().then((win) => {
+  win.store.dispatch({ type: 'cart/clear' })
+})
+cy.wait(2000)
+
+cy.get('.sidebar').then(($el) => {
+  expect($el.outerWidth()).to.be.greaterThan(200)
+})
+
+cy.get('.target').trigger('mousedown', { button: 0 })
+```
+
+**✅ Drives the UI, waits for the request, reads through Cypress, and builds
+the right event:**
+
+```js
+cy.intercept('DELETE', '/api/cart').as('clearCart')
+cy.get('[data-cy=clear-cart]').click()
+cy.wait('@clearCart')
+
+cy.get('.sidebar').invoke('outerWidth').should('be.greaterThan', 200)
+
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 0,
+})
+```
+
+## Domains in code examples
+
+A code example is code the reader runs. When it visits, requests, or intercepts
+a URL, the reader's test loads whatever that host serves, so write examples as
+if Cypress only runs code it controls: every host in an example is `cypress.io`
+or one of its subdomains. A reader swaps in their own app's URL; until they do,
+the example points at a host Cypress owns, not a stranger's site. That rules out
+`example.com`, real third-party sites, and invented domains such as
+`supersecurelogons.com`, which anyone can register and serve anything from.
+
+This covers every host the code runs against: `cy.visit()`, `cy.request()`,
+`cy.intercept()`, `cy.origin()`, `baseUrl`, and URLs in fixtures or `expose`
+values. It also covers the format examples in prose that show what an argument
+accepts. It doesn't cover test data that only gets typed or asserted, such as
+an email address, or links in prose, which follow [Linking](#linking).
+
+Pick the host by what the example needs:
+
+| The example needs                     | Use                                                                                  |
+| ------------------------------------- | ------------------------------------------------------------------------------------ |
+| To run as written against a real page | a [real Cypress site](#real-cypress-sites-for-examples-that-run-as-written)          |
+| A stand-in for the reader's app       | `https://app.cypress.io`                                                             |
+| A second origin, such as a login page | `https://auth.cypress.io`                                                            |
+| More origins                          | another descriptive subdomain, such as `https://help.cypress.io`                     |
+| The reader's own local server         | `http://localhost` with a port, such as `http://localhost:3000` (the reader owns it) |
+
+Don't use a real Cypress site as a stand-in for the reader's app, since a reader
+takes the example as describing that site. Use one only for what it actually
+serves, as listed below.
+
+Some stand-in hosts resolve, for example to a redirect, but none of them serve
+the pages an example describes. They mark where the reader puts their own URL.
+To run an example that uses one, see
+[Serving a stand-in host locally](#serving-a-stand-in-host-locally).
+
+### Real Cypress sites for examples that run as written
+
+These sites are live, so an example that uses them runs with no setup. Their
+content changes without notice, so use them to demonstrate a concept, such as
+where the page landed, that an element exists, or that a request succeeds,
+rather than to check specific text. Reach for `example.cypress.io` first when an
+example types, clicks, or checks text: it exists for examples, so targeting its
+elements and asserting on their text is expected.
+
+| Site                          | What it is                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------------- |
+| `https://example.cypress.io`  | The Kitchen Sink app, built for Cypress examples, with a page per command group |
+| `https://www.cypress.io`      | The Cypress website                                                             |
+| `https://docs.cypress.io`     | This documentation site                                                         |
+| `https://learn.cypress.io`    | Real World Testing, Cypress's free courses                                      |
+| `https://www.cypress.io/blog` | The Cypress blog                                                                |
+| `https://cloud.cypress.io`    | Cypress Cloud, which sends a signed-out visitor to sign in                      |
+
+**❌ Tied to content that changes:**
+
+```js
+cy.visit('https://www.cypress.io/blog')
+cy.get('h1').should('have.text', 'cy.blog()')
+cy.url().should('eq', 'https://www.cypress.io/blog')
+```
+
+**✅ The same check as a concept:**
+
+```js
+cy.visit('https://www.cypress.io/blog')
+cy.get('h1').should('be.visible')
+cy.location('pathname').should('eq', '/blog')
+```
+
+Keep these behaviors in mind:
+
+- **Check part of the URL, not all of it.** Page scripts can rewrite the URL
+  after it loads, for example by adding a hash, so assert on `hostname` or
+  `pathname` with `cy.location()`.
+- **Use the URL the site ends on.** Some hosts redirect to another origin:
+  `blog.cypress.io` goes to `https://www.cypress.io/blog`, so an example that
+  visits `blog.cypress.io` names one origin and lands on another.
+- **Cloud stops at sign-in.** Anything past it needs an account, so an example
+  of it can't run locally. Report it as not run, with that reason.
+- **Keep typing and clicking on `example.cypress.io`.** The other sites can show
+  an overlay, such as a cookie consent banner, on top of what an example clicks.
+- **These sites load third-party scripts.** On a network that blocks one, as
+  many CI sandboxes do, the page can throw an uncaught exception, which fails
+  the test. If that happens while you verify an example, it is the network, not
+  the example: say so in your report.
+
+**✅ Concepts demonstrated against real Cypress sites:**
+
+```js
+// Concrete selectors are fine here: the Kitchen Sink exists for examples
+cy.visit('https://example.cypress.io/commands/actions')
+cy.get('.action-email').type('fake@email.com')
+cy.get('.action-email').should('have.value', 'fake@email.com')
+```
+
+```js
+// The page loaded on the expected origin
+cy.visit('https://www.cypress.io')
+cy.location('hostname').should('eq', 'www.cypress.io')
+cy.get('h1').should('be.visible')
+```
+
+```js
+// The page has navigation links
+cy.visit('https://docs.cypress.io')
+cy.get('nav a[href]').should('have.length.greaterThan', 0)
+```
+
+```js
+// A request succeeds without loading the page in the browser
+cy.request('https://learn.cypress.io').its('status').should('eq', 200)
+```
+
+```js
+// Signed out, Cloud sends you away from the page you asked for
+cy.visit('https://cloud.cypress.io')
+cy.location('pathname').should('not.eq', '/')
+```
+
+### Correct and incorrect hosts in code examples
+
+**❌ Hosts Cypress doesn't control:**
+
+```js
+cy.visit('https://www.example.com')
+
+cy.intercept('GET', 'https://api.acme-corp.dev/users', {
+  fixture: 'users.json',
+})
+
+cy.origin('https://login.acme-corp.com', () => {
+  cy.visit('/login')
+  cy.get('#username').type('jane')
+})
+```
+
+**✅ Hosts under `cypress.io`:**
+
+```js
+cy.visit('https://app.cypress.io')
+
+cy.intercept('GET', 'https://app.cypress.io/api/users', {
+  fixture: 'users.json',
+})
+
+cy.origin('https://auth.cypress.io', () => {
+  cy.visit('/login')
+  cy.get('#username').type('jane')
+})
+```
+
+A URL inside a code example is not a link, so it never takes the
+[UTM params](#linking-to-other-cypress-domains-utm-params) that outbound links to
+`www.cypress.io` need.
 
 ## Verifying code examples
 
@@ -514,6 +934,22 @@ page reaches Cypress's server, where `cy.intercept()` can stub it.
 An example that loads a fixture needs the file too. Save it under
 `cypress/fixtures/`, where `cy.fixture('user.json')` looks for it, the same as
 in a reader's project.
+
+#### Serving a stand-in host locally
+
+Stand-in hosts such as `app.cypress.io` don't serve the pages an example
+expects, so don't run the example against the real host. Serve fixture pages
+locally and point the stand-in hosts at them for the run:
+
+1. Back up `/etc/hosts`, then map each stand-in host to `127.0.0.1`, for example
+   `127.0.0.1 app.cypress.io auth.cypress.io`.
+2. Serve each host from a local server. For `https`, use a self-signed
+   certificate for those names; Cypress accepts it for the application under
+   test.
+3. Add the stand-in hosts, and only those, to `NO_PROXY` and `no_proxy` for the
+   `cypress run`, so the session proxy doesn't send them to the real hosts.
+   `example.cypress.io` stays off the list and keeps going through the proxy.
+4. When you're done, restore `/etc/hosts` from the backup and stop the servers.
 
 ### Step 5: paste the example in verbatim
 
@@ -722,20 +1158,23 @@ Use a **fenced code block** for:
 ### `<CopyPrompt>` authoring rules
 
 Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
-(required), `title`, `subtext`, `hideTitle`, `defaultCollapsed`,
+and `title` (both required), `subtext`, `hideTitle`, `defaultCollapsed`,
 `excludeFromLlmExport`. Live examples: `docs/cloud/integrations/cloud-mcp.mdx`
 and `docs/app/guides/migration/`.
 
+- **Give every card a unique `title`**, even one whose heading comes from
+  children or `hideTitle`. It is the card's `promptTitle` in Fullstory, so a
+  shared title merges two cards in analytics. `npm run test:copy-prompt-titles`
+  fails on a missing or repeated title and names its file and line.
 - **No quotes** around the prompt — the card renders it verbatim.
 - **No tool calls** unless explicitly required: prefer _"Find all failing tests
   on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
-- **For a titled card, pass `title`** — rendered as the card's heading with a
-  sparkle icon (used by the migration guides).
+- **`title` renders as the card's heading** with a sparkle icon (used by the
+  migration guides), unless children or `hideTitle` replace it.
 - **When a card is one of several in a section** (e.g. a list of example
-  prompts), pass a `###` Markdown heading as the card's **children** instead of
-  a `title`. It stays a real heading, so the workflow shows up in the page's
-  table of contents, and the card styles it to match. Keep `title` too, for
-  analytics. Use `hideTitle` only for a lone card that already sits under its
+  prompts), pass a `###` Markdown heading as the card's **children**, which
+  renders in place of the `title`. It stays a real heading, so the workflow
+  shows up in the page's table of contents, and the card styles it to match. Use `hideTitle` only for a lone card that already sits under its
   own Markdown heading.
 - **Write `subtext` as the outcome, not the mechanism.** Say what the reader gets
   from running the prompt, like the example below (_"Get a high-level summary of
@@ -785,8 +1224,7 @@ For a prompt over 350 characters, add `defaultCollapsed` and structure:
 ## Admonition blocks
 
 Call-outs use Docusaurus admonition directives: `:::type` to open, `:::` to
-close, with an optional custom title (`:::note Requirements`). Reach for these
-instead of bolded inline asides. Pick the type by intent:
+close. Reach for these instead of bolded inline asides. Pick the type by intent:
 
 - `:::info` — neutral, helpful context or background. The default workhorse and
   by far the most common in this repo.
@@ -804,7 +1242,29 @@ instead of bolded inline asides. Pick the type by intent:
   admonition type is configured. Reach for `:::tip` or `:::info` unless you
   specifically want the "good news" framing.
 
-Keep them short and infrequent; a page wall-to-wall with call-outs dilutes them.
+**Never add a custom title.** Docusaurus supports `:::note Requirements`, but
+`src/css/custom.scss` sets `[class^='admonitionHeading'] { display: none; }`, so
+the title (and the default type label) never render.
+
+When the call-out needs a visible heading, put a **bold lead line** in the body
+on its own, then a blank line, then the explanation. That layout is the stand-in
+for the hidden admonition title:
+
+```markdown
+:::tip
+
+**Run Checks evaluate runs; they don't block CI by themselves.**
+
+A check is a pass/fail evaluation after the run records. Fetch results with
+`getCheckResults()` when you need a merge gate.
+
+:::
+```
+
+Skip the bold lead when the whole call-out is one or two short sentences and a
+heading would only repeat them. Keep admonitions infrequent; a page wall-to-wall
+with call-outs dilutes them. Existing titled admonitions outside the change
+you're making can wait for a follow-up; don't expand scope just to strip them.
 
 ## Tabs
 
@@ -864,7 +1324,8 @@ canonical tab order and labels (`npm`, `Yarn`, `pnpm`, `Bun`) when you do.
 
 Prefer **not** to hand-write a JS tab. Author a single TypeScript block tagged
 `copyTsToJs` and the `copyTsToJs` remark plugin generates the JavaScript version
-automatically, **JS tab first, then TS**:
+automatically and renders the two as JavaScript and TypeScript tabs in the
+`cypress-lang` tab group, **JS tab first, then TS**:
 
 ````mdx
 ```typescript copyTsToJs
@@ -874,14 +1335,104 @@ export default name
 ```
 ````
 
-Only fall back to explicit `<Tabs>` with separate `.js`/`.ts` `<TabItem>`s when
-the two versions differ by more than types (e.g. a `declare global` block) and
-the plugin can't derive one from the other. When you do, keep the **JS tab
-first**.
+The plugin drops type-only code, including a `declare global` block, from the
+JavaScript tab. Only fall back to explicit
+`<Tabs groupId="cypress-lang">` with `<TabItem value="js" label="JavaScript">`
+and `<TabItem value="ts" label="TypeScript">` when the plugin can't derive one
+version from the other. When you do, keep the **JS tab first**.
+
+Hand-write the JavaScript version of a component support file
+(`cypress/support/component.js`) instead of using `copyTsToJs`. The plugin turns
+each `import` into `require()`, and a Vite-bundled support file fails on it with
+`ReferenceError: require is not defined`. Cypress scaffolds that file with ES
+`import` statements, so keep them.
 
 ### Frameworks
 
 Use `groupId="frameworks"`, ordered **React → Angular → Vue → Svelte**.
+
+### Never nest tab groups
+
+A tab group inside another tab group renders as two stacked rows of tabs, and
+the reader has to work out which row controls what. Keep every tab group at the
+top level. A `copyTsToJs` block counts as a tab group, since the plugin renders
+its JavaScript and TypeScript versions as tabs.
+
+When an example sits inside framework tabs or any other tab group, show only its
+JavaScript version, in a plain `js` block with a `title`. Cover what only
+TypeScript readers need, such as the `declare global` block that types a custom
+command, in its own section outside the tabs. In
+`docs/api/commands/mount.mdx`, the framework tabs show each
+`cypress/support/component.js`, and a separate section covers the typings.
+
+### Keep prose out of tabs
+
+A `<TabItem>` holds code: code blocks, plus components that render as code, such
+as `<PackageManagerTabs>`. Leave plain paragraphs and lists out. The site styles
+the whole tab container as a code surface (`.tabs-container` in
+`src/css/custom.scss`), so plain prose inside it breaks:
+
+- In light mode, body text renders in the page's dark text color on the dark
+  code background, at about 2:1 contrast, well under the 4.5:1 that WCAG AA
+  requires.
+- Code blocks nested in a list item run flush to the panel's right edge, so long
+  lines look clipped.
+
+An admonition is the exception: it brings its own background, so a short
+`:::info` inside a tab stays readable.
+
+None of the build, lint, or test commands catch this, so render the page in
+both light and dark mode whenever you add or change a tab group.
+
+#### Use accordions for prose that varies by tool
+
+When the same kind of instructions repeats for different tools or variations,
+and each one needs its own prose, lists, or steps, give each variation an
+[`<AccordionBlock>`](#mdx-components) instead of a tab. Typical cases are setup
+per agent sandbox, environment variables per CI provider, and configuration per
+AI client. The accordion renders its content on the page background, so text and
+code blocks keep their normal styling, and readers expand only the variation
+they use.
+
+```mdx
+## Configure your sandbox
+
+Expand your sandbox below for the setup it needs.
+
+<AccordionBlock title="Claude Code on the web" icon={<Icon name="claude" />}>
+
+1. In the environment's network settings, allow the hosts in
+   [Network access](#Network-access).
+
+</AccordionBlock>
+
+<AccordionBlock title="Cursor Cloud" icon={<Icon name="hexagon-nodes" />}>
+
+Cursor Cloud builds the environment from a Dockerfile.
+
+</AccordionBlock>
+```
+
+- Lead with a sentence outside the accordions that tells the reader to expand
+  the one they use, and keep what every variation shares in prose above or
+  below them rather than repeating it in each.
+- Title each accordion with the tool's name alone ("Cursor Cloud"); the section
+  heading above carries the context.
+- Leave a blank line after the opening tag and before the closing tag, as the
+  existing pages do.
+- Give each one an `icon` and check that the icon is registered (see
+  [MDX components](#mdx-components)). Use the brand icon when one exists.
+- Don't put headings inside an accordion. Its title already names the
+  variation, and a heading that other pages link to belongs where readers can
+  see it without expanding anything.
+
+Precedents: `docs/cloud/integrations/cloud-mcp.mdx` (one per AI client),
+`docs/partials/_results-api-env-vars.mdx` (one per CI provider), and
+`docs/app/ai/cypress-agent-sandboxes.mdx` (one per agent sandbox).
+
+Tabs stay the right fit when each variation is a code sample, such as one config
+file per framework. Keep any lead-in sentence outside the tab group rather than
+inside each tab.
 
 ## Cypress config examples
 
@@ -1188,6 +1739,100 @@ read those on GitHub.
 - **Options tables are the most common place drift hides.** Check every row
   against the options interface and the defaults, including rows the source no
   longer has.
+
+## Namespace API pages
+
+Most `/api` pages document one command with one signature, and the skeleton in
+[`docs/api/AGENTS.md`](./docs/api/AGENTS.md) fits them. A namespace page
+documents an object with several functions, such as `Cypress.ensure`. Forced
+into the single-command skeleton, it ends up with one shared Arguments list full
+of "this function only" exceptions, and each function's behavior split across
+the table, Arguments, and Notes. The reader then visits four sections to learn
+what one function does, and no function has an anchor another page can link to.
+The namespace layout gives each function one place.
+
+[`docs/api/cypress-api/ensure.mdx`](./docs/api/cypress-api/ensure.mdx) is the
+model page. The sections, in order:
+
+| Section        | Contents                                                                                            |
+| -------------- | --------------------------------------------------------------------------------------------------- |
+| Intro          | the value: what the object gives the reader, then a pointer to `## Functions` and `## Examples`     |
+| `## Syntax`    | every signature in one `javascript` block, then `### Usage`, `### Arguments`, `### Return value`    |
+| `## Functions` | an index table (function linked to its entry, one-line summary), then one `### name()` per function |
+| `## Examples`  | complete, runnable recipes that combine functions, under task headings                              |
+| `## Notes`     | only behavior that applies across functions                                                         |
+| `## History`   | version table, newest first                                                                         |
+| `## See also`  | related pages                                                                                       |
+
+- **Alphabetical order, everywhere.** The Syntax block, the index table, and the
+  `### name()` entries list functions in the same alphabetical order, so a
+  reader scans for a name instead of learning a grouping. Don't add grouping
+  comments to the Syntax block; the index table's summaries say what each
+  function is for.
+- **`### Arguments` covers only the shared arguments.** An argument one function
+  takes, like `isType()`'s `types`, goes in that function's entry, and the
+  shared Arguments section links to it.
+- **Each `### name()` entry holds** the signature, what the function does, the
+  behavior specific to it (as bullets), its error message when it throws, and a
+  "Used in:" line linking to the recipe that shows it. A function with no
+  recipe gets a new tested one, which makes coverage gaps visible: an entry
+  without a "Used in:" line is missing an example.
+- **`### Return value`, not `<HeaderYields />`.** These are plain functions that
+  return a value or nothing; they don't yield a subject to a chain.
+- **The function headings are exempt from the heading-length rule.** A bare
+  `### isVisible()` is the term readers search for, and it produces the anchor
+  `#isVisible` that other pages link to.
+
+Use it for pages like `Cypress.dom` and `Cypress.session`, where several
+functions share a page. Leave single-function configuration APIs, such as
+`Cypress.Keyboard.defaults()` and `Cypress.Screenshot.defaults()`, on the
+single-command skeleton.
+
+## Code comments
+
+These rules cover comments in the code that builds and runs this site: `src/`,
+`plugins/`, `scripts/`, `cypress/`, and config files such as
+`docusaurus.config.js`. They don't cover comments inside the code examples on a
+docs page, which are written for the reader.
+
+- **Prefer none.** Always prefer no code comment if the code is
+  self-explanatory.
+- **Explain the why.** When a comment is necessary, use it to explain the _why_
+  and anything relevant that is not directly expressed by the code itself.
+- **Don't repeat yourself.** Do not restate the same comment multiple times in a
+  file as the code flows through each step.
+- **Present state only.** Keep comments relevant to the current state of the
+  code. Do not describe what changed or how the code used to be different.
+- **Name the reason, not the predecessor.** "Matches what the old tab component
+  did" is not a _why_, and it rots once that component is deleted. State the
+  reason the old code had, and put parity with replaced tooling in the commit
+  message or guide.
+- **No measurements.** Don't cite benchmark numbers in a comment. They depend on
+  the machine they came from and go stale with the code around them. State the
+  reason instead, and keep the numbers in the commit message or pull request.
+
+Bad examples:
+
+```tsx
+// Define the types for the props
+// These were previously authored as ##### headings, now they render as a <p>
+// Sort the tabs the same way the old hand-written OS tab sets did
+// Memoized: filtering the plugins list dropped from 40ms to 3ms
+```
+
+Good examples:
+
+```tsx
+// Seed the search from a shareable `?search=` param on load. Done in an
+// effect (not the initial state) so server and client first render agree.
+
+// Not `async`: everything up to `copyPendingText` has to run in the click's
+// own tick, or the clipboard write lands outside the user activation that
+// Safari requires. The fetch is started here and handed over still pending.
+
+// Escaping `<` keeps a value such as `</script>` in a title or description
+// from closing the tag early.
+```
 
 ## Testing
 

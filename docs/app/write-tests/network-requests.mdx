@@ -11,8 +11,8 @@ slug: /app/guides/network-requests
 # Intercepting network requests in Cypress
 
 Cypress helps you test the entire lifecycle of HTTP requests within your
-application. Cypress provides you access to the objects with information about
-the request, enabling you to make assertions about its properties. Additionally
+application. Cypress exposes objects with information about
+the request, so you can make assertions about its properties. Additionally
 you can even stub and mock a request's response.
 
 **_Common testing scenarios:_**
@@ -26,7 +26,7 @@ you can even stub and mock a request's response.
 - Delaying a response
 - Waiting for a response to happen
 
-Within Cypress, you have the ability to choose whether to stub responses or
+Within Cypress, you choose whether to stub responses or
 allow them to actually hit your server. You can also mix and match within the
 same test by choosing to stub certain requests, while allowing others to hit
 your server.
@@ -46,8 +46,8 @@ To call an endpoint _from your test_ and assert on what it returns, see
 
 ## Use Server Responses
 
-Requests that are not stubbed actually reach your server. By _not_ stubbing your
-responses, you are writing true _end-to-end_ tests. This means you are driving
+Requests that you don't stub actually reach your server. By _not_ stubbing your
+responses, you are writing true _end-to-end_ tests. Not stubbing means you are driving
 your application the same way a real user would.
 
 > When requests are not stubbed, this guarantees that the _contract_ between
@@ -55,13 +55,13 @@ your application the same way a real user would.
 
 In other words, you can have confidence your server is sending the correct data
 in the correct structure to your client to consume. It is a good idea to have
-_end-to-end_ tests around your application's _critical paths_. These typically
-include user login, signup, or other critical paths such as billing.
+_end-to-end_ tests around your application's _critical paths_. Critical paths typically
+include user login, signup, and billing.
 
 **_There are downsides to not stubbing responses you should be aware of:_**
 
-- Since no responses are stubbed, that means **your server has to actually send
-  real responses**. This can be problematic because you may have to _seed a
+- Since you stub no responses, that means **your server has to actually send
+  real responses**. Sending real responses can be problematic because you may have to _seed a
   database_ before every test to generate state. For instance, if you were
   testing _pagination_, you'd have to seed the database with every object that
   it takes to replicate this feature in your application.
@@ -70,7 +70,7 @@ include user login, signup, or other critical paths such as billing.
   stubbed responses.
 
 If you are writing a traditional server-side application where most of the
-responses are HTML you will likely have few stubbed responses. However, most
+responses are HTML you likely have few stubbed responses. However, most
 modern applications that serve JSON can take advantage of stubbing.
 
 :::tip
@@ -105,20 +105,20 @@ modern applications that serve JSON can take advantage of stubbing.
 
 ## Stub Responses
 
-Stubbing responses enables you to control every aspect of the response,
+When you stub a response, you control every aspect of the response,
 including the response `body`, the `status`, `headers`, and even network
-`delay`. Stubbing is extremely fast, most responses will be returned in less
+`delay`. Stubbing is extremely fast, most responses return in less
 than 20ms.
 
 :::note
 
-Stubbing responses is a great way to control the data that is returned to your
-client.
+Stubbing responses is a great way to control the data that your
+client receives.
 
 :::
 
-You don't have to do any work on the server. Your application will have no idea
-its requests are being stubbed, so there are _no code changes_ needed.
+You don't have to do any work on the server. Your application has no idea
+that Cypress is stubbing its requests, so there are _no code changes_ needed.
 
 :::tip
 
@@ -174,10 +174,10 @@ to see Cypress network handling in action.
 
 ## Stubbing
 
-Cypress enables you to stub a response and control the `body`, `status`,
-`headers`, or even delay.
+Cypress stubs a response with the `body`, `status`, `headers`, or even delay
+you specify.
 
-[`cy.intercept()`](/api/commands/intercept) is used to control the behavior of
+[`cy.intercept()`](/api/commands/intercept) controls the behavior of
 HTTP requests. You can statically define the body, HTTP status code, headers,
 and other response characteristics.
 
@@ -208,16 +208,16 @@ Cypress displays this under "Routes" in the Command Log.
   alt="Routing Table"
 />
 
-When a new test runs, Cypress will restore the default behavior and remove all
+When a new test runs, Cypress restores the default behavior and removes all
 routes and stubs. For a complete reference of the API and options, refer to the
 documentation for [`cy.intercept()`](/api/commands/intercept).
 
 ## Fixtures
 
-A fixture is a fixed set of data located in a file that is used in your tests.
+A fixture is a fixed set of data located in a file that your tests use.
 The purpose of a test fixture is to ensure that there is a well known and fixed
-environment in which tests are run so that results are repeatable. Fixtures are
-accessed within tests by calling the [`cy.fixture()`](/api/commands/fixture)
+environment in which tests run so that results are repeatable. You access
+fixtures within tests by calling the [`cy.fixture()`](/api/commands/fixture)
 command.
 
 With Cypress, you can stub network requests and have it respond instantly with
@@ -234,7 +234,7 @@ cy.intercept('GET', '/activities/*', { fixture: 'activities.json' })
 ### Organizing
 
 Cypress automatically scaffolds out a suggested folder structure for organizing
-your fixtures on every new project. By default it will create an `example.json`
+your fixtures on every new project. By default it creates an `example.json`
 file when you add your project to Cypress.
 
 ```text
@@ -259,8 +259,8 @@ cy.fixture('images/dogs.png') // yields dogs.png as Base64
 
 ## Waiting
 
-Whether or not you choose to stub responses, Cypress enables you to
-declaratively [`cy.wait()`](/api/commands/wait) for requests and their
+Whether or not you choose to stub responses,
+[`cy.wait()`](/api/commands/wait) declaratively waits for requests and their
 responses.
 
 :::tip
@@ -338,14 +338,14 @@ Let's investigate each benefit.
 One advantage of declaratively waiting for responses is that it decreases test
 flake. You can think of [`cy.wait()`](/api/commands/wait) as a guard that
 indicates to Cypress when you expect a request to be made that matches a
-specific routing alias. This prevents the next commands from running until
+specific routing alias. Waiting on the alias prevents the next commands from running until
 responses come back and it guards against situations where your requests are
 initially delayed.
 
 **_Auto-complete Example:_**
 
-What makes this example below so powerful is that Cypress will automatically
-wait for a request that matches the `getSearch` alias. Instead of forcing
+What makes this example below so powerful is that Cypress automatically
+waits for a request that matches the `getSearch` alias. Instead of forcing
 Cypress to test the _side effect_ of a successful request (the display of the
 Book results), you can test the actual _cause_ of the results.
 
@@ -414,13 +414,13 @@ results.
 In this example, there are many possible sources of failure. In most testing
 tools, if our request failed to go out, we would normally only ever get an error
 once we attempt to find the results in the DOM and see that there is no matching
-element. This is problematic because it's unknown _why_ the results failed to be
+element. This late error is problematic because it's unknown _why_ the results failed to be
 displayed. Was there a problem with our rendering code? Did we modify or change
 an attribute such as an `id` or `class` on an element? Perhaps our server sent
 us different Book items.
 
 With Cypress, by adding a [`cy.wait()`](/api/commands/wait), you can pinpoint
-your specific problem. If the response never came back, you'll receive
+your specific problem. If the response never came back, you receive
 an error like this:
 
 <!--
@@ -436,14 +436,14 @@ it('test', () => {
   alt="Wait Failure"
 />
 
-Now we know exactly why our test failed. It had nothing to do with the DOM.
+Now we know exactly why our test failed. The failure had nothing to do with the DOM.
 Instead we can see that either our request never went out or a request went out
 to the wrong URL.
 
 ### Assertions
 
 Another benefit of using [`cy.wait()`](/api/commands/wait) on requests is that
-it yields the actual request object. This is useful when you want to make
+it yields the actual request object. The request object is useful when you want to make
 assertions about this object.
 
 In our example above we can assert about the request object to verify that it
@@ -527,7 +527,7 @@ cy.wait('@new-user').then(console.log)
 
 ## Working with WebSockets
 
-Your application's WebSocket traffic will work as expected during tests.
+Your application's WebSocket traffic works as expected during tests.
 
 ### Limitations
 
@@ -565,11 +565,11 @@ test or closer to the expectation.
 
 ### Alias multiple queries or mutations
 
-In the `beforeEach`, we will use [cy.intercept()](/api/commands/intercept) to
+In the `beforeEach`, use [cy.intercept()](/api/commands/intercept) to
 capture all requests for a GraphQL endpoint (e.g. `/graphql`), use conditionals
 to match the query or mutation and set an alias for using `req.alias`.
 
-First, we'll create a set of utility functions to help match and alias our
+First, create a set of utility functions to help match and alias our
 queries and mutations.
 
 ```js
@@ -625,7 +625,7 @@ context('Tests', () => {
 
 ### Expectations for Query or Mutation Results
 
-Expectations can be made against the response of an intercepted GraphQL query or
+You can make expectations against the response of an intercepted GraphQL query or
 mutation using [cy.wait()](/api/commands/wait).
 
 ```js
@@ -653,7 +653,7 @@ context('Tests', () => {
 
 ### Modifying a Query or Mutation Response
 
-In the test below, the response is modified to test the UI for a single page of
+The test below modifies the response to test the UI for a single page of
 results.
 
 ```js
@@ -723,23 +723,23 @@ like:
 
 :::info
 
-**Note:** Logging can be disabled by passing `{ log: false }` with the static
+**Note:** You can disable logging by passing `{ log: false }` with the static
 response.
 
 ```js
 cy.intercept('/users*', { body: ['user1', 'user2'], log: false }).as('getUsers')
 ```
 
-To disable logs for all xhr/fetch requests, checkout our
-[example](/api/commands/intercept#Disabling-logs-for-a-request) on the intercept
-api page.
+To disable logs for all xhr/fetch requests, see the
+[disabling logs for a request example](/api/commands/intercept#Disabling-logs-for-a-request)
+on the `cy.intercept()` API page.
 
 :::
 
 The circular indicator on the left side indicates if the request went to the
 destination server or not. If the circle is solid, the request went to the
-destination server; if it is outlined, the response was stubbed by
-`cy.intercept()` and not sent outbound.
+destination server; if it is outlined, `cy.intercept()` stubbed the
+response and Cypress did not send the request outbound.
 
 If we re-run our previous test to make the same requests, but this time, add a
 `cy.intercept()` to stub the response to `/users`, we can see that the indicator
@@ -749,7 +749,7 @@ changes. After adding the following line:
 cy.intercept('/users*', ['user1', 'user2']).as('getUsers')
 ```
 
-The Command Log will look like this:
+The Command Log looks like this:
 
 <!-- Code to reproduce screenshot:
     cy.intercept('/users*', ['user1', 'user2']).as('getUsers')
@@ -765,17 +765,17 @@ The Command Log will look like this:
   alt="Screenshot of stubbed fetch and unstubbed XHR requests"
 />
 
-The `fetch` request now has an open circle, to indicate that it has been
-stubbed. The alias for the `cy.intercept()` is also now displayed on
+The `fetch` request now has an open circle, to indicate that `cy.intercept()`
+has stubbed it. The alias for the `cy.intercept()` also now displays on
 the right-hand side of the Command Log. If you mouse over the alias, you can see
-more information about how the request was handled:
+more information about how Cypress handled the request:
 
 <DocsImage
   src="/img/app/network-requests/command-log-stubbed-tooltip.png"
   alt="Screenshot of stubbed fetch request with tooltip and unstubbed XHR request"
 />
 
-Additionally, the request will be flagged if the request and/or response was
+Additionally, the Command Log flags the request if the request and/or response was
 modified by a `cy.intercept()` handler function. If we add this code to modify
 outgoing requests to `/users`:
 
@@ -785,8 +785,8 @@ cy.intercept('/users*', (req) => {
 }).as('addAuthHeader')
 ```
 
-The request log for `/users` will reflect that the `req` object was modified,
-but the request was still fulfilled from the destination (filled indicator):
+The request log for `/users` reflects that the test modified the `req` object,
+but the destination still fulfilled the request (filled indicator):
 
 <!-- Code to reproduce screenshot:
     cy.intercept('/users*', (req) => {
@@ -803,12 +803,12 @@ but the request was still fulfilled from the destination (filled indicator):
   alt="Screenshot of request that has had the req modified"
 />
 
-As you can see, "req modified" is displayed in the badge, to indicate the
-request object was modified. "res modified" and "req + res modified" can also be
-displayed, depending on if `res` was modified inside of a `req.continue()`
-callback.
+As you can see, the badge displays "req modified" to indicate that the test
+modified the request object. The badge can also display "res modified" and
+"req + res modified", depending on if the test modified `res` inside of a
+`req.continue()` callback.
 
-As with all command logs, logs for network requests can be clicked to display
+As with all command logs, you can click logs for network requests to display
 additional information in the Console. For example, after clicking the previous
 request for `/users?limit=100` and opening Developer Tools, we can see the
 following:

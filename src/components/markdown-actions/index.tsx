@@ -7,6 +7,11 @@ import Icon from '@cypress-design/react-icon'
 import Select, { type SelectItem } from '@cypress-design/react-select'
 import { markdownPathFor } from '@site/src/utils/markdown-url'
 import { copyPendingText } from '@site/src/utils/copy-to-clipboard'
+import {
+  currentPagePath,
+  trackFullStoryEvent,
+  type MarkdownDestination,
+} from '@site/src/utils/fullstory'
 import s from './style.module.css'
 
 /** How long the button keeps showing the result of the last copy. */
@@ -60,10 +65,6 @@ export default function MarkdownActions(): React.JSX.Element {
   const markdownUrl = `${siteConfig.url}${markdownPath}`
   const prompt = `Read ${markdownUrl}, then help me apply it to my project.`
 
-  const track = (event: string) => {
-    ;(window as any).FS?.event?.(event, { markdown_url: markdownUrl })
-  }
-
   const flash = (state: CopyState) => {
     if (!mounted.current) {
       return
@@ -77,6 +78,8 @@ export default function MarkdownActions(): React.JSX.Element {
   // own tick, or the clipboard write lands outside the user activation that
   // Safari requires. The fetch is started here and handed over still pending.
   const copyMarkdown = () => {
+    // Read now: the reader can reach another page before the copy lands.
+    const pagePath = currentPagePath()
     const markdown = fetch(markdownPath, {
       headers: { Accept: 'text/markdown, text/plain' },
     }).then((response) => {
@@ -92,7 +95,7 @@ export default function MarkdownActions(): React.JSX.Element {
           flash('error')
           return
         }
-        track('Copied Page Markdown')
+        trackFullStoryEvent('Page Markdown Copied', { pagePath })
         flash('copied')
       },
       () => flash('error')
@@ -103,24 +106,36 @@ export default function MarkdownActions(): React.JSX.Element {
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 
+  const openInAssistant = (destination: MarkdownDestination, url: string) => {
+    trackFullStoryEvent('Page Markdown Opened', {
+      pagePath: currentPagePath(),
+      destination,
+    })
+    openInNewTab(url)
+  }
+
   const runAction = (action: string | undefined) => {
     switch (action) {
       case 'copy':
         void copyMarkdown()
         return
       case 'view':
-        track('Viewed Page Markdown')
+        trackFullStoryEvent('Page Markdown Viewed', {
+          pagePath: currentPagePath(),
+        })
         openInNewTab(markdownPath)
         return
       case 'chatgpt':
-        track('Opened Page Markdown in ChatGPT')
-        openInNewTab(
+        openInAssistant(
+          'ChatGPT',
           `https://chatgpt.com/?hints=search&prompt=${encodeURIComponent(prompt)}`
         )
         return
       case 'claude':
-        track('Opened Page Markdown in Claude')
-        openInNewTab(`https://claude.ai/new?q=${encodeURIComponent(prompt)}`)
+        openInAssistant(
+          'Claude',
+          `https://claude.ai/new?q=${encodeURIComponent(prompt)}`
+        )
     }
   }
 
@@ -177,7 +192,12 @@ export default function MarkdownActions(): React.JSX.Element {
         // internally.
         value=""
         onChange={runAction}
-        onOpenChange={(open) => open && track('Opened Page Markdown Menu')}
+        onOpenChange={(open) =>
+          open &&
+          trackFullStoryEvent('Page Markdown Menu Opened', {
+            pagePath: currentPagePath(),
+          })
+        }
         align="right"
         // The docs content column is narrow, and the longest row is
         // "Copy page as Markdown".

@@ -11,7 +11,7 @@ Two prerequisites apply to every provider:
 
 ### Environment variables by CI provider
 
-Each CI provider has a unique combination of components, patterns, and environment variables that must be interpreted by this module. Expand a provider below for its essential environment variables.
+Each CI provider has a unique combination of components, patterns, and environment variables that this module must interpret. Expand a provider below for its essential environment variables.
 
 <AccordionBlock title="GitHub Actions" icon={<Icon name="github" />}>
 
@@ -21,7 +21,7 @@ References: [Understanding GitHub Actions](https://docs.github.com/en/actions/le
 
 - `GITHUB_ACTIONS` - Presence identifies the environment as a GitHub Actions environment.
 - `GITHUB_RUN_ID` - Value uniquely identifies a GitHub Actions workflow instance. Value does not change as jobs in the workflow are re-executed.
-- `GITHUB_RUN_ATTEMPT` - Value identifies the workflow instance's attempt index. Value is incremented each time jobs are re-executed.
+- `GITHUB_RUN_ATTEMPT` - Value identifies the workflow instance's attempt index. Value increments each time jobs are re-executed.
 
 </AccordionBlock>
 
@@ -34,7 +34,7 @@ References: [GitLab CI/CD pipelines](https://docs.gitlab.com/ee/ci/pipelines/) |
 - `GITLAB_CI` - Presence identifies the environment as a GitLab CI environment.
 - `CI_PIPELINE_ID` - Value uniquely identifies a GitLab pipeline workflow. This value does not change as jobs in the pipeline are retried.
 - `CI_JOB_NAME` - Value uniquely identifies a single job name within a pipeline. Ex. `run-e2e`.
-- `CI_JOB_ID` - Value uniquely identifies an execution instance of a job. This value will change each time a job is executed/re-executed.
+- `CI_JOB_ID` - Value uniquely identifies an execution instance of a job. This value changes each time a job is executed/re-executed.
 
 </AccordionBlock>
 
@@ -44,7 +44,7 @@ References: [Jenkins documentation](https://www.jenkins.io/doc/) | [Jenkins envi
 
 Jenkins is heavily customizable through the usage of plugins, which limits the amount of assumptions we can make about available environment variables and overall behavior.
 
-We have implemented Jenkins support within this module using the broadest set of available default values. For the purposes of this documentation, though, we will discuss terms related to [Jenkins Pipeline support](https://www.jenkins.io/doc/book/pipeline/getting-started/).
+We have implemented Jenkins support within this module using the broadest set of available default values. For the purposes of this documentation, though, this page discusses terms related to [Jenkins Pipeline support](https://www.jenkins.io/doc/book/pipeline/getting-started/).
 
 **Essential environment variables**
 
@@ -64,7 +64,7 @@ References: [Azure Pipelines key concepts](https://learn.microsoft.com/en-us/azu
 - `TF_BUILD` and `AZURE_HTTP_USER_AGENT` - Combined presence identifies the environment as an Azure pipeline environment.
 - `SYSTEM_PLANID` - Value uniquely identifies a pipeline run. Value does not change as jobs within the pipeline are retried from failure.
 - `SYSTEM_JOBID` - Value uniquely identifies a job execution. Value changes each time a job is retried from failure, in conjunction with the `SYSTEM_JOBATTEMPT` being incremented.
-- `SYSTEM_JOBATTEMPT` - Value identifies the pipelines shared attempt index. Value is incremented when jobs are retried from failure.
+- `SYSTEM_JOBATTEMPT` - Value identifies the pipelines shared attempt index. Value increments when jobs are retried from failure.
 
 </AccordionBlock>
 
@@ -78,7 +78,7 @@ References: [About CircleCI](https://circleci.com/docs/about-circleci/) | [Circl
 
 - `CIRCLECI` - Presence identifies the environment as a CircleCI environment.
 - `CIRCLE_PIPELINE_ID` - Value uniquely identifies a CircleCI pipeline, created on push or manually triggered through the UI. This value does not change as workflows within the pipeline are re-executed.
-- `CIRCLE_WORKFLOW_ID` - Value uniquely identifies an instance of a workflow's execution within a pipeline. This value will be updated upon each workflow execution; in other words, retrying a workflow from failure from the Circle UI will create a new workflow with a new `CIRCLE_WORKFLOW_ID` value available to the jobs executed within it.
+- `CIRCLE_WORKFLOW_ID` - Value uniquely identifies an instance of a workflow's execution within a pipeline. This value changes upon each workflow execution; in other words, retrying a workflow from failure from the Circle UI creates a new workflow with a new `CIRCLE_WORKFLOW_ID` value available to the jobs executed within it.
 - `CIRCLE_WORKFLOW_JOB_ID` - Value uniquely identifies an execution instance of a named job within a workflow instance.
 
 </AccordionBlock>
@@ -130,9 +130,9 @@ References: [Buildkite documentation](https://buildkite.com/docs) | [Buildkite e
 
 ### Local development example
 
-To iterate on your verification script and see everything working without putting code into your CI environment, simulate the CI context for a specific Cypress run locally. This can save a lot of time when getting started.
+To iterate on your verification script and see everything working without putting code into your CI environment, simulate the CI context for a specific Cypress run locally. Simulating the CI context can save a lot of time when getting started.
 
-If you executed a run in GitHub Actions and it was recorded to Cypress Cloud, you would set these 5 environment variables to replicate the context of that run locally and execute your local handler script. This is a great way to iterate on your script and verify everything is working as expected, without having to integrate anything in CI. It's also useful for debugging.
+If you executed a run in GitHub Actions and recorded it to Cypress Cloud, you would set these 5 environment variables to replicate the context of that run locally and execute your local handler script. Setting these variables is a great way to iterate on your script and verify everything is working as expected, without having to integrate anything in CI. Replicating the run locally is also useful for debugging.
 
 ```shell
 CYPRESS_PROJECT_ID=AAA
@@ -143,4 +143,4 @@ GITHUB_RUN_ATTEMPT=1
 node verifyResults.js
 ```
 
-The Results API will then look for the Cypress Cloud run that matches this run ID. If there is more than one Cypress Cloud run found for that GitHub Actions Run, you can pass run tags to narrow down to one run's report.
+The Results API then looks for the Cypress Cloud run that matches this run ID. If there is more than one Cypress Cloud run found for that GitHub Actions Run, you can pass run tags to narrow down to one run's report.
