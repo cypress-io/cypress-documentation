@@ -55,6 +55,14 @@ Apply the same reasoning to any new job you add behind a condition: if it can
 skip, the thing branch protection requires has to be an aggregator that reads
 its result, not the job itself.
 
+## `pull_request_target` never runs pull request code
+
+`auto-approve-low-risk.yml` uses `pull_request_target` so a pull request can't
+rewrite the rules that approve it. That trigger has secrets and a write token,
+so never check out or run the pull request's code in it: read the PR through the
+API. How the approval decides is in
+[`AGENTS_REFERENCE.md`](../../AGENTS_REFERENCE.md#auto-approving-low-risk-pull-requests).
+
 ## Workflows that trigger no CI
 
 GitHub raises no workflow run for an event caused by `GITHUB_TOKEN`. The nightly
