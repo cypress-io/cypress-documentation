@@ -5,8 +5,8 @@
 # Paths that control how pull requests are reviewed and approved, including
 # Bugbot's own rules and the auto-approve workflow. auto-approve-low-risk.yml
 # never approves changes here, so a code owner reviews them.
-/.github/ @cypress-io/app
-/.cursor/ @cypress-io/app
+/.github/ @cypress-io/product
+/.cursor/ @cypress-io/product
 
 # Plugins data — review requested automatically on PRs touching these files,
 # including the nightly update-plugins-data automation.

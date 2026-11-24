@@ -1944,7 +1944,7 @@ other than **Low Risk**, or a protected path dismisses it.
 Two branch protection settings back this up. **Dismiss stale pull request
 approvals when new commits are pushed** clears a person's approval on a new
 push the same way the workflow clears its own. **Require review from Code
-Owners** makes `.github/` and `.cursor/` need a review from `@cypress-io/app`
+Owners** makes `.github/` and `.cursor/` need a review from `@cypress-io/product`
 (see `.github/CODEOWNERS`), and the bot is never a code owner, so its approval
 can't satisfy that review.
 
