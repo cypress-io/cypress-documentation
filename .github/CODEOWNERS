@@ -9,7 +9,7 @@
 /.cursor/ @cypress-io/product
 
 # Plugins data — review requested automatically on PRs touching these files,
-# including the nightly update-plugins-data automation.
-/src/data/plugins.json @jennifer-shehane
-/src/data/plugins-generated.json @jennifer-shehane
-/.github/workflows/update-plugins-data.yml @jennifer-shehane
+# including the nightly update-plugins-data automation. Its workflow is
+# covered by the /.github/ rule above.
+/src/data/plugins.json @cypress-io/product
+/src/data/plugins-generated.json @cypress-io/product
