@@ -255,6 +255,10 @@ This child process is similar to the way Visual Studio Code or Atom works.
 
 Cypress runs the configuration code using the Node version that launched Cypress.
 
+Because the configuration code runs in Node, you debug it with a Node debugger
+rather than the browser's Developer Tools. See
+[Debug setupNodeEvents and tasks with a Node debugger](/app/guides/debugging#Debug-setupNodeEvents-and-tasks-with-a-Node-debugger).
+
 ### npm modules
 
 When Cypress executes the
@@ -320,6 +324,11 @@ made take effect immediately. Cypress reads the file in and executes the
 exported function again.
 
 Because Cypress watches the file, you can iterate on plugin code while Cypress is already running.
+
+Each change to a watched file starts a new config process. A debugger attached
+to the old process doesn't follow it on its own, but the VS Code JavaScript
+Debug Terminal reattaches for you, as described in
+[Debug the Cypress config process in VS Code](/app/guides/debugging#Debug-the-Cypress-config-process-in-VS-Code).
 
 ## <Icon name="graduation-cap" /> Real World Example
 
