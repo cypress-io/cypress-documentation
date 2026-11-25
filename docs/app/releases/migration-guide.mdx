@@ -2317,8 +2317,8 @@ See [`.as()`](/api/commands/as) for more details.
 
 #### `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce`
 
-The `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce` APIs been
-removed. Use the [`cy.session()`](/api/commands/session) command to preserve
+The `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce` APIs have
+been removed. Use the [`cy.session()`](/api/commands/session) command to preserve
 cookies (and local and session storage) between tests.
 
 #### Cookie commands now use `hostname` instead of `superdomain`
@@ -2368,9 +2368,16 @@ describe('Dashboard', () => {
 
 #### `cy.server()`, `cy.route()`, and `Cypress.Server.defaults`
 
-The` cy.server()` and` cy.route()` commands and the `Cypress.server.defaults`
-API has been removed. Use the [`cy.intercept()`](/api/commands/intercept)
+The `cy.server()` and `cy.route()` commands and the `Cypress.Server.defaults`
+API have been removed. Use the [`cy.intercept()`](/api/commands/intercept)
 command instead.
+
+`cy.route()` watched `XMLHttpRequest` calls from inside the page, so it also saw
+requests that a service worker, such as Mock Service Worker (MSW), answered.
+`cy.intercept()` sees requests at the network layer, and a response that a
+service worker builds never reaches the network. See
+[`cy.intercept()` and service worker responses](/api/commands/intercept#cyintercept-and-service-worker-responses)
+for ways to test those requests.
 
 ```diff
   it('can encode + decode headers', () => {
@@ -2384,12 +2391,10 @@ command instead.
 -        'test': 'We’ll',
 -      }
 -    }).as('getApi')
-+   cy.intercept('GET', /api/, (req) => {
-+      req.on('response', (res) => {
-+        res.setDelay(500)
-+      })
-+      req.body.'test': 'We’ll'
-+    }).as('getApi')
++   cy.intercept('GET', /api/, {
++     body: { test: 'We’ll' },
++     delay: 500,
++   }).as('getApi')
     cy.visit('/index.html')
     cy.window().then((win) => {
       const xhr = new win.XMLHttpRequest

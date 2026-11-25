@@ -2091,6 +2091,10 @@ When a route doesn't match, check these:
 - The request isn't served from the cache. Cached responses never reach
   the network. See
   [`cy.intercept()` and request caching](#cyintercept-and-request-caching).
+- A service worker didn't answer the request. A response that a service
+  worker, such as Mock Service Worker (MSW), builds itself never reaches the
+  network. See
+  [`cy.intercept()` and service worker responses](#cyintercept-and-service-worker-responses).
 - Your app sent the request. `cy.intercept()` doesn't see requests made by
   [`cy.request()`](/api/commands/request).
 
@@ -2099,7 +2103,9 @@ When a route doesn't match, check these:
 `cy.intercept()` intercepts requests at the network layer. Intercepting at that layer can cause
 confusion when trying to intercept a request that the browser has already cached. If
 the browser serves a request from its cache, the request never hits the
-network layer, and `cy.intercept()` never fires.
+network layer, and `cy.intercept()` never fires. A response that a service
+worker serves from Cache Storage never reaches the network either. See
+[`cy.intercept()` and service worker responses](#cyintercept-and-service-worker-responses).
 
 To see if this is affecting your app, open the **Network** tab in Chrome
 DevTools and check the **Size** column. A request served from the cache shows
@@ -2153,6 +2159,85 @@ are some workarounds:
       )
     }
   })
+  ```
+
+## `cy.intercept()` and service worker responses
+
+`cy.intercept()` sees a request when the request leaves the browser for the
+network. A
+[service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+that answers a request itself, with a `Response` the worker builds or one it
+reads from Cache Storage, keeps that request inside the browser. Cypress never
+sees the request, so no route matches it, a stub on that route doesn't reach the
+page, and `cy.wait()` on the route's alias fails with `No request ever occurred`.
+The page still receives the worker's response.
+
+Mock Service Worker (MSW) works this way in the browser: for each request a
+handler mocks, the MSW worker builds the `Response` itself. Teams moving from
+`cy.route()` to `cy.intercept()` often notice this behavior first, since
+`cy.route()` watched `XMLHttpRequest` calls from inside the page.
+
+A worker that passes a request on with `fetch(event.request)` sends the request
+to the network, where `cy.intercept()` matches and stubs it like any other
+request. This worker shows both cases:
+
+```js title="sw.js"
+self.addEventListener('fetch', (event) => {
+  const { pathname } = new URL(event.request.url)
+
+  if (pathname === '/api/users') {
+    // answered inside the browser, so cy.intercept() never sees it
+    event.respondWith(Response.json([{ id: 1, name: 'Ada' }]))
+  } else if (pathname.startsWith('/api/')) {
+    // passed on to the network, where cy.intercept() matches it
+    event.respondWith(fetch(event.request))
+  }
+})
+```
+
+To test requests that a service worker answers, use one of these approaches:
+
+- Turn the worker's mocking off during Cypress runs, and stub the requests with
+  `cy.intercept()` instead. For MSW, skip `worker.start()` when the app runs in
+  Cypress:
+
+  ```js title="src/main.js"
+  async function enableMocking() {
+    // under Cypress, the tests stub the API with cy.intercept() instead
+    if (window.Cypress) {
+      return
+    }
+
+    const { worker } = await import('./mocks/browser')
+    return worker.start()
+  }
+
+  enableMocking().then(() => {
+    startApp()
+  })
+  ```
+
+  ```js title="spec.cy.js"
+  cy.intercept('GET', '/api/users', [{ id: 1, name: 'Ada' }]).as('getUsers')
+  cy.visit('/')
+  cy.get('[data-cy="load-users"]').click()
+  cy.wait('@getUsers')
+  ```
+
+- Keep the worker running, and spy on `fetch` in the app's window with
+  [`cy.spy()`](/api/commands/spy). The spy records every `fetch` call the app
+  makes, including the ones the worker answers, while the response still comes
+  from the worker. For an app that uses `XMLHttpRequest`, spy on
+  `win.XMLHttpRequest.prototype.open` instead.
+
+  ```js title="spec.cy.js"
+  cy.visit('/', {
+    onBeforeLoad(win) {
+      cy.spy(win, 'fetch').as('fetch')
+    },
+  })
+  cy.get('[data-cy="load-users"]').click()
+  cy.get('@fetch').should('have.been.calledWithMatch', '/api/users')
   ```
 
 ## `cy.intercept()` and CORS preflight requests
