@@ -434,8 +434,8 @@ cy.get('textarea').should('contain.value', 'ab')
 value, so it doesn't match what a user typed into an input. See
 [Value assertions](/app/references/assertions#Value) for more examples.
 
-If you'd like to massage or work with the text prior to an assertion, such as
-matching it against a regular expression:
+To work with the value before you assert on it, such as matching it against a
+regular expression, yield it with `.invoke('val')`:
 
 ```javascript
 cy.get('input')

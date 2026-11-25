@@ -125,7 +125,7 @@ You commonly use these chainers after using DOM commands like:
 
 The `contain` chainer matches an element's text content, not the current value
 of an `<input>` or `<textarea>`. To match part of a value, use `include.value`
-or its alias `contain.value`, as shown in [Value](#Value).
+or its alias `contain.value`, as shown in the [Value examples](#Value).
 
 ## Sinon-Chai
 
@@ -210,7 +210,8 @@ cy.get('input').should('contain.value', '@')
 cy.get('input').should('not.include.value', ' ')
 ```
 
-Use a value chainer rather than `contain` here. `contain` checks text content:
+To match part of a value, use `include.value` or `contain.value`, not
+`contain`. The `contain` chainer checks text content:
 on an `<input>`, which has none, `.should('contain', 'bar')` fails even when the
 value includes `bar`. On a `<textarea>`, `contain` matches the text written in
 the page's markup, not what the user typed.
