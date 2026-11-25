@@ -93,8 +93,9 @@ Cypress is not built on Jest or Jasmine. Cypress bundles
 structured with `describe()` and `it()`, and assertions use Chai's globally
 available `expect` and `assert` (or the [`.should()`](/api/commands/should)
 command). Jest-style `expect` matchers aren't available by default. You can
-still run Jest for unit tests in the same project; if you use TypeScript, see
-[Clashing types with Jest](/app/tooling/typescript-support#Clashing-types-with-Jest)
+still run Jest, Jasmine, or Vitest for unit tests in the same project; if you
+use TypeScript, see
+[Cypress types clashing with Jest, Jasmine, or Vitest](/app/tooling/typescript-support#Cypress-types-clashing-with-Jest-Jasmine-or-Vitest)
 to keep the two runners' global types from conflicting.
 
 ### <Icon name="angle-right" /> Can I use a different assertion library with Cypress?
@@ -2165,34 +2166,20 @@ file in your **tsconfig.json** file. See our
 [TypeScript Configuration](/app/tooling/typescript-support#Using-an-External-Typings-File)
 guide for more info on doing this.
 
-### <Icon name="angle-right" /> How do I get TypeScript to recognize Cypress types and not Jest types?
+### <Icon name="angle-right" /> How do I get TypeScript to recognize Cypress types and not Jest, Jasmine, or Vitest types?
 
-For frameworks that include Jest out of the box (like Create React App), you
-might run into issues where the Cypress global types for TypeScript conflict
-with Jest global types (`describe`, `test`, `it`, etc..). In this case, other
-Cypress globals like `Cypress` and `cy` might not be working properly either.
+When a project runs unit tests with Jest, Jasmine, or Vitest globals alongside
+Cypress, the Cypress global types can conflict with the unit test runner's
+global types (`describe`, `it`, `expect`, and others). Unit tests then show
+errors such as `Property 'toBeTruthy' does not exist on type 'Assertion'`, or
+Cypress globals such as `cy` and `Cypress` stop resolving in your specs.
 
-We are currently investigating better ways to handle this, but for the time
-being, we recommend using a
-[triple slash references directive](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-types-)
-to instruct the TypeScript compiler to look at the Cypress global types in each
-of your affected spec files:
-
-```
-/// <reference types="cypress" />
-```
-
-**Alternatively, Relocate Component Specs**
-
-You can also group your Cypress and Jest tests inside separate folders (not
-co-located with components).
-
-You need to add a `tsconfig.json` to the folder and specify the types the
-files inside that folder should use.
-
-Don't forget to update your
-[`specPattern`](/app/references/configuration#component)
-to include the new file location.
+The types conflict when one `tsconfig.json` covers both your unit tests and your
+Cypress files. Give Cypress its own `tsconfig.json` and keep the Cypress types
+out of the configuration your unit tests use. See
+[Cypress types clashing with Jest, Jasmine, or Vitest](/app/tooling/typescript-support#Cypress-types-clashing-with-Jest-Jasmine-or-Vitest)
+for the steps, including the setup for Angular workspaces with component specs
+next to their components.
 
 ## cy.prompt
 

@@ -123,6 +123,17 @@ export default {
 
 - [Angular 22](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular)
 
+## TypeScript types for Angular unit tests and Cypress
+
+When a workspace runs unit tests with Jasmine or Vitest globals and its root
+`tsconfig.json` covers every file, the layout Angular CLI 19 and earlier
+generated, your editor loads the global types Cypress declares for `describe()`,
+`it()`, and `expect` alongside the unit test runner's own. Unit tests then report
+errors such as `Property 'toBeTruthy' does not exist on type 'Assertion'`. To
+give Cypress its own `tsconfig.json`, including for component specs next to
+their components in `src`, see
+[Separate Cypress and unit test types in Angular](/app/tooling/typescript-support#Separate-Cypress-and-unit-test-types-in-Angular).
+
 ## Styling
 
 Cypress builds your component specs with the Angular build pipeline. When you do
