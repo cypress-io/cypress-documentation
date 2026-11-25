@@ -373,6 +373,11 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 :::
 
+Cypress doesn't apply `launchOptions.args` to Electron, and prints a warning
+when they're set. To use your own video in Electron, pass the switch in the
+`ELECTRON_EXTRA_LAUNCH_ARGS` environment variable, as shown in
+[Change the fake webcam video between tests](#Change-the-fake-webcam-video-between-tests).
+
 #### Change the fake webcam video between tests
 
 To give each test a different camera video, such as a valid and an expired QR
@@ -381,8 +386,8 @@ to instead of changing the switch. The browser reads the switch once, when it
 starts, and Cypress fires `before:browser:launch` only when it launches a
 browser. Cypress keeps the same browser open from spec to spec (in
 `cypress run`, each spec after the first opens in a new tab), so a different
-argument per test or per spec has no effect. Chrome does read the video file
-again each time the app starts the camera with `getUserMedia()`.
+argument per test or per spec has no effect. The browser does read the video
+file again each time the app starts the camera with `getUserMedia()`.
 
 Point the switch at a placeholder file, and copy the video each test needs over
 the placeholder with [`cy.task()`](/api/commands/task):
@@ -426,14 +431,18 @@ The config expects your own videos in `cypress/fixtures`: `webcam-default.y4m`,
 which the config copies in at the start of each run, and the videos the tests
 copy in, such as `valid-qr.y4m` and `expired-qr.y4m`.
 
-Electron ignores `launchOptions.args`, so to run these tests in Electron, pass
-the switch in the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable (see
+To run these tests in Electron, pass the switch in the
+`ELECTRON_EXTRA_LAUNCH_ARGS` environment variable instead (see
 [Modify Electron app switches](#Modify-Electron-app-switches)). With Cypress
 started from the project folder, the placeholder's relative path works:
 
 ```shell
 export ELECTRON_EXTRA_LAUNCH_ARGS=--use-file-for-fake-video-capture=cypress/fixtures/fake-webcam.y4m
 ```
+
+On Windows, use `set` in place of `export`. The path has to name the same
+placeholder file as the config, so renaming the placeholder, such as to
+`fake-webcam.mjpeg`, means changing the variable too.
 
 In the spec, swap the video before the app starts the camera:
 
@@ -477,7 +486,7 @@ Keep these behaviors in mind:
   gives each test a predictable video.
 - The switch belongs to Chromium, so the approach works in Chromium-based
   browsers, including Electron, and doesn't apply to Firefox or WebKit.
-- The approach relies on how Chrome reads the fake capture file, not on a
+- The approach relies on how Chromium reads the fake capture file, not on a
   Cypress API, so a browser update can change how it behaves. If the video
   stops changing between tests in your browser,
   [stub `getUserMedia()`](#Stub-getUserMedia-with-a-fixture-video) instead.
