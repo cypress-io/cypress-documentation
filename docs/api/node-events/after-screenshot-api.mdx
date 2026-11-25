@@ -48,7 +48,7 @@ properties:
 | `size`             | `number`  | The size of the image file (in bytes).                                                                                                                                                  |
 | `specName`         | `string`  | The name of the specfile where the screenshot was taken.                                                                                                                                |
 | `takenAt`          | `string`  | The date and time the screenshot was taken. ISO 8601 format in UTC (example: `'2020-03-09T07:30:37.686Z'`)                                                                              |
-| `testAttemptIndex` | `number`  | The index of the test attempt that took the screenshot, starting at `0`. With [test retries](/app/guides/test-retries), each retry increases it by one.                                 |
+| `testAttemptIndex` | `number`  | The index of the test attempt that took the screenshot, starting at `0`. With [test retries](/app/guides/test-retries), each retry increases the index by one.                          |
 | `testFailure`      | `boolean` | _(Optional)_ `true` when Cypress took the screenshot automatically because a test failed. Cypress leaves it out for screenshots taken with [cy.screenshot()](/api/commands/screenshot). |
 
 ## Usage

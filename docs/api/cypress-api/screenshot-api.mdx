@@ -185,11 +185,7 @@ properties to the default `onAfterScreenshot` callback with `testFailure` set to
 a `test:after:run` handler can attach the screenshot Cypress saved to an HTML
 report.
 
-The `path` property is the absolute path Cypress saved the screenshot to. Read
-the path from the callback rather than rebuilding it from `Cypress.spec` and the
-test's titles: Cypress removes characters such as `:` from titles in file names,
-and the folders between the screenshots folder and the image change with the
-[common ancestor of the specs in the run](/app/core-concepts/writing-and-organizing-tests#How-asset-file-paths-are-generated).
+The `path` property is the absolute path Cypress saved the screenshot to.
 
 This support file adds each failure screenshot to the failed test in a
 [mochawesome](https://www.npmjs.com/package/mochawesome) report with
@@ -223,11 +219,11 @@ Cypress.on('test:after:run', (test) => {
 })
 ```
 
-The example assumes the report is written to a folder next to the
+The example assumes your reporter writes the report to a folder next to the
 [`screenshotsFolder`](/app/references/configuration#Screenshots), such as
 `cypress/reports` beside the default `cypress/screenshots`, so
-`../screenshots/` reaches the image from the report. Change the prefix to match
-where your report lives.
+`../screenshots/` reaches the image from the report. Change `../screenshots/`
+to match where your report lives.
 
 Keep these behaviors in mind:
 
