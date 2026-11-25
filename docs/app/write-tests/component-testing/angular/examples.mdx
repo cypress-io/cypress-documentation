@@ -147,17 +147,19 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-## Inject Angular services from dependency injection
+## Get Angular services from dependency injection
 
 Some of what a component does lands in a service rather than in its template. A
-component test checks that work by getting the service from Angular's
-dependency injection, then confirming what a stateful fake recorded after a
-click, answering requests through `HttpTestingController`, or dispatching
-actions to a state store. Cypress has no built-in command for injection, and
-`cy.mount()` yields only the `fixture` and the `component`. `cypress/angular`
-mounts components with Angular's own `TestBed` from `@angular/core/testing`,
-though, so the `TestBed` a spec imports is the one that configured the mounted
-component, and `TestBed.inject()` returns providers from that test module.
+component test reaches that service through Angular's dependency injection to
+confirm what a stateful fake recorded after a click, answer requests through
+`HttpTestingController`, or dispatch actions to a state store.
+
+`cy.mount()` yields the `fixture` and the `component`, and Cypress has no
+built-in command for injection. A test calls `TestBed.inject()` instead:
+`cypress/angular` mounts components with Angular's own `TestBed` from
+`@angular/core/testing`, so the `TestBed` a spec imports is the one that
+configured the mounted component, and `TestBed.inject()` returns providers from
+that test module.
 
 Call `TestBed.inject()` inside `.then()` after `cy.mount()`. The `CartService`
 below keeps the cart in a signal, and `ProductComponent` adds to the cart
@@ -216,6 +218,7 @@ it('adds the product to the cart', () => {
 
 [`.invoke()`](/api/commands/invoke) calls `getItems()` again each time
 `.should()` retries, so the assertion waits for the cart to update.
+
 `TestBed.inject()` returns whatever the test module provides for a token. When
 the test passes a fake in `providers`, such as
 `{ provide: CartService, useValue: cartFake }`, `TestBed.inject(CartService)`
@@ -226,10 +229,10 @@ returns `cartFake`.
 `cy.mount()` queues a command, and Cypress configures `TestBed` for the
 component when that command runs, not when the test function calls
 `cy.mount()`. A `TestBed.inject()` call at the top level of the test runs
-before the test module is configured, so Angular creates an empty test module to
-answer the call, and the mount fails:
+before `cy.mount()` configures the test module, so Angular creates an empty test
+module to answer the call, and the mount fails:
 
-```ts
+```ts title="src/app/product.component.cy.ts"
 // ❌ Runs before cy.mount() configures TestBed
 const cart = TestBed.inject(CartService)
 
@@ -245,7 +248,7 @@ comes after `cy.mount()`. Cypress also resets `TestBed` after each test and when
 a test calls `cy.mount()` again, so inject the service again after each mount
 rather than keeping a reference to the old instance.
 
-### Get providers from a component's own injector
+### Get services from an Angular component's own injector
 
 `TestBed.inject()` reads from the test module's injector. When a component lists
 a service in its own `providers` array, Angular creates a separate instance for
@@ -424,7 +427,7 @@ it('adds the product to the cart', () => {
 
 `cy.inject()` reads from `TestBed`, the same as `TestBed.inject()`. For a
 service in a component's own `providers`, use the fixture's injector as shown in
-[Get providers from a component's own injector](#Get-providers-from-a-components-own-injector).
+[Get services from an Angular component's own injector](#Get-services-from-an-Angular-components-own-injector).
 
 ## Working with Legacy @Input() Decorators
 
