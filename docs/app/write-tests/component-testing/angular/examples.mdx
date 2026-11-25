@@ -161,8 +161,8 @@ it('clicking + fires a change event with the incremented value', () => {
 
 Some of what a component does lands in a service rather than in its template. A
 component test reaches that service through Angular's dependency injection to
-confirm what a stateful fake recorded after a click, answer requests through
-`HttpTestingController`, or dispatch actions to a state store.
+confirm what a service, or a fake in its place, recorded after a click, answer
+requests through `HttpTestingController`, or dispatch actions to a state store.
 
 `cy.mount()` yields the `fixture` and the `component`, and Cypress has no
 built-in command for injection. A test calls `TestBed.inject()` instead:
@@ -243,10 +243,16 @@ before `cy.mount()` configures the test module, so Angular creates an empty test
 module to answer the call, and the mount fails:
 
 ```ts title="src/app/product.component.cy.ts"
-// ❌ Runs before cy.mount() configures TestBed
-const cart = TestBed.inject(CartService)
+import { TestBed } from '@angular/core/testing'
+import { CartService } from './cart.service'
+import { ProductComponent } from './product.component'
 
-cy.mount(ProductComponent)
+it('adds the product to the cart', () => {
+  // ❌ Runs before cy.mount() configures TestBed
+  const cart = TestBed.inject(CartService)
+
+  cy.mount(ProductComponent)
+})
 ```
 
 ```text
@@ -262,10 +268,12 @@ rather than keeping a reference to the old instance.
 
 `TestBed.inject()` reads from the test module's injector. When a component lists
 a service in its own `providers` array, Angular creates a separate instance for
-that component, and `TestBed.inject()` returns the module's instance instead.
-Get the component's instance from the injector on the `fixture` that
-`cy.mount()` yields. This version of `ProductComponent` provides its own
-`CartService`:
+that component. `TestBed.inject()` returns the module's instance instead, such
+as the root instance that `providedIn: 'root'` creates for `CartService`. A
+service that only the component provides isn't in the test module at all, so
+`TestBed.inject()` throws `NG0201: No provider found`. Get the component's
+instance from the injector on the `fixture` that `cy.mount()` yields. This
+version of `ProductComponent` provides its own `CartService`:
 
 ```ts title="src/app/product.component.ts"
 import { Component, inject } from '@angular/core'
