@@ -38,11 +38,11 @@ An object containing one or more of the following:
 | `blackout`                   | `[]`         | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | `capture`                    | `'fullPage'` | Which parts of the Cypress Test Runner to capture. Cypress ignores this value for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, Cypress captures your application under test in the current viewport. When `fullPage`, Cypress captures your application under test in its entirety from top to bottom. When `runner`, Cypress captures the entire browser viewport, including the Cypress Command Log. For screenshots automatically taken on test failure, Cypress always coerces capture to `runner`. When [Test Replay](/cloud/features/test-replay) is enabled and the Runner UI is hidden, a `runner` screenshot does not include the Runner UI and instead captures the application under test only in the current viewport. |
 | `disableTimersAndAnimations` | `true`       | When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `onAfterScreenshot`          | `null`       | A callback Cypress calls right after it takes a screenshot, including the screenshots it takes automatically when a test fails. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the jQuery-wrapped `<html>` element. The second argument holds the screenshot's properties, such as the absolute `path` Cypress saved it to, its `dimensions`, and `testFailure`, which is `true` when Cypress took the screenshot because a test failed.                                                                                                                                                                                                                                                                          |
+| `onBeforeScreenshot`         | `null`       | A callback Cypress calls right before it takes a screenshot, including the screenshots it takes automatically when a test fails. For an element capture, the argument is the element being captured. For other screenshots, the argument is the jQuery-wrapped `<html>` element.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `overwrite`                  | `false`      | Whether to overwrite duplicate screenshot files with the same file name when saving.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `scale`                      | `false`      | Whether to scale the app to fit into the browser viewport. Cypress always coerces `scale` to `true` for `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `screenshotOnRunFailure`     | `true`       | When true, automatically takes a screenshot when there is a failure during `cypress run`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `overwrite`                  | `false`      | Whether to overwrite duplicate screenshot files with the same file name when saving.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `onBeforeScreenshot`         | `null`       | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `$el`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `onAfterScreenshot`          | `null`       | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `$el`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
 ## Examples
 
@@ -158,19 +158,87 @@ Cypress.Screenshot.defaults({
     // props has information about the screenshot,
     // including but not limited to the following:
     // {
-    //   path: '/Users/janelane/project/screenshots/my-screenshot.png',
-    //   size: '15 kb',
+    //   blackout: [],
     //   dimensions: {
-    //     width: 1000,
-    //     height: 660,
+    //     height: 720,
+    //     width: 1280,
     //   },
+    //   duration: 2300, // in milliseconds
+    //   path: '/Users/janelane/project/cypress/screenshots/login.cy.js/Login -- shows an error (failed).png',
     //   scaled: true,
-    //   blackout: ['.foo'],
-    //   duration: 2300,
+    //   size: 58607, // in bytes
+    //   specName: 'login.cy.js',
+    //   takenAt: '2026-11-01T17:00:00.000Z',
+    //   testAttemptIndex: 0,
+    //   testFailure: true, // only on screenshots taken because a test failed
     // }
   },
 })
 ```
+
+### Attach failure screenshots to a mochawesome report
+
+When a test fails during `cypress run`, Cypress takes a screenshot and passes its
+properties to the default `onAfterScreenshot` callback with `testFailure` set to
+`true`. The callback runs before Cypress emits the test's
+[`test:after:run`](/api/cypress-api/catalog-of-events#Cypress-Events) event, so
+a `test:after:run` handler can attach the screenshot Cypress saved to an HTML
+report.
+
+The `path` property is the absolute path Cypress saved the screenshot to.
+
+This support file adds each failure screenshot to the failed test in a
+[mochawesome](https://www.npmjs.com/package/mochawesome) report with
+`addContext()`:
+
+```javascript title="cypress/support/e2e.js"
+import addContext from 'mochawesome/addContext'
+
+let failureScreenshotPath
+
+Cypress.Screenshot.defaults({
+  onAfterScreenshot($el, props) {
+    if (props.testFailure) {
+      failureScreenshotPath = props.path
+    }
+  },
+})
+
+Cypress.on('test:after:run', (test) => {
+  if (failureScreenshotPath) {
+    // The path inside the screenshots folder, with forward slashes
+    const relativePath = failureScreenshotPath
+      .slice(Cypress.config('screenshotsFolder').length + 1)
+      .replaceAll('\\', '/')
+    const url = relativePath.split('/').map(encodeURIComponent).join('/')
+
+    addContext({ test }, `../screenshots/${url}`)
+  }
+
+  failureScreenshotPath = undefined
+})
+```
+
+The example assumes your reporter writes the report to a folder next to the
+[`screenshotsFolder`](/app/references/configuration#Screenshots), such as
+`cypress/reports` beside the default `cypress/screenshots`, so
+`../screenshots/` reaches the image from the report. Change `../screenshots/`
+to match where your report lives.
+
+Keep these behaviors in mind:
+
+- Cypress takes failure screenshots only during `cypress run`, and only while
+  `screenshotOnRunFailure` is `true`.
+- A failure in a `beforeEach` hook produces a screenshot for the test the hook
+  ran for.
+- With [test retries](/app/guides/test-retries), Cypress takes a screenshot and
+  emits `test:after:run` for each failed attempt, so each attempt gets its own
+  screenshot.
+- `Cypress.Screenshot.defaults()` keeps one `onAfterScreenshot` callback, so
+  each call that passes `onAfterScreenshot` replaces the callback set before
+  it. If your support file already sets `onAfterScreenshot`, such as for
+  [hiding a clock before each screenshot](#Change-the-DOM-using-onBeforeScreenshot-and-onAfterScreenshot),
+  combine the two into one callback.
 
 ## Notes
 

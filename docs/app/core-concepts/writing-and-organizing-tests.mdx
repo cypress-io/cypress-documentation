@@ -637,6 +637,11 @@ landed, read the path Cypress actually used:
 - [`cy.screenshot()`](/api/commands/screenshot) reports the saved location to
   its `onAfterScreenshot` callback, and you can pass an explicit `name` to
   control the filename.
+- A default `onAfterScreenshot` callback set with
+  [`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api) also runs
+  for the screenshots Cypress takes when a test fails, with `testFailure` set to
+  `true`. See
+  [Attach failure screenshots to a mochawesome report](/api/cypress-api/screenshot-api#Attach-failure-screenshots-to-a-mochawesome-report).
 - The [`after:screenshot`](/api/node-events/after-screenshot-api) and
   [`after:spec`](/api/node-events/after-spec-api) Node events hand you the
   resolved `path` (and video path) after each screenshot or spec finishes.
