@@ -655,7 +655,7 @@ Vitest with its `globals` option declare their own versions of the same names.
 When one `tsconfig.json` covers both your unit tests and your Cypress files,
 TypeScript loads both sets of globals into the same program, and one runner's
 types override the other's. Your editor then reports errors on code that runs
-fine, such as a Jasmine or Vitest matcher in a unit test:
+correctly, such as a Jasmine or Vitest matcher in a unit test:
 
 ```text
 Property 'toBeTruthy' does not exist on type 'Assertion'.
@@ -704,18 +704,17 @@ type-checks nothing itself, so your editor checks each unit test against
 (`jasmine` or `vitest/globals`). Workspaces created with Angular CLI 19 or
 earlier, including upgraded ones that kept their original files, have a root
 `tsconfig.json` with no `files` or `include`. That root file covers every `.ts`
-file in the workspace, Cypress files included, so its programs load both sets of
-globals.
+file in the workspace, Cypress files included, so your editor checks unit tests
+and Cypress files with both sets of globals loaded.
 
-Angular component tests also build differently from other frameworks. Cypress
-generates a `tsconfig.json` for the component test build that extends the
-`tsConfig` of your Angular build options (usually `tsconfig.app.json`), sets
-`types` to `["cypress"]`, and includes your `specPattern` and support file. A
-`cypress/tsconfig.json` therefore types your editor and `tsc`, not the component
-test build, and an `exclude` in your app's tsconfig carries into that build.
+Cypress builds Angular component tests with a `tsconfig.json` it generates. The
+generated file extends the `tsConfig` of your Angular build options (usually
+`tsconfig.app.json`), sets `types` to `["cypress"]`, and includes your
+`specPattern` and support file. So a `cypress/tsconfig.json` sets the types your
+editor and `tsc` use, not the types of the component test build.
 
-So in an Angular workspace, use the solution-style layout rather than the
-`exclude` from Step 2:
+In an Angular workspace, use the solution-style layout rather than the `exclude`
+from the general Step 2 above:
 
 **Step 1:** Create a `cypress/tsconfig.json` that extends the root
 `tsconfig.json`, so Cypress files share Angular's compiler options, such as the
@@ -732,7 +731,8 @@ So in an Angular workspace, use the solution-style layout rather than the
 ```
 
 The `../src/**/*.cy.ts` entry covers component specs placed next to their
-components. Leave it out if all your specs live in the `cypress` folder.
+components. If all your specs live in the `cypress` folder, leave out the
+`../src/**/*.cy.ts` entry.
 
 **Step 2:** In the root `tsconfig.json`, keep your `compilerOptions` and
 `angularCompilerOptions`, and set `files` and `references` so the root covers no
