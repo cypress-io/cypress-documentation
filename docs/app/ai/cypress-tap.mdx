@@ -19,6 +19,12 @@ An AI agent can run a Cypress spec and get back pass or fail. What it can't get 
 
 With `cypress tap`, an agent verifies its own work as it codes, catching and fixing failures in the same loop that created them.
 
+Start the session with `cypress open --headless` and the agent drives Cypress in
+the background: no Cypress window or browser appears or takes focus, so you
+keep working while the agent runs specs and reads failures. When you want to
+see what the agent sees, start a headed session instead and follow each run,
+pin, and snapshot in the Cypress app.
+
 Any agent that can run shell commands can use `cypress tap`, including Cursor, Claude
 Code, GitHub Copilot, Windsurf, and Codex CLI.
 
@@ -45,11 +51,16 @@ output can still change in any release while we gather feedback.
 
 ## How it works
 
-Start Cypress in open mode (`cypress open`) in your project, select your testing type and a chromium browser, then run
-`cypress tap` commands from the same project directory in another terminal.
+`cypress tap` drives a Cypress session started with `cypress open` in your
+project. Start the session one of two ways, then run `cypress tap` commands
+from the same project directory:
 
-In a cloud agent or other sandbox, start the session from the agent itself. See
-[Run cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes).
+- **Headless, for an agent to drive.** The default way to use `cypress tap`.
+  The session runs in the background, so you or the agent can start it and
+  keep working.
+- **Headed, to follow along.** The Cypress app shows each run, pin, and
+  snapshot as the agent drives it. Use it when you need to see the rendered
+  page yourself.
 
 The CLI finds the running Cypress session on its own. If more than one is
 running, it prefers the one whose project matches your current directory. Use
@@ -58,11 +69,94 @@ running, it prefers the one whose project matches your current directory. Use
 Every command prints a human-readable output by default and a JSON
 result when passed `--json`. Agents and scripts should prefer `--json`.
 
+### Start a headless Cypress session for cypress tap
+
+Run [`cypress open --headless`](/app/references/command-line#cypress-open-headless)
+with a testing type and a Chromium-based browser:
+
+```shell title="Command"
+npx cypress open --headless --e2e --browser chrome
+```
+
+The browser runs headless and the Cypress window stays hidden, so neither one
+takes focus from your editor or other apps. With no window to touch, nothing
+you click changes what the agent reads.
+
+A headless session has no window to choose a testing type or browser in, so
+`--headless` needs both up front:
+
+- `--e2e` or `--component` is required. Without one, the command exits right
+  away with an error.
+- The browser comes from `--browser` or from
+  [`defaultBrowser`](/app/references/configuration#Browser) in the Cypress
+  config. If it's missing or isn't Chromium-based, Cypress still starts, and
+  `cypress tap status` reports the reason as an `error`.
+
+An agent can start the session itself by running it in the background, with
+its output in `cypress-open.log`:
+
+```shell title="Command"
+nohup npx cypress open --headless --e2e --browser chrome > cypress-open.log 2>&1 &
+```
+
+A headless session has no window to close. The session runs until its process
+stops:
+
+- In the terminal that started it in the foreground, press `Ctrl+C`.
+- From any terminal, find the session's PID in the `PID` column of
+  [`cypress tap sessions`](#cypress-tap-sessions), or in the `pid` field of
+  `cypress tap status --json`, and stop that process:
+
+```shell title="Command"
+npx cypress tap sessions
+kill <pid>
+```
+
+On Windows, run `taskkill /PID <pid>` in place of `kill <pid>`.
+
+Run `cypress tap sessions` before starting a session, too. A session left
+running from earlier is one `cypress tap` can pick instead of the new one.
+
+In a cloud agent or other sandbox, the agent starts the session the same way.
+See [Run cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes)
+for the browser and setup each sandbox needs.
+
+### Follow an agent in a headed Cypress session
+
+Leave out `--headless` to open the Cypress app and watch the session the agent
+drives:
+
+```shell title="Command"
+npx cypress open --e2e --browser chrome
+```
+
+Each spec the agent runs plays in the Cypress window, and each command it pins
+shows its DOM snapshot there, the same as clicking that command in the app.
+Open a headed session when you need to see the page yourself:
+
+- You want to watch the agent work, to check that it runs the specs and pins
+  the commands you expect.
+- The agent reports a failure it can't explain from the `cypress tap` output.
+  Some problems show only on the rendered page, such as an element covered by
+  another one, or a layout or style change.
+- You are taking over the debugging. Stop the agent first, then use the
+  Cypress app as usual.
+
+While the agent is working, watch the window rather than click in it. The app
+and `cypress tap` share one app-under-test frame, so a click in the app changes
+what the agent reads next.
+See [Pin a command and read the app](#cypress-tap-pin).
+
+Stop any headless session for the same project before you open a headed one,
+so `cypress tap` has one session to choose instead of two. The previous section
+shows how to stop one.
+
 ## Requirements
 
-- Only works with `cypress open` sessions, not headless `cypress run` sessions.
+- Only works with `cypress open` sessions, headed or started with `--headless`. `cypress run` sessions aren't supported.
 - Only supports Chromium-based browsers (Chrome, Chromium, Edge, Electron).
-- Requires Cypress v15.21.0+.
+- Requires Cypress v15.21.0+. Starting the session with `--headless` requires
+  Cypress v16.4.0+.
 - If the `cypress tap` CLI and the session it attaches to are on incompatible versions, the CLI stops and reports the version mismatch.
 
 No Cypress Cloud account and no paid subscription are required. `cypress tap`
@@ -112,7 +206,7 @@ SESSIONS (2)
   222  /projects/other  component  —
 ```
 
-`--json` returns the same rows as an array, with `browserAttached` as a boolean and `browserName` as `null` where the text shows `—`:
+`--json` returns the same rows as an array, with `browserAttached` and `browserSupported` as booleans and `browserName` as `null` where the text shows `—`:
 
 ```json title="Output"
 [
@@ -121,32 +215,40 @@ SESSIONS (2)
     "projectRoot": "/projects/app",
     "testingType": "e2e",
     "browserAttached": true,
-    "browserName": "Chrome"
+    "browserName": "Chrome",
+    "browserSupported": true
   },
   {
     "pid": 222,
     "projectRoot": "/projects/other",
     "testingType": "component",
     "browserAttached": false,
-    "browserName": null
+    "browserName": null,
+    "browserSupported": true
   }
 ]
 ```
+
+If the project breaks after the session starts, the `PROJECT` column shows
+`(could not load)` or `(plugins stopped)`, and the JSON has the reason in
+`loadError` or `pluginsError`. [Troubleshooting](#Troubleshooting) says how to
+recover from each.
 
 ### cypress tap status {#cypress-tap-status}
 
 Reports where a running Cypress session is in its lifecycle. `cypress tap status` is built for
 polling, see [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict).
 
-| Stage                  | Meaning                                                                                                                   |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `not connected`        | No running Cypress session could be found                                                                                 |
-| `browser not selected` | A session is running, but it has no browser open                                                                          |
-| `spec not selected`    | A browser is open, but no spec has been chosen                                                                            |
-| `loading`              | A spec is selected and waiting on its own build. A spec that fails to build stays here, so a poller needs its own timeout |
-| `running`              | The selected spec is executing                                                                                            |
-| `passed`               | The run finished and no test failed                                                                                       |
-| `failed`               | The run finished with at least one failing test                                                                           |
+| Stage                  | Meaning                                                                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `not connected`        | No running Cypress session could be found                                                                                       |
+| `error`                | Cypress is running but its project couldn't load                                                                                |
+| `browser not selected` | A session is running, but it has no browser open                                                                                |
+| `spec not selected`    | A browser is open, but no spec has been chosen                                                                                  |
+| `loading`              | A spec is selected and waiting on its own build. A slow build stays here as long as it takes, so a poller needs its own timeout |
+| `running`              | The selected spec is executing                                                                                                  |
+| `passed`               | The run finished and no test failed                                                                                             |
+| `failed`               | The run finished with at least one failing test                                                                                 |
 
 ```shell title="Command"
 cypress tap status
@@ -183,6 +285,15 @@ carrying the earlier `startedAt` describes the previous run, not yours.
   "results": { "passed": 1, "failed": 1, "pending": 2, "skipped": 1 }
 }
 ```
+
+The `error` stage means Cypress is running but the project couldn't load, for
+example because the configuration file is invalid. The reason is in the `error`
+field. A `failed` result can also have an `error` field, such as the build
+error of a spec that didn't compile.
+
+If `status` includes `pluginsError`, the project's plugins process has stopped,
+and specs can fail or stay `loading` until you restart it. See
+[Troubleshooting](#Troubleshooting).
 
 ### cypress tap specs {#cypress-tap-specs}
 
@@ -492,13 +603,18 @@ the commands yourself.
 
 :::
 
-Start Cypress in your project and pick a testing type and browser:
+Start a headless Cypress session in your project, with a testing type and
+browser, and leave it running:
 
 ```shell title="Command"
-npx cypress open --e2e --browser=chrome
+npx cypress open --headless --e2e --browser chrome
 ```
 
-List the specs the session can run:
+To watch each step in the Cypress app as you go, leave out `--headless`. See
+[Follow an agent in a headed Cypress session](#Follow-an-agent-in-a-headed-Cypress-session).
+
+In another terminal, from the same project directory, list the specs the
+session can run:
 
 ```shell title="Command"
 npx cypress tap specs
@@ -525,7 +641,7 @@ npx cypress tap run cypress/e2e/checkout.cy.ts
 ```
 
 Poll `status` until it reports a verdict. `status` always exits 0 for a
-determinable stage, so a poller branches on the output, not the exit code. See [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict) for the traps (stale verdicts, empty specs that still pass, and builds that never leave loading).
+determinable stage, so a poller branches on the output, not the exit code. See [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict) for the traps (stale verdicts, empty specs that still pass, builds that stay loading, and the `error` stage).
 
 ```shell title="Command"
 npx cypress tap status
@@ -561,11 +677,12 @@ here, debugging is three commands away.
 
 ### Poll cypress tap status for a verdict
 
-`cypress tap run` returns immediately, so you learn a run's outcome by polling its status. Four things to know before you trust what it reports:
+`cypress tap run` returns immediately, so you learn a run's outcome by polling its status. Five things to know before you trust what it reports:
 
 - Only passed and failed are verdicts. Every other stage (loading, running, and so on) means the run isn't done. Keep polling.
 - Verify that `startedAt` changed. A finished run stays readable until the next one starts, so a passed/failed still carrying the previous run's `startedAt` describes the previous run. Record `startedAt` before you rerun, and wait for a verdict whose startedAt differs.
-  0 loading can be terminal. A spec that fails to build sits in loading and never leaves. Give your poller its own timeout.
+- loading lasts as long as the spec's build takes. Give your poller its own timeout.
+- Stop polling if status reports error or includes pluginsError. Neither one clears on its own, so the run can't reach a verdict. See [Troubleshooting](#Troubleshooting) for how to recover.
 - passed doesn't mean tests ran. A spec with no tests, or whose tests were all skipped or pending, finishes passed with results.passed at 0. Read the results counts alongside the stage when it matters that something actually ran.
 
 ### Debug a failing test
@@ -645,7 +762,8 @@ the historical snapshot, and stays there until you release the pin.
 
 :::caution
 
-Leave the Cypress window alone while `cypress tap` is driving it. Both share
+In a headed session, leave the Cypress window alone while `cypress tap` is
+driving it. Both share
 one app-under-test frame, so clicking in the app changes what the next command
 reads. Releasing a pin in the app releases your agent's, and pinning one
 yourself is invisible to `status`, which only reports pins `cypress tap`
@@ -734,18 +852,23 @@ Cypress it is about to drive.
 Fields arrive as the run progresses, so an agent should treat most of them as
 conditional rather than assuming a fixed shape. In `status`:
 
-| Field                                                                 | Present when                                                       |
-| --------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `status`                                                              | Always                                                             |
-| `pid`, `projectRoot`, `testingType`, `browserAttached`, `browserName` | A Cypress session was found, so every stage except `not connected` |
-| `totalSpecs`                                                          | A browser is attached, so `spec not selected` onwards              |
-| `spec`                                                                | A spec is selected, so `loading` onwards                           |
-| `startedAt`                                                           | `loading` onwards, and `null` until the run starts                 |
-| `totalTests`, `results`                                               | The run has started, so `running` onwards                          |
-| `pinned`                                                              | A pin created by `cypress tap` is active                           |
+| Field                               | Present when                                                                             |
+| ----------------------------------- | ---------------------------------------------------------------------------------------- |
+| `status`                            | Always                                                                                   |
+| `pid`, `projectRoot`, `testingType` | A Cypress session was found, so every stage except `not connected`                       |
+| `browserAttached`, `browserName`    | The project loaded, so `browser not selected` onwards                                    |
+| `error`                             | Always in `error`; in `failed` when the spec failed to build or threw while loading      |
+| `pluginsError`                      | The plugins process exited after the project loaded, from `browser not selected` onwards |
+| `totalSpecs`                        | A browser is attached, so `spec not selected` onwards                                    |
+| `spec`                              | A spec is selected, so `loading` onwards                                                 |
+| `startedAt`                         | `loading` onwards, and `null` until the run starts                                       |
+| `totalTests`, `results`             | The run has started, so `running` onwards                                                |
+| `pinned`                            | A pin created by `cypress tap` is active                                                 |
 
-Elsewhere, `sessions` always reports all five of its fields, using `null` for
-an absent testing type or browser. `specs` always reports `relativePath` and
+Elsewhere, `sessions` always reports `pid`, `projectRoot`, `testingType`,
+`browserAttached`, `browserName`, and `browserSupported`, using `null` for an
+absent testing type or browser. `sessions` adds `loadError` or `pluginsError` when the
+project broke after the session started. `specs` always reports `relativePath` and
 adds `lastModified` only where git history is available. `command` always
 reports `snapshots`, as an empty array when the row has none to pin, and omits
 `consoleProps` entirely when the driver has none to give.
@@ -784,14 +907,18 @@ Verify your work against the live Cypress session using the `cypress tap` CLI.
 Prefer `--json` output.
 
 1. Check for a session with `npx cypress tap status`. If it reports
-   `not connected`, ask me to start one with `npx cypress open`.
+   `not connected`, start one in the background with
+   `npx cypress open --headless --e2e --browser chrome`
+   and poll `status` until it reports `"browserAttached": true`. If it reports
+   `error`, tell me the reason in its `error` field. When you're done,
+   stop the session you started by killing its PID.
 2. List runnable specs with `npx cypress tap specs`.
 3. Run the affected spec: `npx cypress tap run <spec-path>`. It returns
    immediately. Poll `npx cypress tap status --json` until `status` is
    `passed` or `failed`, and compare `startedAt` to confirm the verdict
-   belongs to your run, not the previous one. Give the poll a timeout: a spec
-   that fails to compile stays `loading`, so stop and tell me to check the
-   Cypress app rather than polling forever.
+   belongs to your run, not the previous one. Give the poll a timeout, and if
+   it expires while `status` is still `loading`, stop and tell me rather than
+   polling forever.
 4. Treat `passed` with a `results.passed` of `0` as nothing having run, not as
    a success, and tell me which tests were skipped.
 5. On failure, run `npx cypress tap reporter` for the spec overview, then
@@ -806,7 +933,7 @@ Prefer `--json` output.
    rerun the spec after each fix until it passes.
 9. Before reading the app, check that `status --json` reports the pin you
    expect. Tell me if it doesn't, rather than reading the page anyway, since
-   it means the Cypress window was touched while you were working.
+   it means someone clicked in a headed Cypress window while you were working.
 ```
 
 ### Example prompts
@@ -827,7 +954,7 @@ without relaying results back and forth:
 <CopyPrompt
   title="Reproduce a flaky test"
   subtext="Runs one spec repeatedly through cypress tap, since a single green run never proves a flake is gone."
-  prompt={`The [test name] test in [spec path] is flaky. Use cypress tap to run that spec against my open Cypress session at least 10 times, polling cypress tap status --json for a verdict each time and comparing startedAt so you attribute each verdict to your own run. Record how many runs passed and failed. For every failure, capture the command log with cypress tap reporter --test-id <id> and compare the failing runs against the passing ones to identify what differs, such as timing, network responses, or leftover state.`}
+  prompt={`The [test name] test in [spec path] is flaky. Use cypress tap to run that spec at least 10 times, polling cypress tap status --json for a verdict each time and comparing startedAt so you attribute each verdict to your own run. Record how many runs passed and failed. For every failure, capture the command log with cypress tap reporter --test-id <id> and compare the failing runs against the passing ones to identify what differs, such as timing, network responses, or leftover state.`}
 >
 
 #### Reproduce a flaky test
@@ -885,8 +1012,9 @@ runs shell commands.
    trace.
 2. **Your agent** changes the test or the application code to address what the
    failure showed.
-3. **You** start a session with `cypress open` and pick a testing type and
-   browser, so there is something for `cypress tap` to attach to.
+3. **Your agent** starts a headless session in the background with
+   `cypress open --headless --e2e --browser chrome`, if one isn't running, so
+   there is something for `cypress tap` to attach to.
 4. **Your agent** runs the same spec with `cypress tap run <spec-path>`, polls
    `cypress tap status --json` for a verdict, and reads the failure with
    `cypress tap reporter --test-id <id>` if it is still red.
@@ -896,7 +1024,7 @@ runs shell commands.
 <CopyPrompt
   title="Fix a CI failure end to end"
   subtext="Chains Cloud MCP and cypress tap: diagnose from the recorded run, fix, then verify locally before pushing."
-  prompt={`Using Cypress Cloud MCP, find the failing tests in the latest run on this branch. For each failure, read the error and stack trace to work out the cause, then fix the test or the application code. I have Cypress open locally, so after each fix use cypress tap to run that spec against my session and poll cypress tap status --json until it reports a verdict. Keep going until every spec you touched passes locally, then summarize what you changed and why.`}
+  prompt={`Using Cypress Cloud MCP, find the failing tests in the latest run on this branch. For each failure, read the error and stack trace to work out the cause, then fix the test or the application code. If cypress tap status reports not connected, start a session in the background with npx cypress open --headless --e2e --browser chrome. After each fix, use cypress tap to run that spec and poll cypress tap status --json until it reports a verdict. Keep going until every spec you touched passes locally, then summarize what you changed and why.`}
 >
 
 #### Fix a CI failure end to end
@@ -953,11 +1081,11 @@ cy-cloud replay timeline --testId 7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f \
 ```
 
 **4. Fix the code, then rerun that spec locally.** `cypress tap` needs a live
-session to attach to, so start one with `cypress open` and pick a testing type
-and browser first. Then feed the `specFilepath` straight to `cypress tap run`.
+session to attach to, so start a headless one in the background first. Then
+feed the `specFilepath` straight to `cypress tap run`.
 
 ```shell title="Command"
-npx cypress open
+npx cypress open --headless --e2e --browser chrome
 ```
 
 ```shell title="Command"
@@ -993,7 +1121,7 @@ already know works.
 <CopyPrompt
   title="Reproduce a CI failure locally"
   subtext="Chains the Cloud CLI and cypress tap: pull the failure from CI, rerun that spec against your local session, and iterate until it passes."
-  prompt={`Use the cy-cloud CLI to find the most recent failed run on <branch> for project <projectId> and list its failing tests. For each one, read the error and pull the replay timeline around the failure, then work out the cause and fix the test or the application code. After each fix, run that test's specFilepath with cypress tap run against my local Cypress session, poll cypress tap status --json until it reports a verdict, and read the failure with cypress tap reporter if it is still red. Keep going until every spec you touched passes locally, then summarize what you changed and why.`}
+  prompt={`Use the cy-cloud CLI to find the most recent failed run on <branch> for project <projectId> and list its failing tests. For each one, read the error and pull the replay timeline around the failure, then work out the cause and fix the test or the application code. If cypress tap status reports not connected, start a session in the background with npx cypress open --headless --e2e --browser chrome. After each fix, run that test's specFilepath with cypress tap run, poll cypress tap status --json until it reports a verdict, and read the failure with cypress tap reporter if it is still red. Keep going until every spec you touched passes locally, then summarize what you changed and why.`}
 >
 
 #### Reproduce a CI failure locally
@@ -1073,7 +1201,7 @@ alongside its accessibility node.
 <CopyPrompt
   title="Verify an accessibility fix"
   subtext="Pulls failing elements from Cypress Accessibility, then confirms each fix against the accessibility tree the browser actually computes."
-  prompt={`Using Cypress Cloud MCP, get the <rule name> accessibility failures from the latest run on this branch and list the failing elements with their selectors and views. I have Cypress open locally. For each element, run a spec that reaches its view with cypress tap run, wait for cypress tap status to report a verdict, then read the element with cypress tap aria <selector> and tell me what role, name, and states the browser resolves. Where the accessible name is missing or wrong, fix the markup, rerun the spec, and read it again to confirm the name now resolves.`}
+  prompt={`Using Cypress Cloud MCP, get the <rule name> accessibility failures from the latest run on this branch and list the failing elements with their selectors and views. If cypress tap status reports not connected, start a session in the background with npx cypress open --headless --e2e --browser chrome. For each element, run a spec that reaches its view with cypress tap run, wait for cypress tap status to report a verdict, then read the element with cypress tap aria <selector> and tell me what role, name, and states the browser resolves. Where the accessible name is missing or wrong, fix the markup, rerun the spec, and read it again to confirm the name now resolves.`}
 >
 
 ### Verify an accessibility fix
@@ -1093,14 +1221,26 @@ Together these tools provide the availability for you or an AI agent to fully en
 ### Troubleshooting
 
 - **`status` reports `not connected`.** `cypress tap` found no Cypress session for
-  this directory. Start one with `cypress open`, and remember that headless
+  this directory. Start one with `cypress open` (with or without `--headless`).
   `cypress run` sessions are never discoverable. In an agent sandbox, also see
   [Troubleshoot Cypress in an agent sandbox](/app/tooling/cypress-agent-sandboxes#Troubleshoot-Cypress-in-an-agent-sandbox).
 
-- **`status` stays `loading` and never reaches a verdict.** The selected spec is
-  waiting on its own build. A spec that fails to compile never starts a run, so
-  it stays `loading` indefinitely and the build error appears only in the
-  Cypress app. Give any poll loop a timeout and check the app when it expires.
+- **`status` reports `error`, or `sessions` shows `(could not load)`.** Cypress
+  is running, but the project couldn't load, usually because the configuration
+  file has an error. Read the reason in `error`, fix the issue, then stop
+  Cypress and start it again. Any other `cypress tap` command will fail for the
+  session until this is fixed.
+
+- **`status` includes `pluginsError`, or `sessions` shows `(plugins stopped)`.**
+  The process that runs `setupNodeEvents` exited. Until it restarts, `cy.task`
+  fails, end-to-end specs fail to build, and component specs stay `loading`
+  without reaching a verdict. Save the configuration file to restart it, or
+  stop Cypress and start it again.
+
+- **`status` stays `loading` and never reaches a verdict.** First check whether
+  `status` includes `pluginsError`; if it does, follow the bullet above.
+  Otherwise the spec is still building. A build that fails reports `failed` with the reason in `error`. Give any poll
+  loop a timeout.
 
 - **A verdict looks wrong, or arrives too fast.** Read `status` before you rerun
   and keep its `startedAt`, then wait for a verdict whose `startedAt` differs. A
@@ -1142,11 +1282,23 @@ Cypress does capture telemetry specifically around the usage of the CLI to infor
 - The CLI and the Cypress session must run on the same machine, container, or
   sandbox. See [Run cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes).
 - Firefox and WebKit are not supported. `cypress tap` only supports Chromium-family browsers.
-- `cypress tap` drives the same session you are looking at, and there is no
-  lock between the two. Starting a run from the app, switching spec, or
-  pinning and unpinning commands all change what your agent's next command
-  reads. Treat a session an agent is driving as one you watch rather than
-  touch.
+- In a headed session, `cypress tap` drives the same session you are looking
+  at, and there is no lock between the two. Starting a run from the app,
+  switching spec, or pinning and unpinning commands all change what your
+  agent's next command reads. Treat a headed session an agent is driving as
+  one you watch rather than touch, or start it with `--headless` so there is
+  no window to touch.
+- A headless session has no window to close, so it keeps running until you
+  stop its process. Find its PID with `cypress tap sessions`, then run
+  `kill <pid>`.
+
+## History
+
+| Version                                      | Changes                                                                            |
+| -------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [16.4.0](/app/references/changelog#16-4-0)   | Added support for sessions started with `cypress open --headless`.                 |
+| [16.3.0](/app/references/changelog#16-3-0)   | Added the `error` stage to `cypress tap status` for a project that could not load. |
+| [15.21.0](/app/references/changelog#15-21-0) | Added the `cypress tap` command.                                                   |
 
 ## See also
 
