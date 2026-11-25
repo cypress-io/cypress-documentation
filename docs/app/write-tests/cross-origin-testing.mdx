@@ -92,8 +92,8 @@ a second time:
   one that restarts
 
 A side effect in [`cy.task()`](/api/commands/task) or
-[`cy.request()`](/api/commands/request) before the visit repeats, so a database gets seeded twice or a test account gets
-created twice. In the following spec, with no `baseUrl` set, the `db:seed` task
+[`cy.request()`](/api/commands/request) before the visit repeats, so the test
+seeds a database twice or creates a test account twice. In the following spec, with no `baseUrl` set, the `db:seed` task
 runs twice:
 
 ```javascript title="cypress/e2e/dashboard.cy.js"
@@ -148,7 +148,7 @@ it('shows the seeded projects', () => {
 })
 ```
 
-#### Wrap the first visit in `cy.origin()`
+#### Wrap the first visit to a new origin in `cy.origin()`
 
 A `cy.visit()` inside [`cy.origin()`](/api/commands/origin) loads the page
 without reloading the Cypress window, so the test doesn't restart. Run the
@@ -190,7 +190,8 @@ actually run on the first domain.
 
 Without `cy.origin()`, you can visit different origins in _different_ tests,
 but not in the _same_ test. Each test whose first visit changes the origin
-[restarts once](#First-cyvisit-to-a-new-origin-restarts-the-test).
+restarts once. See
+[First `cy.visit()` to a new origin restarts the test](#First-cyvisit-to-a-new-origin-restarts-the-test).
 
 #### Examples of test cases that error without the use of `cy.origin`
 
