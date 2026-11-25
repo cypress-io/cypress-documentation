@@ -3197,8 +3197,8 @@ Default values
   ignore value).
 - `component.excludeSpecPattern` default value is
   `['/snapshots/*', '/image_snapshots/*']` updated from `*.hot-update.js`.
-- Cypress skips `node_modules` when it looks for specs, so `**/node_modules/**`
-  doesn't need to be added to `e2e.excludeSpecPattern` or
+- Cypress skips `node_modules` when it looks for specs, so you don't need to add
+  `**/node_modules/**` to `e2e.excludeSpecPattern` or
   `component.excludeSpecPattern`. To run specs from a package in
   `node_modules`, name `node_modules` in `specPattern`, available since
   [13.6.3](/app/references/changelog#13-6-3). See

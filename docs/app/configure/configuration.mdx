@@ -785,9 +785,10 @@ need to add `**/node_modules/**` to `excludeSpecPattern`. Cypress searches
   narrows the specs that `specPattern` already matches.
 - The project itself is inside a `node_modules` folder.
 
-`excludeSpecPattern` still filters the specs Cypress finds there. Cypress finds
-a support file inside `node_modules` when the `supportFile` path contains
-`node_modules` or the project is inside a `node_modules` folder.
+`excludeSpecPattern` still filters the specs Cypress finds in `node_modules`.
+
+Cypress finds a support file inside `node_modules` when the `supportFile` path
+contains `node_modules` or the project is inside a `node_modules` folder.
 `excludeSpecPattern` never filters the support file.
 
 For example, to run specs shipped in a package installed in your project:
@@ -806,17 +807,17 @@ For example, to run specs shipped in a package installed in your project:
 :::
 
 While `cypress open` is running, Cypress doesn't watch `node_modules` for
-changes. A spec added, removed, or renamed there, such as by reinstalling the
-package, shows up in the spec list after you restart Cypress.
+changes. A spec added, removed, or renamed in `node_modules`, such as by
+reinstalling the package, shows up in the spec list after you restart Cypress.
 
 :::caution
 
 The default end-to-end [preprocessor](/api/node-events/preprocessors-api)
 doesn't compile TypeScript or run Babel on any file whose path contains
-`node_modules`. A TypeScript or JSX spec or support file fails to compile when
-it ships in a package, and so does every TypeScript or JSX file in a project
-that sits inside a `node_modules` folder. Publish the package's specs and support
-file as plain JavaScript, or configure your own preprocessor to compile them.
+`node_modules`. A TypeScript or JSX file fails to compile in either case: a spec
+or support file shipped in a package, or any file in a project inside a
+`node_modules` folder. Publish the package's specs and support file as plain
+JavaScript, or configure your own preprocessor to compile them.
 
 :::
 
@@ -1224,7 +1225,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 | [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                                                                 |
 | [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                                                       |
 | [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                                                  |
-| [13.6.3](/app/references/changelog#13-6-3)   | Stopped skipping `node_modules` when finding specs or the support file if `specPattern`, `supportFile`, or the project path contains `node_modules`.                            |
+| [13.6.3](/app/references/changelog#13-6-3)   | Searched `node_modules` for specs and the support file when `specPattern`, `supportFile`, or the project path contains `node_modules`.                                          |
 | [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`.                                   |
 | [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                                                   |
 | [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                                                           |
