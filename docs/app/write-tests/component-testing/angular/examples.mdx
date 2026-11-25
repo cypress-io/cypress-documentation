@@ -354,10 +354,10 @@ cy.get('@countChange').should('have.been.called')
 
 ## Test Angular i18n translations in component tests
 
-A component test can check the text a reader sees in each language, not only
-the source strings in your templates. Cypress runs Angular's runtime
-translation from `@angular/localize`: the test loads a map of translations,
-mounts the component, and asserts on the translated text.
+A component test can check the text a user sees in each language, not only the
+source strings in your templates. Angular's runtime translation from
+`@angular/localize` works in component tests: the test loads a map of
+translations, mounts the component, and asserts on the translated text.
 
 :::info
 Cypress compiles component tests just in time and skips Angular's build-time
@@ -397,6 +397,45 @@ loads don't carry over into the next test.
 translated text. Extract the app's messages as JSON to get those IDs:
 
 <PackageManagerTabs run="ng extract-i18n --format json --output-path src/locale" />
+
+`ng extract-i18n` builds the app first, and that build type-checks every file
+`tsconfig.app.json` includes. When component specs sit next to their components
+in `src/`, the build fails with `Cannot find name 'cy'`. Excluding the specs in
+`tsconfig.app.json` breaks component tests, since Cypress builds them from that
+file too. Instead, give the extraction its own tsconfig that leaves out the
+specs:
+
+```json title="tsconfig.extract.json"
+{
+  "extends": "./tsconfig.app.json",
+  "exclude": ["src/**/*.spec.ts", "src/**/*.cy.ts"]
+}
+```
+
+Add a build configuration that uses it, replacing `my-app` with the project
+name in `angular.json`:
+
+```json title="angular.json"
+{
+  "projects": {
+    "my-app": {
+      "architect": {
+        "build": {
+          "configurations": {
+            "extract": {
+              "tsConfig": "tsconfig.extract.json"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Then point the extraction at that configuration:
+
+<PackageManagerTabs run="ng extract-i18n --format json --output-path src/locale --build-target my-app:build:extract" />
 
 The command writes the source text to `src/locale/messages.json`. Copy that file
 for each language and translate the values:
@@ -443,7 +482,7 @@ export class Greeting {
 Each test reads a translation file with [`cy.readFile()`](/api/commands/readfile),
 passes its `translations` to `loadTranslations()`, and then mounts the
 component. The cart assertion checks that `$localize` fills the `{$count}`
-placeholder with the component's value. An Italian file,
+placeholder with the `items` value. An Italian file,
 `src/locale/messages.it.json`, has the same shape as the Portuguese one:
 
 ```ts title="src/app/greeting/greeting.cy.ts"
@@ -465,22 +504,21 @@ describe('Greeting', () => {
     cy.readFile('src/locale/messages.it.json').then(({ translations }) => {
       loadTranslations(translations)
     })
-    cy.mount(Greeting, { componentProperties: { items: 2 } })
+    cy.mount(Greeting)
 
     cy.get('[data-cy=title]').should('have.text', 'Benvenuto nel negozio')
   })
 
   it('renders the source text when no translations are loaded', () => {
-    cy.mount(Greeting, { componentProperties: { items: 2 } })
+    cy.mount(Greeting)
 
     cy.get('[data-cy=title]').should('have.text', 'Welcome to the store')
   })
 })
 ```
 
-Load translations before `cy.mount()`. `$localize` translates each message as
-the component renders, so translations loaded after the mount don't update text
-the component already rendered.
+Load translations before `cy.mount()` so the component renders translated text
+from its first render.
 
 ## Testing Error States
 
