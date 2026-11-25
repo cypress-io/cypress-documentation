@@ -465,11 +465,15 @@ The placeholder keeps the last video a test copied in, across tests and specs.
 Set the video in every test that uses the camera, or reset the video in a
 `beforeEach()` with `cy.task('setFakeWebcamVideo', 'webcam-default.y4m')`.
 
+:::caution
+
 The approach relies on how Chromium reads the fake capture file, not on a
 Cypress API. Firefox and WebKit don't support the switch, and a browser update
 can change the behavior. If the video stops changing between tests in your
 browser, [stub `getUserMedia()`](#Stub-getUserMedia-with-a-fixture-video)
 instead.
+
+:::
 
 #### Stub getUserMedia() with a fixture video
 
