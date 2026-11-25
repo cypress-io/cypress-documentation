@@ -128,17 +128,17 @@ setx HTTP_PROXY http://my-company-proxy.com
 **Windows registry**
 
 On Windows, Cypress uses the proxy configured in the Windows registry as a
-_fallback_: Cypress only consults it when no proxy has been set through the
-`HTTP_PROXY`/`HTTPS_PROXY` environment variables or your npm config. When Cypress
-uses the registry value, it applies the single configured proxy to both
-`HTTP_PROXY` and `HTTPS_PROXY`.
+_fallback_: Cypress only consults it when neither the `HTTP_PROXY` environment
+variable nor npm's `proxy` setting is set. Setting `HTTPS_PROXY` alone doesn't
+prevent the fallback. When Cypress uses the registry value, it applies the
+single configured proxy to both `HTTP_PROXY` and `HTTPS_PROXY`, replacing any
+`HTTPS_PROXY` value you set.
 [Learn how to set your proxy settings system-wide in Windows.](https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/)
 
 The registry fallback only applies when running your tests. When downloading
 Cypress for the first time, the `cypress` command line tool _does not_ read proxy
 settings from the Windows registry. If you need a proxy for the installation to
-work, you must set the environment variables shown above. Environment variables are also the only
-way to define a proxy for `cypress install`.
+work, set the environment variables shown above or npm's proxy settings.
 
 :::
 
@@ -155,10 +155,10 @@ differ between installation and running tests:
 
 Two practical takeaways:
 
-- **`HTTPS_PROXY` always wins.** When running tests, `HTTP_PROXY` and
-  `HTTPS_PROXY` both override npm config and the Windows registry. During
-  installation, npm's `proxy` setting overrides `HTTP_PROXY`, so set
-  `HTTPS_PROXY` when your environment variable needs to win there too.
+- **Set both `HTTP_PROXY` and `HTTPS_PROXY` to override every other source.**
+  During installation, npm's `proxy` setting overrides `HTTP_PROXY`. When running
+  tests on Windows, the registry proxy replaces `HTTPS_PROXY` unless
+  `HTTP_PROXY` is also set.
 - **Cypress only uses the Windows registry and `NODE_EXTRA_CA_CERTS` when running
   tests**, never during installation. If your binary download is blocked or
   TLS-intercepted, you must rely on environment variables and npm's
@@ -195,8 +195,9 @@ environment variables, and Cypress applies them as follows:
 | `npm_config_proxy`       | `HTTP_PROXY`  | if `HTTP_PROXY` unset  |
 | `npm_config_https_proxy` | `HTTPS_PROXY` | if `HTTPS_PROXY` unset |
 
-A proxy set through the `HTTP_PROXY` or `HTTPS_PROXY` environment variable always
-takes precedence over the corresponding npm configuration. Cypress uses only npm's `proxy`
+When Cypress runs your tests, a proxy set through the `HTTP_PROXY` or
+`HTTPS_PROXY` environment variable takes precedence over the corresponding npm
+configuration. Cypress uses only npm's `proxy`
 and `https-proxy` values as a fallback. Cypress does **not** apply npm's
 [`noproxy`](https://docs.npmjs.com/cli/v9/using-npm/config#noproxy) configuration
 to `NO_PROXY`, so set `NO_PROXY` directly if you need to
@@ -246,8 +247,8 @@ Keep these behaviors in mind when you write the list:
 
 In curl and wget, a bare entry matches as a domain suffix, so
 `NO_PROXY=example.internal` also bypasses the proxy for `app.example.internal`
-in those tools. In Cypress, the same value still sends `app.example.internal`
-through the proxy. If a `NO_PROXY` value works with curl but not with Cypress,
+in those tools. When Cypress runs your tests, the same value still sends
+`app.example.internal` through the proxy. If a `NO_PROXY` value works with curl but not with Cypress,
 add the subdomain form next to the bare entry:
 
 ```shell
