@@ -379,10 +379,6 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 :::
 
-In Electron, pass the switch in the `ELECTRON_EXTRA_LAUNCH_ARGS` environment
-variable instead, as shown in
-[Change the fake webcam video between tests](#Change-the-fake-webcam-video-between-tests).
-
 #### Change the fake webcam video between tests
 
 To give each test a different camera video, such as a valid and an expired QR
@@ -439,18 +435,6 @@ video copied over `fake-webcam.y4m` makes `getUserMedia()` fail with a
 `NotFoundError`, so for MJPEG videos, name the placeholder `fake-webcam.mjpeg`.
 Because the config recreates the placeholder on each run, you can add the
 placeholder to `.gitignore`.
-
-In Electron, pass the switch in the `ELECTRON_EXTRA_LAUNCH_ARGS` environment
-variable instead (see [Modify Electron app switches](#Modify-Electron-app-switches)
-for the Windows form). With Cypress started from the project folder, the
-placeholder's relative path works:
-
-```shell
-export ELECTRON_EXTRA_LAUNCH_ARGS=--use-file-for-fake-video-capture=cypress/fixtures/fake-webcam.y4m
-```
-
-The path must name the same placeholder file as the config, so update the
-variable if you rename the placeholder.
 
 In the spec, swap the video before the app starts the camera:
 
@@ -523,8 +507,7 @@ it('accepts a valid QR code', () => {
 
 Keep these details in mind:
 
-- Chromium-based browsers, including Electron, support `captureStream()` on a
-  `<video>` element. Firefox names the method `mozCaptureStream()`.
+- Chromium-based browsers support `captureStream()` on a `<video>` element. Firefox names the method `mozCaptureStream()`.
 - TypeScript's DOM types don't declare `captureStream()` on video elements, so
   a `.ts` spec needs a type assertion for the call.
 - To stream a still image, such as a single QR code, draw the image on a
