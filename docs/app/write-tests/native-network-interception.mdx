@@ -51,7 +51,6 @@ example:
 | [Stubbed bodies are decoded from their declared `content-encoding`](#Stubbed-bodies-are-decoded-from-their-declared-content-encoding)  | Make sure a declared encoding matches the bytes you supply.                |
 | [Compressed documents from insecure origins load](#Compressed-documents-from-insecure-origins-load)                                    | Update tests that expected the visit itself to fail.                       |
 | [Revalidated responses report `200` instead of `304`](#Revalidated-responses-report-200-instead-of-304)                                | Use [`cy.request()`](/api/commands/request) to assert on caching behavior. |
-| [`responseTimeout` does not apply to response handlers](#responseTimeout-does-not-apply-to-response-handlers)                          | Bound the wait with a `timeout` on [`cy.wait()`](/api/commands/wait).      |
 | [Request `content-length` is not reported](#Request-content-length-is-not-reported)                                                    | Assert on the body you set.                                                |
 | [Your application's certificate is used](#Your-applications-certificate-is-used)                                                       | Nothing. The new behavior is the improvement.                              |
 | [`cy.intercept()` changes are visible in the browser](#cyintercept-changes-are-visible-in-the-browser)                                 | Nothing. The new behavior is the improvement.                              |
@@ -314,39 +313,6 @@ cy.wait('@logo').its('response.statusCode').should('equal', 200)
 To assert on caching behavior itself, request the resource with
 [`cy.request()`](/api/commands/request), which goes through Cypress rather than the
 browser cache and reports the status your server sent.
-
-### `responseTimeout` does not apply to response handlers
-
-When an intercept supplies a response handler, Cypress 15 and earlier fetched the upstream
-response itself and applied
-[`responseTimeout`](/app/references/configuration#Timeouts) to that fetch. A slow endpoint
-failed the test with a timeout error naming `responseTimeout`.
-
-On the native browser network, the browser makes that request, so there is no Cypress
-request for `responseTimeout` to bound. A response handler runs when your server answers.
-Cypress still gives up if no response arrives within 30 seconds, but that limit is fixed
-and is not the value you configure.
-
-```js
-// Cypress 15 and earlier: failed after responseTimeout elapsed
-cy.intercept('/api/slow', (req) => {
-  req.reply((res) => {
-    res.send()
-  })
-})
-```
-
-```js
-// Cypress 16: bound the wait in your test instead
-cy.intercept('/api/slow').as('slow')
-cy.visit('/')
-cy.wait('@slow', { timeout: 10000 })
-```
-
-`responseTimeout` still applies to every command
-[documented as using it](/app/references/configuration#Timeouts), including
-[`cy.request()`](/api/commands/request) and [`cy.wait()`](/api/commands/wait). The change
-affects only `cy.intercept()` response handlers.
 
 ### Request `content-length` is not reported
 
