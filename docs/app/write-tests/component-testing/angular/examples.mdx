@@ -442,8 +442,9 @@ export class Greeting {
 
 Each test reads a translation file with [`cy.readFile()`](/api/commands/readfile),
 passes its `translations` to `loadTranslations()`, and then mounts the
-component. An Italian file, `src/locale/messages.it.json`, has the same shape as
-the Portuguese one:
+component. The cart assertion checks that `$localize` fills the `{$count}`
+placeholder with the component's value. An Italian file,
+`src/locale/messages.it.json`, has the same shape as the Portuguese one:
 
 ```ts title="src/app/greeting/greeting.cy.ts"
 import { loadTranslations } from '@angular/localize'
@@ -457,6 +458,7 @@ describe('Greeting', () => {
     cy.mount(Greeting, { componentProperties: { items: 2 } })
 
     cy.get('[data-cy=title]').should('have.text', 'Bem-vindo à loja')
+    cy.get('[data-cy=cart]').should('have.text', 'Itens no seu carrinho: 2')
   })
 
   it('renders Italian', () => {
