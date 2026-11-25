@@ -2046,6 +2046,17 @@ To apply your `.storybook/preview` settings, compile `template` decorators, and
 spy on events from a decorated story, see
 [Mount Storybook stories in Vue component tests](/app/component-testing/vue/examples#Mount-Storybook-stories-in-Vue-component-tests).
 
+### <Icon name="angle-right" /> Can I test Angular i18n translations in component tests?
+
+Yes, with Angular's runtime translation. Cypress skips Angular's build-time
+localization, so the `localize` option in `angular.json` doesn't apply to
+component tests. Import `@angular/localize/init` in the component support file,
+which also fixes the `Cannot find name '$localize'` error. Then call
+`loadTranslations()` from `@angular/localize` before `cy.mount()`, and call
+`clearTranslations()` after each test so every test can use its own language.
+For the setup, translation files, and a full example, see
+[Test Angular i18n translations in component tests](/app/component-testing/angular/examples#Test-Angular-i18n-translations-in-component-tests).
+
 ### <Icon name="angle-right" /> How do I fix ESLint errors for things like using the global Cypress objects?
 
 If you experience ESLint errors in your code editor around Cypress globals (`cy`,
