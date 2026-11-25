@@ -100,9 +100,9 @@ running in the background.
 In a sandbox, Cypress uses your project's existing `cypress.config.*` file.
 
 If the project has no configuration yet, Cypress creates one when an agent
-starts it with `--e2e`. For component testing (`--component`), create the
-configuration before you launch Cypress in a sandbox, so Cypress doesn't have to
-guess your framework and bundler.
+starts it with `--e2e`, or when you use `--headless`. For component testing
+(`--component`), create the configuration before you launch Cypress in a
+sandbox, so Cypress doesn't have to guess your framework and bundler.
 
 Cypress writes a scaffolded configuration inside the sandbox, so commit it
 along with the agent's other changes. Otherwise the next session starts without
@@ -110,10 +110,12 @@ the configuration.
 
 ### Start Cypress in the background
 
-Run `cypress open` with a browser and a testing type, and leave it running:
+Run `cypress open` with a browser, a testing type, and
+[`--headless`](/app/references/command-line#cypress-open-headless) (Cypress
+16.4.0 and later), and leave it running:
 
 ```shell title="Command"
-nohup npx cypress open --e2e --browser chromium --project . > cypress-open.log 2>&1 &
+nohup npx cypress open --headless --e2e --browser chromium --project . > cypress-open.log 2>&1 &
 ```
 
 The trailing `&` runs Cypress in the background, so the command returns right
@@ -124,19 +126,35 @@ This command writes Cypress's output to `cypress-open.log`, including errors,
 configuration problems, and the location of any files Cypress creates for you.
 Tell your agent to read this file when something goes wrong.
 
-When Cypress detects an agent, it skips the welcome screens as long as you pass
-`--project`, `--browser` (or set `defaultBrowser` in the config), and a testing
-type.
+Without `--headless`, Cypress still runs, but a person sharing the sandbox's
+display sees the Cypress window and its browser pop open.
+
+`--headless` keeps the Cypress window and its browser off screen and out of
+the Dock or app switcher for the whole session, so neither one takes focus
+away from whatever a person watching the sandbox is doing. When Cypress
+detects an agent, it skips the welcome screens as long as you pass
+`--project`, `--browser` (or set `defaultBrowser` in the config), and a
+testing type. `--headless` requires a testing type, and exits right away
+without one. `--headless` needs a browser too, but a missing or non-Chromium
+one doesn't stop Cypress from starting:
+`cypress tap status` reports it instead, as covered in
+[Troubleshoot Cypress in an agent sandbox](#Troubleshoot-Cypress-in-an-agent-sandbox).
 
 `cypress open --detached` waits until Cypress is ready before it returns, but
 stops writing output after that point. Use the `nohup` form when you want the
 ongoing log in `cypress-open.log`, which the troubleshooting steps on this page
 rely on. Use `--detached` when you want the command to block until Cypress is
-ready.
+ready. Combine it with `--headless` the same way:
 
 ```shell title="Command"
-npx cypress open --e2e --browser chromium --project . --detached
+npx cypress open --headless --e2e --browser chromium --project . --detached
 ```
+
+A `--headless` session has no window to close, so have your agent stop it as
+soon as it's done with `kill <pid>`, using the PID from
+[`cypress tap sessions`](/app/tooling/cypress-tap#cypress-tap-sessions). Run
+`cypress tap sessions` before starting a new session, too, to find any left
+running from earlier.
 
 ### Wait for the browser
 
@@ -179,6 +197,11 @@ If `status` stays at `spec not selected` after you run a spec, run the spec agai
 `cypress tap` works with Chromium-based browsers: Chrome, Chromium, Edge, and
 Electron.
 
+With `--headless`, give one of these up front, from `--browser` or
+`defaultBrowser` in the config: there's no window for a person to choose one
+in. Give any other browser, or none at all, and Cypress starts but can't run
+specs; Cypress prints why, and `cypress tap status` reports it.
+
 Pass Chrome or Chromium by name if it's on the `PATH`, or pass the path to its
 executable:
 
@@ -191,7 +214,7 @@ Cypress identifies a browser from its `--version` output, such as
 name, pass its full path instead, since Cypress checks a path against every
 browser it knows. If Cypress still can't use the browser, the reason and the
 `--version` output go to `cypress-open.log`, and `cypress tap status` stays at
-`browser not selected`.
+`browser not selected` (with `--headless`, it reports `error` instead).
 
 Many sandboxes come with a Chromium build that a browser-automation tool
 installed. Run it with `--version` to check that it reports itself as Chromium,
@@ -264,7 +287,7 @@ Expand your sandbox below for the setup it needs.
    ```shell title="Command"
    mkdir -p ~/bin
    ln -sf "$(ls /opt/pw-browsers/chromium-*/chrome-linux/chrome | head -1)" ~/bin/chromium
-   PATH="$HOME/bin:$PATH" nohup npx cypress open --e2e --browser chromium --project . > cypress-open.log 2>&1 &
+   PATH="$HOME/bin:$PATH" nohup npx cypress open --headless --e2e --browser chromium --project . > cypress-open.log 2>&1 &
    ```
 
 </AccordionBlock>
@@ -321,11 +344,11 @@ them.
   defaultCollapsed
   prompt={`## Run Cypress tests
 
-Start Cypress once per session, in the background. Replace \`<browser>\` with
-\`chromium\` if it is on the PATH, or with the path to a Chromium or Chrome
-executable:
+Start Cypress once per session, in the background and with no visible window.
+Replace \`<browser>\` with \`chromium\` if it is on the PATH, or with the path
+to a Chromium or Chrome executable:
 
-    nohup npx cypress open --e2e --browser <browser> --project . > cypress-open.log 2>&1 &
+    nohup npx cypress open --headless --e2e --browser <browser> --project . > cypress-open.log 2>&1 &
 
 Poll \`npx cypress tap status --json\` until it reports \`"browserAttached": true\`.
 Stop waiting if it reports a \`status\` of \`error\` or if nothing changes after
@@ -336,7 +359,10 @@ Then run a spec with \`npx cypress tap run <spec>\` and poll
 \`startedAt\` has changed. Read failures with \`npx cypress tap reporter --json\`.
 
 For component testing, write the configuration, support files, and bundler
-config first, and check them with \`npx cypress run --component --spec <spec>\`.`}
+config first, and check them with \`npx cypress run --component --spec <spec>\`.
+
+Stop the Cypress process when the session is no longer needed; a \`--headless\`
+session leaves no window open to remind you.`}
 />
 
 ## Environment variables
@@ -375,18 +401,29 @@ config first, and check them with \`npx cypress run --component --spec <spec>\`.
 
 - **`status` reports `error`.** The project failed to load: an invalid
   configuration file, or (for component testing) a dev server that failed to
-  start. Cypress prints the same error to `cypress-open.log`, and
-  `npx cypress tap status --json` includes it under `error`. After a
-  configuration file fails to load, or `setupNodeEvents` throws, Cypress stops
-  watching the configuration, so restart Cypress to pick up your fix.
+  start. With `--headless`, this also covers no browser being given at all,
+  a browser that isn't Chromium-based, and component testing that isn't set
+  up yet, since none of those has a window to resolve it in. Cypress prints
+  the same error to `cypress-open.log`, and `npx cypress tap status --json`
+  includes it under `error`. After a configuration file fails to load, or
+  `setupNodeEvents` throws, Cypress stops watching the configuration, so
+  restart Cypress to pick up your fix.
 
-- **`status` stays at `browser not selected`.** A stalled status can happen for two
-  reasons. First, check that you passed `--project`, `--browser` (or set
-  `defaultBrowser`), and a testing type to `cypress open`; if you already
-  did, set `CYPRESS_AGENT_MODE=1`, since Cypress didn't recognize the agent.
-  Second, if you pointed `--browser` at a path, Cypress may not have
-  recognized the binary at that path; read the reason in `cypress-open.log`
-  and see [Choose a browser](#Choose-a-browser-for-cypress-tap-in-a-sandbox).
+- **`cypress open --headless` exits right away with an error about missing
+  options.** Add `--e2e` or `--component`. If Cypress is installed globally,
+  also add `--project <path>`.
+
+- **`status` stays at `browser not selected`.** Without `--headless`, a
+  stalled status can happen for two reasons. First, check that you passed
+  `--project`, `--browser` (or set `defaultBrowser`), and a testing type to
+  `cypress open`; if you already did, set `CYPRESS_AGENT_MODE=1`, since
+  Cypress didn't recognize the agent. Second, if you pointed `--browser` at a
+  path, Cypress may not have recognized the binary at that path; read the
+  reason in `cypress-open.log` and see
+  [Choose a browser](#Choose-a-browser-for-cypress-tap-in-a-sandbox). With
+  `--headless`, Cypress skips the welcome screens on its own, so
+  `CYPRESS_AGENT_MODE` doesn't apply. An unrecognized or non-Chromium browser
+  reports `error` instead.
 
 - **Cypress ignores `ELECTRON_RUN_AS_NODE`.** Some agent environments set this
   variable, which makes Electron run as plain Node.js with no window.
@@ -410,6 +447,9 @@ config first, and check them with \`npx cypress run --component --spec <spec>\`.
 
 ## Limitations of Cypress in agent sandboxes
 
+- A `--headless` session has no window a person can notice left open, so
+  cleaning it up matters more than for a headed one. See
+  [Start Cypress in the background](#Start-Cypress-in-the-background) for how.
 - The agent and Cypress have to run in the same sandbox.
 - An open Cypress session with a browser uses about 2 GB of memory in a small
   project, and more in a larger one. Size the sandbox accordingly.

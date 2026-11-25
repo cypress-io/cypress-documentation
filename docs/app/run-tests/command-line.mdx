@@ -734,6 +734,7 @@ guides you through selecting a browser, project, and/or testing type.
 | `--env`, `-e`         | [Specify secret environment variables](#cypress-open-env-lt-env-gt)                                                                                                             |
 | `--expose`, `-x`      | [Specify public configuration values](#cypress-open-expose-lt-expose-gt)                                                                                                        |
 | `--global`            | [Open in global mode](#cypress-open-global)                                                                                                                                     |
+| `--headless`          | [Start a session for `cypress tap` with no visible window](#cypress-open-headless)                                                                                              |
 | `--help`, `-h`        | Output usage information                                                                                                                                                        |
 | `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                                                                          |
 | `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                                                                          |
@@ -852,6 +853,38 @@ to switch between them.
 ```shell
 cypress open --global
 ```
+
+#### `cypress open --headless` {#cypress-open-headless}
+
+Starts a session with no visible window, for
+[`cypress tap`](/app/tooling/cypress-tap) to drive (such as when an AI coding
+agent runs your tests while you keep working in other apps). The browser
+Cypress launches runs headless too, so neither it nor the Cypress window takes
+focus or appears on screen.
+
+`--headless` requires `--e2e` or `--component`, since there's no
+window to choose them in, and can't be combined with
+[`--global`](#cypress-open-global):
+
+```shell
+cypress open --headless --e2e --browser chrome --project .
+```
+
+`--headless` also needs a browser, from `--browser` or from
+[`defaultBrowser`](/app/references/configuration#Browser) in the project's
+Cypress config, since there's no window to pick one in either. Either way,
+pass a Chromium-based browser (Chrome, Chromium, Edge, or Electron), since
+those are the only browsers [`cypress tap`](/app/tooling/cypress-tap) can
+drive. If the browser is missing or isn't Chromium-based, or component
+testing isn't set up yet, Cypress still starts, prints the reason, and
+[`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status) reports it
+as an `error`.
+
+There's no window to close, so end the session with `Ctrl+C`, or `kill <pid>`
+using the PID from `cypress tap sessions`.
+
+See [Run Cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes)
+for a complete walkthrough of starting and driving a headless session.
 
 #### `cypress open --port <port>` {#cypress-open-port-lt-port-gt}
 
@@ -1167,6 +1200,7 @@ and with Windows CMD and PowerShell terminal windows.
 
 | Version                                      | Changes                                                               |
 | -------------------------------------------- | --------------------------------------------------------------------- |
+| [16.4.0](/app/references/changelog#16-4-0)   | Added `--headless` flag to `cypress open`                             |
 | [15.21.0](/app/references/changelog#15-21-0) | Added the `cypress tap` command                                       |
 | [15.11.0](/app/references/changelog#15-11-0) | Added `--pass-with-no-tests` flag to `cypress run`                    |
 | [15.5.0](/app/references/changelog#15-5-0)   | Added the 112 exit code scenario when using `--posix-exit-codes` flag |
