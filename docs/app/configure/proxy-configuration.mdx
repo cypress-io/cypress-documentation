@@ -80,7 +80,7 @@ $env:HTTP_PROXY = "http://my-company-proxy.com"
 </OsTabs>
 
 You can also set `NO_PROXY` to bypass the proxy for additional hosts. Cypress
-always bypasses the proxy for loopback addresses such as `localhost`. This
+bypasses the proxy for loopback addresses such as `localhost` by default. This
 example bypasses the proxy for your internal domain, `example.internal`, and
 every subdomain of it. See
 [how Cypress matches `NO_PROXY` entries to hostnames](#How-Cypress-matches-NO_PROXY-entries-to-hostnames)
@@ -204,8 +204,10 @@ bypass the proxy for specific domains.
 
 To bypass the proxy for certain hosts, set the `NO_PROXY` environment variable
 to the hostnames Cypress should reach directly, such as
-`NO_PROXY=example.internal,.example.internal`. Cypress applies the same `NO_PROXY` rules when
-it downloads the binary and when it runs your tests.
+`NO_PROXY=example.internal,.example.internal`. Cypress matches `NO_PROXY`
+entries the same way when it downloads the binary and when it runs your tests.
+During the binary download, a host that matches `NO_PROXY` still goes through
+npm's `https-proxy` or `proxy` setting when one is configured.
 
 #### How Cypress matches `NO_PROXY` entries to hostnames
 
@@ -223,7 +225,8 @@ Keep these behaviors in mind when you write the list:
 
 - An entry without a leading `.` or `*.` matches only that exact hostname.
 - An entry that starts with `.` or `*.` matches every subdomain but not the
-  domain itself. To bypass both, list both forms: `example.internal,.example.internal`.
+  domain itself. To bypass both, list both forms:
+  `example.internal,.example.internal`.
 - An entry with a `:port` matches only requests to that port. A URL without a
   port uses the default for its protocol, so `app.example.internal:443` matches
   `https://app.example.internal`.
@@ -241,10 +244,9 @@ Keep these behaviors in mind when you write the list:
 
 In curl and wget, a bare entry matches as a domain suffix, so
 `NO_PROXY=example.internal` also bypasses the proxy for `app.example.internal`
-in those tools. In Cypress, the
-same value still sends `app.example.internal` through the proxy. If a `NO_PROXY` value
-works with curl but not with Cypress, add the subdomain form next to the bare
-entry:
+in those tools. In Cypress, the same value still sends `app.example.internal`
+through the proxy. If a `NO_PROXY` value works with curl but not with Cypress,
+add the subdomain form next to the bare entry:
 
 ```shell
 export NO_PROXY=example.internal,.example.internal
@@ -258,7 +260,9 @@ Cypress always appends `127.0.0.1`, `::1`, and `localhost` to `NO_PROXY` so that
 loopback traffic is never proxied. Cypress appends these entries even when you set your own
 `NO_PROXY` entries; Cypress adds to your list rather than replacing it. The only way to send
 loopback traffic through the proxy is to include the special `<-loopback>` value
-in `NO_PROXY`, which removes the automatic loopback entries.
+in `NO_PROXY`, which removes the automatic loopback entries. Put `<-loopback>`
+directly after a comma, as in `NO_PROXY=example.internal,<-loopback>`, because
+Cypress doesn't recognize the value with a space in front of it.
 
 ### Casing
 
