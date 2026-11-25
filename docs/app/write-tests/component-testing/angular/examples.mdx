@@ -121,13 +121,11 @@ cy.get('@onClickSpy').should('have.been.called');
 
 ## Accessing the Component Instance
 
-There might be times when you might want to access the component instance
-directly in your tests. To do so, use `.then()`, which enables us to work with
-the subject that the `cy.mount()` command yielded. In this case, mount
-yields an object that contains the rendered component and the fixture.
+To work with the component instance directly in a test, chain `.then()` off
+`cy.mount()`. The `.then()` callback receives the subject that `cy.mount()`
+yields: an object that holds the rendered `component` and its `fixture`.
 
-In the below example, we use the component to spy directly on the `change` event
-emitter.
+The example below uses the component to spy on its `change` event emitter:
 
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
