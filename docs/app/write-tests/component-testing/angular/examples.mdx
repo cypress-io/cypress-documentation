@@ -125,22 +125,19 @@ To work with the component instance directly in a test, chain `.then()` off
 `cy.mount()`. The `.then()` callback receives the subject that `cy.mount()`
 yields: an object that holds the rendered `component` and its `fixture`.
 
-The example below uses the component to spy on its `change` event emitter:
+The example below uses the component to spy on the `emit()` method of its
+`change` output:
 
-```ts
+```ts title="src/app/stepper.component.cy.ts"
+import { StepperComponent } from './stepper.component'
+
 it('clicking + fires a change event with the incremented value', () => {
-  cy.mount(
-    '<app-stepper count="100" (change)="change.emit($event)"></app-stepper>',
-    {
-      componentProperties: { change: new EventEmitter() },
-      declarations: [StepperComponent],
+  cy.mount(StepperComponent, { componentProperties: { count: 100 } }).then(
+    ({ component }) => {
+      cy.spy(component.change, 'emit').as('changeSpy')
     }
-  ).then((wrapper) => {
-    console.log({ wrapper })
-    cy.spy(wrapper.component.change, 'emit').as('changeSpy')
-    return cy.wrap(wrapper).as('angular')
-  })
-  cy.get(incrementSelector).click()
+  )
+  cy.get('[data-cy=increment]').click()
   cy.get('@changeSpy').should('have.been.calledWith', 101)
 })
 ```
