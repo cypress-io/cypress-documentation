@@ -401,12 +401,12 @@ translated text. Extract the app's messages as JSON to get those IDs:
 The command writes the source text to `src/locale/messages.json`. Copy that file
 for each language and translate the values:
 
-```json title="src/locale/messages.fr.json"
+```json title="src/locale/messages.pt.json"
 {
-  "locale": "fr",
+  "locale": "pt",
   "translations": {
-    "2470120160871425761": "Bienvenue dans la boutique",
-    "7488886800994603769": "Articles dans votre panier : {$count}"
+    "2470120160871425761": "Bem-vindo à loja",
+    "7488886800994603769": "Itens no seu carrinho: {$count}"
   }
 }
 ```
@@ -442,42 +442,36 @@ export class Greeting {
 
 Each test reads a translation file with [`cy.readFile()`](/api/commands/readfile),
 passes its `translations` to `loadTranslations()`, and then mounts the
-component. A German file, `src/locale/messages.de.json`, has the same shape as
-the French one:
+component. An Italian file, `src/locale/messages.it.json`, has the same shape as
+the Portuguese one:
 
 ```ts title="src/app/greeting/greeting.cy.ts"
 import { loadTranslations } from '@angular/localize'
 import { Greeting } from './greeting'
 
 describe('Greeting', () => {
-  it('renders French', () => {
-    cy.readFile('src/locale/messages.fr.json').then(({ translations }) => {
+  it('renders Portuguese', () => {
+    cy.readFile('src/locale/messages.pt.json').then(({ translations }) => {
       loadTranslations(translations)
     })
     cy.mount(Greeting, { componentProperties: { items: 2 } })
 
-    cy.get('[data-cy=title]').should('have.text', 'Bienvenue dans la boutique')
-    cy.get('[data-cy=cart]').should(
-      'have.text',
-      'Articles dans votre panier : 2'
-    )
+    cy.get('[data-cy=title]').should('have.text', 'Bem-vindo à loja')
   })
 
-  it('renders German', () => {
-    cy.readFile('src/locale/messages.de.json').then(({ translations }) => {
+  it('renders Italian', () => {
+    cy.readFile('src/locale/messages.it.json').then(({ translations }) => {
       loadTranslations(translations)
     })
     cy.mount(Greeting, { componentProperties: { items: 2 } })
 
-    cy.get('[data-cy=title]').should('have.text', 'Willkommen im Shop')
-    cy.get('[data-cy=cart]').should('have.text', 'Artikel im Warenkorb: 2')
+    cy.get('[data-cy=title]').should('have.text', 'Benvenuto nel negozio')
   })
 
   it('renders the source text when no translations are loaded', () => {
     cy.mount(Greeting, { componentProperties: { items: 2 } })
 
     cy.get('[data-cy=title]').should('have.text', 'Welcome to the store')
-    cy.get('[data-cy=cart]').should('have.text', 'Items in your cart: 2')
   })
 })
 ```
