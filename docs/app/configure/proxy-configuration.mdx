@@ -81,7 +81,7 @@ $env:HTTP_PROXY = "http://my-company-proxy.com"
 
 You can also set `NO_PROXY` to bypass the proxy for additional hosts (loopback
 addresses such as `localhost` are always bypassed). This example bypasses the
-proxy for `cypress.io` and every subdomain of `cypress.io`. See
+proxy for your internal domain, `example.internal`, and every subdomain of it. See
 [how Cypress matches `NO_PROXY` entries](#How-Cypress-matches-NO_PROXY-entries)
 for why the list names the domain twice.
 
@@ -89,25 +89,25 @@ for why the list names the domain twice.
   <TabItem value="macos" label="macOS">
 
 ```shell
-export NO_PROXY=cypress.io,.cypress.io
+export NO_PROXY=example.internal,.example.internal
 ```
 
   </TabItem>
   <TabItem value="linux" label="Linux">
 
 ```shell
-export NO_PROXY=cypress.io,.cypress.io
+export NO_PROXY=example.internal,.example.internal
 ```
 
   </TabItem>
   <TabItem value="windows" label="Windows">
 
 ```shell title="Command Prompt"
-set NO_PROXY=cypress.io,.cypress.io
+set NO_PROXY=example.internal,.example.internal
 ```
 
 ```shell title="PowerShell"
-$env:NO_PROXY = "cypress.io,.cypress.io"
+$env:NO_PROXY = "example.internal,.example.internal"
 ```
 
   </TabItem>
@@ -203,31 +203,31 @@ bypass the proxy for specific domains.
 
 To bypass the proxy for certain hosts, set the `NO_PROXY` environment variable
 to a list of hostnames that should not be proxied, such as
-`NO_PROXY=cypress.io,.cypress.io`. Cypress applies the same `NO_PROXY` rules when
+`NO_PROXY=example.internal,.example.internal`. Cypress applies the same `NO_PROXY` rules when
 it downloads the binary and when it runs your tests.
 
 #### How Cypress matches `NO_PROXY` entries
 
 Cypress compares each entry with the hostname of the request:
 
-| Entry             | Bypasses the proxy for              | Still proxied                  |
-| ----------------- | ----------------------------------- | ------------------------------ |
-| `*.cypress.io`    | `docs.cypress.io`, `app.cypress.io` | `cypress.io`                   |
-| `.cypress.io`     | `docs.cypress.io`, `app.cypress.io` | `cypress.io`                   |
-| `cypress.io`      | `cypress.io` only                   | `docs.cypress.io`              |
-| `cypress.io:8443` | `cypress.io` on port `8443`         | `cypress.io` on any other port |
-| `docs.cypress.io` | `docs.cypress.io` only              | `cypress.io`, `app.cypress.io` |
+| Entry                   | Bypasses the proxy for                         | Still proxied                              |
+| ----------------------- | ---------------------------------------------- | ------------------------------------------ |
+| `*.example.internal`    | `app.example.internal`, `api.example.internal` | `example.internal`                         |
+| `.example.internal`     | `app.example.internal`, `api.example.internal` | `example.internal`                         |
+| `app.example.internal`  | `app.example.internal` only                    | `example.internal`, `api.example.internal` |
+| `example.internal`      | `example.internal` only                        | `app.example.internal`                     |
+| `example.internal:8443` | `example.internal` on port `8443`              | `example.internal` on any other port       |
 
 Keep these behaviors in mind when you write the list:
 
 - An entry without a leading `.` or `*.` matches only that exact hostname.
 - An entry that starts with `.` or `*.` matches every subdomain but not the
-  domain itself. To bypass both, list both forms: `cypress.io,.cypress.io`.
+  domain itself. To bypass both, list both forms: `example.internal,.example.internal`.
 - An entry with a `:port` matches only requests to that port. A URL without a
-  port uses the default for its protocol, so `docs.cypress.io:443` matches
-  `https://docs.cypress.io`.
+  port uses the default for its protocol, so `app.example.internal:443` matches
+  `https://app.example.internal`.
 - Commas and whitespace both separate entries, so a stray space, such as the one
-  `set NO_PROXY=cypress.io && npm test` leaves at the end of the value in
+  `set NO_PROXY=example.internal && npm test` leaves at the end of the value in
   Windows Command Prompt, doesn't break matching.
 - Matching ignores case.
 - An IP address matches only that exact address. IP ranges in CIDR notation,
@@ -237,14 +237,14 @@ Keep these behaviors in mind when you write the list:
 
 **`NO_PROXY` matching differs from curl and wget**
 
-curl and wget treat a bare entry as a domain suffix, so `NO_PROXY=cypress.io`
-also bypasses the proxy for `docs.cypress.io` in those tools. In Cypress, the
-same value still sends `docs.cypress.io` through the proxy. If a `NO_PROXY` value
+curl and wget treat a bare entry as a domain suffix, so `NO_PROXY=example.internal`
+also bypasses the proxy for `app.example.internal` in those tools. In Cypress, the
+same value still sends `app.example.internal` through the proxy. If a `NO_PROXY` value
 works with curl but not with Cypress, add the subdomain form next to the bare
 entry:
 
 ```shell
-export NO_PROXY=cypress.io,.cypress.io
+export NO_PROXY=example.internal,.example.internal
 ```
 
 :::
