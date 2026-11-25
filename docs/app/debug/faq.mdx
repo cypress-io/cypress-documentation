@@ -1395,6 +1395,26 @@ See
 [Download PDFs instead of opening them in Chrome](/api/node-events/browser-launch-api#Download-PDFs-instead-of-opening-them-in-Chrome)
 for the configuration.
 
+### <Icon name="angle-right" /> How do I test a webcam feature with a different fake video in each test?
+
+Cypress launches Chromium-based browsers with a fake camera, so the app under
+test gets a video stream without a real camera. To play your own video, pass the
+`--use-file-for-fake-video-capture` switch in the `before:browser:launch` event.
+See
+[Use fake video for webcam testing](/api/node-events/browser-launch-api#Use-fake-video-for-webcam-testing).
+
+The browser reads the switch once, when it starts, so changing the switch per
+test has no effect. To give each test its own video, copy the video over the
+file the switch points to with [`cy.task()`](/api/commands/task) before the app
+starts the camera. See
+[Change the fake webcam video between tests](/api/node-events/browser-launch-api#Change-the-fake-webcam-video-between-tests)
+for the configuration and the behaviors to keep in mind.
+
+In a browser without the switch, such as Firefox, or when the video stops
+changing between tests, stub `getUserMedia()` to hand the app a stream from a
+fixture video. See
+[Stub getUserMedia() with a fixture video](/api/node-events/browser-launch-api#Stub-getUserMedia-with-a-fixture-video).
+
 ### <Icon name="angle-right" /> Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command.
