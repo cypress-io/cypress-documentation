@@ -133,8 +133,8 @@ export cypress_api_server=http://localhost:8888/api/v1/
 ```
 
 Cypress removes the leading `CYPRESS_` or `cypress_` prefix and keeps the rest
-of the name exactly as written, so the variables above are read as
-`cy.env(['HOST'])` and `cy.env(['api_server'])`.
+of the name exactly as written, so `cy.env(['HOST'])` and
+`cy.env(['api_server'])` read the variables above.
 
 A `CYPRESS_*` variable named after a configuration option, such as
 `CYPRESS_BASE_URL`, sets that option instead and isn't readable with
@@ -219,7 +219,7 @@ that reach the Cypress configuration:
 | Cypress configuration file                                                       | Yes                           | Yes, in the `env` key  |
 | `cypress.env.json`                                                               | No                            | Yes                    |
 | `CYPRESS_*` variable named after a configuration option, like `CYPRESS_BASE_URL` | Yes                           | No                     |
-| Any other `CYPRESS_*` variable, like `CYPRESS_HOST`                              | No                            | Yes                    |
+| `CYPRESS_*` variable not named after a configuration option, like `CYPRESS_HOST` | No                            | Yes                    |
 | `setupNodeEvents`                                                                | Yes                           | Yes, in `config.env`   |
 
 Whatever `setupNodeEvents` returns takes precedence over the other methods in
