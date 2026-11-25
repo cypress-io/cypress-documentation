@@ -219,7 +219,10 @@ Anyone can create and publish a plugin. If no existing plugin covers your use
 case, read the [Node Events Overview](/api/node-events/overview) to learn how
 plugins hook into Cypress, then
 [submit it to the plugins list](https://github.com/cypress-io/cypress-documentation/blob/master/CONTRIBUTING.md#adding-plugins)
-so others can find it.
+so others can find it. If your plugin reads its own options from the Cypress
+configuration, ship
+[types for its custom configuration options](/app/tooling/typescript-support#Types-for-custom-Cypress-configuration-options)
+so users' `cypress.config.ts` files type-check them.
 
 ## See also
 

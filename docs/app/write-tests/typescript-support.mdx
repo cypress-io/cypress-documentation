@@ -517,6 +517,87 @@ const setupNodeEvents: Cypress.PluginConfig = (on, config) => {
 export default setupNodeEvents
 ```
 
+### Types for custom Cypress configuration options
+
+If your plugin reads its own options from the Cypress configuration, such as a
+`requestBaseUrl` key that your plugin prepends to relative `cy.request()` URLs,
+ship types for those options. Your users' `cypress.config.ts` then type-checks
+those options and keeps using `defineConfig()`. Without the types, TypeScript
+rejects the `requestBaseUrl` key, because `defineConfig()` only accepts the options Cypress defines:
+
+```text
+Object literal may only specify known properties, and 'requestBaseUrl' does not exist in type 'ConfigOptions<any>'.
+```
+
+To type a custom key, augment the `Cypress.ResolvedConfigOptions` interface.
+Cypress derives the configuration types from this interface, so one declaration
+types the key at the top level of `defineConfig()`, inside the `e2e` and
+`component` objects, on the `config` argument of `setupNodeEvents`, and in
+`Cypress.config()`. Augment `ResolvedConfigOptions` rather than
+`Cypress.ConfigOptions`: `ConfigOptions` is a type alias, and TypeScript can
+merge declarations into an interface but not into a type alias.
+
+Ship the declaration in your plugin's typings:
+
+```typescript title="index.d.ts"
+declare global {
+  namespace Cypress {
+    interface ResolvedConfigOptions<ComponentDevServerOpts = any> {
+      /**
+       * Base URL that the plugin prepends to relative `cy.request()` URLs.
+       */
+      requestBaseUrl?: string
+    }
+  }
+}
+
+export {} // makes this file a module so declare global is valid
+```
+
+When writing the declaration:
+
+- Declare each key as optional (`?`). Cypress supplies no default for a key it
+  doesn't define, so the value is `undefined` until your users set it.
+- Repeat the `<ComponentDevServerOpts = any>` type parameter from the Cypress
+  declaration, so both declarations of the interface match.
+- Keep the `declare global` wrapper in a module file, as described in
+  [`declare global` requires a TypeScript module file](#declare-global-requires-a-TypeScript-module-file).
+
+Once TypeScript loads the declaration, for example because the project imports
+your plugin, your users' configuration accepts the key. In `cypress.config.ts`,
+TypeScript infers
+`config.requestBaseUrl` in `setupNodeEvents` as `string | undefined`:
+
+:::cypress-config-example
+
+```ts
+{
+  requestBaseUrl: 'https://api.cypress.io',
+  e2e: {
+    setupNodeEvents(on, config) {
+      // config.requestBaseUrl holds the user's value
+    },
+  },
+}
+```
+
+:::
+
+Your plugin's code in the browser reads the same key with `Cypress.config()`:
+
+```typescript title="src/support.ts"
+const requestBaseUrl = Cypress.config('requestBaseUrl') // string | undefined
+```
+
+Keep these behaviors in mind:
+
+- Declarations from several plugins merge, so each plugin adds its own keys
+  without replacing another plugin's keys.
+- TypeScript still checks the value, so `requestBaseUrl: 42` is an error.
+- [Test configuration](/app/references/configuration#Test-Configuration) and
+  the `Cypress.config()` setters accept a fixed set of options
+  (`Cypress.TestConfigOverrides`), so a custom key there remains a type error.
+
 ### Using an External Typings File
 
 You might find it easier to organize your types by moving them from the support
