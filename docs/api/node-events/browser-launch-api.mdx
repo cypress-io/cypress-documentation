@@ -49,12 +49,12 @@ An object describing the browser being launched, with the following properties:
 Options you can modify to control how Cypress launches the browser, with the
 following properties:
 
-| Property      | Type       | Description                                                                                                                                                                                                |
-| ------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `preferences` | `object`   | An object describing browser preferences. Differs between browsers. See [Change browser preferences](#Change-browser-preferences) for details.                                                             |
-| `args`        | `string[]` | An array of strings that Cypress passes as command-line args when it launches the browser. Has no effect on Electron. See [Modify browser launch arguments](#Modify-browser-launch-arguments) for details. |
-| `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions for Cypress to load before the browser starts. See [Add browser extensions](#Add-browser-extensions) for details.                           |
-| `env`         | `object`   | An object of system environment variables to pass to the launched browser. See [Configure browser environment](#Configure-browser-environment) for details.                                                |
+| Property      | Type       | Description                                                                                                                                                                                                                                            |
+| ------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `preferences` | `object`   | An object describing browser preferences. Differs between browsers. See [Change browser preferences](#Change-browser-preferences) for details.                                                                                                         |
+| `args`        | `string[]` | An array of strings that Cypress passes as command-line args when it launches the browser. Has no effect on Electron, and Cypress prints a warning when it's set. See [Modify browser launch arguments](#Modify-browser-launch-arguments) for details. |
+| `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions for Cypress to load before the browser starts. See [Add browser extensions](#Add-browser-extensions) for details.                                                                       |
+| `env`         | `object`   | An object of system environment variables to pass to the launched browser. Has no effect on Electron, and Cypress prints a warning when it's set. See [Configure browser environment](#Configure-browser-environment) for details.                     |
 
 ## Usage
 
@@ -69,6 +69,12 @@ Cypress launches the browser.
 
 The returned `launchOptions` object becomes the new launch options for the
 browser.
+
+Cypress fires `before:browser:launch` each time it launches a browser, not
+before each spec or test. In `cypress run`, each spec after the first opens in a
+new tab of the same browser, so the event fires once for the run. Electron is
+the exception: Cypress opens a new Electron browser window for each spec, and
+fires the event each time.
 
 ### Modify browser launch arguments
 
@@ -373,9 +379,8 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 :::
 
-Cypress doesn't apply `launchOptions.args` to Electron, and prints a warning
-when they're set. To use your own video in Electron, pass the switch in the
-`ELECTRON_EXTRA_LAUNCH_ARGS` environment variable, as shown in
+In Electron, pass the switch in the `ELECTRON_EXTRA_LAUNCH_ARGS` environment
+variable instead, as shown in
 [Change the fake webcam video between tests](#Change-the-fake-webcam-video-between-tests).
 
 #### Change the fake webcam video between tests
@@ -384,10 +389,9 @@ To give each test a different camera video, such as a valid and an expired QR
 code, overwrite the file the `--use-file-for-fake-video-capture` switch points
 to instead of changing the switch. The browser reads the switch once, when it
 starts, and Cypress fires `before:browser:launch` only when it launches a
-browser. Cypress keeps the same browser open from spec to spec (in
-`cypress run`, each spec after the first opens in a new tab), so a different
-argument per test or per spec has no effect. The browser does read the video
-file again each time the app starts the camera with `getUserMedia()`.
+browser (see [Usage](#Usage)), so a new argument per test or per spec has no
+effect. The browser does read the video file again each time the app calls
+`getUserMedia()`.
 
 Point the switch at a placeholder file, and copy the video each test needs over
 the placeholder with [`cy.task()`](/api/commands/task):
@@ -428,21 +432,25 @@ on('task', {
 :::
 
 The config expects your own videos in `cypress/fixtures`: `webcam-default.y4m`,
-which the config copies in at the start of each run, and the videos the tests
-copy in, such as `valid-qr.y4m` and `expired-qr.y4m`.
+which the config copies in at the start of each run, and the per-test videos,
+such as `valid-qr.y4m` and `expired-qr.y4m`. Every video must be in the
+placeholder's format, which the browser takes from the file extension. An MJPEG
+video copied over `fake-webcam.y4m` makes `getUserMedia()` fail with a
+`NotFoundError`, so for MJPEG videos, name the placeholder `fake-webcam.mjpeg`.
+Because the config recreates the placeholder on each run, you can add the
+placeholder to `.gitignore`.
 
-To run these tests in Electron, pass the switch in the
-`ELECTRON_EXTRA_LAUNCH_ARGS` environment variable instead (see
-[Modify Electron app switches](#Modify-Electron-app-switches)). With Cypress
-started from the project folder, the placeholder's relative path works:
+In Electron, pass the switch in the `ELECTRON_EXTRA_LAUNCH_ARGS` environment
+variable instead (see [Modify Electron app switches](#Modify-Electron-app-switches)
+for the Windows form). With Cypress started from the project folder, the
+placeholder's relative path works:
 
 ```shell
 export ELECTRON_EXTRA_LAUNCH_ARGS=--use-file-for-fake-video-capture=cypress/fixtures/fake-webcam.y4m
 ```
 
-On Windows, use `set` in place of `export`. The path has to name the same
-placeholder file as the config, so renaming the placeholder, such as to
-`fake-webcam.mjpeg`, means changing the variable too.
+The path must name the same placeholder file as the config, so update the
+variable if you rename the placeholder.
 
 In the spec, swap the video before the app starts the camera:
 
@@ -461,41 +469,28 @@ it('rejects an expired QR code', () => {
 })
 ```
 
+Swap the video only while the camera is off. A stream that's already open can
+pick up the overwritten file partway through, or keep playing the previous
+video, depending on the browser version, the platform, and the video format.
 With [test isolation](/app/core-concepts/test-isolation) on, the default,
-Cypress clears the page before each test, which also turns off the previous
-test's camera. When the camera is on at the point a test needs a new video,
-such as with `testIsolation: false`, stop the camera before the swap and start
-it again after. Use the app's own controls, which stop the stream's tracks and
-call `getUserMedia()` again.
+Cypress clears the page before each test, which turns off the previous test's
+camera. With `testIsolation: false`, stop the camera with the app's own controls
+before the swap, and start the camera again after.
 
-Keep these behaviors in mind:
+The placeholder keeps the last video a test copied in, across tests and specs.
+Set the video in every test that uses the camera, or reset the video in a
+`beforeEach()` with `cy.task('setFakeWebcamVideo', 'webcam-default.y4m')`.
 
-- Because the config recreates the placeholder on each run, you can add the
-  placeholder to `.gitignore`.
-- Every video the task copies in must be in the placeholder's format. The
-  browser reads the placeholder in the format its file extension names, so an
-  MJPEG video copied over `fake-webcam.y4m` makes `getUserMedia()` fail with a
-  `NotFoundError`. For MJPEG videos, name the placeholder `fake-webcam.mjpeg`.
-- The placeholder keeps the last video a test copied in, for the rest of the
-  run and across specs. Set the video in every test that uses the camera, or
-  reset it in a `beforeEach()` with
-  `cy.task('setFakeWebcamVideo', 'webcam-default.y4m')`.
-- A stream that's already open can pick up the overwritten file partway
-  through, or keep playing the previous video, depending on the browser
-  version, the platform, and the video format. Swapping while the camera is off
-  gives each test a predictable video.
-- The switch belongs to Chromium, so the approach works in Chromium-based
-  browsers, including Electron, and doesn't apply to Firefox or WebKit.
-- The approach relies on how Chromium reads the fake capture file, not on a
-  Cypress API, so a browser update can change how it behaves. If the video
-  stops changing between tests in your browser,
-  [stub `getUserMedia()`](#Stub-getUserMedia-with-a-fixture-video) instead.
+The approach relies on how Chromium reads the fake capture file, not on a
+Cypress API. Firefox and WebKit don't support the switch, and a browser update
+can change the behavior. If the video stops changing between tests in your
+browser, [stub `getUserMedia()`](#Stub-getUserMedia-with-a-fixture-video)
+instead.
 
 #### Stub getUserMedia() with a fixture video
 
 Stubbing `navigator.mediaDevices.getUserMedia()` hands the app a stream the
-test controls, without the fake capture switches, so the stub doesn't depend on
-how the browser reads a fake capture file. Load the video with
+test controls, without the fake capture switches. Load the video with
 [`cy.fixture()`](/api/commands/fixture), play it in a `<video>` element the
 test creates, and return the element's `captureStream()`:
 
