@@ -92,10 +92,11 @@ A headless session has no window to choose a testing type or browser in, so
   config. If it's missing or isn't Chromium-based, Cypress still starts, and
   `cypress tap status` reports the reason as an `error`.
 
-An agent can start the session itself by running it in the background:
+An agent can start the session itself by running it in the background, with
+its output in `cypress-open.log`:
 
 ```shell title="Command"
-npx cypress open --headless --e2e --browser chrome
+nohup npx cypress open --headless --e2e --browser chrome > cypress-open.log 2>&1 &
 ```
 
 A headless session has no window to close. The session runs until its process
