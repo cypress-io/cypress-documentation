@@ -200,7 +200,7 @@ and `https-proxy` values as a fallback. Cypress does **not** apply npm's
 to `NO_PROXY`, so set `NO_PROXY` directly if you need to
 bypass the proxy for specific domains.
 
-### Bypassing the proxy with `NO_PROXY`
+### Bypass the proxy for internal hosts with `NO_PROXY`
 
 To bypass the proxy for certain hosts, set the `NO_PROXY` environment variable
 to the hostnames Cypress should reach directly, such as
@@ -321,7 +321,7 @@ Cypress is currently using:
 
 <DocsImage
   src="/img/app/configuration/test-runner-settings-proxy-configuration.jpg"
-  alt="Proxy configuration in the Desktop app"
+  alt="Proxy Settings section of the Cypress app Settings tab, listing the proxy server and the proxy bypass list Cypress detected from environment variables"
 />
 
 To check the proxy settings from the command line, such as in CI, run Cypress
