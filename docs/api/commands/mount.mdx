@@ -415,13 +415,16 @@ The [React Router](/app/component-testing/react/examples#React-Router) and
 approach.
 
 For Vue, type the options with `CyMountOptions<any>` from `cypress/vue` instead
-of `Parameters<typeof mount>[1]`. `mount()` from `cypress/vue` has a separate
-signature for each way to declare a component, and `Parameters<>` reads only
-the last one, so the `props` type it produces rejects the props your specs pass.
-The [Vue Router](/app/component-testing/vue/examples#Vue-Router) example adds a
-`router` option this way:
+of `Parameters<typeof mount>[1]`, as
+[Type custom `cy.mount()` options in Vue](/app/component-testing/vue/examples#Type-custom-cymount-options-in-Vue)
+explains. The
+[Vue Router example](/app/component-testing/vue/examples#Provide-a-Vue-Router-instance-to-cymount)
+adds a `router` option this way:
 
 ```ts
+import { type CyMountOptions } from 'cypress/vue'
+import { type Router } from 'vue-router'
+
 type MountOptions = CyMountOptions<any> & { router?: Router }
 ```
 

@@ -261,8 +261,9 @@ For more info on testing Vue components with slots, refer to the
 
 ## Using Vue Test Utils
 
-To encourage interoperability between your existing component tests and
-Cypress, we support using Vue Test Utils' API.
+Cypress supports the Vue Test Utils API, so your existing component tests can
+keep using it. `cy.mount()` yields the Vue Test Utils `wrapper` and the
+component instance:
 
 ```js
 cy.mount(Stepper).then(({ wrapper, component }) => {
@@ -273,9 +274,8 @@ cy.mount(Stepper).then(({ wrapper, component }) => {
 
 {/* TODO: Custom mount command docs */}
 
-If you intend to use the `wrapper` frequently and use Vue Test Util's API, we
-recommend you write a [custom mount command](/api/commands/mount) and create a
-Cypress alias to get back at the `wrapper`.
+If your tests use the `wrapper` often, we recommend a
+[custom mount command](/api/commands/mount) that saves it as a Cypress alias:
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
@@ -320,31 +320,25 @@ Cypress.Commands.add('mount', (component, options) => {
 </Tabs>
 
 ```js
-// the "@vue" alias will now work anywhere
-// after you've mounted your component
-cy.mount(Stepper).doStuff().get('@vue') // The subject is now the Vue Wrapper
+// After you mount a component, the "@vue" alias works anywhere in the test
+cy.mount(Stepper)
+cy.get('@vue') // The subject is the Vue Test Utils wrapper
 ```
 
-The `@vue` alias means that you are able to get to the resulting `wrapper` returned from the
-`mount` command and use `wrapper.emitted()` to gain access to Native
-DOM events that fired, as well as custom events that your component under test
-emitted.
+The `@vue` alias yields the `wrapper` that `cy.mount()` created. Call
+`wrapper.emitted()` on it to read the native DOM events that fired and the
+custom events your component emitted.
 
-Because `wrapper.emitted()` is only data, and NOT spy-based you have to
-unpack its results to write assertions.
+`wrapper.emitted()` returns plain data rather than spies, so unpack its results
+to write assertions. Failure messages are less helpful as well, because the
+Sinon-Chai assertions that Cypress ships, such as `to.have.been.called` and
+`to.have.been.calledWith`, don't apply to plain data.
 
-Your test failure messages are not as helpful because you're not able to use
-the Sinon-Chai library that Cypress ships, which comes with methods such as
-`to.have.been.called` and `to.have.been.calledWith`.
-
-Usage of the `cy.get('@vue')` alias may look something like the below code
-snippet.
-
-Notice that we're using the `'should'` function signature to take
-advantage of Cypress's [retryability](/app/guides/test-retries). If we
-chained using `cy.then` instead of `cy.should`, we may run into the kinds of
-issues you have in Vue Test Utils tests where you have to use `await` frequently
-to make sure the DOM has updated or any reactive events have fired.
+The examples below pass a function to `.should()`, so the assertion gets
+Cypress's [retry-ability](/app/core-concepts/retry-ability). With `.then()` in
+place of `.should()`, a test runs into the same timing problems as a Vue Test
+Utils test, where you `await` often to make sure the DOM updated or reactive
+events fired.
 
 <Tabs>
 <TabItem value="With emitted">
@@ -373,13 +367,9 @@ cy.get('@onChangeSpy').should('have.been.calledWith', '101')
 </TabItem>
 </Tabs>
 
-Regardless of our recommendation to use spies instead of the internal Vue Test
-Utils API, you may decide to continue using `emitted` as it _automatically_
-records every single event emitted from the component, and so you don't have to
-create a spy for every event emitted.
-
-This auto-spying behavior could be useful for components that emit _many_ custom
-events.
+We recommend spies, but `wrapper.emitted()` records every event a component
+emits without a spy for each one, which helps with components that emit many
+custom events.
 
 ## Mount Storybook stories in Vue component tests
 
@@ -537,12 +527,12 @@ it('emits click', () => {
 
 ## Custom Mount Commands
 
-### Customizing `cy.mount()`
+### Register `cy.mount()` in the component support file
 
-While you can use the [mount()](/app/component-testing/vue/api#mount)
-function in your tests, we recommend using [`cy.mount()`](/api/commands/mount),
-which is a [custom command](/api/cypress-api/custom-commands) that you define in
-the **cypress/support/component.js** file:
+You can call the [`mount()`](/app/component-testing/vue/api#mount) function in
+your tests directly, but we recommend [`cy.mount()`](/api/commands/mount), a
+[custom command](/api/cypress-api/custom-commands) that you define in
+`cypress/support/component.js`:
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
@@ -573,23 +563,25 @@ Cypress.Commands.add('mount', mount)
 </TabItem>
 </Tabs>
 
-The support file registers `cy.mount()` for any test without having to import the `mount()`
-function in each and every spec file.
+The support file registers `cy.mount()` for every test, so no spec file has to
+import `mount()`.
 
-By default, `cy.mount()` is a simple passthrough to `mount()`, however, you can
-customize `cy.mount()` to fit your needs. For instance, if you are using plugins
-or other global app-level setups in your Vue app, you can configure them here.
-
-Below are a few examples that demonstrate using a custom mount command. You can
-adjust these examples for most other providers that you need to support.
+As registered above, `cy.mount()` passes its arguments straight to `mount()`.
+Customize the command to set up what your app sets up globally, such as Vue
+plugins, global components, or a component that wraps every other component.
+The sections below cover common setups, starting with how to type a custom
+command in TypeScript. The same patterns carry over to most other plugins and
+providers.
 
 ### Type custom `cy.mount()` options in Vue
 
-Once a custom command changes how it calls `mount()`, `mount: typeof mount` no
-longer describes it, so the TypeScript examples on this page declare the
-signature themselves. Type the options with `CyMountOptions<any>`, which
-`cypress/vue` exports, and add your own options to it with `&`, such as
-`CyMountOptions<any> & { router?: Router }`.
+A custom command that only adds global setup keeps `mount: typeof mount`, as the
+[Vue plugins example](#Install-Vue-plugins-such-as-Pinia-in-cymount) and the
+[global components example](#Register-global-Vue-components-in-cymount) do. A command that accepts options of its own, mounts a
+wrapper around your component, or yields something other than what `mount()`
+yields needs its own signature. Type that command's options with
+`CyMountOptions<any>`, which `cypress/vue` exports, and add your own options
+with `&`, such as `CyMountOptions<any> & { router?: Router }`.
 
 Avoid `Parameters<typeof mount>[1]` for Vue. `mount()` from `cypress/vue` has a
 separate signature for each way to declare a component, and `Parameters<>`
@@ -599,10 +591,11 @@ an object. The `props` type from that signature includes array members such as
 `cy.mount(HelloWorld, { props: { msg: 'Hello Cypress' } })` fails type-checking
 with `TS2322`.
 
-### Replicating Plugins
+### Install Vue plugins such as Pinia in `cy.mount()`
 
-Most applications have state management or routing. Both of these are Vue
-plugins.
+Most Vue apps install plugins for state management, routing, or translations.
+Install the same plugins in `cy.mount()`, so components that depend on them
+render in tests:
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
@@ -643,7 +636,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 ```ts
 import { createPinia } from 'pinia' // or Vuex
 import { createI18n } from 'vue-i18n'
-import { mount, type CyMountOptions } from 'cypress/vue'
+import { mount } from 'cypress/vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
@@ -663,12 +656,7 @@ const i18nOptions = {
 declare global {
   namespace Cypress {
     interface Chainable {
-      /**
-       * Helper mount function for Vue Components
-       * @param component Vue Component or JSX Element to mount
-       * @param options Options passed to Vue Test Utils
-       */
-      mount(component: any, options?: CyMountOptions<any>): Chainable<any>
+      mount: typeof mount
     }
   }
 }
@@ -686,24 +674,18 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 </TabItem>
 </Tabs>
 
-### Replicating the expected Component Hierarchy
+### Wrap components in Vuetify's `VApp` with `cy.mount()`
 
-Some Vue applications, most famously Vue apps built on top of Vuetify, require
-certain components to be structured in a specific hierarchy.
+Some UI libraries expect components to render inside a specific parent.
+Vuetify's layout components, for example, expect to render inside a `VApp`
+component, which a component mounted on its own doesn't have. Wrap every mounted
+component in `VApp` from a custom `cy.mount()`, and install Vuetify the same way
+your app does, following the
+[Vuetify installation guide](https://vuetifyjs.com/en/getting-started/installation/).
 
-All Vuetify applications require that you wrap your app in a `VApp` component
-when you build it. The `VApp` wrapper is an implementation detail of Vuetify, but once users
-try to test components that depend on Vuetify, they get Vuetify-specific
-compilation errors and quickly find out that **they need to replicate that
-component hierarchy any time they need to mount a component that uses a Vuetify
-component**!
-
-Custom `cy.mount` commands to the rescue! You may find the JSX syntax to be more
-straightforward.
-
-You also need to replicate the plugin setup steps from the Vuetify docs for
-everything to compile. The command takes `props` out of the options and passes
-them to your component, so they don't land on the wrapper that renders `VApp`.
+The command takes `props` out of the options and passes them to your component,
+so they don't land on the wrapper that renders `VApp`. The JSX version reads
+closer to the markup it renders.
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
@@ -818,10 +800,11 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 </TabItem>
 </Tabs>
 
-### Vue Router
+### Provide a Vue Router instance to `cy.mount()`
 
-To use Vue Router, create a command to register the plugin and pass in a custom
-implementation of the router via the options param.
+To test components that use Vue Router, give `cy.mount()` a `router` option. The
+command installs the router you pass in, or creates a new one for the test when
+you don't pass one.
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
@@ -841,7 +824,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
     ...mountOptions
   } = options
 
-  // Setup options object
+  // Set up the options object
   mountOptions.global = mountOptions.global || {}
   mountOptions.global.plugins = mountOptions.global.plugins || []
 
@@ -885,7 +868,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
     ...mountOptions
   } = options
 
-  // Setup options object
+  // Set up the options object
   mountOptions.global = mountOptions.global || {}
   mountOptions.global.plugins = mountOptions.global.plugins || []
 
@@ -899,7 +882,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 </TabItem>
 <TabItem value="Spec Usage">
 
-```js
+```jsx
 import Navigation from './Navigation.vue'
 import { routes } from '../router'
 import { createMemoryHistory, createRouter } from 'vue-router'
@@ -931,19 +914,20 @@ it('login link should be active when url is "/login"', () => {
 
 :::info
 
-Calling `router.push()` in the router for Vue 3 is an asynchronous operation.
-Use the [cy.wrap](/api/commands/wrap) command to have Cypress await the
-promise's resolve before it continues with other commands:
+`router.push()` is asynchronous in Vue Router 4. Pass its promise to
+[`cy.wrap()`](/api/commands/wrap), so Cypress waits for it to resolve before it
+runs the next command.
 
 :::
 
 </TabItem>
 </Tabs>
 
-### Vuex
+### Provide a Vuex store to `cy.mount()`
 
-To use a component that uses [Vuex](https://vuex.vuejs.org/), create a `mount`
-command that configures a Vuex store for your component.
+To test a component that uses [Vuex](https://vuex.vuejs.org/), give `cy.mount()`
+a `store` option. The command installs the store you pass in, or a new one from
+your store factory when you don't pass one.
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
@@ -956,7 +940,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   // Use store passed in from options, or initialize a new one
   const { store = getStore(), ...mountOptions } = options
 
-  // Setup options object
+  // Set up the options object
   mountOptions.global = mountOptions.global || {}
   mountOptions.global.stubs = {
     ...mountOptions.global.stubs,
@@ -971,14 +955,6 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   return mount(component, mountOptions)
 })
 ```
-
-:::info
-
-The `getStore` method is a factory method that initializes Vuex and creates a
-new store. It is important to initialize the store with each new test to
-ensure changes to the store don't affect other tests.
-
-:::
 
 </TabItem>
 <TabItem value="cypress/support/component.ts">
@@ -1007,7 +983,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   // Use store passed in from options, or initialize a new one
   const { store = getStore(), ...mountOptions } = options
 
-  // Setup options object
+  // Set up the options object
   mountOptions.global = mountOptions.global || {}
   mountOptions.global.stubs = {
     ...mountOptions.global.stubs,
@@ -1030,7 +1006,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 import { getStore } from '@/plugins/store'
 import UserProfile from './UserProfile.vue'
 
-it.only('User profile should display user name', () => {
+it('User profile should display user name', () => {
   const user = { name: 'test person' }
 
   // getStore is a factory method that creates a new store
@@ -1050,11 +1026,18 @@ it.only('User profile should display user name', () => {
 </TabItem>
 </Tabs>
 
-### Global Components
+:::info
 
-If you register components globally in the main application
-file, set them up in your mount command so your component renders them
-properly:
+`getStore()` is a factory function that creates a new Vuex store. Create a new
+store for each test, so changes to the store in one test don't affect the
+others.
+
+:::
+
+### Register global Vue components in `cy.mount()`
+
+If your app's entry file registers components globally, register them in
+`cy.mount()` too, so components that use them render in tests:
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
@@ -1064,7 +1047,7 @@ import { mount } from 'cypress/vue'
 import Button from '../../src/components/Button.vue'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
+  // Set up the options object
   options.global = options.global || {}
   options.global.components = options.global.components || {}
 
@@ -1079,24 +1062,19 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 <TabItem value="cypress/support/component.ts">
 
 ```ts
-import { mount, type CyMountOptions } from 'cypress/vue'
+import { mount } from 'cypress/vue'
 import Button from '../../src/components/Button.vue'
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      /**
-       * Helper mount function for Vue Components
-       * @param component Vue Component or JSX Element to mount
-       * @param options Options passed to Vue Test Utils
-       */
-      mount(component: any, options?: CyMountOptions<any>): Chainable<any>
+      mount: typeof mount
     }
   }
 }
 
 Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
+  // Set up the options object
   options.global = options.global || {}
   options.global.components = options.global.components || {}
 
