@@ -319,6 +319,101 @@ beforeEach(() => {
   alt="Global hooks for tests"
 />
 
+#### Run Cypress global setup and teardown once per run
+
+A `before()` or `after()` hook in the support file runs once per spec file, not
+once per run, because Cypress loads the support file again for every spec. For
+setup and teardown that run once for the whole run, choose by what the work
+needs:
+
+- For Node.js code only, such as a database script or an API client, use
+  [`before:run`](/api/node-events/before-run-api) and
+  [`after:run`](/api/node-events/after-run-api), which run once at the start
+  and end of `cypress run`.
+- For Cypress commands, such as `cy.request()` or a custom command, in a
+  `cypress run` on one machine, count the specs in Node and gate the
+  support-file hooks, as shown below.
+- For a parallel run, or cleanup that has to happen even if Cypress stops early,
+  use CI steps before and after the Cypress jobs. In a
+  [parallel run](/cloud/features/smart-orchestration/parallelization), every
+  Node event fires on each machine, so the gated hooks run the setup on every
+  machine and usually never run the teardown.
+
+To gate the support-file hooks, track the run in `setupNodeEvents`, whose Node
+process stays alive for the whole run. Count the specs with `before:run` and
+[`after:spec`](/api/node-events/after-spec-api), and expose the state to the
+browser through [`cy.task()`](/api/commands/task):
+
+:::cypress-config-plugin-example
+
+```ts
+let setupDone = false
+let totalSpecs = 0
+let finishedSpecs = 0
+
+on('before:run', (details) => {
+  totalSpecs = details.specs?.length ?? 0
+})
+
+on('after:spec', () => {
+  finishedSpecs += 1
+})
+
+on('task', {
+  shouldRunSetup() {
+    return !setupDone
+  },
+  markSetupDone() {
+    setupDone = true
+    return null
+  },
+  isLastSpec() {
+    return finishedSpecs === totalSpecs - 1
+  },
+})
+```
+
+:::
+
+The support file asks those tasks whether to act. The relative URLs resolve
+against your [`baseUrl`](/app/references/configuration#e2e):
+
+```ts copyTsToJs title="cypress/support/e2e.ts"
+before(() => {
+  cy.task('shouldRunSetup').then((shouldRun) => {
+    if (shouldRun) {
+      cy.request('POST', '/api/test-users')
+      cy.task('markSetupDone')
+    }
+  })
+})
+
+after(() => {
+  cy.task('isLastSpec').then((isLast) => {
+    if (isLast) {
+      cy.request('DELETE', '/api/test-users')
+    }
+  })
+})
+```
+
+The setup runs in the first spec that runs its hooks. `markSetupDone` runs only
+after the setup request succeeds, so a failed setup runs again in the next
+spec; make the setup request safe to repeat. The teardown runs in the last
+spec, even when earlier tests fail, and a run filtered with `--spec` counts
+only the specs it runs.
+
+The teardown depends on the last spec running its `after()` hook, so it
+doesn't run when:
+
+- The last spec has no tests, fails to load, or crashes the browser.
+- The run stops before its last spec, such as a run cancelled by
+  [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation).
+- The specs run in `cypress open`. There, `before:run` and `after:spec` fire
+  only with the
+  [`experimentalInteractiveRunEvents`](/app/references/experiments#Configuration)
+  flag, and `details.specs` is undefined even with it.
+
 ## Cypress fixtures for repeatable test data
 
 Fixtures are external pieces of static data your tests can load on demand.
@@ -542,6 +637,11 @@ landed, read the path Cypress actually used:
 - [`cy.screenshot()`](/api/commands/screenshot) reports the saved location to
   its `onAfterScreenshot` callback, and you can pass an explicit `name` to
   control the filename.
+- A default `onAfterScreenshot` callback set with
+  [`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api) also runs
+  for the screenshots Cypress takes when a test fails, with `testFailure` set to
+  `true`. See
+  [Attach failure screenshots to a mochawesome report](/api/cypress-api/screenshot-api#Attach-failure-screenshots-to-a-mochawesome-report).
 - The [`after:screenshot`](/api/node-events/after-screenshot-api) and
   [`after:spec`](/api/node-events/after-spec-api) Node events hand you the
   resolved `path` (and video path) after each screenshot or spec finishes.
@@ -754,6 +854,71 @@ it.skip('uploads a new avatar', () => {
   cy.get('[data-testid="avatar"]').selectFile('cypress/fixtures/avatar.png')
 })
 ```
+
+#### Skip dependent Cypress tests after a failure
+
+Tests work best when each one runs on its own (see
+[Test Isolation](#Test-Isolation)). Some flows still get split across several
+tests that build on each other, such as a checkout where one test fills the cart
+and the next one opens it. When an early test in that chain fails, every test
+after it fails too, and the extra errors bury the one that matters.
+
+A pair of hooks stops the chain at the first failure. The `afterEach` hook
+records a failure, and the `beforeEach` hook calls Mocha's
+[`this.skip()`](https://mochajs.org/#inclusive-tests) for every test after it.
+Cypress reports the skipped tests as [pending](#Pending), and tests in other
+`describe` blocks still run:
+
+```javascript title="cypress/e2e/checkout.cy.js"
+describe('Checkout', { testIsolation: false }, () => {
+  let previousTestFailed = false
+
+  beforeEach(function () {
+    if (previousTestFailed) {
+      this.skip()
+    }
+  })
+
+  afterEach(function () {
+    const test = this.currentTest
+    const isLastAttempt = test.currentRetry() >= test.retries()
+
+    if (test.state === 'failed' && isLastAttempt) {
+      previousTestFailed = true
+    }
+  })
+
+  it('adds an item to the cart', () => {
+    cy.visit('/products')
+    cy.get('[data-testid="add-to-cart"]').first().click()
+    cy.get('[data-testid="cart-count"]').should('have.text', '1')
+  })
+
+  it('shows the item in the cart', () => {
+    cy.get('[data-testid="cart-link"]').click()
+    cy.get('[data-testid="cart-item"]').should('have.length', 1)
+  })
+})
+```
+
+Keep these details in mind:
+
+- The hooks use `function () {}` callbacks, not arrow functions, so `this` is
+  bound to the test context.
+- The `isLastAttempt` check matters when [test retries](/app/guides/test-retries)
+  are on. Without it, a failed first attempt marks the block as failed, and
+  Cypress skips the retry that would have passed. The experimental
+  `detect-flake-but-always-fail` strategy fails any test with a failed attempt.
+  When that test's final attempt passes, `this.currentTest.state` reads
+  `'passed'`, so the tests after it still run.
+- `testIsolation: false` keeps the page between tests in the block, which is
+  what lets the second test pick up where the first one left off.
+
+To stop every remaining test in the spec file instead of one block, call
+[`Cypress.stop()`](/api/cypress-api/stop) from the `afterEach` hook. To cancel
+a whole recorded run across machines after a set number of failures, use
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) in
+Cypress Cloud.
 
 ### Test Isolation
 
@@ -1051,6 +1216,38 @@ modern JS-based stack, you likely already have some form of hot module
 replacement watching your application code (HTML, CSS, JS, etc.) and reloading
 it in response to changes, so Cypress doesn't duplicate that work.
 
+#### Rerun specs when application files change
+
+Hot module replacement reloads your app, but it doesn't rerun your spec. To
+rerun a spec whenever a file outside the spec graph changes, such as your
+application code or a fixture, pair a file watcher with
+[`cypress tap run`](/app/tooling/cypress-tap#cypress-tap-run). The
+`cypress tap run` command starts or reruns a spec in a running
+`cypress open` session, so the watcher starts a fresh run each time a watched
+file changes.
+
+Start Cypress with `cypress open`, then select your testing type and a
+Chromium-based browser, since `cypress tap` drives Chromium-based browsers only.
+Then install a file watcher. This example uses
+[`chokidar-cli`](https://www.npmjs.com/package/chokidar-cli):
+
+<PackageManagerTabs install="chokidar-cli" dev />
+
+In a second terminal, from the same project directory, watch the files you care
+about and run `cypress tap run` with the spec to rerun on each change:
+
+<PackageManagerTabs
+  run={`chokidar "src/**/*" "cypress/fixtures/**/*" -c "cypress tap run cypress/e2e/login.cy.ts"`}
+/>
+
+Each time a file under `src/` or `cypress/fixtures/` changes, the open Cypress
+session reruns `cypress/e2e/login.cy.ts`. Saving a watched file during a run
+stops that run and starts the spec again from the first command. Any watcher
+that runs a shell command works the same way, including `nodemon`, `watchexec`,
+or a script in your build tool. To declare the watched files in your Cypress config instead, use
+the community plugin
+[`cypress-watch-and-reload`](https://github.com/bahmutov/cypress-watch-and-reload).
+
 #### Disable file watching
 
 Set the [`watchForFileChanges`](/app/references/configuration#Global)
@@ -1133,16 +1330,20 @@ can fix it.
 
 ### Pending
 
-A **pending** test is one that Cypress intentionally doesn't run because you
-told it not to. A test ends up pending in three ways:
+A **pending** test is one that Cypress intentionally doesn't run, either because
+you told it not to or because your test code skipped it at runtime. A test ends
+up pending in four ways:
 
 - **The test has no body**: a placeholder for a test you haven't written yet, such
   as `it('is not written yet')`.
 - **The test is explicitly skipped**: using `it.skip()` or the `xit()` alias.
 - **The test is excluded from the current browser**: a test configured with the
   `browser` option to run only in a browser you aren't currently using.
+- **The test skips itself at runtime**: a call to `this.skip()` in the test or
+  in a `beforeEach` hook, as in
+  [skipping dependent tests after a failure](#Skip-dependent-Cypress-tests-after-a-failure).
 
-Each of the four tests below is pending (the browser-specific one is pending
+The four tests below show the first three ways. Each one is pending (the browser-specific one is pending
 whenever the run isn't using Chrome):
 
 ```js
@@ -1174,7 +1375,7 @@ describe('TodoMVC', () => {
   alt="Cypress with four pending test"
 />
 
-In each case you've knowingly told Cypress to hold off, so it reports the test
+In each case your test code told Cypress to hold off, so it reports the test
 as pending rather than passed or failed.
 
 ### Skipped

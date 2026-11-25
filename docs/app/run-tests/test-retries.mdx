@@ -238,16 +238,21 @@ describe('User Login', () => {
 // screenshot filename from cy.screenshot() on 1st attempt
 'user-login-errors.png'
 // screenshot filename on 1st failed attempt
-'user-login-errors (failed).png'
+'User Login -- displays login errors (failed).png'
 // screenshot filename from cy.screenshot() on 2nd attempt
 'user-login-errors (attempt 2).png'
 // screenshot filename on 2nd failed attempt
-'user-login-errors (failed) (attempt 2).png'
+'User Login -- displays login errors (failed) (attempt 2).png'
 // screenshot filename from cy.screenshot() on 3rd attempt
 'user-login-errors (attempt 3).png'
 // screenshot filename on 3rd failed attempt
-'user-login-errors (failed) (attempt 3).png'
+'User Login -- displays login errors (failed) (attempt 3).png'
 ```
+
+A failure screenshot takes its name from the suite and test titles, not from
+the name passed to `cy.screenshot()`. When the failure happens in a hook, the
+name also includes the hook's title. See
+[Failure screenshot names when a hook fails](/api/commands/screenshot#Failure-screenshot-names-when-a-hook-fails).
 
 ## Videos
 

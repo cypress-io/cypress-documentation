@@ -37,11 +37,7 @@ on('after:spec', (spec, results) => {
 
 Details of the spec file, including the following properties:
 
-| Property   | Description                                                                                |
-| ---------- | ------------------------------------------------------------------------------------------ |
-| `name`     | The base name of the spec file (e.g. `login.cy.js`)                                        |
-| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login.cy.js`)   |
-| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login.cy.js`) |
+<SpecObjectProperties />
 
 <Icon name="angle-right" /> **results _(Object)_**
 
@@ -104,8 +100,9 @@ on('after:spec', (spec, results) => {
 ### Delete the recorded video if the spec passed
 
 You can delete the recorded video for a spec when certain conditions are met.
-Deleting the video skips the compression and uploading of the video when recording to
-Cypress Cloud.
+Cypress fires `after:spec` before processing the video, so deleting the video
+skips uploading it when recording to Cypress Cloud, and skips compressing it
+when `videoCompression` is enabled.
 
 The example below shows how to delete the recorded video for specs with no
 failing tests.
@@ -134,8 +131,9 @@ on(
 ### Delete the recorded video if no tests retried
 
 You can delete the recorded video for a spec when certain conditions are met.
-Deleting the video skips the compression and uploading of the video when recording to
-Cypress Cloud.
+Cypress fires `after:spec` before processing the video, so deleting the video
+skips uploading it when recording to Cypress Cloud, and skips compressing it
+when `videoCompression` is enabled.
 
 The example below shows how to delete the recorded video for specs that had no
 retry attempts when using Cypress [test retries](/app/guides/test-retries).

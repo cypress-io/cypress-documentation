@@ -49,12 +49,12 @@ An object describing the browser being launched, with the following properties:
 Options you can modify to control how Cypress launches the browser, with the
 following properties:
 
-| Property      | Type       | Description                                                                                                                                                                                                |
-| ------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `preferences` | `object`   | An object describing browser preferences. Differs between browsers. See [Change browser preferences](#Change-browser-preferences) for details.                                                             |
-| `args`        | `string[]` | An array of strings that Cypress passes as command-line args when it launches the browser. Has no effect on Electron. See [Modify browser launch arguments](#Modify-browser-launch-arguments) for details. |
-| `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions for Cypress to load before the browser starts. See [Add browser extensions](#Add-browser-extensions) for details.                           |
-| `env`         | `object`   | An object of system environment variables to pass to the launched browser. See [Configure browser environment](#Configure-browser-environment) for details.                                                |
+| Property      | Type       | Description                                                                                                                                                                                                                                            |
+| ------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `preferences` | `object`   | An object describing browser preferences. Differs between browsers. See [Change browser preferences](#Change-browser-preferences) for details.                                                                                                         |
+| `args`        | `string[]` | An array of strings that Cypress passes as command-line args when it launches the browser. Has no effect on Electron, and Cypress prints a warning when it's set. See [Modify browser launch arguments](#Modify-browser-launch-arguments) for details. |
+| `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions for Cypress to load before the browser starts. See [Add browser extensions](#Add-browser-extensions) for details.                                                                       |
+| `env`         | `object`   | An object of system environment variables to pass to the launched browser. Has no effect on Electron, and Cypress prints a warning when it's set. See [Configure browser environment](#Configure-browser-environment) for details.                     |
 
 ## Usage
 
@@ -69,6 +69,12 @@ Cypress launches the browser.
 
 The returned `launchOptions` object becomes the new launch options for the
 browser.
+
+Cypress fires `before:browser:launch` each time it launches a browser, not
+before each spec or test. In `cypress run`, each spec after the first opens in a
+new tab of the same browser, so the event fires once for the run. Electron is
+the exception: Cypress opens a new Electron browser window for each spec, and
+fires the event each time.
 
 ### Modify browser launch arguments
 
@@ -333,30 +339,38 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 
 ### Use fake video for webcam testing
 
-By default, Cypress passes the Chrome command line switch to enable a fake video
-for a media stream. The fake video is to better enable testing webcam functionality
-without having to have the necessary hardware to test.
+By default, Cypress launches Chromium-based browsers with the
+`--use-fake-device-for-media-stream` and `--use-fake-ui-for-media-stream`
+switches. The switches replace the camera with a fake video and accept the
+camera permission prompt, so webcam tests run without a camera.
 
 <DocsImage
   src="/img/api/browser-launch-fake-video.gif"
-  alt="Enable fake video for testing"
+  alt="A passing webcam test in the Cypress App, with the app under test showing the browser's green fake camera video"
 />
 
-You can however send your own video file for testing by passing a Chrome command
-line switch pointing to a video file.
+To use your own video, pass the `--use-file-for-fake-video-capture` switch with
+the path to a video file in Y4M (`.y4m`) or MJPEG (`.mjpeg`) format. Build the
+path from `config.projectRoot`, so the browser gets an absolute path on every
+operating system:
 
 :::cypress-config-plugin-example
 
 ```ts
-on('before:browser:launch', (browser = {}, launchOptions) => {
+import path from 'path'
+```
+
+```ts
+on('before:browser:launch', (browser, launchOptions) => {
   if (browser.family === 'chromium' && browser.name !== 'electron') {
-    // Mac/Linux
-    launchOptions.args.push(
-      '--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m'
+    const video = path.join(
+      config.projectRoot,
+      'cypress',
+      'fixtures',
+      'my-video.y4m'
     )
 
-    // Windows
-    // launchOptions.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
+    launchOptions.args.push(`--use-file-for-fake-video-capture=${video}`)
   }
 
   return launchOptions
@@ -364,6 +378,145 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 ```
 
 :::
+
+#### Change the fake webcam video between tests
+
+To give each test a different camera video, such as a valid and an expired QR
+code, overwrite the file the `--use-file-for-fake-video-capture` switch points
+to instead of changing the switch. The browser reads the switch once, when it
+starts, and Cypress fires `before:browser:launch` only when it launches a
+browser (see [Usage](#Usage)), so a new argument per test or per spec has no
+effect. The browser does read the video file again each time the app calls
+`getUserMedia()`.
+
+Point the switch at a placeholder file, and copy the video each test needs over
+the placeholder with [`cy.task()`](/api/commands/task):
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+import path from 'path'
+```
+
+```ts
+const fixtures = path.join(config.projectRoot, 'cypress', 'fixtures')
+// The file Chrome reads the fake camera video from. The task
+// overwrites it, so don't point it at one of your source videos.
+const fakeWebcam = path.join(fixtures, 'fake-webcam.y4m')
+
+// Start each run from the same video
+fs.copyFileSync(path.join(fixtures, 'webcam-default.y4m'), fakeWebcam)
+
+on('before:browser:launch', (browser, launchOptions) => {
+  if (browser.family === 'chromium' && browser.name !== 'electron') {
+    launchOptions.args.push(`--use-file-for-fake-video-capture=${fakeWebcam}`)
+  }
+
+  return launchOptions
+})
+
+on('task', {
+  setFakeWebcamVideo(fileName: string) {
+    fs.copyFileSync(path.join(fixtures, fileName), fakeWebcam)
+
+    return null
+  },
+})
+```
+
+:::
+
+The config expects your own videos in `cypress/fixtures`: `webcam-default.y4m`,
+which the config copies in at the start of each run, and the per-test videos,
+such as `valid-qr.y4m` and `expired-qr.y4m`. Every video must be in the
+placeholder's format, which the browser takes from the file extension. An MJPEG
+video copied over `fake-webcam.y4m` makes `getUserMedia()` fail with a
+`NotFoundError`, so for MJPEG videos, name the placeholder `fake-webcam.mjpeg`.
+Because the config recreates the placeholder on each run, you can add the
+placeholder to `.gitignore`.
+
+In the spec, swap the video before the app starts the camera:
+
+```js title="cypress/e2e/scan.cy.js"
+it('accepts a valid QR code', () => {
+  cy.task('setFakeWebcamVideo', 'valid-qr.y4m')
+  // The scan page starts the camera when it loads
+  cy.visit('/scan')
+  cy.contains('Code accepted')
+})
+
+it('rejects an expired QR code', () => {
+  cy.task('setFakeWebcamVideo', 'expired-qr.y4m')
+  cy.visit('/scan')
+  cy.contains('Code expired')
+})
+```
+
+Swap the video only while the camera is off. A stream that's already open can
+pick up the overwritten file partway through, or keep playing the previous
+video, depending on the browser version, the platform, and the video format.
+With [test isolation](/app/core-concepts/test-isolation) on, the default,
+Cypress clears the page before each test, which turns off the previous test's
+camera. With `testIsolation: false`, stop the camera with the app's own controls
+before the swap, and start the camera again after.
+
+The placeholder keeps the last video a test copied in, across tests and specs.
+Set the video in every test that uses the camera, or reset the video in a
+`beforeEach()` with `cy.task('setFakeWebcamVideo', 'webcam-default.y4m')`.
+
+:::caution
+
+The approach relies on how Chromium reads the fake capture file, not on a
+Cypress API. Firefox and WebKit don't support the switch, and a browser update
+can change the behavior. If the video stops changing between tests in your
+browser, [stub `getUserMedia()`](#Stub-getUserMedia-with-a-fixture-video)
+instead.
+
+:::
+
+#### Stub getUserMedia() with a fixture video
+
+Stubbing `navigator.mediaDevices.getUserMedia()` hands the app a stream the
+test controls, without the fake capture switches. Load the video with
+[`cy.fixture()`](/api/commands/fixture), play it in a `<video>` element the
+test creates, and return the element's `captureStream()`:
+
+```js title="cypress/e2e/scan.cy.js"
+it('accepts a valid QR code', () => {
+  cy.fixture('valid-qr.webm', null).then((videoFile) => {
+    cy.visit('/scan', {
+      onBeforeLoad(win) {
+        const player = win.document.createElement('video')
+        player.muted = true
+        player.loop = true
+        player.src = win.URL.createObjectURL(
+          new win.Blob([videoFile], { type: 'video/webm' })
+        )
+
+        cy.stub(win.navigator.mediaDevices, 'getUserMedia').callsFake(
+          async () => {
+            await player.play()
+
+            return player.captureStream()
+          }
+        )
+      },
+    })
+  })
+
+  cy.contains('Code accepted')
+})
+```
+
+Keep these details in mind:
+
+- Chromium-based browsers support `captureStream()` on a `<video>` element. Firefox names the method `mozCaptureStream()`.
+- TypeScript's DOM types don't declare `captureStream()` on video elements, so
+  a `.ts` spec needs a type assertion for the call.
+- To stream a still image, such as a single QR code, draw the image on a
+  `<canvas>` and return the canvas's `captureStream()`, which Chrome and
+  Firefox both support.
 
 ### Support unique file download mime types
 
@@ -396,6 +549,43 @@ on('before:browser:launch', (browser, options) => {
 [Check out our example recipe showing how to download and validate CSV and Excel files.](/app/references/recipes#Testing-the-DOM)
 
 :::
+
+### Download PDFs instead of opening them in Chrome
+
+Chrome, Chromium, and Edge include a built-in PDF viewer, in
+[headless mode](/app/references/launching-browsers#Headless-mode) as well as
+headed. When your app opens a PDF, for example with `window.open()` or a link
+with `target="_blank"`, the browser displays the PDF in the viewer and doesn't
+save it to the [`downloadsFolder`](/app/references/configuration#Downloads).
+Each `cypress run` also starts from a fresh browser profile, so a PDF setting
+you changed in the browser during `cypress open` doesn't carry over.
+
+To save PDFs to the `downloadsFolder` instead, set the
+`always_open_pdf_externally` preference:
+
+:::cypress-config-plugin-example
+
+```ts
+on('before:browser:launch', (browser, launchOptions) => {
+  if (browser.family === 'chromium' && browser.name !== 'electron') {
+    launchOptions.preferences.default.plugins = {
+      always_open_pdf_externally: true,
+    }
+  }
+
+  return launchOptions
+})
+```
+
+:::
+
+The preference also turns off the PDF viewer for PDFs that your app shows in an
+`<iframe>` or `<embed>`. The browser shows an "Open" button in their place
+instead of the rendered PDF.
+
+The preference applies to Chrome, Chromium, and Edge. Electron doesn't save
+these PDFs to the `downloadsFolder` either, so run specs that check a PDF
+download in one of those browsers.
 
 ### Set a Firefox flag
 

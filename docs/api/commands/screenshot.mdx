@@ -75,19 +75,19 @@ for more.
 
 Pass in an options object to change the default behavior of `.screenshot()`.
 
-| Option                       | Default                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| ---------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `blackout`                   | `[]`                                                        | Array of selectors. Cypress blacks out every element that matches each selector. Doesn't apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `capture`                    | `'fullPage'`                                                | Which part of the browser to capture: `viewport`, the visible part of the application under test; `fullPage`, the whole application under test from top to bottom; or `runner`, the entire browser window, including the Command Log. Cypress ignores `capture` for element screenshots and always uses `runner` for automatic failure screenshots. When the Runner UI is hidden, the default when [Test Replay](/cloud/features/test-replay) is enabled during `cypress run` and also with [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui), a `runner` capture shows only the application under test in the current viewport. A `runner` capture still ignores `blackout` and still scales the app. |
-| `clip`                       | `null`                                                      | Position and size, in pixels, to crop the final image to, in the shape `{ x: 0, y: 0, width: 100, height: 100 }`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `disableTimersAndAnimations` | `true`                                                      | When `true`, Cypress pauses JavaScript timers (such as `setTimeout` and `setInterval`) and CSS animations while it takes the screenshot.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `log`                        | `true`                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `onAfterScreenshot`          | `null`                                                      | A callback Cypress calls right after it takes the screenshot. The callback's first argument is a jQuery-wrapped element: the captured element for an element screenshot, or the document's root `<html>` element otherwise. The callback's second argument holds the screenshot's properties, such as the `path` Cypress saved it to and its `dimensions`.                                                                                                                                                                                                                                                                                                                                                                     |
-| `onBeforeScreenshot`         | `null`                                                      | A callback Cypress calls right before it takes the screenshot. The callback's argument is a jQuery-wrapped element: the captured element for an element screenshot, or the document's root `<html>` element otherwise.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `overwrite`                  | `false`                                                     | Whether to replace an existing screenshot with the same file name instead of saving a numbered copy.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `padding`                    | `null`                                                      | Padding to add around an element screenshot: a number, or an array of up to four numbers in [CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). Cypress ignores it for other screenshots.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `scale`                      | `false`                                                     | Whether to scale the application under test to fit the browser viewport. Always `true` for `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| `timeout`                    | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.screenshot()` to resolve before [timing out](#Timeouts).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Option                       | Default                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ---------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `blackout`                   | `[]`                                                        | Array of selectors. Cypress blacks out every element that matches each selector. Doesn't apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `capture`                    | `'fullPage'`                                                | Which part of the browser to capture: `viewport`, the visible part of the application under test; `fullPage`, the whole application under test from top to bottom; or `runner`, the entire browser window, including the Command Log. Cypress ignores `capture` for element screenshots and always uses `runner` for automatic failure screenshots. To capture an element's scrolled content, see [Scrollable elements in element screenshots](#Scrollable-elements-in-element-screenshots). When the Runner UI is hidden, the default when [Test Replay](/cloud/features/test-replay) is enabled during `cypress run` and also with [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui), a `runner` capture shows only the application under test in the current viewport. A `runner` capture still ignores `blackout` and still scales the app. |
+| `clip`                       | `null`                                                      | Position and size, in pixels, to crop the final image to, in the shape `{ x: 0, y: 0, width: 100, height: 100 }`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `disableTimersAndAnimations` | `true`                                                      | When `true`, Cypress pauses JavaScript timers (such as `setTimeout` and `setInterval`) and CSS animations while it takes the screenshot.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `log`                        | `true`                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `onAfterScreenshot`          | `null`                                                      | A callback Cypress calls right after it takes the screenshot. The callback's first argument is a jQuery-wrapped element: the captured element for an element screenshot, or the document's root `<html>` element otherwise. The callback's second argument holds the screenshot's properties, such as the `path` Cypress saved it to and its `dimensions`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `onBeforeScreenshot`         | `null`                                                      | A callback Cypress calls right before it takes the screenshot. The callback's argument is a jQuery-wrapped element: the captured element for an element screenshot, or the document's root `<html>` element otherwise.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `overwrite`                  | `false`                                                     | Whether to replace an existing screenshot with the same file name instead of saving a numbered copy.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `padding`                    | `null`                                                      | Padding to add around an element screenshot: a number, or an array of up to four numbers in [CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). Cypress ignores it for other screenshots.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `scale`                      | `false`                                                     | Whether to scale the application under test to fit the browser viewport. Always `true` for `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `timeout`                    | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.screenshot()` to resolve before [timing out](#Timeouts).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 For more details on these options and to set some as defaults across all uses of
 `.screenshot()`, see the
@@ -480,13 +480,14 @@ inside a folder for its spec file:
 the spec file's path, minus any parent folders that all spec files share.
 Cypress names each file by these rules:
 
-| Screenshot                                                        | File name                                                                                                |
-| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Default, with no name passed                                      | `{testName}.png`, from the suite and test titles, such as `users -- shows the list.png`                  |
-| Duplicate of an earlier screenshot                                | ` (1)`, ` (2)`, and so on appended, such as `{testName} (1).png` or `{name} (1).png`                     |
-| Failure screenshot                                                | `{testName} (failed).png`                                                                                |
-| Named                                                             | `{name}.png`, with a `/` in the name creating folders                                                    |
-| Taken during a [test retry](/app/guides/test-retries#Screenshots) | ` (attempt {n})` appended, such as `{testName} (attempt 2).png` or `{testName} (failed) (attempt 2).png` |
+| Screenshot                                                        | File name                                                                                                              |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Default, with no name passed                                      | `{testName}.png`, from the suite and test titles, such as `users -- shows the list.png`                                |
+| Duplicate of an earlier screenshot                                | ` (1)`, ` (2)`, and so on appended, such as `{testName} (1).png` or `{name} (1).png`                                   |
+| Failure screenshot from a hook                                    | `{testName} -- {hookTitle} (failed).png`, as described in [hook failures](#Failure-screenshot-names-when-a-hook-fails) |
+| Failure screenshot from a test                                    | `{testName} (failed).png`                                                                                              |
+| Named                                                             | `{name}.png`, with a `/` in the name creating folders                                                                  |
+| Taken during a [test retry](/app/guides/test-retries#Screenshots) | ` (attempt {n})` appended, such as `{testName} (attempt 2).png` or `{testName} (failed) (attempt 2).png`               |
 
 Cypress numbers duplicates, named or not, across several `cypress run`
 processes that share a project folder too, so one run never overwrites another
@@ -551,6 +552,72 @@ cypress/screenshots/
     ├── my flaky tests -- passes on retry (failed).png     ← attempt 1, automatic failure screenshot
     └── my flaky tests -- passes on retry (attempt 2).png  ← attempt 2, cy.screenshot()
 ```
+
+#### Failure screenshot names when a hook fails
+
+When a hook fails, the failure screenshot's name adds the hook's title after the
+test's title: `{testName} -- {hookTitle} (failed).png`. The hook title is the
+hook type, such as `before each hook`, followed by the hook function's name when
+the hook is a named function. Cypress removes the quotes and the colon that
+appear in the reporter's version of the title, so `"before each" hook: signIn`
+becomes `before each hook signIn`. An anonymous hook adds only the type, such as
+`before each hook`.
+
+The test in the name is the one the hook ran for:
+
+- `beforeEach()` and `afterEach()`: the current test
+- `before()`: the first test that runs in the hook's suite
+- `after()`: the last test that ran in the hook's suite
+
+The suite titles in the name come from the suites that contain the hook, not the
+test. When a hook in `describe('outer')` fails for a test inside a nested
+`describe('inner')`, the name leaves out `inner`, as in
+`outer -- nested test -- before each hook signIn (failed).png`.
+
+This spec has a named `beforeEach()` hook that fails on every attempt of a
+retried test, and a named `after()` hook that fails after the last test in its
+suite:
+
+```javascript title="cypress/e2e/users/account.cy.js"
+describe('profile', { retries: { runMode: 1 } }, () => {
+  beforeEach(function signIn() {
+    // fails: the sign-in form never renders
+    cy.get('[data-cy=sign-in-form]')
+  })
+
+  it('shows the user name', () => {})
+})
+
+describe('orders', () => {
+  it('lists orders', () => {})
+  it('cancels an order', () => {})
+
+  after(function deleteOrders() {
+    // fails: the server responds with a 500 error
+    cy.request('DELETE', '/api/orders')
+  })
+})
+```
+
+In `cypress run`, it saves three failure screenshots:
+
+```text
+cypress/screenshots/
+└── account.cy.js/
+    ├── orders -- cancels an order -- after all hook deleteOrders (failed).png
+    ├── profile -- shows the user name (failed).png
+    └── profile -- shows the user name -- before each hook signIn (failed) (attempt 2).png
+```
+
+The `(attempt {n})` suffix comes after `(failed)`, as it does for any retried
+test. A `beforeEach()` failure on an attempt that Cypress retries counts as a
+failure of the test itself, so that attempt's screenshot has no hook title. Only
+the screenshot from the final attempt names the hook. An `afterEach()` failure
+names the hook on every attempt.
+
+To rename screenshots as Cypress saves them, such as to match a report's file
+names, use the
+[`after:screenshot` event](/api/node-events/after-screenshot-api).
 
 :::info
 
@@ -711,6 +778,58 @@ cy.get('.sticky-header').invoke('css', 'visibility', '')
   src="/img/api/screenshot/element-screenshot-with-sticky-header-hidden.png"
   alt="The same post card, fully visible with its avatar, title, timestamp, and text"
 />
+
+### Scrollable elements in element screenshots
+
+An element screenshot captures the element's box as it appears on the page.
+When the element scrolls its own content, such as a split-pane panel or a modal
+body with `overflow: auto` or `overflow: scroll`, the image holds only the part
+currently scrolled into view. A 400px-tall panel with 2000px of content saves a
+400px-tall image. Cypress ignores the `capture` option for element screenshots,
+so `capture: 'fullPage'` doesn't change the result.
+
+To capture all of the content, let the element grow to its full height for the
+screenshot, then restore its styles. Set the element's `overflow` to `visible`
+and its `height` to `auto`, and remove any fixed height on a parent that holds
+the element to its old size. When the element is taller than the viewport,
+Cypress scrolls the page and joins the parts into one image. Setting a property
+to `''` removes the inline value, so the stylesheet's value applies again:
+
+```javascript
+cy.get('.split-pane').invoke('css', 'height', 'auto')
+cy.get('.left-panel').invoke('css', { overflow: 'visible', height: 'auto' })
+cy.get('.left-panel').screenshot('left-panel')
+cy.get('.left-panel').invoke('css', { overflow: '', height: '' })
+cy.get('.split-pane').invoke('css', 'height', '')
+```
+
+A `max-height` limits the element the same way, so reset it along with
+`overflow`. A `position: fixed` element stays in place while Cypress scrolls the
+page, so when the element or one of its ancestors is fixed, the image repeats
+the same part of the content. A modal often sits in a fixed, full-screen overlay
+that also scrolls its own content. Switch the overlay to `position: absolute`,
+and release its `overflow` and its bottom edge so the overlay grows with the
+modal body:
+
+```javascript
+cy.get('.modal').invoke('css', {
+  position: 'absolute',
+  overflow: 'visible',
+  bottom: 'auto',
+})
+cy.get('.modal-body').invoke('css', { overflow: 'visible', maxHeight: 'none' })
+cy.get('.modal-body').screenshot('modal-body')
+cy.get('.modal-body').invoke('css', { overflow: '', maxHeight: '' })
+cy.get('.modal').invoke('css', { position: '', overflow: '', bottom: '' })
+```
+
+The saved image has the full height even when parts of it repeat, so open the
+image to check the result instead of relying on its dimensions.
+
+If the page sets one of these properties inline already, read its value before
+the screenshot and set that value back afterward instead of `''`. To make the
+changes inside the screenshot command instead, use the
+[`onBeforeScreenshot` and `onAfterScreenshot` callbacks](#Change-the-page-only-for-the-screenshot-with-onBeforeScreenshot).
 
 ## Rules
 

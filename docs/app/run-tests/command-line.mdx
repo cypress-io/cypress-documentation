@@ -951,19 +951,13 @@ Each subcommand supports a `--help` or `-h` flag to view the options help conten
 
 Prints information about Cypress and the current environment such as:
 
-- A list of browsers Cypress detected on the machine.
-- Any environment variables that control
-  [proxy configuration](/app/references/proxy-configuration).
-- Any environment variables that start with the `CYPRESS` prefix (with sensitive
-  variables like
-  [record key](/cloud/account-management/projects#Record-key) masked for
-  security).
-- The location where Cypress stores run-time data.
-- The location where Cypress caches the binary.
-- Operating system information.
-- System memory including free space.
+- A list of browsers Cypress detected on the machine
+- The location where Cypress stores run-time data
+- The location where Cypress caches the binary
+- Operating system information
+- System memory, including free space
 
-```css
+```text
 cypress info
 Displaying Cypress info...
 
@@ -972,14 +966,14 @@ Detected 2 browsers installed:
 1. Chrome
   - Name: chrome
   - Channel: stable
-  - Version: 79.0.3945.130
+  - Version: 142.0.7444.176
   - Executable: /path/to/google-chrome
   - Profile: /user/profile/folder/for/google-chrome
 
 2. Firefox Nightly
   - Name: firefox
   - Channel: nightly
-  - Version: 74.0a1
+  - Version: 147.0a1
   - Executable: /path/to/firefox
 
 Note: to run these browsers, pass <name>:<channel> to the '--browser' field
@@ -990,16 +984,13 @@ Examples:
 
 Learn More: https://on.cypress.io/launching-browsers
 
-Proxy Settings: none detected
-Environment Variables: none detected
-
 Application Data: /path/to/app/data/cypress/cy/development
 Browser Profiles: /path/to/app/data/cypress/cy/development/browsers
 Binary Caches: /user/profile/path/.cache/Cypress
 
-Cypress Version: 4.1.0
-System Platform: darwin (19.2.0)
-System Memory: 17.2 GB free 670 MB
+Cypress Version: 16.3.0 (stable)
+System Platform: darwin (macOS - 26.1)
+System Memory: 34.4 GB free 8.2 GB
 ```
 
 **Tip:** set

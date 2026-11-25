@@ -33,17 +33,42 @@ You can [install Cypress](/app/get-started/install-cypress) on Mac,
 Linux, and Windows. For additional information, see our
 [System requirements](/app/get-started/install-cypress#System-requirements).
 
-### <Icon name="angle-right" /> Do you support native mobile apps?
+### <Icon name="angle-right" /> Can I run Cypress in Island or another undetected browser?
 
-Cypress will never be able to run on a native mobile app, but we can test some
+Cypress detects the browsers in the
+[Supported browsers](/app/references/launching-browsers#Supported-browsers)
+list automatically. Other Chromium-based browsers, such as the
+[Island](https://www.island.io/) enterprise browser, [Brave](https://brave.com/),
+or [Vivaldi](https://vivaldi.com/), don't appear in the browser list on their
+own, but you can add them yourself.
+
+First, try passing the browser's executable path to `--browser`:
+
+<CypressCommandTabs command="open --browser /path/to/Island" />
+
+Cypress reads the executable's version and launches the browser when the version
+matches a browser Cypress knows, such as Chrome or Chromium.
+[Launching by a path](/app/references/launching-browsers#Launching-by-a-path)
+describes the `--browser` path option in more detail.
+
+If Cypress reports `Unable to find browser with path`, add the browser to
+`config.browsers` in `setupNodeEvents` with `family: 'chromium'`. The browser
+then appears in the browser list in `cypress open`, and Cypress drives it like
+any other browser in the `chromium` family. The
+[Customize available browsers](/app/references/launching-browsers#Customize-available-browsers)
+section has a complete example.
+
+### <Icon name="angle-right" /> Does Cypress support native mobile apps?
+
+Cypress doesn't run on native mobile apps, but Cypress can test some
 functionality of mobile web browsers and test mobile applications that are
 developed in a browser, such as with
 [the Ionic framework](https://ionicframework.com/).
 
-Currently you can control the viewport with the
-[`cy.viewport()`](/api/commands/viewport) command to test responsive, mobile
-views in a website or web application. You can also mimic certain behaviors like
-swiping using [custom commands](/api/cypress-api/custom-commands).
+The [`cy.viewport()`](/api/commands/viewport) command controls the viewport
+size, so you can test responsive, mobile views in a website or web application.
+You can also mimic certain behaviors, such as swiping, with
+[custom commands](/api/cypress-api/custom-commands).
 
 You can read our blog post on
 [end-to-end testing mobile apps with Ionic and Cypress](https://www.cypress.io/blog/2020/07/08/end-to-end-testing-mobile-apps-with-ionic-and-cypress/?utm_source=docs.cypress.io&utm_medium=app-faq)
@@ -68,8 +93,9 @@ Cypress is not built on Jest or Jasmine. Cypress bundles
 structured with `describe()` and `it()`, and assertions use Chai's globally
 available `expect` and `assert` (or the [`.should()`](/api/commands/should)
 command). Jest-style `expect` matchers aren't available by default. You can
-still run Jest for unit tests in the same project; if you use TypeScript, see
-[Clashing types with Jest](/app/tooling/typescript-support#Clashing-types-with-Jest)
+still run Jest, Jasmine, or Vitest for unit tests in the same project; if you
+use TypeScript, see
+[Cypress types clashing with Jest, Jasmine, or Vitest](/app/tooling/typescript-support#Cypress-types-clashing-with-Jest-Jasmine-or-Vitest)
 to keep the two runners' global types from conflicting.
 
 ### <Icon name="angle-right" /> Can I use a different assertion library with Cypress?
@@ -396,7 +422,21 @@ If you're trying to assert on an input's value:
 cy.get('input').should('have.value', 'abc')
 ```
 
-If you'd like to massage or work with the text prior to an assertion:
+To match part of the value, use `include.value` or its alias `contain.value`.
+Both chainers work on a `<textarea>` too:
+
+```javascript
+// passes when the value includes 'ab'
+cy.get('input').should('include.value', 'ab')
+cy.get('textarea').should('contain.value', 'ab')
+```
+
+`.should('contain', 'ab')` checks the element's text content rather than its
+value, so it doesn't match what a user typed into an input. See
+[Value assertions](/app/references/assertions#Value) for more examples.
+
+To work with the value before you assert on it, such as matching it against a
+regular expression, yield it with `.invoke('val')`:
 
 ```javascript
 cy.get('input')
@@ -464,6 +504,20 @@ What you're asking about is conditional testing and control flow.
 Read our extensive
 [Conditional Testing Guide](/app/guides/conditional-testing) which
 explains this in detail.
+
+### <Icon name="angle-right" /> How do I verify that an element never appeared on the page?
+
+A `.should('not.exist')` assertion passes the first time Cypress finds no
+matching element, so the assertion can pass before the element renders or after
+the element renders and disappears. Increasing the `timeout` doesn't change
+that: extra time only gives the assertion more chances to pass.
+
+To check that an element never appeared, either wait for the work that would
+render the element before asserting, or register a `MutationObserver` in
+[`cy.visit()`](/api/commands/visit)'s `onBeforeLoad` option to record every
+element the app adds. See
+[Verify that an element never appears on the page](/app/references/assertions#Verify-that-an-element-never-appears-on-the-page)
+for both approaches.
 
 ### <Icon name="angle-right" /> Can I stop a test partway through and keep the steps that already ran?
 
@@ -1326,6 +1380,41 @@ recipe.
 In the end, it's up to you to know your implementation and to test enough to
 cover everything.
 
+### <Icon name="angle-right" /> Why does a PDF open in Chrome instead of downloading during `cypress run`?
+
+Chrome, Chromium, and Edge open PDFs in their built-in PDF viewer, headless or
+headed. When your app opens a PDF with `window.open()` or a link with
+`target="_blank"`, the browser shows the PDF in the viewer and doesn't save it
+to the [`downloadsFolder`](/app/references/configuration#Downloads).
+
+A PDF setting you change in the browser during `cypress open` doesn't help in
+`cypress run`, because each `cypress run` starts from a fresh browser profile.
+To save PDFs to the `downloadsFolder` instead, set the
+`always_open_pdf_externally` preference in the `before:browser:launch` event.
+See
+[Download PDFs instead of opening them in Chrome](/api/node-events/browser-launch-api#Download-PDFs-instead-of-opening-them-in-Chrome)
+for the configuration.
+
+### <Icon name="angle-right" /> How do I test a webcam feature with a different fake video in each test?
+
+Cypress launches Chromium-based browsers with a fake camera, so the app under
+test gets a video stream without a real camera. To play your own video, pass the
+`--use-file-for-fake-video-capture` switch in the `before:browser:launch` event.
+See
+[Use fake video for webcam testing](/api/node-events/browser-launch-api#Use-fake-video-for-webcam-testing).
+
+The browser reads the switch once, when it starts, so changing the switch per
+test has no effect. To give each test its own video, copy the video over the
+file the switch points to with [`cy.task()`](/api/commands/task) before the app
+starts the camera. See
+[Change the fake webcam video between tests](/api/node-events/browser-launch-api#Change-the-fake-webcam-video-between-tests)
+for the configuration and the behaviors to keep in mind.
+
+In a browser without the switch, such as Firefox, or when the video stops
+changing between tests, stub `getUserMedia()` to hand the app a stream from a
+fixture video. See
+[Stub getUserMedia() with a fixture video](/api/node-events/browser-launch-api#Stub-getUserMedia-with-a-fixture-video).
+
 ### <Icon name="angle-right" /> Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command.
@@ -1507,7 +1596,11 @@ accepts three values:
 - `false` _(default)_: strip the entire CSP header.
 - `true`: keep the header, removing only the directives that interfere with
   Cypress.
-- an array of directive names: keep the header and only the named directives.
+- an array of directive names: keep the header as `true` does, and also send
+  the named directives to the browser. The array accepts only the six
+  allowable directives, such as `default-src` and `script-src`.
+  Directives such as `img-src`, `font-src`, and `style-src` reach the browser
+  with either `true` or an array, so they never need listing.
 
 :::cypress-config-example
 
@@ -1771,6 +1864,86 @@ Cypress tests are slower than "normal" use. Still, you can access the native
 [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom)
 recipe.
 
+### <Icon name="angle-right" /> Can I take a heap snapshot or find memory leaks in a Cypress test?
+
+Yes, in Chromium-based browsers such as Chrome, Chrome for Testing, Chromium,
+and Edge. The
+[`@cypress/puppeteer`](/app/guides/multi-tab-testing#Set-up-cypresspuppeteer-in-your-project)
+plugin opens a
+[Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
+session on the Cypress tab at any test step. Headed Google Chrome 137 and later
+can't launch with the plugin registered, so read
+[Browser support for @cypress/puppeteer](/app/guides/multi-tab-testing#Browser-support-for-cypresspuppeteer)
+first. This handler forces garbage
+collection and yields the used heap size in bytes:
+
+:::cypress-config-plugin-example
+
+```ts
+import { setup } from '@cypress/puppeteer'
+```
+
+```ts
+setup({
+  on,
+  onMessage: {
+    async getHeapUsage(browser) {
+      // The Cypress tab's URL contains /__/, and your app runs in an iframe inside it
+      const pages = await browser.pages()
+      const cypressTab = pages.find((page) => page.url().includes('/__/'))
+
+      if (!cypressTab) throw new Error('Could not find the Cypress tab')
+
+      const session = await cypressTab.createCDPSession()
+
+      await session.send('HeapProfiler.collectGarbage')
+      const { usedSize } = await session.send('Runtime.getHeapUsage')
+      await session.detach()
+
+      return usedSize
+    },
+  },
+})
+```
+
+:::
+
+This test reads the heap size, repeats an action 20 times, and fails if the heap
+grew by 5 MB or more. The `browser`
+[test configuration](/app/references/configuration#Test-Configuration) skips
+the test outside the Chromium family:
+
+```js title="memory.cy.js"
+it(
+  'keeps heap growth small while the dialog opens and closes',
+  { browser: { family: 'chromium' } },
+  () => {
+    cy.visit('/')
+
+    cy.puppeteer('getHeapUsage').then((before) => {
+      Cypress._.times(20, () => {
+        cy.contains('button', 'Open dialog').click()
+        cy.contains('button', 'Close').click()
+      })
+
+      cy.puppeteer('getHeapUsage').then((after) => {
+        expect(after - before).to.be.lessThan(5_000_000)
+      })
+    })
+  }
+)
+```
+
+The heap size covers the whole Cypress tab, including the Cypress runner, so
+compare two readings in the same test rather than one absolute value. Set the
+threshold from `cypress run`, since `cypress open` keeps a DOM snapshot of each
+command for time travel, which adds to the heap.
+
+To find what is leaking, send
+[`HeapProfiler.takeHeapSnapshot`](https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler/#method-takeHeapSnapshot)
+on the same session, save the chunks it emits to a `.heapsnapshot` file, and
+load the file in the Memory panel of Chrome DevTools.
+
 ## Integrations with Other Tools/Frameworks/Libraries
 
 ### <Icon name="angle-right" /> Can I test React applications using Cypress?
@@ -1969,6 +2142,29 @@ information on doing so.
 If something appears missing from the spec list, make sure the files have the
 [proper extension and the `specPattern` is correctly defined](/app/component-testing/component-framework-configuration#Spec-Pattern-for-Component-Tests).
 
+### <Icon name="angle-right" /> Can I mount Storybook stories in Vue component tests?
+
+Yes. Storybook's portable stories API turns each story in a CSF file into a
+component, and `cy.mount()` mounts that component like any other, so Cypress
+needs no plugin. `composeStories()` from `@storybook/vue3` applies each story's
+args and decorators:
+
+```js title="src/components/Button.cy.js"
+import { composeStories } from '@storybook/vue3'
+import * as stories from './Button.stories'
+
+const { Primary } = composeStories(stories)
+
+it('renders the Primary story', () => {
+  cy.mount(Primary)
+  cy.get('button').should('have.text', 'Primary')
+})
+```
+
+To apply your `.storybook/preview` settings, compile `template` decorators, and
+spy on events from a decorated story, see
+[Mount Storybook stories in Vue component tests](/app/component-testing/vue/examples#Mount-Storybook-stories-in-Vue-component-tests).
+
 ### <Icon name="angle-right" /> How do I fix ESLint errors for things like using the global Cypress objects?
 
 If you experience ESLint errors in your code editor around Cypress globals (`cy`,
@@ -2004,34 +2200,20 @@ file in your **tsconfig.json** file. See our
 [TypeScript Configuration](/app/tooling/typescript-support#Using-an-External-Typings-File)
 guide for more info on doing this.
 
-### <Icon name="angle-right" /> How do I get TypeScript to recognize Cypress types and not Jest types?
+### <Icon name="angle-right" /> How do I get TypeScript to recognize Cypress types and not Jest, Jasmine, or Vitest types?
 
-For frameworks that include Jest out of the box (like Create React App), you
-might run into issues where the Cypress global types for TypeScript conflict
-with Jest global types (`describe`, `test`, `it`, etc..). In this case, other
-Cypress globals like `Cypress` and `cy` might not be working properly either.
+When a project runs unit tests with Jest, Jasmine, or Vitest globals alongside
+Cypress, the Cypress global types can conflict with the unit test runner's
+global types (`describe`, `it`, `expect`, and others). Unit tests then show
+errors such as `Property 'toBeTruthy' does not exist on type 'Assertion'`, or
+Cypress globals such as `cy` and `Cypress` stop resolving in your specs.
 
-We are currently investigating better ways to handle this, but for the time
-being, we recommend using a
-[triple slash references directive](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-types-)
-to instruct the TypeScript compiler to look at the Cypress global types in each
-of your affected spec files:
-
-```
-/// <reference types="cypress" />
-```
-
-**Alternatively, Relocate Component Specs**
-
-You can also group your Cypress and Jest tests inside separate folders (not
-co-located with components).
-
-You need to add a `tsconfig.json` to the folder and specify the types the
-files inside that folder should use.
-
-Don't forget to update your
-[`specPattern`](/app/references/configuration#component)
-to include the new file location.
+The types conflict when one `tsconfig.json` covers both your unit tests and your
+Cypress files. Give Cypress its own `tsconfig.json` and keep the Cypress types
+out of the configuration your unit tests use. See
+[Cypress types clashing with Jest, Jasmine, or Vitest](/app/tooling/typescript-support#Cypress-types-clashing-with-Jest-Jasmine-or-Vitest)
+for the steps, including the setup for Angular workspaces with component specs
+next to their components.
 
 ## cy.prompt
 

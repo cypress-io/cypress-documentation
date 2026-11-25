@@ -270,6 +270,11 @@ cy.visit('/', {
 cy.contains('Bienvenue')
 ```
 
+To send a header with every request in a test, including `cy.reload()`, link
+clicks, and form submissions, add it with a `cy.intercept()` route that sets
+`middleware: true` in a `beforeEach()`, as shown in
+[Add, modify, or delete a header to all outgoing requests](/api/commands/intercept#Add-modify-or-delete-a-header-to-all-outgoing-requests).
+
 #### Visit an error page with `failOnStatusCode: false`
 
 By default, `cy.visit()` fails when the server responds with a status code

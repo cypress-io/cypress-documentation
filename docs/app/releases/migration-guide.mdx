@@ -2317,8 +2317,8 @@ See [`.as()`](/api/commands/as) for more details.
 
 #### `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce`
 
-The `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce` APIs been
-removed. Use the [`cy.session()`](/api/commands/session) command to preserve
+The `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce` APIs have
+been removed. Use the [`cy.session()`](/api/commands/session) command to preserve
 cookies (and local and session storage) between tests.
 
 #### Cookie commands now use `hostname` instead of `superdomain`
@@ -2368,9 +2368,16 @@ describe('Dashboard', () => {
 
 #### `cy.server()`, `cy.route()`, and `Cypress.Server.defaults`
 
-The` cy.server()` and` cy.route()` commands and the `Cypress.server.defaults`
-API has been removed. Use the [`cy.intercept()`](/api/commands/intercept)
+The `cy.server()` and `cy.route()` commands and the `Cypress.Server.defaults`
+API have been removed. Use the [`cy.intercept()`](/api/commands/intercept)
 command instead.
+
+`cy.route()` watched `XMLHttpRequest` calls from inside the page, so it also saw
+requests that a service worker, such as Mock Service Worker (MSW), answered.
+`cy.intercept()` sees requests at the network layer, and a response that a
+service worker builds never reaches the network. See
+[`cy.intercept()` and service worker responses](/api/commands/intercept#cyintercept-and-service-worker-responses)
+for ways to test those requests.
 
 ```diff
   it('can encode + decode headers', () => {
@@ -2384,12 +2391,10 @@ command instead.
 -        'test': 'We’ll',
 -      }
 -    }).as('getApi')
-+   cy.intercept('GET', /api/, (req) => {
-+      req.on('response', (res) => {
-+        res.setDelay(500)
-+      })
-+      req.body.'test': 'We’ll'
-+    }).as('getApi')
++   cy.intercept('GET', /api/, {
++     body: { test: 'We’ll' },
++     delay: 500,
++   }).as('getApi')
     cy.visit('/index.html')
     cy.window().then((win) => {
       const xhr = new win.XMLHttpRequest
@@ -3197,9 +3202,12 @@ Default values
   ignore value).
 - `component.excludeSpecPattern` default value is
   `['/snapshots/*', '/image_snapshots/*']` updated from `*.hot-update.js`.
-- The `**/node_modules/**` pattern is automatically added to both
-  `e2e.specExcludePattern` and `component.specExcludePattern`, and does not need
-  to be specified (and can't be overridden).
+- Cypress skips `node_modules` when it looks for specs, so you don't need to add
+  `**/node_modules/**` to `e2e.excludeSpecPattern` or
+  `component.excludeSpecPattern`. To run specs from a package in
+  `node_modules`, name `node_modules` in `specPattern`, available since
+  [13.6.3](/app/references/changelog#13-6-3). See
+  [`excludeSpecPattern`](/app/references/configuration#excludeSpecPattern).
 
 <Badge type="danger">Before</Badge>
 
@@ -3545,7 +3553,7 @@ should be uninstalled in Cypress 10.
 ### Clashing Types with Jest
 
 You may want to consider configuring your app with a separate `tsconfig.json` to solve
-[clashing types with jest](/app/tooling/typescript-support#Clashing-types-with-Jest).
+[clashing types with Jest](/app/tooling/typescript-support#Cypress-types-clashing-with-Jest-Jasmine-or-Vitest).
 You need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
 root `tsconfig.json` file.
 

@@ -1,6 +1,6 @@
 ---
 title: 'Debugging in Cypress'
-description: 'Learn how to use debugger, .debug(), .pause(), and the Developer Tools to debug Cypress tests.'
+description: 'Debug Cypress tests with debugger, .debug(), .pause(), and the Developer Tools, and step through setupNodeEvents and cy.task() code with a Node debugger.'
 sidebar_label: Debugging
 sidebar_position: 10
 slug: /app/guides/debugging
@@ -270,6 +270,99 @@ Read more about [logging all events in the browser](/api/cypress-api/catalog-of-
   src="/img/api/catalog-of-events/console-log-events-debug.png"
   alt="console log events for debugging"
 />
+
+## Debug setupNodeEvents and tasks with a Node debugger
+
+A Node debugger pauses your
+[`setupNodeEvents`](/app/references/configuration#setupNodeEvents) function and
+[`cy.task()`](/api/commands/task) handlers at a breakpoint, so you inspect their
+variables and step through them line by line instead of adding `console.log()`
+calls and rerunning. That code, along with preprocessors and component testing
+dev servers, runs in a
+[separate config process](/api/node-events/overview#Execution-context) on your
+system's Node.js, out of reach of the browser's Developer Tools.
+
+Cypress passes the `NODE_OPTIONS` environment variable you start it with on to
+the config process, so set up the debugger through `NODE_OPTIONS`. The `--dev`,
+`--inspect`, and `--inspect-brk` command line flags are for developing Cypress
+itself, and an installed Cypress exits with an error when you pass them.
+
+### Debug the Cypress config process in VS Code
+
+VS Code's JavaScript Debug Terminal attaches to every Node process it starts,
+including the Cypress config process, with no extra configuration:
+
+1. Open the Command Palette and run **Debug: JavaScript Debug Terminal**.
+2. Start Cypress from that terminal:
+
+   <CypressCommandTabs command="open" />
+
+3. Set a breakpoint in your Cypress configuration file or a file it imports,
+   or add a `debugger` statement, as in this `cy.task()` handler.
+
+:::cypress-config-plugin-example
+
+```ts
+const users = [{ email: 'jane@cypress.io', name: 'Jane Lane' }]
+```
+
+```ts
+on('task', {
+  findUser(email) {
+    debugger // pauses here each time a test calls cy.task('findUser')
+    return users.find((user) => user.email === email) ?? null
+  },
+})
+```
+
+:::
+
+VS Code pauses at the breakpoint the next time Cypress runs that code. In
+`cypress open`, Cypress restarts the config process each time you save your
+configuration file or a file it imports. VS Code attaches to the new process
+too, so your breakpoints keep working without restarting Cypress.
+
+If you use VS Code's auto attach in a regular terminal instead, set it to
+**Always**. In the default Smart mode, VS Code skips the config process, because
+Cypress runs it from the Cypress cache, outside your workspace.
+
+### Attach WebStorm or Chrome DevTools with NODE_OPTIONS
+
+WebStorm, Chrome DevTools, and other debuggers that support the Node inspector
+protocol attach to a process that has its inspector open. Set `NODE_OPTIONS` to
+`--inspect=0` when you start Cypress:
+
+<CypressCommandTabs env="NODE_OPTIONS=--inspect=0" command="open" />
+
+On Windows, set the variable with your shell's syntax, such as
+`$env:NODE_OPTIONS="--inspect=0"` in PowerShell, then start Cypress.
+
+Every Node process that inherits the variable prints the address its inspector
+listens on. Your package manager, when it runs on Node.js, and the Cypress CLI
+print theirs first, and the config process prints the last one before Cypress
+loads your configuration:
+
+```text
+Debugger listening on ws://127.0.0.1:43857/3c346074-6f70-45b9-8ff8-c399a826dd21
+```
+
+Attach your debugger to that address. Keep these behaviors in mind:
+
+- `--inspect=0` gives each process a free port. A fixed port such as
+  `--inspect=9229` never reaches the config process: your package manager or
+  the Cypress CLI takes the port first, and the config process starts without
+  an inspector after printing
+  `Starting inspector on 127.0.0.1:9229 failed: address already in use`.
+- `--inspect-brk` in `NODE_OPTIONS` pauses the first Node process, your package
+  manager or the Cypress CLI, and Cypress doesn't start until you attach a
+  debugger to it and resume.
+- Cypress loads your configuration before you have time to attach by hand, so a
+  debugger you attach yourself stops in `cy.task()` handlers and other events
+  that run later, not in the first run of `setupNodeEvents`. To stop there too,
+  use the VS Code JavaScript Debug Terminal, which attaches as each process
+  starts.
+- Each restart of the config process in `cypress open` opens a new inspector on
+  a new port, so attach to the new address after you change your configuration.
 
 ## Troubleshooting Cypress
 

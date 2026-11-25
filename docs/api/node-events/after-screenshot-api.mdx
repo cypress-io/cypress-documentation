@@ -35,19 +35,21 @@ on('after:screenshot', (details) => {
 An object describing the screenshot that was taken, with the following
 properties:
 
-| Property     | Type      | Description                                                                                                                                                                 |
-| ------------ | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `size`       | `number`  | The size of the image file (in bytes).                                                                                                                                      |
-| `takenAt`    | `string`  | The date and time the screenshot was taken. ISO 8601 format in UTC (example: `'2020-03-09T07:30:37.686Z'`)                                                                  |
-| `duration`   | `number`  | Duration taking and saving the screenshot (in milliseconds).                                                                                                                |
-| `dimensions` | `object`  | The width and height of the image in pixels (example: `{ width: 100, height: 50 }`)                                                                                         |
-| `multipart`  | `boolean` | Whether the screenshot was stitched together from multiple screenshot images.                                                                                               |
-| `pixelRatio` | `number`  | _(Optional)_ The ratio of screenshot pixels to the browser's displayed pixels.                                                                                              |
-| `name`       | `string`  | _(Optional)_ The `fileName` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments)                                                                    |
-| `specName`   | `string`  | The name of the specfile where the screenshot was taken.                                                                                                                    |
-| `path`       | `string`  | The absolute path to the image.                                                                                                                                             |
-| `scaled`     | `boolean` | Whether the application under test was scaled to fit into the browser viewport. May be `scale` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments) |
-| `blackout`   | `array`   | The `blackout` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments)                                                                                 |
+| Property           | Type      | Description                                                                                                                                                                             |
+| ------------------ | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `blackout`         | `array`   | The `blackout` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments)                                                                                             |
+| `dimensions`       | `object`  | The width and height of the image in pixels (example: `{ width: 100, height: 50 }`)                                                                                                     |
+| `duration`         | `number`  | Duration taking and saving the screenshot (in milliseconds).                                                                                                                            |
+| `multipart`        | `boolean` | Whether the screenshot was stitched together from multiple screenshot images.                                                                                                           |
+| `name`             | `string`  | _(Optional)_ The `fileName` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments)                                                                                |
+| `path`             | `string`  | The absolute path to the image.                                                                                                                                                         |
+| `pixelRatio`       | `number`  | _(Optional)_ The ratio of screenshot pixels to the browser's displayed pixels.                                                                                                          |
+| `scaled`           | `boolean` | Whether the application under test was scaled to fit into the browser viewport. May be `scale` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments)             |
+| `size`             | `number`  | The size of the image file (in bytes).                                                                                                                                                  |
+| `specName`         | `string`  | The name of the specfile where the screenshot was taken.                                                                                                                                |
+| `takenAt`          | `string`  | The date and time the screenshot was taken. ISO 8601 format in UTC (example: `'2020-03-09T07:30:37.686Z'`)                                                                              |
+| `testAttemptIndex` | `number`  | The index of the test attempt that took the screenshot, starting at `0`. With [test retries](/app/guides/test-retries), each retry increases the index by one.                          |
+| `testFailure`      | `boolean` | _(Optional)_ `true` when Cypress took the screenshot automatically because a test failed. Cypress leaves it out for screenshots taken with [cy.screenshot()](/api/commands/screenshot). |
 
 ## Usage
 

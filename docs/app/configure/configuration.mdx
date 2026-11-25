@@ -142,7 +142,7 @@ default values.
 | `env`                                                 | `{}`                                  | Any secret values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                               |
 | `expose`                                              | `{}`                                  | Any public values to be set as [exposed variables](/api/cypress-api/expose).                                                                                                                                                                                                             |
 | `forceHttp1` <Badge type="caution">deprecated</Badge> | `false`                               | Whether Cypress routes all browser traffic through the legacy network path instead of using the native browser network in Chrome, Chromium, and Edge. [Read the `forceHttp1` notes on using this.](#forceHttp1)                                                                          |
-| `includeShadowDom`                                    | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                            |
+| `includeShadowDom`                                    | `false`                               | Whether to traverse open shadow roots and include the elements inside them in the results of query commands (e.g. [`cy.get()`](/api/commands/get)). The option never searches [closed or user-agent shadow roots](/api/commands/shadow#Closed-and-user-agent-shadow-roots-in-shadow).    |
 | `manageBrowserMemory`                                 | `true`                                | Whether Cypress monitors browser memory and collects garbage when usage crosses a threshold, so memory-heavy suites don't crash the browser. Chromium-based browsers only; no effect in Firefox or WebKit. See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory). |
 | `numTestsKeptInMemory`                                | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` defaults to `50` during `cypress open` and `0` during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
 | `port`                                                | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                   |
@@ -585,23 +585,23 @@ each set value to show where the value has been set via the following ways:
 
 ### blockHosts
 
-By passing a string or array of strings you can block requests made to one or
-more hosts.
+`blockHosts` accepts a string or an array of strings and blocks requests to
+every host that matches.
 
 To block a host:
 
 - ✅ Pass only the host
 - ✅ Use wildcard `*` patterns
-- ✅ Include the port other than `80` and `443`
-- ❌ Do **NOT** include protocol: `http://` or `https://`
+- ✅ Include the port when it isn't `80` or `443`
+- ❌ Don't include the protocol (`http://` or `https://`)
 
 :::info
 
-Not sure what a part of the URL a host is?
-See the [Node.js guide to URL strings and URL objects](https://nodejs.org/api/url.html#url_url_strings_and_url_objects).
+Not sure which part of a URL is the host? See the
+[Node.js guide to URL strings and URL objects](https://nodejs.org/api/url.html#url_url_strings_and_url_objects).
 
-When blocking a host, we use [`minimatch`](/api/utilities/minimatch) to check
-the host. When in doubt you can test whether something matches yourself.
+Cypress matches hosts with [`minimatch`](/api/utilities/minimatch), so you can
+test a pattern against a host yourself before adding it to `blockHosts`.
 
 :::
 
@@ -613,7 +613,7 @@ https://www.google-analytics.com/ga.js
 http://localhost:1234/some/user.json
 ```
 
-These URLs would match the following blocked hosts:
+These URLs match the following blocked hosts:
 
 ```text
 www.google-analytics.com
@@ -623,27 +623,54 @@ www.google-analytics.com
 localhost:1234
 ```
 
-Because `localhost:1234` uses a port other than `80` and `443` it **must be
-included**.
+Because `localhost:1234` uses a port other than `80` or `443`, the pattern has
+to include the port. `localhost` alone doesn't match it.
 
 :::caution
 
-<strong>Subdomains</strong>
+**URLs without a subdomain**
 
-Be cautious for URL's which have no subdomain.
-
-For instance given a URL: `https://google.com/search?q=cypress`
+A `*.` pattern needs a subdomain to match, so take care with URLs that have
+none. For example, given the URL `https://google.com/search?q=cypress`:
 
 - ✅ Matches `google.com`
 - ✅ Matches `*google.com`
-- ❌ Does NOT match `*.google.com`
+- ❌ Doesn't match `*.google.com`
 
 :::
 
-When Cypress blocks a request made to a matching host, it automatically
-sends a `503` status code. As a convenience it also sets a
-`x-cypress-matched-blocked-host` header so you can see which rule it
-matched.
+#### Allow only listed hosts with a negated `blockHosts` pattern
+
+A pattern that starts with `!` negates the match, so it matches every host
+_except_ the ones it names. To block all traffic except the hosts your tests
+need, pass a single negated pattern and list the allowed hosts inside braces:
+
+:::cypress-config-example
+
+```ts
+{
+  blockHosts: '!{localhost:3000,api.cypress.io}',
+}
+```
+
+:::
+
+With this configuration, Cypress allows requests to `localhost:3000` and
+`api.cypress.io` and blocks requests to every other host, such as
+`www.cypress.io`.
+
+Cypress checks a URL against each pattern in `blockHosts` separately and blocks
+the request as soon as one pattern matches. A negated pattern can't carve an
+exception out of another pattern, so keep the whole allowlist in one pattern:
+
+- ❌ `['*', '!localhost:3000']` blocks `localhost:3000`, because `*` matches it
+- ❌ `['!localhost:3000', '!api.cypress.io']` blocks both hosts, because each
+  negated pattern matches the other host
+- ✅ `'!{localhost:3000,api.cypress.io}'` blocks every host except those two
+
+Cypress responds to a blocked request with a `503` status code and sets the
+`x-cypress-matched-blocked-host` header to the pattern that matched, so you can
+see which rule blocked it.
 
 <DocsImage
   src="/img/app/references/blocked-host.png"
@@ -748,9 +775,53 @@ Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We
 suggest using [https://globster.xyz](https://globster.xyz) to test what files
 would match.
 
-Cypress automatically adds the `**/node_modules/**` pattern to `excludeSpecPattern`,
-and you don't need to specify it (and can't override it). See [`e2e`](#e2e)
-or [`component`](#component) testing-specific options.
+Cypress skips files inside `node_modules` when it looks for specs, so you don't
+need to add `**/node_modules/**` to `excludeSpecPattern`. Cypress searches
+`node_modules` for specs only when one of the following is true:
+
+- A pattern in the configured `specPattern` contains `node_modules`. A
+  [`--spec`](/app/references/command-line#cypress-run-spec-lt-spec-gt) value
+  that points into `node_modules` isn't enough on its own, because `--spec` only
+  narrows the specs that `specPattern` already matches.
+- The project itself is inside a `node_modules` folder.
+
+`excludeSpecPattern` still filters the specs Cypress finds in `node_modules`.
+
+Cypress finds a support file inside `node_modules` when the `supportFile` path
+contains `node_modules` or the project is inside a `node_modules` folder.
+`excludeSpecPattern` never filters the support file.
+
+For example, to run specs shipped in a package installed in your project:
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    specPattern: 'node_modules/@your-org/e2e-tests/e2e/**/*.cy.js',
+    supportFile: 'node_modules/@your-org/e2e-tests/support/e2e.js',
+  },
+}
+```
+
+:::
+
+While `cypress open` is running, Cypress doesn't watch `node_modules` for
+changes. A spec added, removed, or renamed in `node_modules`, such as by
+reinstalling the package, shows up in the spec list after you restart Cypress.
+
+:::caution
+
+The default end-to-end [preprocessor](/api/node-events/preprocessors-api)
+doesn't compile TypeScript or run Babel on any file whose path contains
+`node_modules`. A TypeScript or JSX file fails to compile in either case: a spec
+or support file shipped in a package, or any file in a project inside a
+`node_modules` folder. Publish the package's specs and support file as plain
+JavaScript, or configure your own preprocessor to compile them.
+
+:::
+
+See [`e2e`](#e2e) or [`component`](#component) testing-specific options.
 
 ### forceHttp1
 
@@ -1154,6 +1225,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 | [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                                                                 |
 | [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                                                       |
 | [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                                                  |
+| [13.6.3](/app/references/changelog#13-6-3)   | Searched `node_modules` for specs and the support file when `specPattern`, `supportFile`, or the project path contains `node_modules`.                                          |
 | [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`.                                   |
 | [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                                                   |
 | [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                                                           |

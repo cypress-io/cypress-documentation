@@ -111,8 +111,9 @@ an issue you have by clearing this app data.
 1. Open Cypress via `cypress open`
 2. Go to `Developer Tools` -> `View App Data`
 3. `View App Data` takes you to the directory in your file system where your App Data
-   is stored. If you cannot open Cypress, search your file system for a
-   directory named `cy` whose content should look something like this:
+   is stored. If you cannot open Cypress, open the `cy` folder inside the
+   [App Data folder for your operating system](/app/references/advanced-installation#Cypress-App-Data-location-on-each-operating-system).
+   The `cy` folder's content should look something like this:
 
 ```text
 📂 production
@@ -521,6 +522,18 @@ the end of the path:
 
 ```shell
 cypress open --browser C:/User/Application/browser.exe:chrome
+```
+
+For a portable browser, pass the path to the browser's own executable, not to
+the portable app's launcher. For example, `FirefoxPortable.exe` from
+PortableApps.com is a launcher that starts Firefox for you. On Windows, Cypress
+reads the browser version from the file you pass to `--browser`, so pointing at
+the launcher reports the launcher's version in an error such as
+`Cypress does not support running Custom Firefox version 2`. Point `--browser`
+at the `firefox.exe` inside the Firefox Portable folder instead:
+
+```shell
+cypress open --browser C:/path/to/FirefoxPortable/App/Firefox64/firefox.exe
 ```
 
 ### Cypress failed to make a connection to the Chrome DevTools Protocol
