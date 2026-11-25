@@ -234,6 +234,11 @@ Keep these behaviors in mind:
 - With [test retries](/app/guides/test-retries), Cypress takes a screenshot and
   emits `test:after:run` for each failed attempt, so each attempt gets its own
   screenshot.
+- `Cypress.Screenshot.defaults()` keeps one `onAfterScreenshot` callback, so
+  each call that passes `onAfterScreenshot` replaces the callback set before
+  it. If your support file already sets `onAfterScreenshot`, such as for
+  [hiding a clock before each screenshot](#Change-the-DOM-using-onBeforeScreenshot-and-onAfterScreenshot),
+  combine the two into one callback.
 
 ## Notes
 
