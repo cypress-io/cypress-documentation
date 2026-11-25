@@ -150,13 +150,15 @@ differ between installation and running tests:
 
 | Phase                          | Proxy resolution order (first match wins)                                     | Custom CA sources                         |
 | ------------------------------ | ----------------------------------------------------------------------------- | ----------------------------------------- |
-| Installation (binary download) | `HTTP_PROXY` / `HTTPS_PROXY`                                                  | npm `cafile`, `ca`                        |
+| Installation (binary download) | `HTTPS_PROXY` → npm `https-proxy` → npm `proxy` → `HTTP_PROXY`                | npm `cafile`, `ca`                        |
 | Running tests                  | `HTTP_PROXY` / `HTTPS_PROXY` → npm `proxy` / `https-proxy` → Windows registry | npm `cafile`, `ca`, `NODE_EXTRA_CA_CERTS` |
 
 Two practical takeaways:
 
-- **Environment variables always win.** Setting `HTTP_PROXY` / `HTTPS_PROXY`
-  explicitly overrides every other source.
+- **`HTTPS_PROXY` always wins.** When running tests, `HTTP_PROXY` and
+  `HTTPS_PROXY` both override npm config and the Windows registry. During
+  installation, npm's `proxy` setting overrides `HTTP_PROXY`, so set
+  `HTTPS_PROXY` when your environment variable needs to win there too.
 - **Cypress only uses the Windows registry and `NODE_EXTRA_CA_CERTS` when running
   tests**, never during installation. If your binary download is blocked or
   TLS-intercepted, you must rely on environment variables and npm's
@@ -204,10 +206,10 @@ bypass the proxy for specific domains.
 
 To bypass the proxy for certain hosts, set the `NO_PROXY` environment variable
 to the hostnames Cypress should reach directly, such as
-`NO_PROXY=example.internal,.example.internal`. Cypress matches `NO_PROXY`
-entries the same way when it downloads the binary and when it runs your tests.
-During the binary download, a host that matches `NO_PROXY` still goes through
-npm's `https-proxy` or `proxy` setting when one is configured.
+`NO_PROXY=example.internal,.example.internal`. The rules below describe how
+Cypress matches entries when it runs your tests. The binary download follows
+slightly different rules, covered in
+[`NO_PROXY` during the Cypress binary download](#NO_PROXY-during-the-Cypress-binary-download).
 
 #### How Cypress matches `NO_PROXY` entries to hostnames
 
@@ -253,6 +255,22 @@ export NO_PROXY=example.internal,.example.internal
 ```
 
 :::
+
+#### `NO_PROXY` during the Cypress binary download
+
+When `npm install cypress` or `cypress install` downloads the binary, the
+result depends on which proxy settings are present:
+
+- With `HTTPS_PROXY` set, Cypress matches entries as described above, except
+  that an entry starting with `*.` doesn't bypass the proxy.
+- With only `HTTP_PROXY` set, a bare entry also matches its subdomains, as in
+  curl, and an entry starting with `*.` doesn't match anything.
+- A host that matches `NO_PROXY` still goes through npm's `https-proxy` or
+  `proxy` setting when one is configured.
+
+To get the same result during installation and test runs, set both
+`HTTP_PROXY` and `HTTPS_PROXY`, and write subdomain entries with a leading `.`
+rather than `*.`, as in `NO_PROXY=example.internal,.example.internal`.
 
 #### Loopback addresses Cypress adds to `NO_PROXY`
 
@@ -317,7 +335,7 @@ Setting `NODE_EXTRA_CA_CERTS` alone does not help at install time.
 
 ## View proxy settings in Cypress
 
-Once configured, you can confirm which proxy Cypress is actually using.
+After you set up a proxy, you can confirm which proxy Cypress is using.
 
 From the Cypress app, open your project with `cypress open`, click **Settings**
 in the sidebar, then expand **Device settings**. The **Proxy settings** section
