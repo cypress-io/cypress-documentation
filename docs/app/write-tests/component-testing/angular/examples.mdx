@@ -159,21 +159,13 @@ it('clicking + fires a change event with the incremented value', () => {
 
 ## Get Angular services from dependency injection
 
-Some of what a component does lands in a service rather than in its template. A
-component test reaches that service through Angular's dependency injection to
-confirm what a service, or a fake in its place, recorded after a click, answer
-requests through `HttpTestingController`, or dispatch actions to a state store.
-
-`cy.mount()` yields the `fixture` and the `component`, and Cypress has no
-built-in command for injection. A test calls `TestBed.inject()` instead:
-`cypress/angular` mounts components with Angular's own `TestBed` from
-`@angular/core/testing`, so the `TestBed` a spec imports is the one that
-configured the mounted component, and `TestBed.inject()` returns providers from
-that test module.
-
-Call `TestBed.inject()` inside `.then()` after `cy.mount()`. The `CartService`
-below keeps the cart in a signal, and `ProductComponent` adds to the cart
-without displaying it:
+Some of what a component does lands in a service rather than its template, such
+as a cart, an HTTP request, or a store. `cypress/angular` mounts components with
+Angular's own `TestBed` from `@angular/core/testing`, so a test reads any
+provider of the mounted component's test module with `TestBed.inject()`. Call
+`TestBed.inject()` inside `.then()` after `cy.mount()`. The `CartService` below
+keeps the cart in a signal, and `ProductComponent` adds to the cart without
+displaying it:
 
 ```ts title="src/app/cart.service.ts"
 import { Injectable, signal } from '@angular/core'
@@ -227,20 +219,16 @@ it('adds the product to the cart', () => {
 ```
 
 [`.invoke()`](/api/commands/invoke) calls `getItems()` again each time
-`.should()` retries, so the assertion waits for the cart to update.
-
-`TestBed.inject()` returns whatever the test module provides for a token. When
-the test passes a fake in `providers`, such as
+`.should()` retries, so the assertion waits for the cart to update. When the
+test passes a fake in `providers`, such as
 `{ provide: CartService, useValue: cartFake }`, `TestBed.inject(CartService)`
 returns `cartFake`.
 
 ### Call `TestBed.inject()` inside the command chain
 
-`cy.mount()` queues a command, and Cypress configures `TestBed` for the
-component when that command runs, not when the test function calls
-`cy.mount()`. A `TestBed.inject()` call at the top level of the test runs
-before `cy.mount()` configures the test module, so Angular creates an empty test
-module to answer the call, and the mount fails:
+`cy.mount()` queues a command, and Cypress configures `TestBed` when that
+command runs. A `TestBed.inject()` call at the top level of the test runs first,
+so Angular creates an empty test module to answer the call, and the mount fails:
 
 ```ts title="src/app/product.component.cy.ts"
 import { TestBed } from '@angular/core/testing'
@@ -259,41 +247,18 @@ it('adds the product to the cart', () => {
 Error: Cannot configure the test module when the test module has already been instantiated. Make sure you are not using `inject` before `TestBed.configureTestingModule`.
 ```
 
-Keep `TestBed.inject()` in a `.then()` callback, or in another command, that
-comes after `cy.mount()`. Cypress also resets `TestBed` after each test and when
-a test calls `cy.mount()` again, so inject the service again after each mount
-rather than keeping a reference to the old instance.
+Cypress also resets `TestBed` after each test and on each new `cy.mount()`, so
+inject the service again after every mount rather than reusing an old instance.
 
 ### Get services from an Angular component's own injector
 
-`TestBed.inject()` reads from the test module's injector. When a component lists
-a service in its own `providers` array, Angular creates a separate instance for
-that component. `TestBed.inject()` returns the module's instance instead, such
-as the root instance that `providedIn: 'root'` creates for `CartService`. A
-service that only the component provides isn't in the test module at all, so
-`TestBed.inject()` throws `NG0201: No provider found`. Get the component's
-instance from the injector on the `fixture` that `cy.mount()` yields. This
-version of `ProductComponent` provides its own `CartService`:
-
-```ts title="src/app/product.component.ts"
-import { Component, inject } from '@angular/core'
-import { CartService } from './cart.service'
-
-@Component({
-  selector: 'app-product',
-  template: `<button data-cy="buy" (click)="buy()">Buy</button>`,
-  providers: [CartService],
-})
-export class ProductComponent {
-  private readonly cart = inject(CartService)
-
-  buy() {
-    this.cart.add('Cypress T-shirt')
-  }
-}
-```
-
-The test aliases the component's cart, then checks it after the click:
+When a component lists a service in its own `providers` array, such as
+`providers: [CartService]` in the `@Component()` decorator of
+`ProductComponent`, Angular gives the component a separate instance.
+`TestBed.inject()` returns the module's instance instead, or throws
+`NG0201: No provider found` when only the component provides the service. Read
+the component's instance from the injector on the `fixture` that `cy.mount()`
+yields:
 
 ```ts title="src/app/product.component.cy.ts"
 import { CartService } from './cart.service'
@@ -369,10 +334,9 @@ it('lists the users the API returns', () => {
 ```
 
 To stub the request at the network layer instead, leave out
-`provideHttpClientTesting()` and stub `/api/users` with
-[`cy.intercept()`](/api/commands/intercept). Call `cy.intercept()` before
-`cy.mount()`, since `UserListComponent` sends the request as soon as Angular
-creates the component.
+`provideHttpClientTesting()` and call [`cy.intercept()`](/api/commands/intercept)
+before `cy.mount()`, since `UserListComponent` sends the request as soon as
+Angular creates the component.
 
 ### Add a custom `cy.inject()` command for Angular
 
@@ -422,13 +386,9 @@ Cypress.Commands.add('inject', (token) =>
 </TabItem>
 </Tabs>
 
-The command yields the service through [`cy.wrap()`](/api/commands/wrap).
-`{ log: false }` hides that inner `wrap`, so `cy.inject()` adds no entry of its
-own to the Command Log, while the `.invoke()` and assertion after it still
-appear. To show an `inject` entry, call
-[`Cypress.log()`](/api/cypress-api/cypress-log) inside the command. Because
-`cy.inject()` is a Cypress command, Cypress runs `TestBed.inject()` in order
-after the commands before it, including `cy.mount()`. So `cy.inject()` works at
+`{ log: false }` hides the inner [`cy.wrap()`](/api/commands/wrap), so
+`cy.inject()` adds no Command Log entry of its own. Cypress runs `cy.inject()`
+in order after `cy.mount()`, like any other command, so `cy.inject()` works at
 the top level of the test:
 
 ```ts title="src/app/product.component.cy.ts"
@@ -444,10 +404,6 @@ it('adds the product to the cart', () => {
     .should('deep.equal', ['Cypress T-shirt'])
 })
 ```
-
-`cy.inject()` reads from `TestBed`, the same as `TestBed.inject()`. For a
-service in a component's own `providers`, use the fixture's injector as shown in
-[Get services from an Angular component's own injector](#Get-services-from-an-Angular-components-own-injector).
 
 ## Working with Legacy @Input() Decorators
 
