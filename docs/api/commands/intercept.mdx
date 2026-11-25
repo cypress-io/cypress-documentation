@@ -2094,7 +2094,7 @@ When a route doesn't match, check these:
 - A service worker didn't answer the request. A response that a service
   worker, such as Mock Service Worker (MSW), builds itself never reaches the
   network. See
-  [`cy.intercept()` and service workers](#cyintercept-and-service-workers).
+  [`cy.intercept()` and service worker responses](#cyintercept-and-service-worker-responses).
 - Your app sent the request. `cy.intercept()` doesn't see requests made by
   [`cy.request()`](/api/commands/request).
 
@@ -2105,7 +2105,7 @@ confusion when trying to intercept a request that the browser has already cached
 the browser serves a request from its cache, the request never hits the
 network layer, and `cy.intercept()` never fires. A response that a service
 worker serves from Cache Storage never reaches the network either. See
-[`cy.intercept()` and service workers](#cyintercept-and-service-workers).
+[`cy.intercept()` and service worker responses](#cyintercept-and-service-worker-responses).
 
 To see if this is affecting your app, open the **Network** tab in Chrome
 DevTools and check the **Size** column. A request served from the cache shows
@@ -2161,7 +2161,7 @@ are some workarounds:
   })
   ```
 
-## `cy.intercept()` and service workers
+## `cy.intercept()` and service worker responses
 
 `cy.intercept()` sees a request when the request leaves the browser for the
 network. A
@@ -2174,8 +2174,8 @@ The page still receives the worker's response.
 
 Mock Service Worker (MSW) works this way in the browser: for each request a
 handler mocks, the MSW worker builds the `Response` itself. Teams moving from
-`cy.route()` to `cy.intercept()` often meet this behavior first, since
-`cy.route()` watched XHR requests from inside the page.
+`cy.route()` to `cy.intercept()` often notice this behavior first, since
+`cy.route()` watched `XMLHttpRequest` calls from inside the page.
 
 A worker that passes a request on with `fetch(event.request)` sends the request
 to the network, where `cy.intercept()` matches and stubs it like any other
@@ -2203,7 +2203,7 @@ To test requests that a service worker answers, use one of these approaches:
 
   ```js title="src/main.js"
   async function enableMocking() {
-    // Cypress runs stub the API with cy.intercept() instead
+    // under Cypress, the tests stub the API with cy.intercept() instead
     if (window.Cypress) {
       return
     }

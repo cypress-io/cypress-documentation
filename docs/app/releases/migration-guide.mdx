@@ -2372,11 +2372,11 @@ The `cy.server()` and `cy.route()` commands and the `Cypress.Server.defaults`
 API have been removed. Use the [`cy.intercept()`](/api/commands/intercept)
 command instead.
 
-`cy.route()` watched XHR requests from inside the page, so it also saw requests
-that a service worker, such as Mock Service Worker (MSW), answered.
+`cy.route()` watched `XMLHttpRequest` calls from inside the page, so it also saw
+requests that a service worker, such as Mock Service Worker (MSW), answered.
 `cy.intercept()` sees requests at the network layer, and a response that a
 service worker builds never reaches the network. See
-[`cy.intercept()` and service workers](/api/commands/intercept#cyintercept-and-service-workers)
+[`cy.intercept()` and service worker responses](/api/commands/intercept#cyintercept-and-service-worker-responses)
 for ways to test those requests.
 
 ```diff
