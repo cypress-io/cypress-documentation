@@ -398,12 +398,31 @@ translated text. Extract the app's messages as JSON to get those IDs:
 
 <PackageManagerTabs run="ng extract-i18n --format json --output-path src/locale" />
 
-`ng extract-i18n` builds the app first, and that build type-checks every file
-`tsconfig.app.json` includes. When component specs sit next to their components
-in `src/`, the build fails with `Cannot find name 'cy'`. Excluding the specs in
-`tsconfig.app.json` breaks component tests, since Cypress builds them from that
-file too. Instead, give the extraction its own tsconfig that leaves out the
-specs:
+The command writes the source text to `src/locale/messages.json`. Copy that file
+for each language and translate the values:
+
+```json title="src/locale/messages.pt.json"
+{
+  "locale": "pt",
+  "translations": {
+    "2470120160871425761": "Bem-vindo à loja",
+    "7488886800994603769": "Itens no seu carrinho: {$count}"
+  }
+}
+```
+
+`ng extract-i18n` writes XLIFF (`.xlf`) by default, and Cypress doesn't read
+XLIFF files in component tests. Convert XLIFF translations to JSON, or parse
+them into an object of message IDs and translated text yourself, before passing
+them to `loadTranslations()`.
+
+When component specs sit next to their components in `src/`, `ng extract-i18n`
+fails with `Cannot find name 'cy'`. The command builds the app first, and that
+build type-checks every file `tsconfig.app.json` includes. Excluding the specs
+in `tsconfig.app.json` breaks component tests, since Cypress builds them from
+that file too. Instead, give the extraction its own tsconfig that leaves out the
+specs. `exclude` replaces the list in `tsconfig.app.json` rather than adding to
+it, so repeat any entries `tsconfig.app.json` already has:
 
 ```json title="tsconfig.extract.json"
 {
@@ -412,8 +431,8 @@ specs:
 }
 ```
 
-Add a build configuration that uses it, replacing `my-app` with the project
-name in `angular.json`:
+Add a build configuration that uses the new tsconfig, replacing `my-app` with
+the project name in `angular.json`:
 
 ```json title="angular.json"
 {
@@ -436,24 +455,6 @@ name in `angular.json`:
 Then point the extraction at that configuration:
 
 <PackageManagerTabs run="ng extract-i18n --format json --output-path src/locale --build-target my-app:build:extract" />
-
-The command writes the source text to `src/locale/messages.json`. Copy that file
-for each language and translate the values:
-
-```json title="src/locale/messages.pt.json"
-{
-  "locale": "pt",
-  "translations": {
-    "2470120160871425761": "Bem-vindo à loja",
-    "7488886800994603769": "Itens no seu carrinho: {$count}"
-  }
-}
-```
-
-Angular writes XLIFF (`.xlf`) by default, and Cypress doesn't read XLIFF files
-in component tests. Convert XLIFF translations to JSON, or parse them into an
-object of message IDs and translated text yourself, before passing them to
-`loadTranslations()`.
 
 ### Assert translated text in Angular component tests
 
