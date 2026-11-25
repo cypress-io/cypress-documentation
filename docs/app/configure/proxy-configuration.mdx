@@ -79,32 +79,36 @@ $env:HTTP_PROXY = "http://my-company-proxy.com"
   </TabItem>
 </OsTabs>
 
-You can also set `NO_PROXY` to bypass the proxy for additional domains (loopback
-addresses such as `localhost` are always bypassed):
+You can also set `NO_PROXY` to bypass the proxy for additional hosts. Cypress
+bypasses the proxy for loopback addresses such as `localhost` by default. This
+example bypasses the proxy for your internal domain, `example.internal`, and
+every subdomain of it. See
+[how Cypress matches `NO_PROXY` entries to hostnames](#How-Cypress-matches-NO_PROXY-entries-to-hostnames)
+for why the list names the domain twice.
 
 <OsTabs>
   <TabItem value="macos" label="macOS">
 
 ```shell
-export NO_PROXY=localhost,google.com,apple.com
+export NO_PROXY=example.internal,.example.internal
 ```
 
   </TabItem>
   <TabItem value="linux" label="Linux">
 
 ```shell
-export NO_PROXY=localhost,google.com,apple.com
+export NO_PROXY=example.internal,.example.internal
 ```
 
   </TabItem>
   <TabItem value="windows" label="Windows">
 
 ```shell title="Command Prompt"
-set NO_PROXY=localhost,google.com,apple.com
+set NO_PROXY=example.internal,.example.internal
 ```
 
 ```shell title="PowerShell"
-$env:NO_PROXY = "localhost,google.com,apple.com"
+$env:NO_PROXY = "example.internal,.example.internal"
 ```
 
   </TabItem>
@@ -124,17 +128,17 @@ setx HTTP_PROXY http://my-company-proxy.com
 **Windows registry**
 
 On Windows, Cypress uses the proxy configured in the Windows registry as a
-_fallback_: Cypress only consults it when no proxy has been set through the
-`HTTP_PROXY`/`HTTPS_PROXY` environment variables or your npm config. When Cypress
-uses the registry value, it applies the single configured proxy to both
-`HTTP_PROXY` and `HTTPS_PROXY`.
+_fallback_: Cypress only consults it when neither the `HTTP_PROXY` environment
+variable nor npm's `proxy` setting is set. Setting `HTTPS_PROXY` alone doesn't
+prevent the fallback. When Cypress uses the registry value, it applies the
+single configured proxy to both `HTTP_PROXY` and `HTTPS_PROXY`, replacing any
+`HTTPS_PROXY` value you set.
 [Learn how to set your proxy settings system-wide in Windows.](https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/)
 
 The registry fallback only applies when running your tests. When downloading
 Cypress for the first time, the `cypress` command line tool _does not_ read proxy
 settings from the Windows registry. If you need a proxy for the installation to
-work, you must set the environment variables shown above. Environment variables are also the only
-way to define a proxy for `cypress install`.
+work, set the environment variables shown above or npm's proxy settings.
 
 :::
 
@@ -146,13 +150,15 @@ differ between installation and running tests:
 
 | Phase                          | Proxy resolution order (first match wins)                                     | Custom CA sources                         |
 | ------------------------------ | ----------------------------------------------------------------------------- | ----------------------------------------- |
-| Installation (binary download) | `HTTP_PROXY` / `HTTPS_PROXY`                                                  | npm `cafile`, `ca`                        |
+| Installation (binary download) | `HTTPS_PROXY` → npm `https-proxy` → npm `proxy` → `HTTP_PROXY`                | npm `cafile`, `ca`                        |
 | Running tests                  | `HTTP_PROXY` / `HTTPS_PROXY` → npm `proxy` / `https-proxy` → Windows registry | npm `cafile`, `ca`, `NODE_EXTRA_CA_CERTS` |
 
 Two practical takeaways:
 
-- **Environment variables always win.** Setting `HTTP_PROXY` / `HTTPS_PROXY`
-  explicitly overrides every other source.
+- **Set both `HTTP_PROXY` and `HTTPS_PROXY` to override every other source.**
+  During installation, npm's `proxy` setting overrides `HTTP_PROXY`. When running
+  tests on Windows, the registry proxy replaces `HTTPS_PROXY` unless
+  `HTTP_PROXY` is also set.
 - **Cypress only uses the Windows registry and `NODE_EXTRA_CA_CERTS` when running
   tests**, never during installation. If your binary download is blocked or
   TLS-intercepted, you must rely on environment variables and npm's
@@ -189,23 +195,93 @@ environment variables, and Cypress applies them as follows:
 | `npm_config_proxy`       | `HTTP_PROXY`  | if `HTTP_PROXY` unset  |
 | `npm_config_https_proxy` | `HTTPS_PROXY` | if `HTTPS_PROXY` unset |
 
-A proxy set through the `HTTP_PROXY` or `HTTPS_PROXY` environment variable always
-takes precedence over the corresponding npm configuration. Cypress uses only npm's `proxy`
+When Cypress runs your tests, a proxy set through the `HTTP_PROXY` or
+`HTTPS_PROXY` environment variable takes precedence over the corresponding npm
+configuration. Cypress uses only npm's `proxy`
 and `https-proxy` values as a fallback. Cypress does **not** apply npm's
 [`noproxy`](https://docs.npmjs.com/cli/v9/using-npm/config#noproxy) configuration
 to `NO_PROXY`, so set `NO_PROXY` directly if you need to
 bypass the proxy for specific domains.
 
-### Bypassing the proxy with `NO_PROXY`
+### Bypass the proxy for internal hosts with `NO_PROXY`
 
-To bypass the proxy for certain domains, set the `NO_PROXY` environment variable
-to a comma-separated list of domain names that should not be proxied.
+To bypass the proxy for certain hosts, set the `NO_PROXY` environment variable
+to the hostnames Cypress should reach directly, such as
+`NO_PROXY=example.internal,.example.internal`. The rules below describe how
+Cypress matches entries when it runs your tests. The binary download follows
+slightly different rules, covered in
+[`NO_PROXY` during the Cypress binary download](#NO_PROXY-during-the-Cypress-binary-download).
+
+#### How Cypress matches `NO_PROXY` entries to hostnames
+
+Cypress compares each entry with the hostname of the request:
+
+| Entry                   | Bypasses the proxy for                         | Still goes through the proxy               |
+| ----------------------- | ---------------------------------------------- | ------------------------------------------ |
+| `*.example.internal`    | `app.example.internal`, `api.example.internal` | `example.internal`                         |
+| `.example.internal`     | `app.example.internal`, `api.example.internal` | `example.internal`                         |
+| `app.example.internal`  | `app.example.internal` only                    | `example.internal`, `api.example.internal` |
+| `example.internal`      | `example.internal` only                        | `app.example.internal`                     |
+| `example.internal:8443` | `example.internal` on port `8443`              | `example.internal` on any other port       |
+
+Keep these behaviors in mind when you write the list:
+
+- An entry without a leading `.` or `*.` matches only that exact hostname.
+- An entry that starts with `.` or `*.` matches every subdomain but not the
+  domain itself. To bypass both, list both forms:
+  `example.internal,.example.internal`.
+- An entry with a `:port` matches only requests to that port. A URL without a
+  port uses the default for its protocol, so `app.example.internal:443` matches
+  `https://app.example.internal`.
+- Commas and whitespace both separate entries, so stray spaces don't break
+  matching, including the trailing space that Windows Command Prompt keeps in
+  `set NO_PROXY=example.internal && npm test`.
+- Matching ignores case.
+- An IP address matches only that exact address. Cypress doesn't support IP
+  ranges in Classless Inter-Domain Routing (CIDR) notation, such as
+  `10.0.0.0/8`, so list each address you need.
+
+:::caution
+
+**`NO_PROXY` matching differs from curl and wget**
+
+In curl and wget, a bare entry matches as a domain suffix, so
+`NO_PROXY=example.internal` also bypasses the proxy for `app.example.internal`
+in those tools. When Cypress runs your tests, the same value still sends
+`app.example.internal` through the proxy. If a `NO_PROXY` value works with curl but not with Cypress,
+add the subdomain form next to the bare entry:
+
+```shell
+export NO_PROXY=example.internal,.example.internal
+```
+
+:::
+
+#### `NO_PROXY` during the Cypress binary download
+
+When `npm install cypress` or `cypress install` downloads the binary, the
+result depends on which proxy settings are present:
+
+- With `HTTPS_PROXY` set, Cypress matches entries as described above, except
+  that an entry starting with `*.` doesn't bypass the proxy.
+- With only `HTTP_PROXY` set, a bare entry also matches its subdomains, as in
+  curl, and an entry starting with `*.` doesn't match anything.
+- A host that matches `NO_PROXY` still goes through npm's `https-proxy` or
+  `proxy` setting when one is configured.
+
+To get the same result during installation and test runs, set both
+`HTTP_PROXY` and `HTTPS_PROXY`, and write subdomain entries with a leading `.`
+rather than `*.`, as in `NO_PROXY=example.internal,.example.internal`.
+
+#### Loopback addresses Cypress adds to `NO_PROXY`
 
 Cypress always appends `127.0.0.1`, `::1`, and `localhost` to `NO_PROXY` so that
 loopback traffic is never proxied. Cypress appends these entries even when you set your own
 `NO_PROXY` entries; Cypress adds to your list rather than replacing it. The only way to send
 loopback traffic through the proxy is to include the special `<-loopback>` value
-in `NO_PROXY`, which removes the automatic loopback entries.
+in `NO_PROXY`, which removes the automatic loopback entries. Put `<-loopback>`
+directly after a comma, as in `NO_PROXY=example.internal,<-loopback>`, because
+Cypress doesn't recognize the value with a space in front of it.
 
 ### Casing
 
@@ -260,23 +336,25 @@ Setting `NODE_EXTRA_CA_CERTS` alone does not help at install time.
 
 ## View proxy settings in Cypress
 
-Once configured, you can confirm which proxy Cypress is actually using.
+After you set up a proxy, you can confirm which proxy Cypress is using.
 
-From the Cypress app, open your project with `cypress open`, click the
-**Settings** tab, then expand the **Proxy Settings** section to view the proxy
-Cypress is currently using:
+From the Cypress app, open your project with `cypress open`, click **Settings**
+in the sidebar, then expand **Device settings**. The **Proxy settings** section
+shows the proxy server and the bypass list Cypress is currently using:
 
 <DocsImage
   src="/img/app/configuration/test-runner-settings-proxy-configuration.jpg"
-  alt="Proxy configuration in the Desktop app"
+  alt="Proxy settings section of the Cypress app's device settings, listing the proxy server and a proxy bypass list that holds the loopback addresses Cypress adds"
 />
 
-You can also check your proxy settings from the command line. Running
-`cypress info` prints the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` values
-Cypress detects, which is a useful alternative to the Settings UI, especially in
-CI or other headless environments:
-
-<CypressCommandTabs command="info" />
+To check the proxy settings from the command line, such as in CI, run Cypress
+with the [`DEBUG` environment variable](/app/references/troubleshooting#Print-DEBUG-logs)
+set to `cypress:*` and look for lines that start with
+`cypress:server:util:proxy`. Those lines show the `HTTP_PROXY`, `HTTPS_PROXY`,
+and `NO_PROXY` values Cypress resolved, including the loopback entries it
+appends to `NO_PROXY`. A proxy URL can contain a username and password, so
+redact the output before you share it. `cypress info` doesn't print proxy
+settings.
 
 ## Managing operating system environment variables
 
