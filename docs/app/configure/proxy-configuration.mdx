@@ -315,13 +315,13 @@ Setting `NODE_EXTRA_CA_CERTS` alone does not help at install time.
 
 Once configured, you can confirm which proxy Cypress is actually using.
 
-From the Cypress app, open your project with `cypress open`, click the
-**Settings** tab, then expand the **Proxy Settings** section to view the proxy
-Cypress is currently using:
+From the Cypress app, open your project with `cypress open`, click **Settings**
+in the sidebar, then expand **Device settings**. The **Proxy settings** section
+shows the proxy server and the bypass list Cypress is currently using:
 
 <DocsImage
   src="/img/app/configuration/test-runner-settings-proxy-configuration.jpg"
-  alt="Proxy Settings section of the Cypress app Settings tab, listing the proxy server and the proxy bypass list Cypress detected from environment variables"
+  alt="Proxy settings section of the Cypress app's device settings, listing the proxy server and a proxy bypass list that holds the loopback addresses Cypress adds"
 />
 
 To check the proxy settings from the command line, such as in CI, run Cypress
