@@ -362,7 +362,9 @@ it('lists the users the API returns', () => {
 
 To stub the request at the network layer instead, leave out
 `provideHttpClientTesting()` and stub `/api/users` with
-[`cy.intercept()`](/api/commands/intercept).
+[`cy.intercept()`](/api/commands/intercept). Call `cy.intercept()` before
+`cy.mount()`, since `UserListComponent` sends the request as soon as Angular
+creates the component.
 
 ### Add a custom `cy.inject()` command for Angular
 
@@ -461,23 +463,23 @@ cy.mount(StepperComponent, { componentProperties: { count: 100 } })
 
 ## Using createOutputSpy()
 
-To make spying on event emitters easier, there is a utility function called
-`createOutputSpy()` which automatically creates an `EventEmitter`
-and sets up the spy on its `.emit()` method. You can use `createOutputSpy()` like the following:
+`createOutputSpy()` from `cypress/angular` creates an `EventEmitter`, spies on
+its `emit()` method, and gives the spy an alias. Bind a component's output to
+the emitter, then assert on the alias:
 
-```ts
+```ts title="src/app/stepper.component.cy.ts"
 import { createOutputSpy } from 'cypress/angular'
+import { StepperComponent } from './stepper.component'
 
 it('clicking + fires a change event with the incremented value', () => {
-  // Arrange
   cy.mount('<app-stepper (change)="change.emit($event)"></app-stepper>', {
-    declarations: [StepperComponent],
+    imports: [StepperComponent],
     componentProperties: {
-      change: createOutputSpy<boolean>('changeSpy'),
+      change: createOutputSpy<number>('changeSpy'),
     },
   })
-  cy.get(incrementSelector).click()
-  cy.get('@changeSpy').should('have.been.called')
+  cy.get('[data-cy=increment]').click()
+  cy.get('@changeSpy').should('have.been.calledWith', 1)
 })
 ```
 
