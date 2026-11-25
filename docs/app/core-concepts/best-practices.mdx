@@ -1224,39 +1224,35 @@ your [Cypress configuration](/app/references/configuration).
 
 :::
 
-By adding a [baseUrl](/app/references/configuration#Global) in your
-configuration Cypress attempts to prefix the `baseUrl` any URL provided to
-commands like [cy.visit()](/api/commands/visit) and
-[cy.request()](/api/commands/request) that are not fully qualified domain name
-(FQDN) URLs.
-
-Setting a `baseUrl` removes the need to hard-code fully qualified domain name (FQDN) URLs in
-commands. For example,
+When you set a [baseUrl](/app/references/configuration#Global) in your
+configuration, Cypress prefixes it to any URL you pass to commands such as
+[cy.visit()](/api/commands/visit) and [cy.request()](/api/commands/request)
+that isn't a fully qualified domain name (FQDN) URL, so you don't hard-code the
+host in every command. With `baseUrl` set to `http://localhost:8080`, the
+following visit:
 
 ```javascript
 cy.visit('http://localhost:8080/index.html')
 ```
 
-can be shortened to
+becomes:
 
 ```javascript
 cy.visit('index.html')
 ```
 
-Not only does this create tests that can easily switch between domains, i.e.
-running a dev server on `http://localhost:8080` vs a deployed production server
-domain, but adding a `baseUrl` can also save some time during the initial
-startup of your Cypress tests.
+The same tests then run against a dev server on `http://localhost:8080` or a
+deployed server when you change one configuration value. A `baseUrl` also
+avoids a reload when your tests start.
 
-When you start running your tests, Cypress does not know the url of the app you
-plan to test. So, Cypress initially opens on `http://localhost` at a random
-port.
+Before your tests start, Cypress doesn't know the URL of the app you plan to
+test, so Cypress opens on `http://localhost` at a random port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
 
 <DocsImage
   src="/img/app/references/cypress-loads-in-localhost-and-random-port.png"
-  alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.cy.js"
+  alt="Browser address bar showing Cypress running at localhost on port 53927, a random port, before any visit"
 />
 
 When the first [cy.visit()](/api/commands/visit) in a test goes to a different
@@ -1268,9 +1264,8 @@ repeats. See
 [how the first `cy.visit()` to a new origin restarts the test](/app/guides/cross-origin-testing#First-cyvisit-to-a-new-origin-restarts-the-test).
 
 Setting `baseUrl` to the origin your tests visit first avoids the reload. Cypress
-loads the main window in the `baseUrl` you specified as soon as your tests start.
-A test that first visits a different origin still reloads the main window and
-restarts.
+loads the main window at the `baseUrl` as soon as your tests start. A test that
+first visits a different origin still reloads the main window and restarts.
 
 ### Cypress configuration file
 
@@ -1290,26 +1285,26 @@ restarts.
 
 <DocsImage
   src="/img/app/references/cypress-loads-window-in-base-url-localhost.png"
-  alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.cy.js"
+  alt="Browser address bar showing Cypress running at the baseUrl, localhost on port 8484, from the start"
 />
 
-Having a `baseUrl` set gives you the added bonus of seeing an error if your
-server is not running during `cypress open` at the specified `baseUrl`.
+With a `baseUrl` set, `cypress open` warns you when no server is running at that
+URL.
 
 <DocsImage
   src="/img/app/references/cypress-ensures-baseUrl-server-is-running.png"
-  alt="Cypress Launchpad with warning about how Cypress could not verify server set as the baseUrl is running"
+  alt="Cypress warning that it could not verify the server set as the baseUrl, http://localhost:8484, is running"
 />
 
-We also display an error if your server is not running at the specified
-`baseUrl` during `cypress run` after several retries.
+`cypress run` retries the connection several times, then fails with an error if
+no server is running at the `baseUrl`.
 
 <DocsImage
   src="/img/app/references/cypress-verifies-server-is-running-during-cypress-run.png"
-  alt="The terminal warns and retries when the url at your baseUrl is not running"
+  alt="Terminal output of cypress run retrying the connection to the baseUrl, then failing because the server isn't running"
 />
 
 ### Usage of `baseUrl` in depth
 
-This [short video](https://www.youtube.com/watch?v=f5UaXuAc52c) explains in
-depth how to use `baseUrl` correctly.
+This [video on using `baseUrl`](https://www.youtube.com/watch?v=f5UaXuAc52c)
+walks through it in depth.
