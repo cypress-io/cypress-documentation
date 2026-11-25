@@ -422,6 +422,19 @@ on('task', {
 
 :::
 
+The config expects your own videos in `cypress/fixtures`: `webcam-default.y4m`,
+which the config copies in at the start of each run, and the videos the tests
+copy in, such as `valid-qr.y4m` and `expired-qr.y4m`.
+
+Electron ignores `launchOptions.args`, so to run these tests in Electron, pass
+the switch in the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable (see
+[Modify Electron app switches](#Modify-Electron-app-switches)). With Cypress
+started from the project folder, the placeholder's relative path works:
+
+```shell
+export ELECTRON_EXTRA_LAUNCH_ARGS=--use-file-for-fake-video-capture=cypress/fixtures/fake-webcam.y4m
+```
+
 In the spec, swap the video before the app starts the camera:
 
 ```js title="cypress/e2e/scan.cy.js"
@@ -439,25 +452,31 @@ it('rejects an expired QR code', () => {
 })
 ```
 
-When the camera is already on before the swap, start it again after the swap.
-Reload the page with [`cy.reload()`](/api/commands/reload), or use the app's
-own control that stops the stream's tracks and calls `getUserMedia()` again.
+With [test isolation](/app/core-concepts/test-isolation) on, the default,
+Cypress clears the page before each test, which also turns off the previous
+test's camera. When the camera is on at the point a test needs a new video,
+such as with `testIsolation: false`, stop the camera before the swap and start
+it again after. Use the app's own controls, which stop the stream's tracks and
+call `getUserMedia()` again.
 
 Keep these behaviors in mind:
 
 - Because the config recreates the placeholder on each run, you can add the
   placeholder to `.gitignore`.
+- Every video the task copies in must be in the placeholder's format. The
+  browser reads the placeholder in the format its file extension names, so an
+  MJPEG video copied over `fake-webcam.y4m` makes `getUserMedia()` fail with a
+  `NotFoundError`. For MJPEG videos, name the placeholder `fake-webcam.mjpeg`.
 - The placeholder keeps the last video a test copied in, for the rest of the
   run and across specs. Set the video in every test that uses the camera, or
   reset it in a `beforeEach()` with
   `cy.task('setFakeWebcamVideo', 'webcam-default.y4m')`.
 - A stream that's already open can pick up the overwritten file partway
   through, or keep playing the previous video, depending on the browser
-  version, the platform, and the video format. Swapping before the camera starts
+  version, the platform, and the video format. Swapping while the camera is off
   gives each test a predictable video.
-- The approach works only in Chromium-based browsers that take
-  `launchOptions.args`, so it doesn't apply to Firefox, WebKit, or Electron,
-  which ignores those arguments.
+- The switch belongs to Chromium, so the approach works in Chromium-based
+  browsers, including Electron, and doesn't apply to Firefox or WebKit.
 - The approach relies on how Chrome reads the fake capture file, not on a
   Cypress API, so a browser update can change how it behaves. If the video
   stops changing between tests in your browser,
@@ -466,10 +485,10 @@ Keep these behaviors in mind:
 #### Stub getUserMedia() with a fixture video
 
 Stubbing `navigator.mediaDevices.getUserMedia()` hands the app a stream the
-test controls, without the fake capture switches, so the stub also works
-in Electron. Load the video with [`cy.fixture()`](/api/commands/fixture), play
-it in a `<video>` element the test creates, and return the element's
-`captureStream()`:
+test controls, without the fake capture switches, so the stub doesn't depend on
+how the browser reads a fake capture file. Load the video with
+[`cy.fixture()`](/api/commands/fixture), play it in a `<video>` element the
+test creates, and return the element's `captureStream()`:
 
 ```js title="cypress/e2e/scan.cy.js"
 it('accepts a valid QR code', () => {
