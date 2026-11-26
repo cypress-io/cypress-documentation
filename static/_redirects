@@ -182,6 +182,7 @@
 /app/roadmap https://www.cypress.io/roadmap/app?utm_source=docs.cypress.io&utm_medium=redirect 301
 /cloud/references/roadmap https://www.cypress.io/roadmap/cloud?utm_source=docs.cypress.io&utm_medium=redirect 301
 /cloud/roadmap https://www.cypress.io/roadmap/cloud?utm_source=docs.cypress.io&utm_medium=redirect 301
+/cloud/releases https://www.cypress.io/releases/cloud?utm_source=docs.cypress.io&utm_medium=redirect 301
 /ui-coverage/roadmap https://www.cypress.io/roadmap/ui-coverage?utm_source=docs.cypress.io&utm_medium=redirect 301
 /accessibility/roadmap https://www.cypress.io/roadmap/accessibility?utm_source=docs.cypress.io&utm_medium=redirect 301
 /faq/questions/cloud-faq /cloud/faq 301
