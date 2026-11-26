@@ -145,8 +145,8 @@ prints the paths of two files in the system temp directory where Cypress keeps
 writing its standard output and standard error. Use the `nohup` form when you
 want the log in `cypress-open.log`, the file the troubleshooting steps on this
 page read. Use `--detached` when you want the command to block until Cypress is
-ready, and point your agent at the printed files instead. Combine it with
-`--headless` the same way:
+ready, and point your agent at the printed files instead. Combine `--detached`
+with `--headless` the same way:
 
 ```shell title="Command"
 npx cypress open --headless --e2e --browser chromium --project . --detached
