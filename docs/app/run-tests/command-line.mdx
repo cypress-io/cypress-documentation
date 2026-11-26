@@ -791,20 +791,27 @@ cypress open --config-file tests/cypress.config.js
 #### `cypress open --detached` {#cypress-open-detached}
 
 Starts Cypress, waits until the Cypress App is ready, then returns and leaves
-Cypress running in the background. Cypress doesn't write this output to a file
-for you; redirect the command's own output if you want to capture what it
-prints before it returns.
+Cypress running in the background. Cypress writes the app's output to two
+files in the system temp directory, one for standard output and one for
+standard error, and the command prints where they are before it returns:
 
 ```shell
 cypress open --e2e --browser chrome --detached
 ```
 
+```text title="Output"
+Cypress is running in the background. Its output is written to "/tmp/cypress-open-4242-1764000000000-app4243.out" and "/tmp/cypress-open-4242-1764000000000-app4243.err"
+```
+
+The app keeps writing to these files for as long as it runs. Cypress deletes
+output files more than a week old the next time you start a detached session,
+unless the app that writes them is still running.
+
 On Linux with no display, Cypress starts an `Xvfb` display for the app. That
-display keeps running after Cypress exits. Stop it by its own process ID,
-found with `pgrep Xvfb` — but see
-[Limitations of Cypress in agent sandboxes](/app/tooling/cypress-agent-sandboxes#Limitations-of-Cypress-in-agent-sandboxes) first if more
-than one Xvfb might be running on the host, since `pgrep Xvfb` can't tell them
-apart.
+display keeps running with the app after the command returns, and stops when
+the app exits. Because the display has to outlive the command,
+`cypress open --detached` ignores `XVFB_DISPLAY_NUM` and prints a warning when
+it is set.
 
 #### `cypress open --env <env>` {#cypress-open-env-lt-env-gt}
 

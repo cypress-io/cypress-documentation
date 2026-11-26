@@ -58,6 +58,64 @@ on('<event>', (arg1, arg2) => {
 
 :::
 
+#### Register the same Node event more than once
+
+A project can register the same event several times, such as once in your own
+`setupNodeEvents` code and once in each plugin you call from it. For
+`before:run`, `after:run`, `before:spec`, `after:spec`,
+`before:browser:launch`, and `after:screenshot`, Cypress runs every handler in
+the order you registered them. Keep these behaviors in mind:
+
+- `before:browser:launch` and `after:screenshot` handlers each receive the
+  result of the handler before them, so a later handler builds on the launch
+  options or screenshot details an earlier one returned.
+- If a handler throws, the handlers registered after it don't run.
+- Cypress merges every `task` object you register, as described in
+  [`cy.task()`](/api/commands/task#Cypress-merges-every-ontask-registration).
+- For `file:preprocessor`, Cypress uses only the last handler you register.
+
+:::cypress-config-plugin-example
+
+```ts
+on('before:browser:launch', (browser, launchOptions) => {
+  launchOptions.args.push('--lang=es')
+
+  return launchOptions
+})
+
+on('before:browser:launch', (browser, launchOptions) => {
+  // launchOptions.args already includes --lang=es
+  launchOptions.args.push('--mute-audio')
+
+  return launchOptions
+})
+```
+
+:::
+
+To keep a plugin from handling an event you want to handle yourself, pass the
+plugin an `on` function that skips that event:
+
+:::cypress-config-plugin-example
+
+```ts
+import myPlugin from 'my-plugin'
+```
+
+```ts
+myPlugin((event: any, handler: any) => {
+  if (event !== 'after:spec') {
+    on(event, handler)
+  }
+}, config)
+
+on('after:spec', (spec, results) => {
+  // only this after:spec handler runs
+})
+```
+
+:::
+
 #### List of events
 
 Each event documents its own argument signature.

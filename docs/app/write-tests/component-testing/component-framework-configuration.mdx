@@ -42,6 +42,13 @@ Cypress ships with built-in dev server implementations for **Vite** and
 **Webpack**. You do not need to install `@cypress/vite-dev-server` or
 `@cypress/webpack-dev-server` separately, the Cypress App bundles them.
 
+The Webpack dev server uses the `webpack-dev-server` package your project
+installs, version 5 or 6, and falls back to the version 5 that ships with
+Cypress when your project has none. Angular projects that build with
+`@angular-devkit/build-angular` 22.2 and later install version 6.
+`webpack-dev-server` 6 requires webpack `5.101.0` or newer, and Cypress reports
+an error naming both versions when your project has an older webpack.
+
 ### How it works at runtime
 
 When you open or run component tests, Cypress:

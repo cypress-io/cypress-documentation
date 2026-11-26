@@ -140,11 +140,13 @@ one doesn't stop Cypress from starting:
 `cypress tap status` reports it instead, as covered in
 [Troubleshoot Cypress in an agent sandbox](#Troubleshoot-Cypress-in-an-agent-sandbox).
 
-`cypress open --detached` waits until Cypress is ready before it returns, but
-stops writing output after that point. Use the `nohup` form when you want the
-ongoing log in `cypress-open.log`, which the troubleshooting steps on this page
-rely on. Use `--detached` when you want the command to block until Cypress is
-ready. Combine it with `--headless` the same way:
+`cypress open --detached` waits until Cypress is ready before it returns, then
+prints the paths of two files in the system temp directory where Cypress keeps
+writing its standard output and standard error. Use the `nohup` form when you
+want the log in `cypress-open.log`, the file the troubleshooting steps on this
+page read. Use `--detached` when you want the command to block until Cypress is
+ready, and point your agent at the printed files instead. Combine `--detached`
+with `--headless` the same way:
 
 ```shell title="Command"
 npx cypress open --headless --e2e --browser chromium --project . --detached
@@ -458,10 +460,6 @@ session leaves no window open to remind you.`}
   again. We recommend persisting the binary cache directory (see
   `CYPRESS_CACHE_FOLDER` in [Environment variables](#Environment-variables))
   if your agent supports it.
-- `--detached` leaves the Xvfb that Cypress started running after Cypress
-  exits. If more than one session shares the host, `pgrep Xvfb` can't tell
-  their displays apart, and `pkill Xvfb` stops all of them. Give each session
-  its own sandbox, torn down when the session ends.
 - `cypress tap` has its own
   [limitations](/app/tooling/cypress-tap#Limitations-of-the-cypress-tap-CLI).
 

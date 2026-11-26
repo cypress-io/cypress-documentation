@@ -534,14 +534,10 @@ Because Cypress runs in its own profile, it can be difficult to tell its browser
 apart from your normal one, and accidentally treating the Cypress browser like a
 regular one (or vice versa) leads to confusion.
 
-In Chrome-based browsers, we've made the browser spawned by
-Cypress look different than regular sessions. The spawned browser has a darker
-theme around the chrome of the browser, so you can always visually distinguish them.
-
-<DocsImage
-  src="/img/app/launching-browsers/cypress-browser-chrome.png"
-  alt="Cypress Browser with darker chrome"
-/>
+The browser Cypress launches uses the same frame and tab colors as your regular
+browser. To tell the Cypress browser from your own, look at the address bar: the Cypress browser's
+first tab shows the Cypress App at a `localhost` URL that contains `/__/`, and the
+profile has none of your bookmarks or extensions.
 
 ## Headless mode
 
