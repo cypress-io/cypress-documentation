@@ -48,6 +48,19 @@ const INSERT_BEFORE_DOC = {
   ],
 }
 
+// A renamed or moved anchor doc would otherwise drop its links from the
+// sidebar without failing the build.
+for (const id of [
+  ...Object.keys(INSERT_AFTER_DOC),
+  ...Object.keys(INSERT_BEFORE_DOC),
+]) {
+  if (!fs.existsSync(`./docs/${id}.mdx`)) {
+    throw new Error(
+      `Sidebar links are anchored to the doc "${id}", but docs/${id}.mdx does not exist. Update INSERT_AFTER_DOC or INSERT_BEFORE_DOC in docusaurus.config.js.`
+    )
+  }
+}
+
 function addExternalSidebarLinks(items) {
   return items.flatMap((item) => {
     if (item.type === 'category') {
