@@ -125,6 +125,12 @@ When the recording begins, `details.runUrl` lets you call the
 before any spec starts. Pass `expectedGroupCount` so the call is safe from every machine. See the
 [`before:run` example](/cloud/features/smart-orchestration/parallelization#before-run-example).
 
+## History
+
+| Version                                    | Changes                                                                                                                                                                                             |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.3.0](/app/references/changelog#16-3-0) | When the event is registered more than once, [every registered handler runs](/api/node-events/overview#Register-the-same-event-more-than-once) in registration order, instead of only the last one. |
+
 ## See also
 
 - [After Run API](/api/node-events/after-run-api)

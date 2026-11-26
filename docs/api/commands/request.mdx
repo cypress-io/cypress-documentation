@@ -628,7 +628,11 @@ With `followRedirect: true`, the default, Cypress follows each redirect and send
 your `headers` again. Keep these behaviors in mind:
 
 - Cookies carry across. Cypress saves any `Set-Cookie` headers into the browser,
-  then attaches the cookies that match the next URL.
+  then sends only the cookies the browser has for the next URL. A cookie that a
+  response in the chain deletes is not sent on later redirects, and cookies for
+  the first host are not sent to a different host.
+- Cypress keeps a `Cookie` header you pass in `headers` on redirects to the same
+  host as the original request, and drops it on a redirect to a different host.
 - Cypress drops `Authorization` when the redirect changes the hostname.
 - Cypress follows a redirected `POST`, `PUT`, or `DELETE` as a `GET`, without its
   body or `Content-Type`. Only a `307` keeps the method and body.
@@ -738,6 +742,7 @@ under `Yielded:`:
 
 | Version                                      | Changes                                                                                                                                                                                                                                                                    |
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.4.0](/app/references/changelog#16-4-0)   | Each redirect sends only the cookies the browser has for that URL, and a `Cookie` header passed in `headers` is dropped on a redirect to a different host.                                                                                                                 |
 | [16.2.1](/app/references/changelog#16-2-1)   | Fails with an invalid encoding error when `encoding` is `false`, `0`, or an empty string.                                                                                                                                                                                  |
 | [15.20.0](/app/references/changelog#15-20-0) | Added support for `QUERY` method.                                                                                                                                                                                                                                          |
 | [7.4.0](/app/references/changelog#7-4-0)     | Added support for `FormData` and `Blob` request bodies.                                                                                                                                                                                                                    |

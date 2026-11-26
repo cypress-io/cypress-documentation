@@ -242,6 +242,10 @@ arguments.
 LAUNCH_EDITOR=zed npx cypress open
 ```
 
+On Windows, Cypress can't open files in an editor when the project is on a UNC
+path, such as `\\wsl$\` or a network share. Open the project from a local
+path to open its files in your editor.
+
 After setting your file opener preference, files automatically open in your
 selected application without prompting you to choose. To change your
 selection, go to the **Settings** tab of Cypress and choose an editor under
