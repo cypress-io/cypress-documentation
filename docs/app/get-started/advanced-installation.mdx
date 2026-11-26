@@ -63,7 +63,7 @@ System-level (OS) environment variables drive almost every behavior on this page
 | `CYPRESS_CACHE_FOLDER`           | [Changes the location of the Cypress binary cache](#Binary-cache)                      |
 | `CYPRESS_RUN_BINARY`             | [Sets the path to the Cypress binary to launch at run time](#Run-binary)               |
 | `CYPRESS_VERIFY_TIMEOUT`         | Overrides the timeout duration for the `verify` command. The default value is 30000.   |
-| `CYPRESS_SKIP_VERIFY`            | Skips the [`verify` command](command-line#cypress-verify) when set to `true`           |
+| `CYPRESS_SKIP_VERIFY`            | Skips the [`verify` command](/app/references/command-line#cypress-verify) when set to `true`           |
 
 ### When you'd reach for each
 
@@ -701,7 +701,7 @@ one it would normally resolve from the cache. `CYPRESS_RUN_BINARY` is useful whe
 a binary to a known location and want to run it directly.
 
 `CYPRESS_RUN_BINARY` should be a path to an already unzipped Cypress binary executable.
-The Cypress commands [open](/app/references/command-line#cypress-open), [run](/app/references/command-line#cypress-run), and [verify](command-line#cypress-verify)
+The Cypress commands [open](/app/references/command-line#cypress-open), [run](/app/references/command-line#cypress-run), and [verify](/app/references/command-line#cypress-verify)
 then launch the provided binary.
 
 The following example [cypress run](/app/references/command-line#cypress-run) commands assume that you have first
