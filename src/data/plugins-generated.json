@@ -113,8 +113,8 @@
     },
     "TypeScript": {
       "npm": "cypress",
-      "version": "16.3.0",
-      "lastPublished": "2026-11-10T19:29:02.913Z"
+      "version": "16.4.0",
+      "lastPublished": "2026-11-25T16:55:02.350Z"
     },
     "cypress-codegen": {
       "npm": "cypress-codegen",
@@ -685,8 +685,8 @@
     },
     "Nx": {
       "npm": "@nx/cypress",
-      "version": "24.0.6",
-      "lastPublished": "2026-11-10T18:20:40.967Z",
+      "version": "24.0.7",
+      "lastPublished": "2026-11-25T12:44:39.542Z",
       "cypressVersion": ">= 13 < 17"
     },
     "cypress-real-events": {
