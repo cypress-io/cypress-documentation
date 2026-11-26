@@ -59,7 +59,7 @@ describe('Basic tests', () => {
 
   describe('Search', () => {
     it('search opens search popup', () => {
-      cy.contains('Search ⌘K').click()
+      cy.get('button[aria-label="Search"]').click()
       cy.get('.DocSearch-Modal').should('be.visible')
     })
   })

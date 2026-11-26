@@ -487,19 +487,8 @@ div[class^='codeBlockTitle'] {
   font-weight: bold;
 }
 
-/* hide the docs version badge, not useful until we
-  use the Docusaurus versioning */
+/* src/components/docs-version-bar already names the version. */
 .theme-doc-version-badge {
-  display: none;
-}
-
-/* tweaks/hiding content after version banner
-  for internal review */
-.theme-doc-version-banner {
-  font-size: 1.1rem;
-  margin-top: 4rem;
-}
-.theme-doc-version-banner + div {
   display: none;
 }
 

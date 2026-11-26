@@ -35,7 +35,7 @@ function exerciseContentTabs() {
 }
 
 function exerciseSearch() {
-  cy.contains('button', 'Search ⌘K').click()
+  cy.get('button[aria-label="Search"]').click()
   cy.get('.DocSearch-Modal').should('be.visible')
   cy.get('.DocSearch-Input').type('cypress')
   cy.get('body').type('{esc}')

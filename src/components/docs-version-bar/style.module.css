@@ -1,0 +1,24 @@
+.bar {
+  --ifm-alert-border-radius: 0;
+  position: sticky;
+  top: var(--navbar-base-height);
+  /* Under the navbar, so the open mobile menu covers the bar. */
+  z-index: calc(var(--ifm-z-index-fixed) - 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: var(--docs-version-bar-height);
+  padding: 0 16px;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar a {
+  margin-left: 4px;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+}

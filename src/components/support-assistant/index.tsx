@@ -256,13 +256,13 @@ export function SupportAssistantButton() {
       aria-controls={PANEL_ID}
       data-cy="support-assistant-button"
       onClick={assistant.toggle}
-      className="mr-[8px] flex h-[42px] w-[42px] cursor-pointer items-center justify-center gap-[8px] rounded-[18px] border-0 bg-gray-50 p-0 font-medium sm:h-[38px] sm:w-[38px] lg:h-auto lg:w-auto lg:rounded-full lg:px-[12px] lg:py-[8px] text-indigo-500 transition-colors hover:bg-indigo-50 dark:bg-gray-900 dark:text-indigo-300 dark:hover:bg-gray-800 dark:[&_.icon-dark]:stroke-indigo-300 dark:[&_.icon-light]:fill-indigo-500"
+      className="flex h-[42px] w-[42px] cursor-pointer items-center justify-center gap-[8px] rounded-[18px] border-0 bg-gray-50 p-0 font-medium sm:h-[38px] sm:w-[38px] xl:h-auto xl:w-auto xl:rounded-full xl:px-[12px] xl:py-[8px] text-indigo-500 transition-colors hover:bg-indigo-50 dark:bg-gray-900 dark:text-indigo-300 dark:hover:bg-gray-800 dark:[&_.icon-dark]:stroke-indigo-300 dark:[&_.icon-light]:fill-indigo-500"
     >
       <IconGeneralSparkleDoubleSmall
         strokeColor="indigo-500"
         fillColor="indigo-100"
       />
-      <span className="sr-only lg:not-sr-only">Ask AI</span>
+      <span className="sr-only xl:not-sr-only">Ask AI</span>
     </button>
   )
 }

@@ -7,6 +7,7 @@ import {
 } from '@docusaurus/theme-common/internal';
 import {translate} from '@docusaurus/Translate';
 import NavbarMobileSidebar from '@theme/Navbar/MobileSidebar';
+import DocsVersionBar from '@site/src/components/docs-version-bar';
 import styles from './styles.module.css';
 function NavbarBackdrop(props) {
   return (
@@ -24,6 +25,7 @@ export default function NavbarLayout({children}) {
   const mobileSidebar = useNavbarMobileSidebar();
   const {navbarRef, isNavbarVisible} = useHideableNavbar(hideOnScroll);
   return (
+    <>
     <nav
       ref={navbarRef}
       aria-label={translate({
@@ -48,5 +50,7 @@ export default function NavbarLayout({children}) {
       <NavbarBackdrop onClick={mobileSidebar.toggle} />
       <NavbarMobileSidebar />
     </nav>
+    <DocsVersionBar />
+    </>
   );
 }
