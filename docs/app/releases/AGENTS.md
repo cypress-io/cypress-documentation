@@ -52,6 +52,6 @@ _Released Sep 15, 2026_
 
 `docs/accessibility/changelog.mdx` and `docs/ui-coverage/changelog.mdx` are
 continuously delivered, so they use `## Week of Mon D, YYYY` with a flat bullet
-list and no version numbers or group labels. `docs/cloud/releases/changelog.mdx`
-holds no entries at all; it points to the Cypress releases page. Don't
+list and no version numbers or group labels. Cypress Cloud has no changelog in
+this repo; its release notes are on www.cypress.io/releases/cloud. Don't
 cross-apply the format on this page to any of them.
