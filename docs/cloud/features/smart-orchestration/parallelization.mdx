@@ -463,7 +463,9 @@ POST https://api.cypress.io/runs/complete
 ```
 
 Cypress Cloud authenticates requests with your **project ID** and **record key**, the same
-credentials used to [record the run](/cloud/get-started/setup#Setup).
+credentials used to [record the run](/cloud/get-started/setup#Setup). The
+[Runtime Configuration API](/cloud/features/runtime-configuration) uses the same
+credentials to send a run its own App Quality configuration from `before:run`.
 
 ### Request body
 

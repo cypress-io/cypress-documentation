@@ -22,6 +22,8 @@ You don't need any of this to get started, and you can add it incrementally. Rep
 
 <AppQualityConfigEditing />
 
+<AppQualityRuntimeConfigNote />
+
 <DocsImage
   src="/img/accessibility/configuration/cypress-accessibility-configuration-editor.png"
   alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
@@ -206,6 +208,17 @@ Every run permanently records the exact configuration it was processed with, so 
 ### In Cypress Cloud
 
 To review the configuration a specific run used, open its **Properties** tab, shown in the [Setting Configuration](#Setting-Configuration) screenshot above. The **Properties** tab displays the configuration as it was applied when the run was processed. When you open a run that was processed with an older configuration than the one currently saved, the report flags it with a "configuration updated" message, and you can [regenerate](#Setting-Configuration) the run to reprocess it with the current configuration.
+
+The message above the configuration says where the configuration came from:
+
+- A run that used the project configuration shows when that configuration was saved and which run first applied it.
+- A run that sent its own configuration shows "Configuration provided at runtime." See the [Runtime Configuration API](/cloud/features/runtime-configuration).
+- A run whose reports were regenerated shows "This run was reprocessed with the following configuration" and how many times the reports were regenerated. The configuration shown is the one the latest regeneration used.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-cloud-properties-tab-reprocessed-config.png"
+  alt="The Application Quality section of a run's Properties tab, showing that the run was reprocessed, that its reports were regenerated 2 times, and the configuration from the latest regeneration"
+/>
 
 ### From the Results API
 
